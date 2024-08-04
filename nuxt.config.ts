@@ -1,5 +1,5 @@
-import { createResolver } from '@nuxt/kit'
-const { resolve } = createResolver(import.meta.url)
+import { createResolver } from '@nuxt/kit';
+const { resolve } = createResolver(import.meta.url);
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -60,6 +60,7 @@ export default defineNuxtConfig({
   ],
 
   imports: {
+    autoImport: true,
     dirs: [resolve('./stores'), '~/stores'],
   },
 
@@ -117,4 +118,4 @@ export default defineNuxtConfig({
   //     }
   //   ]
   // },
-})
+});

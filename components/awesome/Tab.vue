@@ -8,8 +8,8 @@ defineProps({
     type: String,
     required: true,
   },
-})
-const activeTab = inject<string>('activeTab')
+});
+const activeTab = inject<string>('activeTab');
 </script>
 
 <template>

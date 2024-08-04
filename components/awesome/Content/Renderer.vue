@@ -8,12 +8,12 @@ const props = defineProps({
     type: String,
     default: '',
   },
-})
+});
 
 const { data } = await useAsyncData(props.path, () =>
   queryContent(props.path).findOne(),
-)
-if (!data) abortNavigation('404')
+);
+if (!data) abortNavigation('404');
 </script>
 
 <template>

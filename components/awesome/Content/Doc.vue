@@ -5,7 +5,7 @@ const props = defineProps({
     required: false,
     default: 'This page is empty',
   },
-})
+});
 </script>
 
 <template>

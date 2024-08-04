@@ -1,24 +1,24 @@
-import type { RouteLocationRaw } from 'vue-router'
-import { NuxtApp } from '#app'
+import type { RouteLocationRaw } from 'vue-router';
+import { NuxtApp } from '#app';
 import {
   AwesomeLayoutPageNavbarMenu,
   AwesomeLayoutPageNavbarMenuDropdownItem,
-} from './types'
+} from './types';
 
 export interface NuxtAwesomeAppConfig {
   /** title name */
-  name?: string
+  name?: string;
   /** description */
-  description?: string
+  description?: string;
 
   /** project config */
   project?: {
     /** links */
     links?: {
       /** project github link */
-      github?: string
-    }
-  }
+      github?: string;
+    };
+  };
 
   /** layout config */
   layout?: {
@@ -27,51 +27,51 @@ export interface NuxtAwesomeAppConfig {
       /** navbar */
       navbar?: {
         /** menus in navbar */
-        menus?: AwesomeLayoutPageNavbarMenu[]
-      }
-    }
+        menus?: AwesomeLayoutPageNavbarMenu[];
+      };
+    };
     /** footer */
     footer?: {
       /** footer year */
-      year?: number
-    }
+      year?: number;
+    };
     /** welcome component page */
     welcome?: {
-      title?: string
-      disableInfoReplaceIndexInWelcomePage?: boolean
+      title?: string;
+      disableInfoReplaceIndexInWelcomePage?: boolean;
       primaryActionButton?: {
-        title?: string
-        to?: RouteLocationRaw | ((nuxt: NuxtApp) => RouteLocationRaw)
-      }
+        title?: string;
+        to?: RouteLocationRaw | ((nuxt: NuxtApp) => RouteLocationRaw);
+      };
       secondaryActionButton?: {
-        title?: string
-        to?: RouteLocationRaw | ((nuxt: NuxtApp) => RouteLocationRaw)
-      }
-    }
-  }
+        title?: string;
+        to?: RouteLocationRaw | ((nuxt: NuxtApp) => RouteLocationRaw);
+      };
+    };
+  };
 
   /** author config */
   author?: {
     /** author name */
-    name?: string
+    name?: string;
     /** author links */
     links?: {
       /** author github link */
-      github?: string
+      github?: string;
       /** author medium link */
-      medium?: string
+      medium?: string;
       /** author website link */
-      website?: string
-    }
-  }
+      website?: string;
+    };
+  };
 
   /** author config */
-  disableInfoReplaceIndexInWelcomePage?: boolean
+  disableInfoReplaceIndexInWelcomePage?: boolean;
 }
 
 declare module '@nuxt/schema' {
   interface AppConfigInput {
-    awesome?: NuxtAwesomeAppConfig
+    awesome?: NuxtAwesomeAppConfig;
   }
 }
 
@@ -122,4 +122,4 @@ export default defineAppConfig({
     class: '',
     size: '1em',
   },
-})
+});

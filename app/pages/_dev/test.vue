@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 //
-const counter = useCounter()
-const identity = useIdentity()
+const counter = useCounter();
+const identity = useIdentity();
 
 // compiler micro
-definePageMeta({ layout: 'page' })
-useHead({ title: 'Test Page' })
+definePageMeta({ layout: 'page' });
+useHead({ title: 'Test Page' });
 </script>
 
 <template>

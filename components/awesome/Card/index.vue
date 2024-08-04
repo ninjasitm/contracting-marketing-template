@@ -4,7 +4,7 @@ defineProps({
     type: Boolean,
     required: false,
   },
-})
+});
 </script>
 
 <template>

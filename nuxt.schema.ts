@@ -1,4 +1,4 @@
-import { NuxtAwesomeAppConfig } from './app.config'
+import { NuxtAwesomeAppConfig } from './app.config';
 
 export default defineNuxtSchema({
   appConfig: {
@@ -35,4 +35,4 @@ export default defineNuxtSchema({
       },
     } as NuxtAwesomeAppConfig,
   },
-})
+});

@@ -1,6 +1,6 @@
-import type { Config } from 'tailwindcss'
-import defaultTheme from 'tailwindcss/defaultTheme'
-import colors from 'tailwindcss/colors'
+import type { Config } from 'tailwindcss';
+import defaultTheme from 'tailwindcss/defaultTheme';
+import colors from 'tailwindcss/colors';
 
 const MyTheme = {
   colors: {
@@ -44,7 +44,7 @@ const MyTheme = {
       '900': '#830000',
     },
   },
-}
+};
 
 export default <Partial<Config>>{
   darkMode: 'class',
@@ -78,4 +78,4 @@ export default <Partial<Config>>{
       },
     },
   },
-}
+};

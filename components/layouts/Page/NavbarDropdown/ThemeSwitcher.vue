@@ -4,8 +4,8 @@ const props = defineProps({
     type: String,
     default: 'dropdown-right-top',
   },
-})
-const currentStyle = toRef(props, 'type')
+});
+const currentStyle = toRef(props, 'type');
 
 const availableThemes = [
   {
@@ -20,7 +20,7 @@ const availableThemes = [
     key: 'system',
     text: 'System',
   },
-]
+];
 </script>
 
 <template>

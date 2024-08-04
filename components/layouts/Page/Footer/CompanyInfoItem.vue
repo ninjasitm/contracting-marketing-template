@@ -1,0 +1,22 @@
+<script lang="ts" setup>
+import { toRefs, defineProps } from 'vue';
+
+type Item = {
+  label: string;
+  value: string;
+};
+
+const props = defineProps<{
+  label: string;
+  value: string;
+}>();
+
+const { label, value } = toRefs(props);
+</script>
+
+<template>
+  <div class="flex flex-col flex-1 shrink justify-between basis-0 min-h-[52px]">
+    <h3 class="text-sm text-stone-500">{{ label }}</h3>
+    <p class="mt-3 text-base text-black">{{ value }}</p>
+  </div>
+</template>

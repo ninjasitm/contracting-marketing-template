@@ -1,35 +1,37 @@
 <script lang="ts" setup>
-const { awesome } = useAppConfig()
-const { parseMenuRoute, parseMenuTitle } = useNavbarParser()
-const $screen = useAwesomeScreen()
-const nuxtApp = useNuxtApp()
+import { ref, computed } from 'vue';
+
+const { awesome } = useAppConfig();
+const { parseMenuRoute, parseMenuTitle } = useNavbarParser();
+const $screen = useAwesomeScreen();
+const nuxtApp = useNuxtApp();
 
 const menus = computed(
   () =>
     (awesome?.layout?.page?.navbar?.menus ||
       []) as AwesomeLayoutPageNavbarMenu[],
-)
+);
+
+const links = computed(() => {
+  return awesome?.layout?.page?.navbar?.links || {};
+});
 
 // drawer
-const showDrawer = ref(false)
+const showDrawer = ref(false);
 </script>
 
 <template>
   <header
-    class="flex fixed backdrop-filter backdrop-blur-md top-0 z-40 w-full flex-none transition-colors duration-300 lg:z-50 border-b border-gray-950/10 dark:border-gray-50/[0.2] bg-white/[0.5] dark:bg-gray-950/[0.5]"
+    class="flex fixed backdrop-filter backdrop-blur-md top-0 z-40 w-full flex-none transition-colors duration-300 lg:z-50 border-b border-gray-950/10 lg:h-[150px] bg-transparent dark:bg-gray-900"
   >
     <!-- content -->
     <div
-      class="flex-1 flex items-center justify-between max-w-screen-2xl mx-auto px-4"
+      class="flex-1 flex items-center justify-between max-w-screen-2xl mx-auto px-4 container mx-auto max-w-[1280px]"
     >
       <!-- title -->
       <div>
         <slot name="title">
           <NuxtLink to="/" class="font-bold text-lg text-primary-500">
-            <Icon
-              name="simple-icons:nuxtdotjs"
-              class="font-black text-xl font-mono mr-2 inline-block"
-            />
             <span class="capitalize">{{ awesome.name }}</span>
           </NuxtLink>
         </slot>
@@ -37,8 +39,7 @@ const showDrawer = ref(false)
       <!-- menus -->
       <div
         v-if="$screen.higherThan('md', $screen.current.value)"
-        class="flex space-x-4 items-center"
-        :class="{ 'divide-x divide-gray-500': menus.length > 0 }"
+        class="flex space-x-4 items-center bg-white/[0.75] dark:bg-black/[0.75] rounded-1xl px-4 py-6"
       >
         <div class="flex space-x-4 text-sm items-center">
           <!-- dynamic menus -->
@@ -47,19 +48,30 @@ const showDrawer = ref(false)
           </template>
         </div>
         <!-- others -->
-        <div class="pl-4 flex space-x-3 text-xl">
+        <div class="pl-4 flex space-x-4 text-xl align-center items-center">
           <!-- todo: feat/localization -->
           <!-- <AwesomeLink class="text-gray-400 hover:text-gray-100">
             <Icon name="la:language" />
           </AwesomeLink> -->
-          <LayoutPageNavbarDropdownThemeSwitcher />
-          <AwesomeLink
-            v-if="awesome?.project?.links?.github"
-            class="dark:text-gray-400 text-gray-600"
-            :href="awesome?.project?.links?.github"
+          <AwesomeButton
+            v-if="links?.capabilities"
+            size="lg"
+            class="gap-2 p-4 text-sm tracking-tight bg-transparent rounded-lg outline-1 dark:text-white text-black"
+            :href="links.capabilities"
           >
-            <Icon name="mdi:github-face" />
-          </AwesomeLink>
+            Capabilities Statement
+          </AwesomeButton>
+          <AwesomeButton
+            v-if="links?.startProject"
+            size="lg"
+            class="gap-2 p-4 text-sm tracking-tight text-white bg-sky-600 rounded-lg"
+            :href="links.startProject"
+          >
+            Start a Project
+          </AwesomeButton>
+          <LayoutPageNavbarDropdownThemeSwitcher
+            class="gap-2 p-4 text-sm tracking-tight"
+          />
         </div>
       </div>
       <!-- drawer:btn -->
@@ -130,9 +142,7 @@ const showDrawer = ref(false)
                         open ? 'font-bold' : '',
                       ]"
                     >
-                      <span>{{
-                        parseMenuTitle(item?.title)
-                      }}</span>
+                      <span>{{ parseMenuTitle(item?.title) }}</span>
                       <Icon
                         name="carbon:chevron-right"
                         class="ml-1"
@@ -167,9 +177,7 @@ const showDrawer = ref(false)
                                   ? 'text-gray-900 dark:text-gray-100 font-bold'
                                   : 'text-gray-700 dark:text-gray-300',
                               ]"
-                              >{{
-                                parseMenuTitle(child?.title)
-                              }}</span
+                              >{{ parseMenuTitle(child?.title) }}</span
                             >
                           </NuxtLink>
                         </template>
@@ -194,8 +202,12 @@ const showDrawer = ref(false)
         <AwesomeActionSheetItemButton
           class="flex justify-center items-center text-base space-x-2"
         >
-          <Icon name="mdi:github-face" class="text-lg font-bold" />
-          <span class="text-sm">Github</span>
+          <span class="text-sm">Capabilities Statement</span>
+        </AwesomeActionSheetItemButton>
+        <AwesomeActionSheetItemButton
+          class="flex justify-center items-center text-base space-x-2"
+        >
+          <span class="text-sm">Start a Project</span>
         </AwesomeActionSheetItemButton>
       </AwesomeActionSheetGroup>
     </AwesomeActionSheet>

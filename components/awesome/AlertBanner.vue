@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { TransitionRoot, TransitionChild } from '@headlessui/vue'
-export type IStyles = 'primary' | 'success' | 'warning' | 'danger'
+import { TransitionRoot, TransitionChild } from '@headlessui/vue';
+export type IStyles = 'primary' | 'success' | 'warning' | 'danger';
 
 // props
 const props = defineProps({
@@ -16,11 +16,11 @@ const props = defineProps({
     type: String,
     default: 'primary',
   },
-})
+});
 
 // styles
 const styles = reactive<{
-  [key: string]: string
+  [key: string]: string;
 }>({
   primary: '',
   success:
@@ -29,30 +29,30 @@ const styles = reactive<{
     'dark:from-yellow-500/50 via-gray-200 to-gray-200 dark:via-gray-900 dark:to-gray-900',
   danger:
     'dark:from-red-500/50 via-gray-200 to-gray-200 dark:via-gray-900 dark:to-gray-900',
-})
+});
 const textStyles = reactive<{
-  [key: string]: string
+  [key: string]: string;
 }>({
   primary: 'text-black dark:text-white',
   success: 'text-green-500',
   warning: 'text-orange-500',
   danger: 'text-red-500',
-})
+});
 
 // selected
-const isDestroyed = ref<Boolean>(false)
+const isDestroyed = ref<Boolean>(false);
 const selectedType = computed<IStyles>((): IStyles => {
   if (['primary', 'success', 'warning', 'danger'].includes(props.type))
-    return props.type as IStyles
-  return 'primary'
-})
-const selectedStyle = computed(() => styles[selectedType.value])
-const selectedTextStyle = computed(() => textStyles[selectedType.value])
+    return props.type as IStyles;
+  return 'primary';
+});
+const selectedStyle = computed(() => styles[selectedType.value]);
+const selectedTextStyle = computed(() => textStyles[selectedType.value]);
 
 // actions
 const close = () => {
-  isDestroyed.value = true
-}
+  isDestroyed.value = true;
+};
 </script>
 
 <template>

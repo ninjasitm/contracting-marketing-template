@@ -1,15 +1,26 @@
-import type { NuxtApp } from 'nuxt/schema'
-import type { RouteLocationRaw } from '#vue-router'
+import type { NuxtApp } from 'nuxt/schema';
+import type { RouteLocationRaw } from '#vue-router';
 
 export interface AwesomeLayoutPageNavbarMenuDropdownItem {
-  type?: 'link'
-  title?: string | ((nuxt: NuxtApp) => string)
-  to?: RouteLocationRaw | ((nuxt: NuxtApp) => RouteLocationRaw)
+  type?: 'link';
+  title?: string | ((nuxt: NuxtApp) => string);
+  to?: RouteLocationRaw | ((nuxt: NuxtApp) => RouteLocationRaw);
 }
 
 export interface AwesomeLayoutPageNavbarMenu {
-  type?: 'link' | 'button' | 'dropdown'
-  title?: string | ((nuxt: NuxtApp) => string)
-  to?: RouteLocationRaw | ((nuxt: NuxtApp) => RouteLocationRaw)
-  children?: AwesomeLayoutPageNavbarMenuDropdownItem[]
+  type?: 'link' | 'button' | 'dropdown';
+  title?: string | ((nuxt: NuxtApp) => string);
+  to?: RouteLocationRaw | ((nuxt: NuxtApp) => RouteLocationRaw);
+  children?: AwesomeLayoutPageNavbarMenuDropdownItem[];
 }
+
+export type LinkItem = {
+  icon: string;
+  url: string;
+  title: string;
+};
+
+export type GenericItem = {
+  label: string;
+  value: string;
+};

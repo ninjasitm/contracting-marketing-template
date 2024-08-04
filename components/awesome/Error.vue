@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 // components
-const PageWrapper = resolveComponent('LayoutPageWrapper')
+const PageWrapper = resolveComponent('LayoutPageWrapper');
 
 // compiler macro
 const props = defineProps({
@@ -12,24 +12,24 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-})
+});
 
 // computed
 const errorsMap: {
-  [key: string]: string
+  [key: string]: string;
 } = {
   '400': 'Bad Request',
   '401': 'Unauthorized',
   '403': 'Forbidden',
   '404': 'Not Found',
-}
+};
 const error = computed(() => {
-  const { code } = props
+  const { code } = props;
   return {
     code,
     message: errorsMap[code.toString()] || 'Unknown Error',
-  }
-})
+  };
+});
 </script>
 
 <template>

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { QueryBuilderParams } from '@nuxt/content/dist/runtime/types'
+import type { QueryBuilderParams } from '@nuxt/content/dist/runtime/types';
 // compiler micro
-definePageMeta({ layout: 'page' })
-useHead({ title: 'Posts' })
+definePageMeta({ layout: 'page' });
+useHead({ title: 'Posts' });
 // query
 // const query: QueryBuilderParams = { path: '/post' }
 </script>

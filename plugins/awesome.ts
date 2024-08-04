@@ -1,1 +1,1 @@
-export default defineNuxtPlugin((nuxt) => {})
+export default defineNuxtPlugin((nuxt) => {});

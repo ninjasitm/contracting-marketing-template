@@ -1,4 +1,4 @@
-import type { WritableComputedRef } from 'vue'
+import type { WritableComputedRef } from 'vue';
 
 export const useSyncProps = <T>(
   props: any,
@@ -7,10 +7,10 @@ export const useSyncProps = <T>(
 ): WritableComputedRef<T> => {
   return computed({
     get() {
-      return props[key]
+      return props[key];
     },
     set(value) {
-      emit(`update:${key}`, value)
+      emit(`update:${key}`, value);
     },
-  })
-}
+  });
+};

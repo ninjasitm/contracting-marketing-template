@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-const { awesome } = useAppConfig()
-const { parseMenuRoute, parseMenuTitle } = useNavbarParser()
+const { awesome } = useAppConfig();
+const { parseMenuRoute, parseMenuTitle } = useNavbarParser();
 
 const props = defineProps({
   withAlert: {
     type: Boolean,
     default: true,
   },
-})
+});
 const showAlert = ref(
   awesome?.layout?.welcome?.disableInfoReplaceIndexInWelcomePage
     ? !awesome?.layout?.welcome?.disableInfoReplaceIndexInWelcomePage
     : props.withAlert,
-)
+);
 
 const titlesText = computed<string[]>(() =>
   (
@@ -23,7 +23,7 @@ const titlesText = computed<string[]>(() =>
     .replaceAll('&nbsp;', '[space]')
     .split(' ')
     .map((item) => item.replaceAll('[space]', ' ')),
-)
+);
 const leadingsText = computed(() => [
   {
     text: titlesText.value[0],
@@ -43,15 +43,15 @@ const leadingsText = computed(() => [
     endColor: '#F9CB28',
     delay: 4,
   },
-])
+]);
 
 onMounted(() => {
   try {
-    console.log('aweawe', parseMenuTitle('aweawe'), this)
+    console.log('aweawe', parseMenuTitle('aweawe'), this);
   } catch (error) {
-    console.log('aweawe error', error)
+    console.log('aweawe error', error);
   }
-})
+});
 </script>
 
 <template>

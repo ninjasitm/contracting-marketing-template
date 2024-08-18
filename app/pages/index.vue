@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
+import BackgroundImage from '../../assets/images/demo/home/banner.png';
+
 const { awesome } = useAppConfig();
 definePageMeta({ layout: 'page' });
 useHead({
@@ -23,6 +25,7 @@ type HomeState = {
     description: string;
     actionText: string;
     actionUrl: string;
+    backgroundImage: string;
   };
   coreCompetencies: {
     title: string;
@@ -42,6 +45,7 @@ const state: HomeState = reactive({
       'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
     actionText: 'Download capabilities statement',
     actionUrl: '#download-capabilities',
+    backgroundImage: BackgroundImage,
   },
   coreCompetencies: {
     title: 'Core Competencies',
@@ -107,24 +111,38 @@ const state: HomeState = reactive({
 </script>
 
 <template>
-  <main
-    class="flex relative flex-col pb-24 w-full min-h-[800px] max-md:max-w-full"
+  <div
+    class="flex relative flex-col pb-24 w-full min-h-[500px] md:min-h-[800px] max-md:max-w-full"
   >
     <section
-      class="flex flex-col mt-56 max-w-full uppercase w-[692px] max-md:mt-10"
+      class="flex flex-col max-w-full uppercase w-full justify-end min-h-[500px] pb-12 md:pb-24 md:h-[800px]"
+      :style="{
+        backgroundImage: `url('${state.banner.backgroundImage}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }"
     >
-      <h2
-        class="text-6xl font-light tracking-tighter text-black max-md:max-w-full max-md:text-4xl"
-        v-html="state.banner.title"
-      ></h2>
-      <AwesomeButton
-        :href="state.banner.actionUrl"
-        class="gap-2 self-start p-4 mt-6 text-sm tracking-tight text-white bg-sky-600 rounded-lg"
-      >
-        {{ state.banner.actionText }}
-      </AwesomeButton>
+      <div class="flex flex-col w-full max-w-screen-xl mx-auto">
+        <div class="flex flex-col w-full lg-w-[692px] px-4">
+          <h2
+            class="text-6xl font-light tracking-tighter text-black max-md:max-w-full max-md:text-4xl"
+            v-html="state.banner.title"
+          ></h2>
+          <AwesomeButton
+            size="lg"
+            class="gap-2 self-start p-4 mt-6 text-sm tracking-tight text-white bg-sky-600 rounded-lg w-full md:w-[max-content]"
+            :href="state.banner.actionUrl"
+          >
+            {{ state.banner.actionText }}
+          </AwesomeButton>
+        </div>
+      </div>
     </section>
-    <section class="flex flex-col w-full max-md:max-w-full">
+    <section
+      class="flex flex-col w-full max-w-screen-xl mt-5 md:mt-20 mx-auto px-4"
+    >
+      <hr class="w-full border border-black mt-10" />
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl font-light tracking-tight uppercase text-sky-950"
         v-html="state.coreCompetencies.title"
@@ -136,21 +154,21 @@ const state: HomeState = reactive({
               class="text-4xl font-light max-md:max-w-full"
               v-html="state.coreCompetencies.description"
             ></p>
-            <a
-              href="#"
-              class="flex gap-1 items-center self-start p-4 mt-6 text-base tracking-tight uppercase rounded-lg"
+            <AwesomeButton
+              size="lg"
+              class="flex gap-1 items-center mt-3 p-3 my-auto text-base tracking-tight uppercase rounded-lg border border-black max-w-[max-content]"
             >
               <img
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/acf526b3811a56de4e85ac6000b6e7bed2d87916ef2a3c3a3d3aba828eaa5df1?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa"
-                class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
                 alt=""
+                class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
               />
-              <span class="self-stretch my-auto">View our process</span>
-            </a>
+              <span class="self-stretch my-auto">View our processes</span>
+            </AwesomeButton>
           </div>
           <div
-            class="flex flex-wrap gap-5 items-start mt-16 w-full max-md:mt-10"
+            class="flex flex-wrap gap-20 items-start mt-16 w-full max-md:mt-10"
           >
             <div
               v-for="(competency, index) in state.coreCompetencies.items"
@@ -164,7 +182,7 @@ const state: HomeState = reactive({
                 <li
                   v-for="(item, i) in competency.items"
                   :key="i"
-                  class="flex-1 shrink gap-2 pb-4 mt-4 w-full"
+                  class="flex-1 shrink gap-4 pb-4 mt-4 w-full border-b border-black"
                   :class="{ 'mt-0': i === 0 }"
                 >
                   {{ item }}
@@ -176,8 +194,9 @@ const state: HomeState = reactive({
       </div>
     </section>
     <section
-      class="flex flex-col mt-32 w-full font-light max-md:mt-10 max-md:max-w-full"
+      class="flex flex-col mt-32 w-full font-light max-md:mt-10 max-w-screen-xl mx-auto px-4"
     >
+      <hr class="w-full border border-black mt-10" />
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl tracking-tight uppercase whitespace-nowrap text-sky-950"
         v-html="state.differentiators.title"
@@ -201,5 +220,5 @@ const state: HomeState = reactive({
         </article>
       </div>
     </section>
-  </main>
+  </div>
 </template>

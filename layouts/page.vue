@@ -33,7 +33,7 @@ const state: any = reactive({
 </script>
 
 <template>
-  <div class="overflow-x-hidden" :style="state.style">
+  <div class="overflow-x-hidden scroll-smooth" :style="state.style">
     <LayoutPageNavbar />
     <LayoutPageContent class="container mx-auto">
       <slot />

@@ -4,6 +4,10 @@ const props = defineProps({
     type: String,
     default: 'dropdown-right-top',
   },
+  horizontal: {
+    type: Boolean,
+    default: false,
+  },
 });
 const currentStyle = toRef(props, 'type');
 
@@ -44,6 +48,9 @@ const availableThemes = [
       </HeadlessListboxButton>
       <HeadlessListboxOptions
         class="p-1 absolute z-50 origin-top-right top-full right-0 outline-none bg-white rounded-lg ring-1 ring-gray-900/10 shadow-lg overflow-hidden w-36 py-1 text-sm text-gray-700 font-semibold dark:bg-gray-800 dark:ring-0 dark:highlight-white/5 dark:text-gray-300"
+        :class="{
+          'flex flex-row mt-[-30px] mr-[60px]': props.horizontal,
+        }"
       >
         <HeadlessListboxOption
           v-for="theme in availableThemes"

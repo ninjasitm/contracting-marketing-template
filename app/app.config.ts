@@ -1,10 +1,87 @@
-import type { AppConfigInput } from 'nuxt/schema';
+import type { RouteLocationRaw } from 'vue-router';
+import { NuxtApp } from '#app';
+import Logo from '../../assets/images/demo/logo.png';
+import { AwesomeLayoutPageNavbarMenu } from './types';
+
+export interface NuxtAwesomeAppConfig {
+  /** title name */
+  name?: string;
+  /** description */
+  description?: string;
+  /** logo */
+  logo?: string;
+
+  /** project config */
+  project?: {
+    /** links */
+    links?: {
+      /** project github link */
+      github?: string;
+    };
+  };
+
+  /** layout config */
+  layout?: {
+    /** page layout */
+    page?: {
+      /** navbar */
+      navbar?: {
+        /** menus in navbar */
+        menus?: AwesomeLayoutPageNavbarMenu[];
+        links: Record<string, string>;
+      };
+    };
+    /** footer */
+    footer?: {
+      /** footer year */
+      year?: number;
+    };
+    /** welcome component page */
+    welcome?: {
+      title?: string;
+      disableInfoReplaceIndexInWelcomePage?: boolean;
+      primaryActionButton?: {
+        title?: string;
+        to?: RouteLocationRaw | ((nuxt: NuxtApp) => RouteLocationRaw);
+      };
+      secondaryActionButton?: {
+        title?: string;
+        to?: RouteLocationRaw | ((nuxt: NuxtApp) => RouteLocationRaw);
+      };
+    };
+  };
+
+  /** author config */
+  author?: {
+    /** author name */
+    name?: string;
+    /** author links */
+    links?: {
+      /** author github link */
+      github?: string;
+      /** author medium link */
+      medium?: string;
+      /** author website link */
+      website?: string;
+    };
+  };
+
+  /** author config */
+  disableInfoReplaceIndexInWelcomePage?: boolean;
+}
+
+declare module '@nuxt/schema' {
+  interface AppConfigInput {
+    config?: NuxtAwesomeAppConfig;
+  }
+}
 
 export default defineAppConfig({
-  awesome: {
+  config: {
     name: 'Ninjas in the Machine',
     description:
       'a starter template for Nuxt 3 with minimalist themes design, built in components, drawer & menus, and more.',
+    logo: Logo,
     project: {
       links: {
         github: 'https://github.com/viandwi24/nuxt3-awesome-starter',

@@ -30,6 +30,16 @@ interface SingleProjectState {
     description: string;
     date: string;
     categories: string[];
+    problem: {
+      title: string;
+      image: string;
+      description: string;
+    };
+    solution: {
+      title: string;
+      image: string;
+      description: string;
+    };
     process: {
       title: string;
       description: string;
@@ -70,6 +80,20 @@ const state: SingleProjectState = reactive({
       'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero.',
     date: 'September 28, 2023',
     categories: ['Product Design', 'Development'],
+    problem: {
+      title: 'Problem',
+      image:
+        'https://cdn.builder.io/api/v1/image/assets/TEMP/0db99a745dd1f8ce609fba75bddb17fde7b5dd5eda9f66caea7fbbea7a9bd5b2?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
+      description:
+        'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero.',
+    },
+    solution: {
+      title: 'Solution',
+      image:
+        'https://cdn.builder.io/api/v1/image/assets/TEMP/0db99a745dd1f8ce609fba75bddb17fde7b5dd5eda9f66caea7fbbea7a9bd5b2?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
+      description:
+        'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero.',
+    },
     process: {
       title: 'Process',
       image:
@@ -165,14 +189,28 @@ const state: SingleProjectState = reactive({
       ] as ResultItem[],
     },
   },
+  nextProject: {
+    id: '2',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus maecenas tempus, tellus eget.',
+  },
+  previousProject: {
+    id: '6',
+    title: 'Lorem ipsum dolor sit amet.',
+    description:
+      'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus maecenas tempus, tellus eget.',
+  },
 });
 </script>
 
 <template>
   <div
-    class="flex flex-col items-center mt-40 w-full max-md:mt-10 max-md:max-w-full"
+    class="flex flex-col items-center mt-40 w-full max-md:mt-10 max-md:max-w-full px-4"
   >
-    <header class="flex flex-col max-w-full text-black w-[1320px]">
+    <div
+      class="flex flex-col max-w-full text-black w-full max-w-screen-xl mt-20 mx-auto"
+    >
       <div class="flex flex-col px-32 w-full max-md:px-5 max-md:max-w-full">
         <div
           class="flex flex-col w-full text-xl font-light text-center max-md:max-w-full"
@@ -199,43 +237,53 @@ const state: SingleProjectState = reactive({
         <div
           class="flex gap-4 justify-center items-start self-center mt-8 text-base"
         >
-          <span
+          <AwesomeButton
             v-for="(category, index) in state.project.categories"
             :key="index"
+            class="roundex-full"
+            outline
+            :uppercase="false"
           >
             {{ category }}
-          </span>
+          </AwesomeButton>
         </div>
       </div>
       <img
         v-if="state.project.bannerImage"
         loading="lazy"
-        class="object-contain mt-20 w-full rounded-2xl aspect-[3.06] max-md:mt-10 max-md:max-w-full"
+        class="object-cover mt-20 h-[450px] w-full rounded-2xl max-md:mt-10 max-md:max-w-full hover:scale-105 transition-transform duration-300"
         :src="state.project.bannerImage"
         :alt="state.project.title"
       />
-    </header>
+    </div>
 
-    <main>
-      <section class="flex flex-col mt-28 max-w-full w-[700px] max-md:mt-10">
+    <div>
+      <section
+        class="flex flex-col mt-28 max-w-full md:w-[700px] mx-auto max-md:mt-10"
+      >
         <h2
           class="text-4xl max-md:max-w-full"
           v-html="state.project.problem.title"
         ></h2>
-        <p class="mt-6 text-xl leading-8 max-md:max-w-full"></p>
+        <p
+          class="mt-6 text-xl leading-8 max-md:max-w-full"
+          v-html="state.project.problem.description"
+        ></p>
         <div
           class="flex overflow-hidden flex-col mt-10 w-full rounded-2xl bg-stone-400 max-md:max-w-full"
         >
           <img
             loading="lazy"
-            class="object-contain w-full aspect-[1.59] max-md:max-w-full"
+            class="object-cover w-full aspect-[1.59] max-md:max-w-full hover:scale-105 transition-transform duration-300"
             :src="state.project.problem.image"
             :alt="state.project.problem.title"
           />
         </div>
       </section>
 
-      <section class="flex flex-col mt-28 max-w-full w-[700px] max-md:mt-10">
+      <section
+        class="flex flex-col mt-28 max-w-full md:w-[700px] mx-auto max-md:mt-10"
+      >
         <h2
           class="text-4xl max-md:max-w-full"
           v-html="state.project.solution.title"
@@ -249,7 +297,7 @@ const state: SingleProjectState = reactive({
         >
           <img
             loading="lazy"
-            class="object-contain w-full aspect-[1.59] max-md:max-w-full"
+            class="object-cover w-full aspect-[1.59] max-md:max-w-full hover:scale-105 transition-transform duration-300"
             :src="state.project.solution.image"
             :alt="state.project.solution.title"
           />
@@ -257,7 +305,7 @@ const state: SingleProjectState = reactive({
       </section>
 
       <section
-        class="flex flex-col mt-28 max-w-full font-light text-black w-[700px] max-md:mt-10"
+        class="flex flex-col mt-28 max-w-full font-light text-black md:w-[700px] mx-auto max-md:mt-10"
       >
         <h2
           class="text-4xl max-md:max-w-full"
@@ -267,18 +315,23 @@ const state: SingleProjectState = reactive({
           class="mt-6 text-xl leading-8 max-md:max-w-full"
           v-html="state.project.process.description"
         ></p>
+      </section>
+
+      <section
+        class="flex flex-col mt-28 max-w-full font-light text-black mx-auto max-md:mt-10"
+      >
         <div
           class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full text-base leading-7 text-center"
         >
           <div
-            v-for="(item, index) in processItems"
+            v-for="(item, index) in state.project.process.items"
             :key="index"
-            class="flex flex-col grow shrink min-w-[240px] w-[248px]"
+            class="flex flex-col flex-wrap w-full md:min-w-[240px] md:w-[414px]"
           >
             <img
               :src="item.imgSrc"
               :alt="item.alt"
-              class="object-contain self-center w-36 max-w-full rounded-2xl aspect-square"
+              class="object-cover self-center w-36 max-w-full rounded-2xl aspect-square hover:scale-105 transition-transform duration-300"
               loading="lazy"
             />
             <p class="mt-4">{{ item.description }}</p>
@@ -286,7 +339,9 @@ const state: SingleProjectState = reactive({
         </div>
       </section>
 
-      <section class="flex flex-col mt-28 max-w-full w-[700px] max-md:mt-10">
+      <section
+        class="flex flex-col mt-28 max-w-full md:w-[700px] mx-auto max-md:mt-10"
+      >
         <h2
           class="text-4xl max-md:max-w-full"
           v-html="state.project.design.title"
@@ -295,18 +350,22 @@ const state: SingleProjectState = reactive({
           class="mt-6 text-xl leading-8 max-md:max-w-full"
           v-html="state.project.design.description"
         ></p>
+      </section>
+      <section
+        class="flex flex-col mt-28 max-w-full w-full mx-auto max-md:mt-10"
+      >
         <div
           class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full"
         >
           <div
-            v-for="(item, index) in designItems"
+            v-for="(item, index) in state.project.design.items"
             :key="index"
-            class="flex overflow-hidden flex-col rounded-2xl bg-stone-400 min-w-[240px] w-[414px]"
+            class="flex overflow-hidden flex-col rounded-2xl bg-stone-400 w-full md:min-w-[240px] md:w-[414px]"
           >
             <img
               :src="item.imgSrc"
               :alt="item.alt"
-              class="object-contain w-full aspect-[0.86]"
+              class="object-cover w-full aspect-[0.86] hover:scale-105 transition-transform duration-300"
               loading="lazy"
             />
           </div>
@@ -314,7 +373,7 @@ const state: SingleProjectState = reactive({
       </section>
 
       <section
-        class="flex flex-col mt-28 max-w-full font-light w-[700px] max-md:mt-10"
+        class="flex flex-col mt-28 max-w-full font-light md:w-[700px] mx-auto max-md:mt-10"
       >
         <h2
           class="text-4xl max-md:max-w-full"
@@ -324,13 +383,17 @@ const state: SingleProjectState = reactive({
           class="mt-6 text-xl leading-8 max-md:max-w-full"
           v-html="state.project.result.description"
         ></p>
+      </section>
+      <section
+        class="flex flex-col mt-28 max-w-full w-full mx-auto max-md:mt-10"
+      >
         <div
           class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full text-center text-white"
         >
           <div
-            v-for="(item, index) in resultItems"
+            v-for="(item, index) in state.project.result.items"
             :key="index"
-            class="flex overflow-hidden flex-col rounded-2xl bg-stone-400 min-w-[240px] w-[414px]"
+            class="flex overflow-hidden flex-col rounded-2xl bg-stone-400 w-full md:min-w-[240px] md:w-[414px]"
           >
             <div
               class="flex relative flex-col justify-center px-10 py-40 w-full aspect-[0.863] max-md:px-5 max-md:py-24"
@@ -338,7 +401,7 @@ const state: SingleProjectState = reactive({
               <img
                 :src="item.imgSrc"
                 :alt="item.alt"
-                class="object-cover absolute inset-0 size-full"
+                class="object-cover absolute inset-0 size-full hover:scale-105 transition-transform duration-300"
                 loading="lazy"
               />
               <div class="flex relative flex-col mb-0 max-md:mb-2.5">
@@ -351,13 +414,14 @@ const state: SingleProjectState = reactive({
           </div>
         </div>
       </section>
-    </main>
+    </div>
 
     <nav
-      class="flex flex-wrap gap-5 justify-between items-center mt-28 max-w-full w-[1320px] max-md:mt-10"
+      class="flex flex-wrap gap-5 justify-between items-center mt-28 max-w-full w-full max-w-screen-xl mt-20 mx-auto max-md:mt-10 mb-10"
     >
       <AwesomeButton
-        class="flex gap-1 items-center self-stretch p-4 my-auto w-14 rounded-lg"
+        v-if="state.previousProject"
+        class="flex gap-1 items-center self-stretch p-4 my-auto w-14 h-14 rounded-lg order-0"
         aria-label="Previous project"
         :to="{
           name: 'work-slug',
@@ -368,11 +432,12 @@ const state: SingleProjectState = reactive({
           loading="lazy"
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/f3cd58e252b4f02cf75549f5468ba74e9bedf4be10572a04d9c3b5d1ff2ac199?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa"
           alt=""
-          class="object-contain self-stretch my-auto w-6 aspect-square"
+          class="object-cover self-stretch my-auto w-6 aspect-square"
         />
       </AwesomeButton>
       <div
-        class="flex flex-col justify-center items-center self-stretch my-auto text-black min-w-[240px] w-[635px] max-md:max-w-full"
+        v-if="state.nextProject"
+        class="flex flex-col justify-center items-center self-stretch my-auto text-black min-w-[240px] w-[635px] max-md:max-w-full order-first md:order-1"
       >
         <p class="text-base">Next project</p>
         <h2
@@ -381,7 +446,8 @@ const state: SingleProjectState = reactive({
         ></h2>
       </div>
       <AwesomeButton
-        class="flex gap-1 items-center self-stretch p-4 my-auto w-14 rounded-lg"
+        v-if="state.nextProject"
+        class="flex gap-1 items-center self-stretch p-4 my-auto w-14 h-14 rounded-lg order-1"
         aria-label="Next project"
         :to="{
           name: 'work-slug',
@@ -392,7 +458,7 @@ const state: SingleProjectState = reactive({
           loading="lazy"
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/16ef346dca0a2892d16ae1a4ec110f8e6a9ef8f8a279e5366f3fbee74e4707ca?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa"
           alt=""
-          class="object-contain self-stretch my-auto w-6 aspect-square"
+          class="object-cover self-stretch my-auto w-6 aspect-square"
         />
       </AwesomeButton>
     </nav>

@@ -80,15 +80,6 @@ export default defineNuxtConfig({
   },
 
   // module::content
-  content: {
-    markdown: {
-      mdc: true,
-    },
-    highlight: {
-      theme: 'github-dark',
-    },
-  },
-
   // todo: feat/localization
   // module::i18n
   // i18n: {
@@ -118,4 +109,14 @@ export default defineNuxtConfig({
   //     }
   //   ]
   // },
+  content: {
+    markdown: {
+      mdc: true,
+    },
+    highlight: {
+      theme: 'github-dark',
+    },
+  },
+
+  compatibilityDate: '2024-08-18',
 });

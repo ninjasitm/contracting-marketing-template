@@ -1,19 +1,20 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
+import type { AwesomeLayoutPageNavbarMenu, LinkItem } from 'config-types';
 
-const { awesome } = useAppConfig();
+const { config } = useAppConfig();
 const { parseMenuRoute, parseMenuTitle } = useNavbarParser();
 const $screen = useAwesomeScreen();
 const nuxtApp = useNuxtApp();
 
 const menus = computed(
   () =>
-    (awesome?.layout?.page?.navbar?.menus ||
+    (config?.layout?.page?.navbar?.menus ||
       []) as AwesomeLayoutPageNavbarMenu[],
 );
 
 const links = computed(() => {
-  return awesome?.layout?.page?.navbar?.links || {};
+  return (config?.layout?.page?.navbar?.links || {}) as {};
 });
 
 // drawer
@@ -26,20 +27,26 @@ const showDrawer = ref(false);
   >
     <!-- content -->
     <div
-      class="flex-1 flex items-center justify-between max-w-screen-2xl mx-auto px-4 container mx-auto max-w-[1280px]"
+      class="md:pl-0 flex-1 flex items-center justify-between max-w-screen-xl mx-auto p-4 container mx-auto"
     >
       <!-- title -->
       <div>
         <slot name="title">
-          <NuxtLink to="/" class="font-bold text-lg text-primary-500">
-            <span class="capitalize">{{ awesome.name }}</span>
+          <NuxtLink to="/" class="font-bold text-lg">
+            <img
+              v-if="config.logo"
+              :src="config.logo"
+              :alt="config.name"
+              class="w-auto h-[40px] md:h-[80px] object-contain"
+            />
+            <span v-else class="capitalize">{{ config.name }}</span>
           </NuxtLink>
         </slot>
       </div>
       <!-- menus -->
       <div
         v-if="$screen.higherThan('md', $screen.current.value)"
-        class="flex space-x-4 items-center bg-white/[0.75] dark:bg-black/[0.75] rounded-1xl px-4 py-6"
+        class="flex space-x-4 items-center bg-white/[0.75] dark:bg-black/[0.75] rounded-xl px-4 py-4"
       >
         <div class="flex space-x-4 text-sm items-center">
           <!-- dynamic menus -->
@@ -56,7 +63,7 @@ const showDrawer = ref(false);
           <AwesomeButton
             v-if="links?.capabilities"
             size="lg"
-            class="gap-2 p-4 text-sm tracking-tight bg-transparent rounded-lg outline-1 dark:text-white text-black"
+            class="gap-2 p-4 px-2 text-sm tracking-tight bg-transparent rounded-lg border border-black dark:text-white text-black"
             :href="links.capabilities"
           >
             Capabilities Statement
@@ -82,11 +89,11 @@ const showDrawer = ref(false);
       >
         <div class="pl-4 flex space-x-3 text-xl">
           <AwesomeLink
-            v-if="awesome?.project?.links?.github"
+            v-if="config?.project?.links?.github"
             class="text-gray-400 hover:text-gray-100"
             @click.prevent="() => (showDrawer = !showDrawer)"
           >
-            <Icon name="heroicons:bars-3-bottom-right-20-solid" />
+            <Icon name="heroicons:bars-3-bottom-right-20-solid" size="32px" />
           </AwesomeLink>
         </div>
       </div>
@@ -97,25 +104,34 @@ const showDrawer = ref(false);
       v-if="!$screen.higherThan('md', $screen.current.value) && showDrawer"
       @close="() => (showDrawer = false)"
     >
-      <AwesomeActionSheetGroup>
-        <AwesomeActionSheetHeader>
-          <AwesomeActionSheetHeaderTitle text="Menu" />
-        </AwesomeActionSheetHeader>
+      <AwesomeActionSheetGroup
+        class="flex flex-col items-stretch"
+        :blur="false"
+      >
         <!-- dynamic menus -->
         <AwesomeActionSheetItem>
           <div
-            class="flex flex-col text-sm items-center divide-y divide-gray-400 dark:divide-gray-700 text-center"
+            class="flex flex-col text-sm items-center dark:divide-gray-700 text-center text-[1.5rem]"
           >
+            <NulxLink
+              class="flex justify-center items-center text-base space-x-2 h-[4rem] w-full"
+              to="/"
+              @click="() => (showDrawer = false)"
+            >
+              <span class="text-[1.5rem]">Home</span>
+            </NulxLink>
             <template v-for="(item, i) in menus">
               <template v-if="item?.type === 'link'">
                 <NuxtLink
                   :key="i"
                   :to="parseMenuRoute(item.to)"
                   #="{ isActive }"
-                  class="w-full py-2"
+                  class="flex justify-center items-center text-base space-x-2 h-[4rem] w-full"
+                  @click="() => (showDrawer = false)"
                 >
                   <span
                     :class="{
+                      'text-[1.5rem]': true,
                       'text-gray-900 dark:text-gray-100 font-bold': isActive,
                       'text-gray-700 dark:text-gray-300': !isActive,
                     }"
@@ -129,7 +145,7 @@ const showDrawer = ref(false);
                   :text="parseMenuTitle(item?.title)"
                   size="sm"
                   :to="parseMenuRoute(item.to)"
-                  class="w-full"
+                  class="flex justify-center items-center text-base space-x-2 h-[4rem] w-full"
                 />
               </template>
               <template v-if="item?.type === 'dropdown'">
@@ -189,26 +205,25 @@ const showDrawer = ref(false);
             </template>
           </div>
         </AwesomeActionSheetItem>
+      </AwesomeActionSheetGroup>
+      <AwesomeActionSheetGroup :blur="false">
+        <AwesomeActionSheetItemButton
+          class="flex justify-center items-center text-base space-x-2 h-[4rem]"
+        >
+          <span class="text-[1.5rem]">Capabilities Statement</span>
+        </AwesomeActionSheetItemButton>
+        <AwesomeActionSheetItemButton
+          class="flex justify-center items-center text-base space-x-2 h-[4rem]"
+        >
+          <span class="text-[1.5rem]">Start a Project</span>
+        </AwesomeActionSheetItemButton>
+      </AwesomeActionSheetGroup>
+      <AwesomeActionSheetGroup class="fixed bottom-4 right-4">
         <AwesomeActionSheetItem class="flex flex-col">
-          <div class="pb-2">
-            <div class="mt-2 mb-2 text-sm font-bold capitalize">
-              Change Theme
-            </div>
-            <LayoutPageNavbarDropdownThemeSwitcher type="select-box" />
+          <div class="p-2">
+            <LayoutPageNavbarDropdownThemeSwitcher horizontal />
           </div>
         </AwesomeActionSheetItem>
-      </AwesomeActionSheetGroup>
-      <AwesomeActionSheetGroup>
-        <AwesomeActionSheetItemButton
-          class="flex justify-center items-center text-base space-x-2"
-        >
-          <span class="text-sm">Capabilities Statement</span>
-        </AwesomeActionSheetItemButton>
-        <AwesomeActionSheetItemButton
-          class="flex justify-center items-center text-base space-x-2"
-        >
-          <span class="text-sm">Start a Project</span>
-        </AwesomeActionSheetItemButton>
       </AwesomeActionSheetGroup>
     </AwesomeActionSheet>
   </header>

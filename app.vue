@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-const { awesome } = useAppConfig();
+const { config } = useAppConfig();
 
 useHead({
-  title: awesome.name,
-  titleTemplate: `%s - ${awesome.name}`,
+  title: config.name,
+  titleTemplate: `%s - ${config.name}`,
 });
 </script>
 

@@ -3,13 +3,17 @@ const emit = defineEmits<{
   (e: 'close', event: MouseEvent): void;
 }>();
 const props = defineProps({
+  blur: {
+    type: Boolean,
+    default: true,
+  },
   closeButton: {
     type: Boolean,
     default: true,
   },
   closeButtonText: {
     type: String,
-    default: 'Cancel',
+    default: '',
   },
 });
 
@@ -41,7 +45,11 @@ onMounted(() => {
   <Teleport to="body">
     <HeadlessTransitionRoot
       :show="isShow"
-      class="action-sheet fixed z-50 top-0 left-0 w-screen h-screen max-h-screen max-w-full flex flex-col justify-end bg-black/[0.5]"
+      :class="{
+        'dark:bg-black bg-white/[0.5]': true,
+        'action-sheet fixed z-50 top-0 left-0 w-screen h-screen max-h-screen max-w-full flex flex-col justify-end bg-black/[0.5] justify-center': true,
+        'backdrop-blur-lg': props.blur,
+      }"
       enter="transition-opacity duration-300"
       enter-from="opacity-0"
       enter-to="opacity-100"
@@ -50,18 +58,36 @@ onMounted(() => {
       leave-to="opacity-0"
       @click="onCloseComponentClick"
     >
-      <div class="flex flex-col overflow-hidden relative">
+      <div
+        class="flex flex-col overflow-hidden relative h-full justify-center p-1"
+      >
+        <AwesomeActionSheetGroup
+          v-if="closeButton"
+          transparent
+          :blur="false"
+          :class="{
+            'h-16 pr-0': true,
+            'align-end': closeButtonText?.length,
+          }"
+        >
+          <AwesomeButton
+            type="none"
+            size="lg"
+            class="w-16 h-16 pr-0 rounded-full self-end text-gray-400 hover:text-gray-100"
+            @click="close"
+          >
+            <Icon
+              v-if="!closeButtonText?.length"
+              name="uil:times"
+              size="32px"
+            />
+            <template v-else>{{ closeButtonText }}</template>
+          </AwesomeButton>
+        </AwesomeActionSheetGroup>
         <div
-          class="action-sheet-container flex-1 overflow-y-auto space-y-1 justify-end px-4 pb-2 pt-4"
+          class="action-sheet-container flex flex-col overflow-y-auto space-y-1 justify-stretch px-4 pb-2 pt-1 h-full"
         >
           <slot />
-          <AwesomeActionSheetGroup v-if="closeButton">
-            <AwesomeActionSheetItemButton
-              class="text-red-500 font-bold"
-              :text="closeButtonText"
-              @click="close"
-            />
-          </AwesomeActionSheetGroup>
         </div>
       </div>
     </HeadlessTransitionRoot>

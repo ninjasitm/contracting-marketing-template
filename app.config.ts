@@ -1,15 +1,15 @@
 import type { RouteLocationRaw } from 'vue-router';
 import { NuxtApp } from '#app';
-import {
-  AwesomeLayoutPageNavbarMenu,
-  AwesomeLayoutPageNavbarMenuDropdownItem,
-} from './types';
+import { AwesomeLayoutPageNavbarMenu } from './types';
+import Logo from '~/assets/images/demo/logo.png';
 
 export interface NuxtAwesomeAppConfig {
   /** title name */
   name?: string;
   /** description */
   description?: string;
+  /** logo */
+  logo?: string;
 
   /** project config */
   project?: {
@@ -28,6 +28,7 @@ export interface NuxtAwesomeAppConfig {
       navbar?: {
         /** menus in navbar */
         menus?: AwesomeLayoutPageNavbarMenu[];
+        links: Record<string, string>;
       };
     };
     /** footer */
@@ -71,55 +72,10 @@ export interface NuxtAwesomeAppConfig {
 
 declare module '@nuxt/schema' {
   interface AppConfigInput {
-    awesome?: NuxtAwesomeAppConfig;
+    config?: NuxtAwesomeAppConfig;
   }
 }
 
 export default defineAppConfig({
-  awesome: {
-    name: 'Nuxt 3 Awesome Starter',
-    description:
-      'a starter template for Nuxt 3 with minimalist themes design, built in components, drawer & menus, and more.',
-    project: {
-      links: {
-        github: 'https://github.com/viandwi24/nuxt3-awesome-starter',
-      },
-    },
-    layout: {
-      page: {
-        navbar: {
-          menus: [],
-        },
-      },
-      footer: {
-        year: new Date().getFullYear(),
-      },
-      welcome: {
-        title: 'Nuxt&nbsp;3 Awesome Starter',
-        disableInfoReplaceIndexInWelcomePage: true,
-        primaryActionButton: {
-          title: 'Nuxt 3',
-          to: 'https://nuxt.com/',
-        },
-        secondaryActionButton: {
-          title: 'Github',
-          to: 'https://github.com/viandwi24/nuxt3-awesome-starter',
-        },
-      },
-    },
-    author: {
-      name: 'viandwi24',
-      links: {
-        github: 'https://github.com/viandwi24',
-        medium: 'https://viandwi24.medium.com',
-        website: 'https://viandwi24.site',
-      },
-    },
-    disableInfoReplaceIndexInWelcomePage: false,
-  } as NuxtAwesomeAppConfig,
-  nuxtIcon: {
-    aliases: {},
-    class: '',
-    size: '1em',
-  },
+  config: {},
 });

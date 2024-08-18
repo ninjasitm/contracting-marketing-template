@@ -4,9 +4,21 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  uppercase: {
+    type: Boolean,
+    default: true,
+  },
+  rounded: {
+    type: Boolean,
+    default: true,
+  },
+  outline: {
+    type: Boolean,
+    default: false,
+  },
   type: {
     type: String,
-    default: 'primary',
+    default: 'none',
   },
   size: {
     type: String,
@@ -24,15 +36,17 @@ const props = defineProps({
 // state:styles
 const defaultStyle = `
   cursor-pointer
-  uppercase
-  border transition-color duration-300
+  ${props.uppercase && 'uppercase'}
+  ${props.outline && 'outline outline-1 outline-black'}
+  ${props.rounded && 'rounded-full'}
+  transition-color duration-300
   focus:outline-none focus:ring-1 focus:ring-offset-1 focus:dark:ring-offset-gray-50 focus:dark:ring-gray-400 focus:ring-gray-600/[0.6] focus:ring-offset-gray-800/[0.6]
   flex items-center justify-center font-semibold
 `;
 const styles = reactive<{
   [key: string]: string;
 }>({
-  none: '',
+  none: 'hover:opacity-80 hover:scale-[105%] transform duration-300',
   primary: 'text-white bg-primary-500 hover:bg-primary-400 border-primary-500',
   secondary:
     'text-gray-800 bg-gray-200 border-gray-200 hover:bg-gray-300 dark:text-white dark:border-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700',
@@ -43,10 +57,10 @@ const styles = reactive<{
 const sizes = reactive<{
   [key: string]: string;
 }>({
-  lg: 'h-14 px-8 text-lg rounded-lg',
-  md: 'h-10 px-6 text-base rounded',
-  sm: 'h-9 px-4 text-sm rounded',
-  xs: 'h-6 px-3 text-xs rounded',
+  lg: 'h-12 px-4 text-md rounded-lg',
+  md: 'h-10 px-3 text-base rounded',
+  sm: 'h-8 px-2 text-sm rounded',
+  xs: 'h-6 px-1 text-xs rounded',
 });
 // state
 const selectedStyle = computed(() =>

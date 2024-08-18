@@ -1,8 +1,8 @@
 <template>
-  <div
-    class="flex pt-[64px] container max-w-[1280px]"
+  <main
+    class="flex container w-full md:px-4"
     :style="{ 'min-height': 'var(--layout-page-content-min-height)' }"
   >
     <slot />
-  </div>
+  </main>
 </template>

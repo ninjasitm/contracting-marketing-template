@@ -8,6 +8,7 @@ type CompanyAddressState = {
   address: string | null;
   email: string | null;
   links: LinkItem[];
+  socialLinks: LinkItem[];
   companyName: string | null;
 };
 
@@ -17,6 +18,7 @@ const props = defineProps<{
   address: string;
   email: string;
   links: LinkItem[];
+  socialLinks: LinkItem[];
   companyName: string;
 }>();
 
@@ -25,6 +27,7 @@ const state: CompanyAddressState = reactive({
   address: null,
   email: null,
   links: [],
+  socialLinks: [],
   companyName: null,
 });
 
@@ -32,11 +35,17 @@ const state: CompanyAddressState = reactive({
 function useMockData() {
   state.address = '1350 College Ave, Bronx, NY, 10456';
   state.email = 'hello@nitm.co';
-  state.links = [
+  state.socialLinks = [
     { title: 'Facebook', icon: 'Facebook', url: '#' },
     { title: 'Twitter', icon: 'Twitter', url: '#' },
     { title: 'Instagram', icon: 'Instagram', url: '#' },
     { title: 'LinkedIn', icon: 'LinkedIn', url: '#' },
+  ];
+  state.links = [
+    { title: 'Work', url: '/work' },
+    { title: 'About', url: '/about' },
+    { title: 'Services', url: '/services' },
+    { title: 'Contact', url: '/contact' },
   ];
   state.companyName = 'Ninjas in the Machine Inc';
 }
@@ -72,25 +81,42 @@ onMounted(() => {
         </p>
       </div>
     </div>
-    <nav
-      class="flex flex-col justify-center text-base text-black whitespace-nowrap"
-    >
-      <AwesomeLink
-        v-for="(link, index) in state.links"
-        :key="index"
-        :to="link.url"
-      >
-        <img
-          v-if="link.icon"
-          :src="link.icon"
-          alt=""
-          class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square mr-3"
-        />
-        <span>{{ link.title }}</span>
-      </AwesomeLink>
-    </nav>
     <div class="flex gap-5 items-center">
-      <p>Social media icons go here</p>
+      <nav
+        class="flex flex-col justify-center text-base text-black whitespace-nowrap"
+      >
+        <AwesomeLink
+          v-for="(link, index) in state.links"
+          :key="index"
+          class="mb-6"
+          :to="link.url"
+        >
+          <img
+            v-if="link.icon"
+            :src="link.icon"
+            alt=""
+            class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square mr-3"
+          />
+          <span>{{ link.title }}</span>
+        </AwesomeLink>
+      </nav>
+    </div>
+    <div class="flex gap-5 items-center">
+      <nav class="flex justify-center text-base text-black whitespace-nowrap">
+        <AwesomeLink
+          v-for="(link, index) in state.socialLinks"
+          :key="index"
+          :to="link.url"
+        >
+          <img
+            v-if="link.icon"
+            :src="link.icon"
+            alt=""
+            class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square mr-3"
+          />
+          <span>{{ link.title }}</span>
+        </AwesomeLink>
+      </nav>
     </div>
   </section>
 </template>

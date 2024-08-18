@@ -10,11 +10,13 @@ async function startProject() {
   <section
     class="flex flex-wrap gap-5 justify-center items-center py-12 w-full text-black max-md:max-w-full"
   >
+    <hr class="w-full border border-black mt-5 mb-5" />
     <h2 class="self-stretch my-auto text-2xl font-light">
       Ready to collaborate?
     </h2>
-    <button
-      class="flex gap-1 items-center self-stretch p-4 my-auto text-base tracking-tight uppercase rounded-lg"
+    <AwesomeButton
+      size="lg"
+      class="flex gap-1 items-center self-stretch p-3 my-auto text-base tracking-tight uppercase rounded-lg border border-black"
       @click="startProject"
     >
       <img
@@ -24,6 +26,7 @@ async function startProject() {
         class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
       />
       <span class="self-stretch my-auto">Start a Project</span>
-    </button>
+    </AwesomeButton>
+    <hr class="w-full border border-black mt-5" />
   </section>
 </template>

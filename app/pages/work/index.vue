@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
-import ProjectCard from './ProjectCard.vue';
+import ProjectCard from '../../../components/work/ProjectCard.vue';
 definePageMeta({ layout: 'page' });
 
 type Project = {
@@ -212,3 +212,4 @@ async function onLoadCategory(id: any): Promise<void> {
     </section>
   </div>
 </template>
+../../../components/work/ProjectCard.vue

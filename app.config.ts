@@ -1,7 +1,6 @@
 import type { RouteLocationRaw } from 'vue-router';
 import { NuxtApp } from '#app';
 import { AwesomeLayoutPageNavbarMenu } from './types';
-import Logo from '~/assets/images/demo/logo.png';
 
 export interface NuxtAwesomeAppConfig {
   /** title name */

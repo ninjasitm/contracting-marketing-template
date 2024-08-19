@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { defineProps, toRefs } from 'vue';
-import linkedInImage from '~/assets/images/linkedin.svg';
+import linkedInImage from '~/public/images/linkedin.svg';
 
 const props = defineProps<{
   name: string;

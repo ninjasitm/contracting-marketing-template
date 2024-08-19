@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
-import BackgroundImage from '../../assets/images/demo/home/banner.png';
+import BackgroundImage from '~/public/images/demo/home/banner.png';
 
 const { awesome } = useAppConfig();
 definePageMeta({ layout: 'page' });

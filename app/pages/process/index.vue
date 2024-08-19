@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
-import ProcessSection from './ProcessSection.vue';
+import ProcessSection from '../../../components/process/ProcessSection.vue';
 definePageMeta({ layout: 'page' });
 
 const state = reactive({
@@ -84,3 +84,4 @@ const state = reactive({
     </section>
   </div>
 </template>
+../../../components/process/ProcessSection.vue

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
-import TeamMember from './TeamMember.vue';
+import TeamMember from '../../../components/about/TeamMember.vue';
 definePageMeta({ layout: 'page' });
 
 type Member = {
@@ -143,3 +143,4 @@ const state: AboutState = reactive({
     </section>
   </div>
 </template>
+../../../components/about/TeamMember.vue

@@ -7,6 +7,11 @@ export default defineNuxtConfig({
   experimental: {
     localLayerAliases: true,
   },
+  nitro: {
+    prerender: {
+      autoSubfolderIndex: false,
+    },
+  },
 
   // app config
   app: {

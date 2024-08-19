@@ -1,6 +1,5 @@
 import type { RouteLocationRaw } from 'vue-router';
 import { NuxtApp } from '#app';
-import Logo from '../../assets/images/demo/logo.png';
 import { AwesomeLayoutPageNavbarMenu } from './types';
 
 export interface NuxtAwesomeAppConfig {
@@ -81,7 +80,7 @@ export default defineAppConfig({
     name: 'Ninjas in the Machine',
     description:
       'a starter template for Nuxt 3 with minimalist themes design, built in components, drawer & menus, and more.',
-    logo: Logo,
+    logo: '/public/images/demo/logo.png',
     project: {
       links: {
         github: 'https://github.com/viandwi24/nuxt3-awesome-starter',

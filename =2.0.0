@@ -1,0 +1,19 @@
+Progress: resolved 0, reused 1, downloaded 0, added 0
+ WARN  deprecated @humanwhocodes/config-array@0.11.14: Use @eslint/config-array instead
+Progress: resolved 318, reused 257, downloaded 0, added 0
+ WARN  deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+ WARN  deprecated glob@8.1.0: Glob versions prior to v9 are no longer supported
+ WARN  deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+ WARN  deprecated npmlog@5.0.1: This package is no longer supported.
+ WARN  deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+Progress: resolved 769, reused 677, downloaded 0, added 0
+Already up-to-date
+
+ WARN  Issues with peer dependencies found
+.
+└─┬ nuxt
+  └─┬ @nuxt/vite-builder
+    └─┬ vite-plugin-checker
+      └── ✕ unmet peer vue-tsc@>=2.0.0: found 1.8.22
+
+Progress: resolved 769, reused 677, downloaded 0, added 0, done

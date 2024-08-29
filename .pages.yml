@@ -3,6 +3,7 @@ content:
   - name: homePage
     type: object
     label: Home Page
+    path: data/_pages/home.json
     fields:
       - name: banner
         label: Banner
@@ -13,7 +14,7 @@ content:
             type: string
           - name: description
             label: Description
-            type: string
+            type: rich-text
           - name: actionText
             label: Action Text
             type: string
@@ -32,7 +33,7 @@ content:
             type: string
           - name: description
             label: Description
-            type: string
+            type: rich-text
           - name: items
             label: Items
             type: list
@@ -67,6 +68,7 @@ content:
   - name: aboutPage
     type: object
     label: About Page
+    path: data/_pages/about.json
     fields:
       - name: heading
         label: Heading
@@ -76,7 +78,7 @@ content:
         type: string
       - name: description
         label: Description
-        type: string
+        type: rich-text
       - name: teamMembers
         label: Team Members
         type: object
@@ -96,7 +98,7 @@ content:
                 type: string
               - name: description
                 label: Description
-                type: string
+                type: rich-text
               - name: photo
                 label: Photo
                 type: image
@@ -106,13 +108,14 @@ content:
   - name: processPage
     type: object
     label: Process Page
+    path: data/_pages/process.json
     fields:
       - name: title
         label: Title
         type: string
       - name: description
         label: Description
-        type: string
+        type: rich-text
       - name: sections
         label: Sections
         type: list
@@ -122,7 +125,7 @@ content:
             type: string
           - name: description
             label: Description
-            type: string
+            type: rich-text
           - name: items
             label: Items
             type: list
@@ -133,6 +136,7 @@ content:
   - name: workPage
     type: object
     label: Work Page
+    path: data/_pages/work.json
     fields:
       - name: title
         label: Title
@@ -143,7 +147,7 @@ content:
         fields:
           - name: description
             label: Description
-            type: string
+            type: rich-text
           - name: type
             label: Type
             type: string
@@ -156,7 +160,7 @@ content:
             type: string
           - name: description
             label: Description
-            type: string
+            type: rich-text
       - name: currentCategory
         label: Current Category
         type: any
@@ -175,144 +179,152 @@ content:
     label: Work
     path: data/_work
     view: [title, client, category]
+    primaryField: slug
     fields:
-      - name: project
-        label: Project
+      - name: client
+        label: Client
         type: object
         fields:
-          - name: client
-            label: Client
-            type: object
-            fields:
-              - name: name
-                label: Name
-                type: string
-          - name: bannerImage
-            label: Banner Image
+          - name: name
+            label: Name
             type: string
+          - name: logo
+            label: Logo
+            type: image
+          - name: url
+            label: URL
+            type: string
+      - name: url
+        label: URL
+        type: string
+      - name: bannerImage
+        label: Banner Image
+        type: string
+      - name: title
+        label: Title
+        type: string
+      - name: description
+        label: Description
+        type: rich-text
+      - name: date
+        label: Date
+        type: date
+        options:
+          format: 'MM/DD/YYYY'
+      - name: categories
+        label: Categories
+        type: list
+        fields:
+          - name: name
+            label: Name
+            type: string
+      - name: problem
+        label: Problem
+        type: object
+        fields:
           - name: title
             label: Title
             type: string
+          - name: image
+            label: Image
+            type: image
           - name: description
             label: Description
             type: string
-          - name: date
-            label: Date
+      - name: solution
+        label: Solution
+        type: object
+        fields:
+          - name: title
+            label: Title
             type: string
-          - name: categories
-            label: Categories
+          - name: image
+            label: Image
+            type: image
+          - name: description
+            label: Description
+            type: string
+      - name: process
+        label: Process
+        type: object
+        fields:
+          - name: title
+            label: Title
+            type: string
+          - name: image
+            label: Image
+            type: image
+          - name: description
+            label: Description
+            type: string
+          - name: items
+            label: Items
             type: list
             fields:
-              - name: name
-                label: Name
+              - name: imgSrc
+                label: Image Source
                 type: string
-          - name: problem
-            label: Problem
-            type: object
-            fields:
-              - name: title
-                label: Title
+              - name: alt
+                label: Alt Text
                 type: string
-              - name: image
-                label: Image
-                type: image
               - name: description
                 label: Description
                 type: string
-          - name: solution
-            label: Solution
-            type: object
+      - name: design
+        label: Design
+        type: object
+        fields:
+          - name: title
+            label: Title
+            type: string
+          - name: image
+            label: Image
+            type: image
+          - name: description
+            label: Description
+            type: rich-text
+          - name: items
+            label: Items
+            type: list
             fields:
+              - name: imgSrc
+                label: Image Source
+                type: image
+              - name: alt
+                label: Alt Text
+                type: string
+      - name: result
+        label: Result
+        type: object
+        fields:
+          - name: title
+            label: Title
+            type: string
+          - name: image
+            label: Image
+            type: image
+          - name: description
+            label: Description
+            type: rich-text
+          - name: items
+            label: Items
+            type: list
+            fields:
+              - name: imgSrc
+                label: Image Source
+                type: image
+              - name: alt
+                label: Alt Text
+                type: string
               - name: title
                 label: Title
                 type: string
-              - name: image
-                label: Image
-                type: image
               - name: description
                 label: Description
-                type: string
-          - name: process
-            label: Process
-            type: object
-            fields:
-              - name: title
-                label: Title
-                type: string
-              - name: image
-                label: Image
-                type: image
-              - name: description
-                label: Description
-                type: string
-              - name: items
-                label: Items
-                type: list
-                fields:
-                  - name: imgSrc
-                    label: Image Source
-                    type: string
-                  - name: alt
-                    label: Alt Text
-                    type: string
-                  - name: description
-                    label: Description
-                    type: string
-          - name: design
-            label: Design
-            type: object
-            fields:
-              - name: title
-                label: Title
-                type: string
-              - name: image
-                label: Image
-                type: image
-              - name: description
-                label: Description
-                type: string
-              - name: items
-                label: Items
-                type: list
-                fields:
-                  - name: imgSrc
-                    label: Image Source
-                    type: image
-                  - name: alt
-                    label: Alt Text
-                    type: string
-          - name: result
-            label: Result
-            type: object
-            fields:
-              - name: title
-                label: Title
-                type: string
-              - name: image
-                label: Image
-                type: image
-              - name: description
-                label: Description
-                type: string
-              - name: items
-                label: Items
-                type: list
-                fields:
-                  - name: imgSrc
-                    label: Image Source
-                    type: image
-                  - name: alt
-                    label: Alt Text
-                    type: string
-                  - name: title
-                    label: Title
-                    type: string
-                  - name: description
-                    label: Description
-                    type: string
+                type: rich-text
   - name: config
     label: App Config
-    path: data/app_config.yml
+    path: data/config.json
     type: file
     fields:
       - name: title
@@ -323,7 +335,7 @@ content:
         type: string
       - name: description
         label: Website description
-        type: string
+        type: rich-text
         description: Will be provused for any page with no description.
       - name: url
         label: Website URL

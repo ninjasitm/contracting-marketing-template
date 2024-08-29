@@ -102,6 +102,8 @@ content:
               - name: photo
                 label: Photo
                 type: image
+                options:
+                  path: media/avatars
               - name: linkedinUrl
                 label: LinkedIn URL
                 type: string
@@ -191,6 +193,9 @@ content:
           - name: logo
             label: Logo
             type: image
+            options:
+              path: media/client/logos
+              categories: [image]
           - name: url
             label: URL
             type: string
@@ -199,7 +204,10 @@ content:
         type: string
       - name: bannerImage
         label: Banner Image
-        type: string
+        type: image
+        options:
+          path: media/work/banners
+          categories: [image]
       - name: title
         label: Title
         type: string
@@ -228,6 +236,9 @@ content:
           - name: image
             label: Image
             type: image
+            options:
+              path: media/work/problems
+              categories: [image]
           - name: description
             label: Description
             type: string
@@ -241,6 +252,9 @@ content:
           - name: image
             label: Image
             type: image
+            options:
+              path: media/work/solutions
+              categories: [image]
           - name: description
             label: Description
             type: string
@@ -254,6 +268,9 @@ content:
           - name: image
             label: Image
             type: image
+            options:
+              path: media/work/processes
+              categories: [image]
           - name: description
             label: Description
             type: string
@@ -263,7 +280,10 @@ content:
             fields:
               - name: imgSrc
                 label: Image Source
-                type: string
+                type: image
+                options:
+                  path: media/work/processes/items
+                  categories: [image]
               - name: alt
                 label: Alt Text
                 type: string
@@ -280,6 +300,9 @@ content:
           - name: image
             label: Image
             type: image
+            options:
+              path: media/work/designs
+              categories: [image]
           - name: description
             label: Description
             type: rich-text
@@ -290,6 +313,9 @@ content:
               - name: imgSrc
                 label: Image Source
                 type: image
+                options:
+                  path: media/work/designs/items
+                  categories: [image]
               - name: alt
                 label: Alt Text
                 type: string
@@ -303,6 +329,9 @@ content:
           - name: image
             label: Image
             type: image
+            options:
+              path: media/work/results
+              categories: [image]
           - name: description
             label: Description
             type: rich-text
@@ -313,6 +342,9 @@ content:
               - name: imgSrc
                 label: Image Source
                 type: image
+                options:
+                  path: media/work/results/items
+                  categories: [image]
               - name: alt
                 label: Alt Text
                 type: string
@@ -430,7 +462,10 @@ content:
                 type: string
               - name: icon
                 label: Icon
-                type: string
+                type: image
+                options:
+                  path: media/social
+                  categories: [image]
           - name: links
             label: Links
             type: object

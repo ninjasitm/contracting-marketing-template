@@ -44,10 +44,6 @@ content:
               - name: items
                 label: Items
                 type: list
-                fields:
-                  - name: item
-                    label: Item
-                    type: string
       - name: differentiators
         label: Differentiators
         type: object
@@ -131,10 +127,6 @@ content:
           - name: items
             label: Items
             type: list
-            fields:
-              - name: item
-                label: Item
-                type: string
   - name: workPage
     type: file
     label: Work Page
@@ -169,18 +161,13 @@ content:
       - name: categories
         label: Categories
         type: list
-        fields:
-          - name: name
-            label: Name
-            type: string
-          - name: filter
-            label: Filter
-            type: string
   - name: work
     type: collection
     label: Work
     path: data/_work
-    view: [title, client, category]
+    view:
+      fields: [title, client, category]
+      sort: [date]
     primaryField: slug
     fields:
       - name: client
@@ -222,10 +209,6 @@ content:
       - name: categories
         label: Categories
         type: list
-        fields:
-          - name: name
-            label: Name
-            type: string
       - name: problem
         label: Problem
         type: object
@@ -384,13 +367,6 @@ content:
       - name: naicsCodes
         label: NAICS Codes
         type: list
-        fields:
-          - name: code
-            label: NAICS Code
-            type: string
-          - name: title
-            label: Title
-            type: string
       - name: companyInfo
         label: Company Info
         type: object

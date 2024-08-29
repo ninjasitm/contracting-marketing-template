@@ -1,7 +1,7 @@
 media: media
 content:
   - name: homePage
-    type: object
+    type: file
     label: Home Page
     path: data/_pages/home.json
     fields:
@@ -66,7 +66,7 @@ content:
                 label: Description
                 type: string
   - name: aboutPage
-    type: object
+    type: file
     label: About Page
     path: data/_pages/about.json
     fields:
@@ -108,7 +108,7 @@ content:
                 label: LinkedIn URL
                 type: string
   - name: processPage
-    type: object
+    type: file
     label: Process Page
     path: data/_pages/process.json
     fields:
@@ -136,7 +136,7 @@ content:
                 label: Item
                 type: string
   - name: workPage
-    type: object
+    type: file
     label: Work Page
     path: data/_pages/work.json
     fields:

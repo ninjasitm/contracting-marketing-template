@@ -1,0 +1,432 @@
+media: media
+content:
+  - name: homePage
+    type: object
+    label: Home Page
+    fields:
+      - name: banner
+        label: Banner
+        type: object
+        fields:
+          - name: title
+            label: Title
+            type: string
+          - name: description
+            label: Description
+            type: string
+          - name: actionText
+            label: Action Text
+            type: string
+          - name: actionUrl
+            label: Action URL
+            type: string
+          - name: backgroundImage
+            label: Background Image
+            type: image
+      - name: coreCompetencies
+        label: Core Competencies
+        type: object
+        fields:
+          - name: title
+            label: Title
+            type: string
+          - name: description
+            label: Description
+            type: string
+          - name: items
+            label: Items
+            type: list
+            fields:
+              - name: heading
+                label: Heading
+                type: string
+              - name: items
+                label: Items
+                type: list
+                fields:
+                  - name: item
+                    label: Item
+                    type: string
+      - name: differentiators
+        label: Differentiators
+        type: object
+        fields:
+          - name: title
+            label: Title
+            type: string
+          - name: items
+            label: Items
+            type: list
+            fields:
+              - name: icon
+                label: Icon
+                type: string
+              - name: description
+                label: Description
+                type: string
+  - name: aboutPage
+    type: object
+    label: About Page
+    fields:
+      - name: heading
+        label: Heading
+        type: string
+      - name: title
+        label: Title
+        type: string
+      - name: description
+        label: Description
+        type: string
+      - name: teamMembers
+        label: Team Members
+        type: object
+        fields:
+          - name: title
+            label: Title
+            type: string
+          - name: members
+            label: Members
+            type: list
+            fields:
+              - name: name
+                label: Name
+                type: string
+              - name: position
+                label: Position
+                type: string
+              - name: description
+                label: Description
+                type: string
+              - name: photo
+                label: Photo
+                type: image
+              - name: linkedinUrl
+                label: LinkedIn URL
+                type: string
+  - name: processPage
+    type: object
+    label: Process Page
+    fields:
+      - name: title
+        label: Title
+        type: string
+      - name: description
+        label: Description
+        type: string
+      - name: sections
+        label: Sections
+        type: list
+        fields:
+          - name: title
+            label: Title
+            type: string
+          - name: description
+            label: Description
+            type: string
+          - name: items
+            label: Items
+            type: list
+            fields:
+              - name: item
+                label: Item
+                type: string
+  - name: workPage
+    type: object
+    label: Work Page
+    fields:
+      - name: title
+        label: Title
+        type: string
+      - name: featuredClient
+        label: Featured Client
+        type: object
+        fields:
+          - name: description
+            label: Description
+            type: string
+          - name: type
+            label: Type
+            type: string
+      - name: footer
+        label: Footer
+        type: object
+        fields:
+          - name: title
+            label: Title
+            type: string
+          - name: description
+            label: Description
+            type: string
+      - name: currentCategory
+        label: Current Category
+        type: any
+      - name: categories
+        label: Categories
+        type: list
+        fields:
+          - name: name
+            label: Name
+            type: string
+          - name: filter
+            label: Filter
+            type: string
+  - name: work
+    type: collection
+    label: Work
+    path: data/_work
+    view: [title, client, category]
+    fields:
+      - name: project
+        label: Project
+        type: object
+        fields:
+          - name: client
+            label: Client
+            type: object
+            fields:
+              - name: name
+                label: Name
+                type: string
+          - name: bannerImage
+            label: Banner Image
+            type: string
+          - name: title
+            label: Title
+            type: string
+          - name: description
+            label: Description
+            type: string
+          - name: date
+            label: Date
+            type: string
+          - name: categories
+            label: Categories
+            type: list
+            fields:
+              - name: name
+                label: Name
+                type: string
+          - name: problem
+            label: Problem
+            type: object
+            fields:
+              - name: title
+                label: Title
+                type: string
+              - name: image
+                label: Image
+                type: image
+              - name: description
+                label: Description
+                type: string
+          - name: solution
+            label: Solution
+            type: object
+            fields:
+              - name: title
+                label: Title
+                type: string
+              - name: image
+                label: Image
+                type: image
+              - name: description
+                label: Description
+                type: string
+          - name: process
+            label: Process
+            type: object
+            fields:
+              - name: title
+                label: Title
+                type: string
+              - name: image
+                label: Image
+                type: image
+              - name: description
+                label: Description
+                type: string
+              - name: items
+                label: Items
+                type: list
+                fields:
+                  - name: imgSrc
+                    label: Image Source
+                    type: string
+                  - name: alt
+                    label: Alt Text
+                    type: string
+                  - name: description
+                    label: Description
+                    type: string
+          - name: design
+            label: Design
+            type: object
+            fields:
+              - name: title
+                label: Title
+                type: string
+              - name: image
+                label: Image
+                type: image
+              - name: description
+                label: Description
+                type: string
+              - name: items
+                label: Items
+                type: list
+                fields:
+                  - name: imgSrc
+                    label: Image Source
+                    type: image
+                  - name: alt
+                    label: Alt Text
+                    type: string
+          - name: result
+            label: Result
+            type: object
+            fields:
+              - name: title
+                label: Title
+                type: string
+              - name: image
+                label: Image
+                type: image
+              - name: description
+                label: Description
+                type: string
+              - name: items
+                label: Items
+                type: list
+                fields:
+                  - name: imgSrc
+                    label: Image Source
+                    type: image
+                  - name: alt
+                    label: Alt Text
+                    type: string
+                  - name: title
+                    label: Title
+                    type: string
+                  - name: description
+                    label: Description
+                    type: string
+  - name: config
+    label: App Config
+    path: data/app_config.yml
+    type: file
+    fields:
+      - name: title
+        label: Website title
+        type: string
+      - name: companyName
+        label: Company Name
+        type: string
+      - name: description
+        label: Website description
+        type: string
+        description: Will be provused for any page with no description.
+      - name: url
+        label: Website URL
+        type: string
+        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+      - name: logo
+        label: Logo
+        type: image
+        description: Image used in the header of the website.
+      - name: cover
+        label: Preview image
+        type: image
+        description: Image used in the social preview on social networks (e.g. Facebook, Twitter...)
+      - name: naicsCodes
+        label: NAICS Codes
+        type: list
+        fields:
+          - name: code
+            label: NAICS Code
+            type: string
+          - name: title
+            label: Title
+            type: string
+      - name: companyInfo
+        label: Company Info
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: Title
+            type: string
+          - name: value
+            label: Value
+            type: string
+      - name: links
+        label: Links
+        type: object
+        fields:
+          - name: capabilities
+            label: Capabilities
+            type: string
+          - name: startProject
+            label: Start a Project
+            type: string
+      - name: style
+        label: Style
+        type: object
+        fields:
+          - name: backgroundColor
+            label: Background Color
+            type: string
+            default: '#333'
+          - name: textColor
+            label: Text Color
+            type: string
+            default: '#fff'
+      - name: footer
+        label: Footer Configruation
+        type: object
+        fields:
+          - name: address
+            label: Address
+            type: string
+          - name: phone
+            label: Phone
+            type: string
+          - name: email
+            label: Email
+            type: string
+          - name: companyInfoStyle
+            label: Company Info Style
+            type: object
+            fields:
+              - name: backgroundColor
+                label: Background Color
+                type: string
+                default: '#333'
+              - name: textColor
+                label: Text Color
+                type: string
+                default: '#fff'
+          - name: socialLinks
+            label: Social Links
+            list: true
+            type: object
+            fields:
+              - name: title
+                label: Title
+                type: string
+              - name: url
+                label: URL
+                type: string
+              - name: icon
+                label: Icon
+                type: string
+          - name: links
+            label: Links
+            type: object
+            list: true
+            fields:
+              - name: title
+                label: Title
+                type: string
+              - name: url
+                label: URL
+                type: string

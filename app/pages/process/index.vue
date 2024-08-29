@@ -84,4 +84,3 @@ const state = reactive({
     </section>
   </div>
 </template>
-../../../components/process/ProcessSection.vue

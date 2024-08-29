@@ -36,10 +36,10 @@ const showDrawer = ref(false);
             <img
               v-if="config.logo"
               :src="config.logo"
-              :alt="config.name"
+              :alt="config.title"
               class="w-auto h-[40px] md:h-[80px] object-contain"
             />
-            <span v-else class="capitalize">{{ config.name }}</span>
+            <span v-else class="capitalize">{{ config.title }}</span>
           </NuxtLink>
         </slot>
       </div>

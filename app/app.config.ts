@@ -4,7 +4,7 @@ import { AwesomeLayoutPageNavbarMenu } from './types';
 
 export interface NuxtAwesomeAppConfig {
   /** title name */
-  name?: string;
+  title?: string;
   /** description */
   description?: string;
   /** logo */
@@ -97,8 +97,8 @@ export default defineAppConfig({
             // {
             //   type: 'button',
             //   title: (nuxt) =>
-            //     (nuxt._appConfig as AppConfigInput)?.awesome?.name || '',
-            //   to: (nuxt) => (nuxt._appConfig as AppConfigInput)?.awesome?.name || '',
+            //     (nuxt._appConfig as AppConfigInput)?.awesome?.title || '',
+            //   to: (nuxt) => (nuxt._appConfig as AppConfigInput)?.awesome?.title || '',
             // },
           ],
           links: {

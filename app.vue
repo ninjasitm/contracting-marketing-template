@@ -2,8 +2,8 @@
 const { config } = useAppConfig();
 
 useHead({
-  title: config.name,
-  titleTemplate: `%s - ${config.name}`,
+  title: config.title,
+  titleTemplate: `%s - ${config.title}`,
 });
 </script>
 

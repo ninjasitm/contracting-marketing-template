@@ -17,7 +17,7 @@ const showAlert = ref(
 const titlesText = computed<string[]>(() =>
   (
     awesome?.layout?.welcome?.title ||
-    awesome?.name ||
+    awesome?.title ||
     'Nuxt&nbsp;3 Awesome Starter'
   )
     .replaceAll('&nbsp;', '[space]')

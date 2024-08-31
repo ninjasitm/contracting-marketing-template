@@ -1,0 +1,14 @@
+{
+  "title": "NITM Inc Local, State and Federal Contracting Services",
+  "url": "https://www.nitm.co",
+  "style": {
+    "backgroundColor": "#333",
+    "textColor": "#fff"
+  },
+  "footer": {
+    "companyInfoStyle": {
+      "backgroundColor": "#333",
+      "textColor": "#fff"
+    }
+  }
+}

@@ -163,7 +163,7 @@ content:
             type: rich-text
       - name: currentCategory
         label: Current Category
-        type: any
+        type: string
       - name: categories
         label: Categories
         type: string

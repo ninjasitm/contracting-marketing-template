@@ -3,10 +3,36 @@
   "url": "https://www.nitm.co",
   "naicsCodes": [
     "541511",
-    null,
+    "611420",
     null,
     null,
     null
+  ],
+  "companyInfo": [
+    {
+      "title": "Corporation Type",
+      "value": "S-Corp"
+    },
+    {
+      "title": "NY State Vendor ID",
+      "value": "1100315596"
+    },
+    {
+      "title": "CAGE Code",
+      "value": "9AVD1"
+    },
+    {
+      "title": "Unique Entity ID",
+      "value": "QWSTFVKPMQT9"
+    },
+    {
+      "title": "SAM",
+      "value": "Active"
+    },
+    {
+      "title": "Local",
+      "value": "NY State MWBE, NY City MWBE"
+    }
   ],
   "style": {
     "backgroundColor": "#333",

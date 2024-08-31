@@ -1,0 +1,15 @@
+{
+  "title": "NITM Inc Government Contracting Services",
+  "companyName": "Ninjas in the Machine Inc.",
+  "url": "https://www.nitm.co",
+  "style": {
+    "backgroundColor": "#333",
+    "textColor": "#fff"
+  },
+  "footer": {
+    "companyInfoStyle": {
+      "backgroundColor": "#333",
+      "textColor": "#fff"
+    }
+  }
+}

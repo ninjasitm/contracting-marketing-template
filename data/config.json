@@ -13,6 +13,9 @@
     "textColor": "#fff"
   },
   "footer": {
+    "address": "1350 College Ave",
+    "phone": "1 (347) 241-2690",
+    "email": "contracts@ninjasitm.com",
     "companyInfoStyle": {
       "backgroundColor": "#333",
       "textColor": "#fff"

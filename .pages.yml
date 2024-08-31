@@ -36,14 +36,16 @@ content:
             type: rich-text
           - name: items
             label: Items
-            type: list
+            type: object
+            list: true
             fields:
               - name: heading
                 label: Heading
                 type: string
               - name: items
                 label: Items
-                type: list
+                type: string
+                list: true
       - name: differentiators
         label: Differentiators
         type: object
@@ -53,7 +55,8 @@ content:
             type: string
           - name: items
             label: Items
-            type: list
+            type: object
+            list: true
             fields:
               - name: icon
                 label: Icon
@@ -84,7 +87,8 @@ content:
             type: string
           - name: members
             label: Members
-            type: list
+            type: object
+            list: true
             fields:
               - name: name
                 label: Name
@@ -116,7 +120,8 @@ content:
         type: rich-text
       - name: sections
         label: Sections
-        type: list
+        type: object
+        list: true
         fields:
           - name: title
             label: Title
@@ -126,7 +131,8 @@ content:
             type: rich-text
           - name: items
             label: Items
-            type: list
+            type: string
+            list: true
   - name: workPage
     type: file
     label: Work Page
@@ -160,7 +166,8 @@ content:
         type: any
       - name: categories
         label: Categories
-        type: list
+        type: string
+        list: true
   - name: work
     type: collection
     label: Work
@@ -208,7 +215,8 @@ content:
           format: 'MM/DD/YYYY'
       - name: categories
         label: Categories
-        type: list
+        type: string
+        list: true
       - name: problem
         label: Problem
         type: object
@@ -259,7 +267,8 @@ content:
             type: string
           - name: items
             label: Items
-            type: list
+            type: object
+            list: true
             fields:
               - name: imgSrc
                 label: Image Source
@@ -291,7 +300,8 @@ content:
             type: rich-text
           - name: items
             label: Items
-            type: list
+            type: object
+            list: true
             fields:
               - name: imgSrc
                 label: Image Source
@@ -320,7 +330,8 @@ content:
             type: rich-text
           - name: items
             label: Items
-            type: list
+            type: object
+            list: true
             fields:
               - name: imgSrc
                 label: Image Source
@@ -366,7 +377,8 @@ content:
         description: Image used in the social preview on social networks (e.g. Facebook, Twitter...)
       - name: naicsCodes
         label: NAICS Codes
-        type: list
+        type: string
+        list: true
       - name: companyInfo
         label: Company Info
         type: object

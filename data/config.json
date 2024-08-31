@@ -1,30 +1,50 @@
 {
-<<<<<<< HEAD
-  "title": "NITM Inc Government Contracting Services",
-  "companyName": "Ninjas in the Machine Inc.",
-  "url": "https://www.nitm.co",
-=======
   "title": "NITM Inc Local, State and Federal Contracting Services",
   "url": "https://www.nitm.co",
   "naicsCodes": [
     "541511",
-    null,
-    null,
-    null,
-    null
+    "611420",
+    "511210",
+    "541430",
+    "541519",
+    "541612",
+    "541618",
+    "519130"
   ],
->>>>>>> 1647ec106fda325ab53ccc503c4da9fc88289e7f
+  "companyInfo": [
+    {
+      "title": "Corporation Type",
+      "value": "S-Corp"
+    },
+    {
+      "title": "NY State Vendor ID",
+      "value": "1100315596"
+    },
+    {
+      "title": "CAGE Code",
+      "value": "9AVD1"
+    },
+    {
+      "title": "Unique Entity ID",
+      "value": "QWSTFVKPMQT9"
+    },
+    {
+      "title": "SAM",
+      "value": "Active"
+    },
+    {
+      "title": "Local",
+      "value": "NY State MWBE, NY City MWBE"
+    }
+  ],
   "style": {
     "backgroundColor": "#333",
     "textColor": "#fff"
   },
   "footer": {
-<<<<<<< HEAD
-=======
     "address": "1350 College Ave",
     "phone": "1 (347) 241-2690",
     "email": "contracts@ninjasitm.com",
->>>>>>> 1647ec106fda325ab53ccc503c4da9fc88289e7f
     "companyInfoStyle": {
       "backgroundColor": "#333",
       "textColor": "#fff"

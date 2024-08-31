@@ -184,6 +184,9 @@ content:
           - name: name
             label: Name
             type: string
+          - name: slug
+            label: Slug
+            type: string
           - name: logo
             label: Logo
             type: image

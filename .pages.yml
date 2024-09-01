@@ -80,7 +80,8 @@ content:
         type: rich-text
       - name: teamMembers
         label: Team Members
-        type: object
+        type: file
+        path: data/_about/teamMembers.json
         fields:
           - name: title
             label: Title
@@ -172,7 +173,7 @@ content:
   - name: work
     type: collection
     label: Work
-    path: data/_work
+    path: data/_work/projects
     view:
       fields: [title, client.name, categories, isOngoing, published, date]
       sort: [date, title]
@@ -211,7 +212,8 @@ content:
         default: false
       - name: client
         label: Client
-        type: object
+        type: file
+        path: data/_work/clients.json
         fields:
           - name: name
             label: Name

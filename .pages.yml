@@ -480,8 +480,9 @@ content:
                 label: Text Color
                 type: string
                 default: '#fff'
-          - name: links
-            label: Links
+          - name: socialLinks
+            label: Social Links
+            list: true
             type: object
             fields:
               - name: title
@@ -491,3 +492,9 @@ content:
                 label: URL
                 type: string
                 pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+              - name: icon
+                label: Icon
+                type: image
+                options:
+                  path: media/social
+                  categories: [image]

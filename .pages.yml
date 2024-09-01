@@ -78,37 +78,37 @@ content:
       - name: description
         label: Description
         type: rich-text
-      - name: teamMembers
-        label: Team Members
-        type: file
-        path: data/_about/teamMembers.json
+  - name: teamMembers
+    label: Team Members
+    type: file
+    path: data/_about/teamMembers.json
+    fields:
+      - name: title
+        label: Title
+        type: string
+      - name: members
+        label: Members
+        type: object
+        list: true
         fields:
-          - name: title
-            label: Title
+          - name: name
+            label: Name
             type: string
-          - name: members
-            label: Members
-            type: object
-            list: true
-            fields:
-              - name: name
-                label: Name
-                type: string
-              - name: position
-                label: Position
-                type: string
-              - name: description
-                label: Description
-                type: rich-text
-              - name: photo
-                label: Photo
-                type: image
-                options:
-                  path: media/avatars
-              - name: linkedinUrl
-                label: LinkedIn URL
-                type: string
-                pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+          - name: position
+            label: Position
+            type: string
+          - name: description
+            label: Description
+            type: rich-text
+          - name: photo
+            label: Photo
+            type: image
+            options:
+              path: media/avatars
+          - name: linkedinUrl
+            label: LinkedIn URL
+            type: string
+            pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
   - name: processPage
     type: file
     label: Process Page
@@ -195,6 +195,10 @@ content:
         label: Slug
         type: string
         required: true
+      - name: client
+        label: Client
+        type: string
+        required: true
       - name: url
         label: URL
         type: string
@@ -210,25 +214,6 @@ content:
         label: Ongoing
         type: boolean
         default: false
-      - name: client
-        label: Client
-        type: file
-        path: data/clients.json
-        fields:
-          - name: name
-            label: Name
-            type: string
-            required: true
-          - name: logo
-            label: Logo
-            type: image
-            options:
-              path: media/client/logos
-              categories: [image]
-          - name: url
-            label: URL
-            type: string
-            pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
       - name: bannerImage
         label: Banner Image
         type: image
@@ -373,6 +358,25 @@ content:
               - name: description
                 label: Description
                 type: rich-text
+  - name: clients
+    label: Clients
+    type: file
+    path: data/clients.json
+    fields:
+      - name: name
+        label: Name
+        type: string
+        required: true
+      - name: logo
+        label: Logo
+        type: image
+        options:
+          path: media/client/logos
+          categories: [image]
+      - name: url
+        label: URL
+        type: string
+        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
   - name: config
     label: App Config
     path: data/config.json

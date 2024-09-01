@@ -78,14 +78,14 @@ content:
       - name: description
         label: Description
         type: rich-text
+      - name: teamMembersTitle
+        label: Team Members Title
+        type: string
   - name: teamMembers
     label: Team Members
     type: file
     path: data/_about/teamMembers.json
     fields:
-      - name: title
-        label: Title
-        type: string
       - name: members
         label: Members
         type: object
@@ -175,7 +175,7 @@ content:
     label: Work
     path: data/_work
     view:
-      fields: [title, client.name, categories, isOngoing, published, date]
+      fields: [title, client, categories, isOngoing, published, date]
       sort: [date, title]
       primary: slug
       default:
@@ -361,6 +361,7 @@ content:
   - name: clients
     label: Clients
     type: file
+    list: true
     path: data/clients.json
     fields:
       - name: name

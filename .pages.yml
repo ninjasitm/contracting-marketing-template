@@ -174,7 +174,7 @@ content:
     label: Work
     path: data/_work
     view:
-      fields: [title, client.name, categories, date]
+      fields: [title, client.name, categories, isOngoing, published, date]
       sort: [date, title]
       primary: slug
     default:

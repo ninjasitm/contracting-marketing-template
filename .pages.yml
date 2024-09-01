@@ -182,6 +182,14 @@ content:
       sort: date
       order: desc
     fields:
+      - name: title
+        label: Title
+        type: string
+      - name: url
+        label: URL
+        type: string
+        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+        required: true
       - name: client
         label: Client
         type: object
@@ -208,20 +216,12 @@ content:
             label: URL
             type: string
             pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
-      - name: url
-        label: URL
-        type: string
-        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
       - name: bannerImage
         label: Banner Image
         type: image
         options:
           path: media/work/banners
           categories: [image]
-      - name: title
-        label: Title
-        type: string
-        required: true
       - name: description
         label: Description
         type: rich-text

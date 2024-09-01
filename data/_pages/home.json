@@ -1,5 +1,38 @@
 {
+  "coreCompetencies": {
+    "items": [
+      {
+        "heading": "Ideation and Research"
+      },
+      {
+        "heading": "Planning and Documentation",
+        "items": [
+          "AI/ML Strategy"
+        ]
+      },
+      {
+        "heading": "Execution and Support",
+        "items": [
+          "Team-building and Management",
+          "MVP Business Strategy",
+          "Workforce Training",
+          null
+        ]
+      }
+    ]
+  },
   "differentiators": {
-    "title": "Differentiators"
+    "title": "Differentiators",
+    "items": [
+      {
+        "description": "Experts at collaboratively developing solutions with minimal information"
+      },
+      {
+        "description": "Excellent communication and planning skills leading to 100% customer satisfaction from start to finish"
+      },
+      {
+        "description": "Strong dedication to acknowledging issues within an hour and resolving critical needs and problems within 12 hours with sliding scales of responsiveness depending on the nature of any issue"
+      }
+    ]
   }
 }

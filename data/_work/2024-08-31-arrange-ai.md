@@ -1,11 +1,9 @@
 ---
+published: false
 title: Arrange AI
 slug: arrange-ai
+client: Arrange Ai
 url: https://arrangeai.io/
-client:
-  name: Arrange AI
-  url: https://arrangeai.io/
-  slug: arrange-ai
-isOngoing: false
 date: 2024-08-31
+isOngoing: false
 ---

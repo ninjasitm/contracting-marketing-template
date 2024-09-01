@@ -174,9 +174,13 @@ content:
     label: Work
     path: data/_work
     view:
-      fields: [title, client, category]
+      fields: [title, client.name, categories, date]
       sort: [date, title]
       primary: slug
+    default:
+      search: ''
+      sort: date
+      order: desc
     fields:
       - name: client
         label: Client
@@ -185,9 +189,15 @@ content:
           - name: name
             label: Name
             type: string
+            required: true
           - name: slug
             label: Slug
             type: string
+            required: true
+          - name: published
+            label: Published
+            type: boolean
+            default: false
           - name: logo
             label: Logo
             type: image
@@ -211,6 +221,7 @@ content:
       - name: title
         label: Title
         type: string
+        required: true
       - name: description
         label: Description
         type: rich-text
@@ -272,7 +283,7 @@ content:
             label: Description
             type: string
           - name: items
-            label: Items
+            label: Process Items
             type: object
             list: true
             fields:
@@ -305,7 +316,7 @@ content:
             label: Description
             type: rich-text
           - name: items
-            label: Items
+            label: Design Items
             type: object
             list: true
             fields:
@@ -335,7 +346,7 @@ content:
             label: Description
             type: rich-text
           - name: items
-            label: Items
+            label: Result Items
             type: object
             list: true
             fields:

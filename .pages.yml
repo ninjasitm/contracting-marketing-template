@@ -174,8 +174,8 @@ content:
     path: data/_work
     view:
       fields: [title, client, category]
-      sort: [date]
-    primaryField: slug
+      sort: [date, title]
+    primary: slug
     fields:
       - name: client
         label: Client
@@ -365,7 +365,7 @@ content:
       - name: description
         label: Website description
         type: rich-text
-        description: Will be provused for any page with no description.
+        description: Will be provided for any page with no description.
       - name: url
         label: Website URL
         type: string
@@ -405,7 +405,7 @@ content:
           - name: value
             label: Value
             type: string
-      - name: navbnar
+      - name: navbar
         type: object
         label: Navbar Configuration
         fields:
@@ -449,7 +449,7 @@ content:
             type: string
             default: '#fff'
       - name: footer
-        label: Footer Configruation
+        label: Footer Configuration
         type: object
         fields:
           - name: footerStyle

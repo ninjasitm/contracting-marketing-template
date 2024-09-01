@@ -46,13 +46,16 @@
     "title": "Differentiators",
     "items": [
       {
-        "description": "Experts at collaboratively developing solutions with minimal information"
+        "description": "Experts at collaboratively developing solutions with minimal information",
+        "icon": "/media/images/database-zap.png"
       },
       {
-        "description": "Excellent communication and planning skills leading to 100% customer satisfaction from start to finish"
+        "description": "Excellent communication and planning skills leading to 100% customer satisfaction from start to finish",
+        "icon": "/media/images/notepad-text.png"
       },
       {
-        "description": "Strong dedication to acknowledging issues within an hour and resolving critical needs and problems within 12 hours with sliding scales of responsiveness depending on the nature of any issue"
+        "description": "Strong dedication to acknowledging issues within an hour and resolving critical needs and problems within 12 hours with sliding scales of responsiveness depending on the nature of any issue",
+        "icon": "/media/images/gallery-horizontal-end.png"
       }
     ]
   }

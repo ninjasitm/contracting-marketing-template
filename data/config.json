@@ -47,6 +47,18 @@
     {
       "title": "Instagram",
       "url": "https://instagram.com/ninjasitm"
+    },
+    {
+      "name": "facebook",
+      "url": "https://www.facebook.com/ninjasitm"
+    },
+    {
+      "name": "linkedin",
+      "url": "https://www.linkedin.com/company/ninjasitm"
+    },
+    {
+      "name": "twitter",
+      "url": "https://twitter.com/ninjasitm"
     }
   ],
   "style": {
@@ -62,19 +74,6 @@
       "backgroundColor": "#333",
       "textColor": "#fff"
     },
-    "links": [
-      {
-        "name": "facebook",
-        "url": "https://www.facebook.com/ninjasitm"
-      },
-      {
-        "name": "linkedin",
-        "url": "https://www.linkedin.com/company/ninjasitm"
-      },
-      {
-        "name": "twitter",
-        "url": "https://twitter.com/ninjasitm"
-      }
-    ]
+    "links": []
   }
 }

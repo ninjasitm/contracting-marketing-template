@@ -43,13 +43,19 @@
       "value": "NY State MWBE, NY City MWBE"
     }
   ],
+  "socialLinks": [
+    {
+      "title": "Instagram",
+      "url": "https://instagram.com/ninjasitm"
+    }
+  ],
   "style": {
     "backgroundColor": "#333",
     "textColor": "#fff"
   },
   "footer": {
     "companyInfoStyle": {
-      "backgroundColor": "#333",
+      "backgroundColor": "#33",
       "textColor": "#fff"
     },
     "footerStyle": {

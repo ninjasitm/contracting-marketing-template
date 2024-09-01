@@ -1,23 +1,14 @@
 import type { RouteLocationRaw } from 'vue-router';
 import { type NuxtApp } from '#app';
 import { type AwesomeLayoutPageNavbarMenu } from './utils/types';
-
+import appConfig from './content/config.json';
 export interface NuxtAwesomeAppConfig {
   /** title name */
-  name?: string;
+  title?: string;
   /** description */
   description?: string;
   /** logo */
   logo?: string;
-
-  /** project config */
-  project?: {
-    /** links */
-    links?: {
-      /** project github link */
-      github?: string;
-    };
-  };
 
   /** layout config */
   layout?: {
@@ -76,5 +67,33 @@ declare module '@nuxt/schema' {
 }
 
 export default defineAppConfig({
-  config: {},
+  config: {
+    name: appConfig.title,
+    logo: appConfig.logo,
+    description: appConfig.description,
+    layout: {
+      page: {
+        navbar: {
+          menus: [
+            { type: 'link', title: 'Work', to: { name: 'work' } },
+            { type: 'link', title: 'About', to: { name: 'about' } },
+            { type: 'link', title: 'Process', to: { name: 'process' } },
+          ],
+          links: appConfig.navbar.links || {},
+        },
+      },
+      footer: {
+        ...appConfig.footer,
+        naicsCodes: appConfig.naicsCodes,
+        year: new Date().getFullYear(),
+      },
+      welcome: {
+        title: appConfig.title,
+        disableInfoReplaceIndexInWelcomePage: true,
+      },
+    },
+    author: {
+      name: appConfig.companyName,
+    },
+  },
 });

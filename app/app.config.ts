@@ -1,73 +1,8 @@
-import type { RouteLocationRaw } from 'vue-router';
-import { type NuxtApp } from '#app';
-import { type AwesomeLayoutPageNavbarMenu } from '../utils/types';
-import appConfig from '../data/config.json';
-export interface NuxtAwesomeAppConfig {
-  /** title name */
-  title?: string;
-  /** description */
-  description?: string;
-  /** logo */
-  logo?: string;
-
-  /** layout config */
-  layout?: {
-    /** page layout */
-    page?: {
-      /** navbar */
-      navbar?: {
-        /** menus in navbar */
-        menus?: AwesomeLayoutPageNavbarMenu[];
-        links: Record<string, string>;
-      };
-    };
-    /** footer */
-    footer?: {
-      /** footer year */
-      year?: number;
-    };
-    /** welcome component page */
-    welcome?: {
-      title?: string;
-      disableInfoReplaceIndexInWelcomePage?: boolean;
-      primaryActionButton?: {
-        title?: string;
-        to?: RouteLocationRaw | ((nuxt: NuxtApp) => RouteLocationRaw);
-      };
-      secondaryActionButton?: {
-        title?: string;
-        to?: RouteLocationRaw | ((nuxt: NuxtApp) => RouteLocationRaw);
-      };
-    };
-  };
-
-  /** author config */
-  author?: {
-    /** author name */
-    name?: string;
-    /** author links */
-    links?: {
-      /** author github link */
-      github?: string;
-      /** author medium link */
-      medium?: string;
-      /** author website link */
-      website?: string;
-    };
-  };
-
-  /** author config */
-  disableInfoReplaceIndexInWelcomePage?: boolean;
-}
-
-declare module '@nuxt/schema' {
-  interface AppConfigInput {
-    config?: NuxtAwesomeAppConfig;
-  }
-}
+import type { NuxtAwesomeAppConfig } from '../app.config';
+import appConfig from '../content/config.json';
 
 export default defineAppConfig({
-  config: {
+  appConfig: {
     name: appConfig.title,
     logo: appConfig.logo,
     description: appConfig.description,
@@ -79,7 +14,7 @@ export default defineAppConfig({
             { type: 'link', title: 'About', to: { name: 'about' } },
             { type: 'link', title: 'Process', to: { name: 'process' } },
           ],
-          links: appConfig.links || {},
+          links: appConfig.navbar.links || {},
         },
       },
       footer: {
@@ -95,5 +30,5 @@ export default defineAppConfig({
     author: {
       name: appConfig.companyName,
     },
-  },
+  } as NuxtAwesomeAppConfig,
 });

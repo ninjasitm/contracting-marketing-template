@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
-import BackgroundImage from '~/public/images/demo/home/banner.png';
+import BackgroundImage from '../../public/images/demo/home/banner.png';
+import config from '../../content/_pages/home.json';
 
-const { awesome } = useAppConfig();
 definePageMeta({ layout: 'page' });
 useHead({
   titleTemplate: '',
-  title: awesome?.title || 'Nuxt 3 Awesome Starter',
+  title: config?.title || 'Contracting Starter',
 });
 
 type Differentiator = {
@@ -38,76 +38,7 @@ type HomeState = {
   };
 };
 
-const state: HomeState = reactive({
-  banner: {
-    title: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.',
-    description:
-      'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
-    actionText: 'Download capabilities statement',
-    actionUrl: '#download-capabilities',
-    backgroundImage: BackgroundImage,
-  },
-  coreCompetencies: {
-    title: 'Core Competencies',
-    description:
-      'NITM specializes in product management, development, consulting, and team building for complex and deep-tech solutions across various industries and verticals including Healthcare, EdTech, AI, SaaS, Data, HIPAA compliance, and more.',
-    items: [
-      {
-        heading: 'Product Management',
-        items: [
-          'Product Strategy',
-          'Product Roadmap',
-          'Product Design',
-          'Product Development',
-          'Product Launch',
-          'Product Marketing',
-        ],
-      },
-      {
-        heading: 'Consulting',
-        items: [
-          'Business Strategy',
-          'Market Research',
-          'Competitive Analysis',
-          'Go-to-Market Strategy',
-          'Growth Strategy',
-          'Business Development',
-        ],
-      },
-      {
-        heading: 'Team Building',
-        items: [
-          'Team Structure',
-          'Team Culture',
-          'Team Development',
-          'Team Training',
-          'Team Management',
-          'Team Leadership',
-        ],
-      },
-    ],
-  },
-  differentiators: {
-    title: 'Differentiators',
-    items: [
-      {
-        icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/acf526b3811a56de4e85ac6000b6e7bed2d87916ef2a3c3a3d3aba828eaa5df1?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-        description:
-          'NITM is a team of experienced product managers, developers, and consultants who have worked with Fortune 500 companies, startups, and government agencies.',
-      },
-      {
-        icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/acf526b3811a56de4e85ac6000b6e7bed2d87916ef2a3c3a3d3aba828eaa5df1?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-        description:
-          'NITM has a proven track record of delivering high-quality products and services on time and within budget.',
-      },
-      {
-        icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/acf526b3811a56de4e85ac6000b6e7bed2d87916ef2a3c3a3d3aba828eaa5df1?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-        description:
-          'NITM is committed to providing exceptional customer service and support to all of our clients.',
-      },
-    ],
-  },
-});
+const state: HomeState = reactive(config);
 </script>
 
 <template>

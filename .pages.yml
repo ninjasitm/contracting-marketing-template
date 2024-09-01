@@ -176,7 +176,7 @@ content:
     view:
       fields: [title, client, category]
       sort: [date, title]
-    primary: slug
+      primary: slug
     fields:
       - name: client
         label: Client

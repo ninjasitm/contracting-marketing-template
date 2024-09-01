@@ -480,7 +480,7 @@ content:
                 label: Text Color
                 type: string
                 default: '#fff'
-          - name: links
+          - name: footerLinks
             label: Links
             list: true
             type: object

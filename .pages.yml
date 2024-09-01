@@ -107,6 +107,7 @@ content:
               - name: linkedinUrl
                 label: LinkedIn URL
                 type: string
+                pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
   - name: processPage
     type: file
     label: Process Page
@@ -196,9 +197,11 @@ content:
           - name: url
             label: URL
             type: string
+            pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
       - name: url
         label: URL
         type: string
+        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
       - name: bannerImage
         label: Banner Image
         type: image
@@ -430,6 +433,7 @@ content:
           - name: url
             label: URL
             type: string
+            pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
           - name: icon
             label: Icon
             type: image
@@ -487,3 +491,4 @@ content:
               - name: url
                 label: URL
                 type: string
+                pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$

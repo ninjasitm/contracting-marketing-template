@@ -173,7 +173,7 @@ content:
   - name: work
     type: collection
     label: Work
-    path: data/_work/projects
+    path: data/_work
     view:
       fields: [title, client.name, categories, isOngoing, published, date]
       sort: [date, title]
@@ -213,7 +213,7 @@ content:
       - name: client
         label: Client
         type: file
-        path: data/_work/clients.json
+        path: data/clients.json
         fields:
           - name: name
             label: Name

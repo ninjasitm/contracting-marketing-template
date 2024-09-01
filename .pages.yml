@@ -185,6 +185,7 @@ content:
       - name: title
         label: Title
         type: string
+        required: true
       - name: slug
         label: Slug
         type: string
@@ -194,6 +195,16 @@ content:
         type: string
         pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
         required: true
+      - name: date
+        label: Date
+        type: date
+        required: true
+        options:
+          format: 'MM/DD/YYYY'
+      - name: isOngoing
+        label: Ongoing
+        type: boolean
+        default: false
       - name: client
         label: Client
         type: object
@@ -225,15 +236,6 @@ content:
       - name: description
         label: Description
         type: rich-text
-      - name: isOngoing
-        label: Ongoing
-        type: boolean
-        default: false
-      - name: date
-        label: Date
-        type: date
-        options:
-          format: 'MM/DD/YYYY'
       - name: categories
         label: Categories
         type: string

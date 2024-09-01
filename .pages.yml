@@ -480,8 +480,8 @@ content:
                 label: Text Color
                 type: string
                 default: '#fff'
-          - name: socialLinks
-            label: Social Links
+          - name: links
+            label: Links
             list: true
             type: object
             fields:

@@ -177,10 +177,10 @@ content:
       fields: [title, client.name, categories, isOngoing, published, date]
       sort: [date, title]
       primary: slug
-    default:
-      search: ''
-      sort: date
-      order: desc
+      default:
+        search: ''
+        sort: date
+        order: desc
     fields:
       - name: title
         label: Title

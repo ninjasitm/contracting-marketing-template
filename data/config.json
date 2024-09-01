@@ -49,15 +49,15 @@
       "url": "https://instagram.com/ninjasitm"
     },
     {
-      "name": "facebook",
+      "title": "Facebook",
       "url": "https://www.facebook.com/ninjasitm"
     },
     {
-      "name": "linkedin",
+      "title": "LinkedIn",
       "url": "https://www.linkedin.com/company/ninjasitm"
     },
     {
-      "name": "twitter",
+      "title": "Twitter",
       "url": "https://twitter.com/ninjasitm"
     }
   ],
@@ -73,7 +73,6 @@
     "footerStyle": {
       "backgroundColor": "#333",
       "textColor": "#fff"
-    },
-    "links": []
+    }
   }
 }

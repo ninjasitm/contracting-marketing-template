@@ -481,7 +481,7 @@ content:
                 type: string
                 default: '#fff'
           - name: footerLinks
-            label: Links
+            label: Footer Links
             list: true
             type: object
             fields:

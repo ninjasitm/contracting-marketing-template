@@ -2,12 +2,25 @@
   "coreCompetencies": {
     "items": [
       {
-        "heading": "Ideation and Research"
+        "heading": "Ideation and Research",
+        "items": [
+          "Scoping and Prioritization",
+          "Prototyping, Wireframing",
+          "Design UI/UX",
+          "System Architecture",
+          "Cloud Architecture and Recommendations",
+          "Roadmapping and ROI Strategy"
+        ]
       },
       {
         "heading": "Planning and Documentation",
         "items": [
-          "AI/ML Strategy"
+          "AI/ML Strategy",
+          "Database and Data Stack Design",
+          "SaaS",
+          "Mobile Applications",
+          "API Design and Integration",
+          "Security"
         ]
       },
       {
@@ -16,7 +29,9 @@
           "Team-building and Management",
           "MVP Business Strategy",
           "Workforce Training",
-          null
+          "Maintenance and Advisory",
+          "Education, Presentations and Continuous Learning",
+          "Salesforce Development"
         ]
       }
     ]

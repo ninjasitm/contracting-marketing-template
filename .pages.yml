@@ -182,6 +182,10 @@ content:
         sort: date
         order: desc
     fields:
+      - name: published
+        label: Published
+        type: boolean
+        default: false
       - name: title
         label: Title
         type: string
@@ -213,10 +217,6 @@ content:
             label: Name
             type: string
             required: true
-          - name: published
-            label: Published
-            type: boolean
-            default: false
           - name: logo
             label: Logo
             type: image

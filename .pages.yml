@@ -483,7 +483,6 @@ content:
           - name: links
             label: Links
             type: object
-            list: true
             fields:
               - name: title
                 label: Title

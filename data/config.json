@@ -62,7 +62,7 @@
       "backgroundColor": "#333",
       "textColor": "#fff"
     },
-    "socialLinks": [
+    "links": [
       {
         "name": "facebook",
         "url": "https://www.facebook.com/ninjasitm"

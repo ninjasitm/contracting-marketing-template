@@ -3,6 +3,9 @@
   "description": "NITM provides technology planning, design, implementation, maintenance, and training for federal, state, and local governments, and small businesses. With over 10 years of experience developing and delivering solutions from conception to market, we pride ourselves on being efficient, strong communicators from start to finish.",
   "url": "https://www.nitm.co",
   "logo": "/media/images/Ninjas Logo.png",
+  "address": "1350 College Ave",
+  "phone": "1 (347) 241-2690",
+  "email": "contracts@ninjasitm.com",
   "naicsCodes": [
     "541511",
     "611420",
@@ -44,12 +47,27 @@
     "textColor": "#fff"
   },
   "footer": {
-    "address": "1350 College Ave",
-    "phone": "1 (347) 241-2690",
-    "email": "contracts@ninjasitm.com",
     "companyInfoStyle": {
       "backgroundColor": "#333",
       "textColor": "#fff"
-    }
+    },
+    "footerStyle": {
+      "backgroundColor": "#333",
+      "textColor": "#fff"
+    },
+    "socialLinks": [
+      {
+        "name": "facebook",
+        "url": "https://www.facebook.com/ninjasitm"
+      },
+      {
+        "name": "linkedin",
+        "url": "https://www.linkedin.com/company/ninjasitm"
+      },
+      {
+        "name": "twitter",
+        "url": "https://twitter.com/ninjasitm"
+      }
+    ]
   }
 }

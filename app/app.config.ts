@@ -1,7 +1,7 @@
 import type { RouteLocationRaw } from 'vue-router';
-import { NuxtApp } from '#app';
-import { AwesomeLayoutPageNavbarMenu } from './types';
-
+import { type NuxtApp } from '#app';
+import { type AwesomeLayoutPageNavbarMenu } from '../utils/types';
+import appConfig from '../data/config.json';
 export interface NuxtAwesomeAppConfig {
   /** title name */
   title?: string;
@@ -9,15 +9,6 @@ export interface NuxtAwesomeAppConfig {
   description?: string;
   /** logo */
   logo?: string;
-
-  /** project config */
-  project?: {
-    /** links */
-    links?: {
-      /** project github link */
-      github?: string;
-    };
-  };
 
   /** layout config */
   layout?: {
@@ -77,15 +68,9 @@ declare module '@nuxt/schema' {
 
 export default defineAppConfig({
   config: {
-    name: 'Ninjas in the Machine',
-    description:
-      'a starter template for Nuxt 3 with minimalist themes design, built in components, drawer & menus, and more.',
-    logo: '/public/images/demo/logo.png',
-    project: {
-      links: {
-        github: 'https://github.com/viandwi24/nuxt3-awesome-starter',
-      },
-    },
+    name: appConfig.title,
+    logo: appConfig.logo,
+    description: appConfig.description,
     layout: {
       page: {
         navbar: {
@@ -93,36 +78,22 @@ export default defineAppConfig({
             { type: 'link', title: 'Work', to: { name: 'work' } },
             { type: 'link', title: 'About', to: { name: 'about' } },
             { type: 'link', title: 'Process', to: { name: 'process' } },
-            // dynamic title
-            // {
-            //   type: 'button',
-            //   title: (nuxt) =>
-            //     (nuxt._appConfig as AppConfigInput)?.awesome?.title || '',
-            //   to: (nuxt) => (nuxt._appConfig as AppConfigInput)?.awesome?.title || '',
-            // },
           ],
-          links: {
-            startProject: '/start-project',
-            capabilities: '/assets/capabilities.pdf',
-          },
+          links: appConfig.links || {},
         },
       },
       footer: {
+        ...appConfig.footer,
+        naicsCodes: appConfig.naicsCodes,
         year: new Date().getFullYear(),
       },
       welcome: {
-        title: 'Contracting Starter',
+        title: appConfig.title,
         disableInfoReplaceIndexInWelcomePage: true,
       },
     },
     author: {
-      name: 'ninjasitm',
-      links: {
-        github: 'https://gitlab.com/ninjasitm',
-        medium: 'https://nitm.medium.com',
-        website: 'https://ninjasitm.com',
-        capabilities: '/assets/capabilities.pdf',
-      },
+      name: appConfig.companyName,
     },
   },
 });

@@ -24,3 +24,7 @@ export type GenericItem = {
   label: string;
   value: string;
 };
+
+export type StyleObject = {
+  [key: string]: string;
+};

@@ -1,15 +1,12 @@
 <script lang="ts" setup>
-import { toRefs, defineProps } from 'vue';
+import { toRefs } from 'vue';
 
 type Item = {
   label: string;
   value: string;
 };
 
-const props = defineProps<{
-  label: string;
-  value: string;
-}>();
+const props = defineProps<Item>();
 
 const { label, value } = toRefs(props);
 </script>

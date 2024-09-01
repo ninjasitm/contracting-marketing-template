@@ -32,30 +32,30 @@ const state: CompanyAddressState = reactive({
 });
 
 // Mock data
-function useMockData() {
-  state.address = '1350 College Ave, Bronx, NY, 10456';
-  state.email = 'hello@nitm.co';
-  state.socialLinks = [
-    { title: 'Facebook', icon: 'Facebook', url: '#' },
-    { title: 'Twitter', icon: 'Twitter', url: '#' },
-    { title: 'Instagram', icon: 'Instagram', url: '#' },
-    { title: 'LinkedIn', icon: 'LinkedIn', url: '#' },
-  ];
-  state.links = [
-    { title: 'Work', url: '/work' },
-    { title: 'About', url: '/about' },
-    { title: 'Services', url: '/services' },
-    { title: 'Contact', url: '/contact' },
-  ];
-  state.companyName = 'Ninjas in the Machine Inc';
-}
+// function useMockData() {
+//   state.address = '1350 College Ave, Bronx, NY, 10456';
+//   state.email = 'hello@nitm.co';
+//   state.socialLinks = [
+//     { title: 'Facebook', icon: 'Facebook', url: '#' },
+//     { title: 'Twitter', icon: 'Twitter', url: '#' },
+//     { title: 'Instagram', icon: 'Instagram', url: '#' },
+//     { title: 'LinkedIn', icon: 'LinkedIn', url: '#' },
+//   ];
+//   state.links = [
+//     { title: 'Work', url: '/work' },
+//     { title: 'About', url: '/about' },
+//     { title: 'Services', url: '/services' },
+//     { title: 'Contact', url: '/contact' },
+//   ];
+//   state.companyName = 'Ninjas in the Machine Inc';
+// }
 
 onMounted(() => {
   state.address = props.address;
   state.email = props.email;
   state.links = props.links;
   state.companyName = props.companyName;
-  useMockData();
+  // useMockData();
 });
 </script>
 

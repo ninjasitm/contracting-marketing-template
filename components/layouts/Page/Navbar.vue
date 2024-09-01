@@ -209,11 +209,13 @@ const showDrawer = ref(false);
       <AwesomeActionSheetGroup :blur="false">
         <AwesomeActionSheetItemButton
           class="flex justify-center items-center text-base space-x-2 h-[4rem]"
+          :href="links.capabilities"
         >
           <span class="text-[1.5rem]">Capabilities Statement</span>
         </AwesomeActionSheetItemButton>
         <AwesomeActionSheetItemButton
           class="flex justify-center items-center text-base space-x-2 h-[4rem]"
+          :href="links.startProject"
         >
           <span class="text-[1.5rem]">Start a Project</span>
         </AwesomeActionSheetItemButton>

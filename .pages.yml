@@ -370,6 +370,15 @@ content:
         label: Website URL
         type: string
         pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+      - name: address
+        label: Address
+        type: string
+      - name: phone
+        label: Phone
+        type: string
+      - name: email
+        label: Email
+        type: string
       - name: logo
         label: Logo
         type: image
@@ -378,6 +387,9 @@ content:
         label: Preview image
         type: image
         description: Image used in the social preview on social networks (e.g. Facebook, Twitter...)
+      - name: naicsCodesTitle
+        label: NAICS Codes Title
+        type: string
       - name: naicsCodes
         label: NAICS Codes
         type: string
@@ -393,16 +405,37 @@ content:
           - name: value
             label: Value
             type: string
-      - name: links
-        label: Links
+      - name: navbnar
+        type: object
+        label: Navbar Configuration
+        fields:
+          - name: links
+            label: Links
+            type: object
+            fields:
+              - name: capabilities
+                label: Capabilities
+                type: string
+              - name: startProject
+                label: Start a Project
+                type: string
+      - name: socialLinks
+        label: Social Links
+        list: true
         type: object
         fields:
-          - name: capabilities
-            label: Capabilities
+          - name: title
+            label: Title
             type: string
-          - name: startProject
-            label: Start a Project
+          - name: url
+            label: URL
             type: string
+          - name: icon
+            label: Icon
+            type: image
+            options:
+              path: media/social
+              categories: [image]
       - name: style
         label: Style
         type: object
@@ -419,15 +452,18 @@ content:
         label: Footer Configruation
         type: object
         fields:
-          - name: address
-            label: Address
-            type: string
-          - name: phone
-            label: Phone
-            type: string
-          - name: email
-            label: Email
-            type: string
+          - name: footerStyle
+            label: Footer Style
+            type: object
+            fields:
+              - name: backgroundColor
+                label: Background Color
+                type: string
+                default: '#333'
+              - name: textColor
+                label: Text Color
+                type: string
+                default: '#fff'
           - name: companyInfoStyle
             label: Company Info Style
             type: object
@@ -440,23 +476,6 @@ content:
                 label: Text Color
                 type: string
                 default: '#fff'
-          - name: socialLinks
-            label: Social Links
-            list: true
-            type: object
-            fields:
-              - name: title
-                label: Title
-                type: string
-              - name: url
-                label: URL
-                type: string
-              - name: icon
-                label: Icon
-                type: image
-                options:
-                  path: media/social
-                  categories: [image]
           - name: links
             label: Links
             type: object

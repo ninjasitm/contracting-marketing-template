@@ -4,11 +4,13 @@ import CompanyInfoItem from './CompanyInfoItem.vue';
 
 import type { GenericItem } from '~/utils/types';
 
-const props = defineProps<{
+type CompanyInfoProps = {
   items: GenericItem[];
-  naicsCodesTitle: string;
-  naicsCodes: string[];
-}>();
+  naicsCodesTitle?: string;
+  naicsCodes?: string[];
+};
+
+const props = defineProps<CompanyInfoProps>();
 
 const { items, naicsCodesTitle, naicsCodes } = toRefs(props);
 </script>

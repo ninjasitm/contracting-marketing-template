@@ -43,6 +43,12 @@
       "value": "NY State MWBE, NY City MWBE"
     }
   ],
+  "navbar": {
+    "links": {
+      "capabilities": "/assets/capabilities.pdf",
+      "startProject": "/contact"
+    }
+  },
   "socialLinks": [
     {
       "title": "Instagram",
@@ -66,12 +72,12 @@
     "textColor": "#fff"
   },
   "footer": {
-    "companyInfoStyle": {
-      "backgroundColor": "#33",
-      "textColor": "#fff"
-    },
     "footerStyle": {
       "backgroundColor": "#333",
+      "textColor": "#fff"
+    },
+    "companyInfoStyle": {
+      "backgroundColor": "#33",
       "textColor": "#fff"
     }
   }

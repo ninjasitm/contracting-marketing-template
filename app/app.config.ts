@@ -14,7 +14,8 @@ export default defineAppConfig({
             { type: 'link', title: 'About', to: { name: 'about' } },
             { type: 'link', title: 'Process', to: { name: 'process' } },
           ],
-          links: appConfig.navbar.links || {},
+          // links: appConfig.navbar.links || {},
+          links: {},
         },
       },
       footer: {

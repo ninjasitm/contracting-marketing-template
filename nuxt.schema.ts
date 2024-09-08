@@ -2,7 +2,7 @@ import type { NuxtAwesomeAppConfig } from './app.config';
 
 export default defineNuxtSchema({
   appConfig: {
-    awesome: {
+    config: {
       name: '',
       description: '',
       project: {

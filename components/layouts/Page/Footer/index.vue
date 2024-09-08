@@ -7,7 +7,9 @@ import CompanyInfo from './CompanyInfo.vue';
 
 import type { LinkItem, GenericItem, StyleObject } from '@/utils/types';
 
-const { config } = useconfig();
+const { config } = useAppConfig();
+
+console.log('config', config);
 
 export type FooterState = {
   address?: string;
@@ -30,9 +32,9 @@ const state: FooterState = reactive({
   items: config.companyInfo as GenericItem[],
   naicsCodesTitle: config.naicsCodesTitle as string,
   naicsCodes: config.naicsCodes as string[],
-  containerStyle: config.footer.containerStyle,
-  footerStyle: config.footer.footerStyle,
-  companyInfoStyle: config.footer.companyInfoStyle,
+  containerStyle: config.layout.footer.containerStyle,
+  footerStyle: config.layout.footer.footerStyle,
+  companyInfoStyle: config.layout.footer.companyInfoStyle,
 });
 </script>
 

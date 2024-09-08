@@ -7,6 +7,18 @@ export interface NuxtAwesomeAppConfig {
   title?: string;
   /** description */
   description?: string;
+  /** company name */
+  companyName?: string;
+  /** naics codes */
+  naicsCodes?: string[];
+  /** url */
+  url?: string;
+  /** address */
+  address?: string;
+  /** email */
+  email?: string;
+  /** phone */
+  phone?: string;
   /** logo */
   logo?: string;
 
@@ -70,7 +82,16 @@ export default defineAppConfig({
   config: {
     name: appConfig.title,
     logo: appConfig.logo,
+    title: appConfig.title,
+    companyName: appConfig.companyName,
+    url: appConfig.url,
+    email: appConfig.email,
+    phone: appConfig.phone,
     description: appConfig.description,
+    naicsCodes: appConfig.naicsCodes,
+    author: {
+      name: appConfig.companyName,
+    },
     layout: {
       page: {
         navbar: {
@@ -92,13 +113,10 @@ export default defineAppConfig({
         disableInfoReplaceIndexInWelcomePage: true,
       },
     },
-    author: {
-      name: appConfig.companyName,
-    },
   } as NuxtAwesomeAppConfig,
   nuxtIcon: {
     aliases: {},
     class: '',
     size: '1em',
-  }
+  },
 });

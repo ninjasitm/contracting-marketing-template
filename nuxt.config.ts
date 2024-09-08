@@ -3,14 +3,10 @@ const { resolve } = createResolver(import.meta.url);
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: false,
   // exp
   experimental: {
     localLayerAliases: true,
-  },
-  nitro: {
-    prerender: {
-      autoSubfolderIndex: false,
-    },
   },
 
   // app config
@@ -123,5 +119,5 @@ export default defineNuxtConfig({
   //   ]
   // },
 
-  // compatibilityDate: '2024-09-01',
+  compatibilityDate: '2024-09-01',
 });

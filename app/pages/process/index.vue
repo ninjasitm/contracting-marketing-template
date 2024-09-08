@@ -1,54 +1,13 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
+import config from '@@/app/content/_pages/process.json';
 import ProcessSection from '../../../components/process/ProcessSection.vue';
 definePageMeta({ layout: 'page' });
 
 const state = reactive({
-  title: 'Process',
-  description:
-    'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus maecenas tempus, tellus eget.',
-  sections: [
-    {
-      title: 'Research',
-      description:
-        'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus maecenas tempus, tellus eget.',
-      items: [
-        'Curabitur ullamcorper ultricies nisi.',
-        'Nam eget dui.',
-        'Etiam rhoncus maecenas tempus, tellus eget.',
-      ],
-    },
-    {
-      title: 'Design',
-      description:
-        'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus maecenas tempus, tellus eget.',
-      items: [
-        'Curabitur ullamcorper ultricies nisi.',
-        'Nam eget dui.',
-        'Etiam rhoncus maecenas tempus, tellus eget.',
-      ],
-    },
-    {
-      title: 'Develop',
-      description:
-        'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus maecenas tempus, tellus eget.',
-      items: [
-        'Curabitur ullamcorper ultricies nisi.',
-        'Nam eget dui.',
-        'Etiam rhoncus maecenas tempus, tellus eget.',
-      ],
-    },
-    {
-      title: 'Launch',
-      description:
-        'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus maecenas tempus, tellus eget.',
-      items: [
-        'Curabitur ullamcorper ultricies nisi.',
-        'Nam eget dui.',
-        'Etiam rhoncus maecenas tempus, tellus eget.',
-      ],
-    },
-  ],
+  title: config.title,
+  description: config.description,
+  sections: config.sections,
 });
 </script>
 <template>

@@ -13,11 +13,13 @@ const state: LayoutProps = reactive({
 </script>
 
 <template>
-  <div class="overflow-x-hidden scroll-smooth" :style="state.style">
-    <LayoutPageNavbar />
-    <LayoutPageContent class="container mx-auto">
-      <slot />
-    </LayoutPageContent>
+  <div class="overflow-x-hidden scroll-smooth mx-auto" :style="state.style">
+    <div class="mx-auto max-w-screen-xl">
+      <LayoutPageNavbar />
+      <LayoutPageContent>
+        <slot />
+      </LayoutPageContent>
+    </div>
     <LayoutPageFooter />
   </div>
 </template>

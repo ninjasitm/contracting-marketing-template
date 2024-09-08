@@ -77,7 +77,7 @@ onMounted(() => {
           {{ state.email }}
         </a>
         <p class="pt-6 mb-6 mt-4 text-lg">
-          © {{ currentYear }} {{ state.companyName }}.
+          © {{ currentYear }} {{ state.companyName }}
         </p>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import type { RouteLocationRaw } from 'vue-router';
 import { type NuxtApp } from '#app';
 import { type AwesomeLayoutPageNavbarMenu } from './utils/types';
-import appConfig from './content/config.json';
+import appConfig from './app/content/config.json';
 export interface NuxtAwesomeAppConfig {
   /** title name */
   title?: string;
@@ -9,6 +9,8 @@ export interface NuxtAwesomeAppConfig {
   description?: string;
   /** company name */
   companyName?: string;
+  /** naics codes title */
+  naicsCodesTitle?: string;
   /** naics codes */
   naicsCodes?: string[];
   /** url */
@@ -21,7 +23,18 @@ export interface NuxtAwesomeAppConfig {
   phone?: string;
   /** logo */
   logo?: string;
-
+  /** company info */
+  companyInfo: {
+    title: string;
+    value: string;
+  }[];
+  /** social links */
+  socialLinks?: {
+    /** social link name */
+    title: string;
+    /** social link url */
+    url: string;
+  }[];
   /** layout config */
   layout?: {
     /** page layout */
@@ -37,6 +50,14 @@ export interface NuxtAwesomeAppConfig {
     footer?: {
       /** footer year */
       year?: number;
+      /** naics codes title */
+      naicsCodesTitle?: string;
+      /** footer container style */
+      containerStyle?: Record<string, string>;
+      /** footer company info style */
+      companyInfoStyle?: Record<string, string>;
+      /** footer style */
+      footerStyle?: Record<string, string>;
     };
     /** welcome component page */
     welcome?: {
@@ -80,15 +101,17 @@ declare module '@nuxt/schema' {
 
 export default defineAppConfig({
   config: {
-    name: appConfig.title,
     logo: appConfig.logo,
     title: appConfig.title,
     companyName: appConfig.companyName,
     url: appConfig.url,
     email: appConfig.email,
     phone: appConfig.phone,
+    address: appConfig.address,
     description: appConfig.description,
     naicsCodes: appConfig.naicsCodes,
+    companyInfo: appConfig.companyInfo,
+    socialLinks: appConfig.socialLinks,
     author: {
       name: appConfig.companyName,
     },
@@ -104,8 +127,10 @@ export default defineAppConfig({
         },
       },
       footer: {
-        ...appConfig.footer,
-        naicsCodes: appConfig.naicsCodes,
+        naicsCodesTitle: appConfig.footer?.naicsCodesTitle as string,
+        containerStyle: {},
+        companyInfoStyle: {},
+        footerStyle: {},
         year: new Date().getFullYear(),
       },
       welcome: {

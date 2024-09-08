@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
 import BackgroundImage from '../../public/images/demo/home/banner.png';
-import config from '../../content/_pages/home.json';
+import config from '../../app/content/_pages/home.json';
 
 definePageMeta({ layout: 'page' });
 useHead({

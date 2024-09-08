@@ -5,7 +5,7 @@ content:
   - name: homePage
     type: file
     label: Home Page
-    path: content/_pages/home.json
+    path: app/content/_pages/home.json
     fields:
       - name: banner
         label: Banner
@@ -71,7 +71,7 @@ content:
   - name: aboutPage
     type: file
     label: About Page
-    path: content/_pages/about.json
+    path: app/content/_pages/about.json
     fields:
       - name: heading
         label: Heading
@@ -88,7 +88,7 @@ content:
   - name: teamMembers
     label: Team Members
     type: file
-    path: content/_about/teamMembers.json
+    path: app/content/_about/teamMembers.json
     fields:
       - name: members
         label: Members
@@ -116,7 +116,7 @@ content:
   - name: processPage
     type: file
     label: Process Page
-    path: content/_pages/process.json
+    path: app/content/_pages/process.json
     fields:
       - name: title
         label: Title
@@ -142,7 +142,7 @@ content:
   - name: workPage
     type: file
     label: Work Page
-    path: content/_pages/work.json
+    path: app/content/_pages/work.json
     fields:
       - name: title
         label: Title
@@ -177,7 +177,7 @@ content:
   - name: work
     type: collection
     label: Work
-    path: content/_work
+    path: app/content/_work
     view:
       fields: [title, client, categories, isOngoing, published, date]
       sort: [date, title]
@@ -366,7 +366,7 @@ content:
     label: Clients
     type: file
     list: true
-    path: content/clients.json
+    path: app/content/clients.json
     fields:
       - name: name
         label: Name
@@ -388,7 +388,7 @@ content:
         pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
   - name: config
     label: App Config
-    path: content/config.json
+    path: app/content/config.json
     type: file
     fields:
       - name: title
@@ -488,6 +488,9 @@ content:
         label: Footer Configuration
         type: object
         fields:
+          - name: naicsCodesTitle
+            label: NAICS Codes Title
+            type: string
           - name: footerStyle
             label: Footer Style
             type: object

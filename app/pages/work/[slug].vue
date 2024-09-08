@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
+import Loading from '@/components/layouts/Page/Loading.vue';
 definePageMeta({ layout: 'page' });
+
+const $route = useRoute();
 
 interface ProcessItem {
   imgSrc: string;
@@ -20,42 +23,55 @@ interface ResultItem {
   description: string;
 }
 
-interface SingleProjectState {
-  project: {
-    client: {
-      name: string;
-    };
-    bannerImage: string;
+interface Client {
+  name: string;
+  logo?: string;
+  description?: string;
+  website?: string;
+}
+
+interface Project {
+  title: string;
+  date: string;
+  slug: string;
+  isOngoing?: boolean;
+  description?: string;
+  client: string;
+  url: string;
+  bannerImage?: string;
+  categories?: string[];
+  problem?: {
     title: string;
+    image: string;
     description: string;
-    date: string;
-    categories: string[];
-    problem: {
-      title: string;
-      image: string;
-      description: string;
-    };
-    solution: {
-      title: string;
-      image: string;
-      description: string;
-    };
-    process: {
-      title: string;
-      description: string;
-      items: ProcessItem[];
-    };
-    design: {
-      title: string;
-      description: string;
-      items: DesignItem[];
-    };
-    result: {
-      title: string;
-      description: string;
-      items: ResultItem[];
-    };
   };
+  solution?: {
+    title: string;
+    image: string;
+    description: string;
+  };
+  process?: {
+    title: string;
+    image: string;
+    description: string;
+    items: ProcessItem[];
+  };
+  design?: {
+    title: string;
+    image: string;
+    description: string;
+    items: DesignItem[];
+  };
+  result?: {
+    title: string;
+    image: string;
+    description: string;
+    items: ResultItem[];
+  };
+}
+
+interface SingleProjectState {
+  project: Project;
   nextProject?: {
     id: string;
     title: string;
@@ -68,144 +84,42 @@ interface SingleProjectState {
   };
 }
 
-const state: SingleProjectState = reactive({
-  project: {
-    client: {
-      name: 'Walmart',
-    },
-    bannerImage:
-      'https://cdn.builder.io/api/v1/image/assets/TEMP/0db99a745dd1f8ce609fba75bddb17fde7b5dd5eda9f66caea7fbbea7a9bd5b2?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-    title: 'Lorem ipsum dolor sit amet.',
-    description:
-      'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero.',
-    date: 'September 28, 2023',
-    categories: ['Product Design', 'Development'],
-    problem: {
-      title: 'Problem',
-      image:
-        'https://cdn.builder.io/api/v1/image/assets/TEMP/0db99a745dd1f8ce609fba75bddb17fde7b5dd5eda9f66caea7fbbea7a9bd5b2?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-      description:
-        'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero.',
-    },
-    solution: {
-      title: 'Solution',
-      image:
-        'https://cdn.builder.io/api/v1/image/assets/TEMP/0db99a745dd1f8ce609fba75bddb17fde7b5dd5eda9f66caea7fbbea7a9bd5b2?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-      description:
-        'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero.',
-    },
-    process: {
-      title: 'Process',
-      image:
-        'https://cdn.builder.io/api/v1/image/assets/TEMP/0db99a745dd1f8ce609fba75bddb17fde7b5dd5eda9f66caea7fbbea7a9bd5b2?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-      description:
-        'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero.',
-      items: [
-        {
-          imgSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/c2edc28aff1766154b031eb83c8940fa575e1ccc6d5de8b2b00a99ac19f0ae60?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-          alt: 'Process step 1',
-          description:
-            'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.',
-        },
-        {
-          imgSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/edbc5048782e495a4f21533fa41ed67f9583c34f0d64d72e552409e6e9a26ace?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-          alt: 'Process step 2',
-          description:
-            'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.',
-        },
-        {
-          imgSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/c2edc28aff1766154b031eb83c8940fa575e1ccc6d5de8b2b00a99ac19f0ae60?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-          alt: 'Process step 3',
-          description:
-            'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.',
-        },
-        {
-          imgSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/edbc5048782e495a4f21533fa41ed67f9583c34f0d64d72e552409e6e9a26ace?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-          alt: 'Process step 4',
-          description:
-            'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.',
-        },
-      ] as ProcessItem[],
-    },
-    design: {
-      title: 'Design',
-      image:
-        'https://cdn.builder.io/api/v1/image/assets/TEMP/0db99a745dd1f8ce609fba75bddb17fde7b5dd5eda9f66caea7fbbea7a9bd5b2?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-      description:
-        'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero.',
-      items: [
-        {
-          imgSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/c91a91d65a1d46df79a3976489054c2b5d4e9bb3580a8e5a4e708b5b173dd75d?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-          alt: 'Design example 1',
-        },
-        {
-          imgSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/0db99a745dd1f8ce609fba75bddb17fde7b5dd5eda9f66caea7fbbea7a9bd5b2?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-          alt: 'Design example 2',
-        },
-        {
-          imgSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/302f2e1b2d329d9098717d96876b85467505b78c29050604c5b9d27635d1506a?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-          alt: 'Design example 3',
-        },
-      ] as DesignItem[],
-    },
-    result: {
-      title: 'Results',
-      image:
-        'https://cdn.builder.io/api/v1/image/assets/TEMP/0db99a745dd1f8ce609fba75bddb17fde7b5dd5eda9f66caea7fbbea7a9bd5b2?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-      description:
-        'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc.',
-      items: [
-        {
-          imgSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/d43355f7d96cb8e8aca4bfc67b7ce44fa95791d0d460a6939c9c46282e820c1a?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-          alt: 'Result 1 background',
-          title: '98+ million',
-          description:
-            'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget',
-        },
-        {
-          imgSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/901d0a9606d36da0fe73dab0ee94e46dc3d4b9258cdd2700ae283736b1d6a920?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-          alt: 'Result 2 background',
-          title: '98+ million',
-          description:
-            'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget',
-        },
-        {
-          imgSrc:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/c9d10623429b428a7f8e06f88e463fd0a86b14fb913364eea70657ac1e8aaaa6?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-          alt: 'Result 3 background',
-          title: '98+ million',
-          description:
-            'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget',
-        },
-      ] as ResultItem[],
-    },
-  },
-  nextProject: {
-    id: '2',
-    title: 'Lorem ipsum dolor sit amet.',
-    description:
-      'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus maecenas tempus, tellus eget.',
-  },
-  previousProject: {
-    id: '6',
-    title: 'Lorem ipsum dolor sit amet.',
-    description:
-      'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus maecenas tempus, tellus eget.',
-  },
-});
+const isLoading = ref(true);
+const project = (
+  await useAsyncData('_work.project', () =>
+    queryContent('/_work').where({ slug: $route.params.slug }).findOne(),
+  )
+).data as Project;
+if (project.value) {
+  const client = (
+    await useAsyncData('_client', () =>
+      queryContent('/').where({ name: project.value.client }).findOne(),
+    )
+  ).data as Client;
+  const [previousProject, nextProject] = await queryContent('_work')
+    .only(['title', 'slug', 'description'])
+    .where({ published: true })
+    .findSurround(`_work/${project.value.slug}`);
+} else {
+  // Get three random projects
+  const projects = (
+    await useAsyncData('_work.project.notFound', () =>
+      queryContent('/_work')
+        .only(['id', 'imageSrc', 'description', 'client', 'slug'])
+        .limit(3)
+        .find(),
+    )
+  ).data as Project[];
+}
+isLoading.value = false;
 </script>
 
 <template>
+  <div v-if="isLoading.value" class="flex justify-center w-full">
+    <Loading />
+  </div>
   <div
+    v-else-if="project"
     class="flex flex-col items-center mt-40 w-full max-md:mt-10 max-md:max-w-full px-4"
   >
     <div
@@ -217,28 +131,28 @@ const state: SingleProjectState = reactive({
         >
           <h1
             class="leading-relaxed max-md:max-w-full"
-            v-html="state.project.client.name"
+            v-html="client?.name"
           ></h1>
           <h2
             class="self-center mt-4 text-6xl tracking-tighter uppercase max-md:max-w-full max-md:text-4xl"
-            v-html="state.project.title"
+            v-html="project.title"
           ></h2>
           <p
             class="mt-4 text-lg max-md:max-w-full"
-            v-html="state.project.description"
+            v-html="project.description"
           ></p>
           <time
             datetime="2023-09-28"
             class="mt-4 leading-relaxed max-md:max-w-full"
           >
-            {{ state.project.date }}
+            {{ project.date }}
           </time>
         </div>
         <div
           class="flex gap-4 justify-center items-start self-center mt-8 text-base"
         >
           <AwesomeButton
-            v-for="(category, index) in state.project.categories"
+            v-for="(category, index) in project.categories"
             :key="index"
             class="roundex-full"
             outline
@@ -249,25 +163,26 @@ const state: SingleProjectState = reactive({
         </div>
       </div>
       <img
-        v-if="state.project.bannerImage"
+        v-if="project.bannerImage"
         loading="lazy"
         class="object-cover mt-20 h-[450px] w-full rounded-2xl max-md:mt-10 max-md:max-w-full hover:scale-105 transition-transform duration-300"
-        :src="state.project.bannerImage"
-        :alt="state.project.title"
+        :src="project.bannerImage"
+        :alt="project.title"
       />
     </div>
 
     <div>
       <section
+        v-if="project.problem"
         class="flex flex-col mt-28 max-w-full md:w-[700px] mx-auto max-md:mt-10"
       >
         <h2
           class="text-4xl max-md:max-w-full"
-          v-html="state.project.problem.title"
+          v-html="project.problem.title"
         ></h2>
         <p
           class="mt-6 text-xl leading-8 max-md:max-w-full"
-          v-html="state.project.problem.description"
+          v-html="project.problem.description"
         ></p>
         <div
           class="flex overflow-hidden flex-col mt-10 w-full rounded-2xl bg-stone-400 max-md:max-w-full"
@@ -275,22 +190,23 @@ const state: SingleProjectState = reactive({
           <img
             loading="lazy"
             class="object-cover w-full aspect-[1.59] max-md:max-w-full hover:scale-105 transition-transform duration-300"
-            :src="state.project.problem.image"
-            :alt="state.project.problem.title"
+            :src="project.problem.image"
+            :alt="project.problem.title"
           />
         </div>
       </section>
 
       <section
+        v-if="project.solution"
         class="flex flex-col mt-28 max-w-full md:w-[700px] mx-auto max-md:mt-10"
       >
         <h2
           class="text-4xl max-md:max-w-full"
-          v-html="state.project.solution.title"
+          v-html="project.solution.title"
         ></h2>
         <p
           class="mt-6 text-xl leading-8 max-md:max-w-full"
-          v-html="state.project.solution.description"
+          v-html="project.solution.description"
         ></p>
         <div
           class="flex overflow-hidden flex-col mt-10 w-full rounded-2xl bg-stone-400 max-md:max-w-full"
@@ -298,33 +214,35 @@ const state: SingleProjectState = reactive({
           <img
             loading="lazy"
             class="object-cover w-full aspect-[1.59] max-md:max-w-full hover:scale-105 transition-transform duration-300"
-            :src="state.project.solution.image"
-            :alt="state.project.solution.title"
+            :src="project.solution.image"
+            :alt="project.solution.title"
           />
         </div>
       </section>
 
       <section
+        v-if="project.process"
         class="flex flex-col mt-28 max-w-full font-light text-black md:w-[700px] mx-auto max-md:mt-10"
       >
         <h2
           class="text-4xl max-md:max-w-full"
-          v-html="state.project.process.title"
+          v-html="project.process.title"
         ></h2>
         <p
           class="mt-6 text-xl leading-8 max-md:max-w-full"
-          v-html="state.project.process.description"
+          v-html="project.process.description"
         ></p>
       </section>
 
       <section
+        v-if="project.process?.items"
         class="flex flex-col mt-28 max-w-full font-light text-black mx-auto max-md:mt-10"
       >
         <div
           class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full text-base leading-7 text-center"
         >
           <div
-            v-for="(item, index) in state.project.process.items"
+            v-for="(item, index) in project.process.items"
             :key="index"
             class="flex flex-col flex-wrap w-full md:min-w-[240px] md:w-[414px]"
           >
@@ -340,25 +258,27 @@ const state: SingleProjectState = reactive({
       </section>
 
       <section
+        v-if="project.design"
         class="flex flex-col mt-28 max-w-full md:w-[700px] mx-auto max-md:mt-10"
       >
         <h2
           class="text-4xl max-md:max-w-full"
-          v-html="state.project.design.title"
+          v-html="project.design.title"
         ></h2>
         <p
           class="mt-6 text-xl leading-8 max-md:max-w-full"
-          v-html="state.project.design.description"
+          v-html="project.design.description"
         ></p>
       </section>
       <section
+        v-if="project.design?.items"
         class="flex flex-col mt-28 max-w-full w-full mx-auto max-md:mt-10"
       >
         <div
           class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full"
         >
           <div
-            v-for="(item, index) in state.project.design.items"
+            v-for="(item, index) in project.design.items"
             :key="index"
             class="flex overflow-hidden flex-col rounded-2xl bg-stone-400 w-full md:min-w-[240px] md:w-[414px]"
           >
@@ -373,25 +293,27 @@ const state: SingleProjectState = reactive({
       </section>
 
       <section
+        v-if="project.result"
         class="flex flex-col mt-28 max-w-full font-light md:w-[700px] mx-auto max-md:mt-10"
       >
         <h2
           class="text-4xl max-md:max-w-full"
-          v-html="state.project.result.title"
+          v-html="project.result.title"
         ></h2>
         <p
           class="mt-6 text-xl leading-8 max-md:max-w-full"
-          v-html="state.project.result.description"
+          v-html="project.result.description"
         ></p>
       </section>
       <section
+        v-if="project.result?.items"
         class="flex flex-col mt-28 max-w-full w-full mx-auto max-md:mt-10"
       >
         <div
           class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full text-center text-white"
         >
           <div
-            v-for="(item, index) in state.project.result.items"
+            v-for="(item, index) in project.result.items"
             :key="index"
             class="flex overflow-hidden flex-col rounded-2xl bg-stone-400 w-full md:min-w-[240px] md:w-[414px]"
           >
@@ -420,12 +342,12 @@ const state: SingleProjectState = reactive({
       class="flex flex-wrap gap-5 justify-between items-center mt-28 max-w-full w-full max-w-screen-xl mt-20 mx-auto max-md:mt-10 mb-10"
     >
       <AwesomeButton
-        v-if="state.previousProject"
+        v-if="previousProject"
         class="flex gap-1 items-center self-stretch p-4 my-auto w-14 h-14 rounded-lg order-0"
         aria-label="Previous project"
         :to="{
           name: 'work-slug',
-          params: { slug: state.previousProject.id },
+          params: { slug: previousProject.slug },
         }"
       >
         <img
@@ -436,22 +358,22 @@ const state: SingleProjectState = reactive({
         />
       </AwesomeButton>
       <div
-        v-if="state.nextProject"
+        v-if="nextProject"
         class="flex flex-col justify-center items-center self-stretch my-auto text-black min-w-[240px] w-[635px] max-md:max-w-full order-first md:order-1"
       >
         <p class="text-base">Next project</p>
         <h2
           class="mt-2 text-xl font-light tracking-tight text-center uppercase"
-          v-html="state.nextProject.title"
+          v-html="nextProject.title"
         ></h2>
       </div>
       <AwesomeButton
-        v-if="state.nextProject"
+        v-if="nextProject"
         class="flex gap-1 items-center self-stretch p-4 my-auto w-14 h-14 rounded-lg order-1"
         aria-label="Next project"
         :to="{
           name: 'work-slug',
-          params: { slug: state.nextProject.id },
+          params: { slug: nextProject.slug },
         }"
       >
         <img
@@ -463,4 +385,21 @@ const state: SingleProjectState = reactive({
       </AwesomeButton>
     </nav>
   </div>
+  <template v-else>
+    <div class="min-h-[450px] flex flex-col align-center justify-center mt-20">
+      <h2 class="text-4xl">Oops! We didn't find that project.</h2>
+      <p class="mt-6 text-xl">You may be interested in the projects below!</p>
+      <main class="flex flex-wrap gap-5 items-start mt-16 w-full max-md:mt-10">
+        <ProjectCard
+          v-for="(p, index) in projects"
+          :id="p.id"
+          :key="index"
+          :image-src="p.imageSrc"
+          :description="p.description"
+          :client="p.client"
+          :slug="p.slug"
+        />
+      </main>
+    </div>
+  </template>
 </template>

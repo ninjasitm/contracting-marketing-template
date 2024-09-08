@@ -23,12 +23,10 @@ const showDrawer = ref(false);
 
 <template>
   <header
-    class="flex fixed backdrop-filter backdrop-blur-md top-0 z-40 w-full flex-none transition-colors duration-300 lg:z-50 border-b border-gray-950/10 lg:h-[150px] bg-transparent dark:bg-gray-900"
+    class="container mx-auto w-full px-6 md:max-w-screen-xl flex fixed backdrop-filter backdrop-blur-md top-0 z-40 w-full flex-none transition-colors duration-300 md:z-50 border-b border-gray-950/10 h-[80px] md:h-[150px] bg-transparent dark:bg-gray-900"
   >
     <!-- content -->
-    <div
-      class="md:pl-0 flex-1 flex items-center justify-between max-w-screen-xl mx-auto p-4 container mx-auto"
-    >
+    <div class="w-full flex-1 flex items-center justify-between mx-auto">
       <!-- title -->
       <div>
         <slot name="title">
@@ -62,6 +60,7 @@ const showDrawer = ref(false);
           </AwesomeLink> -->
           <AwesomeButton
             v-if="links?.capabilities"
+            download="nitm-capabilities-statement.pdf"
             size="lg"
             class="gap-2 p-4 px-2 text-sm tracking-tight bg-transparent rounded-lg border border-black dark:text-white text-black"
             :href="links.capabilities"
@@ -89,7 +88,6 @@ const showDrawer = ref(false);
       >
         <div class="pl-4 flex space-x-3 text-xl">
           <AwesomeLink
-            v-if="config?.project?.links?.github"
             class="text-gray-400 hover:text-gray-100"
             @click.prevent="() => (showDrawer = !showDrawer)"
           >
@@ -209,9 +207,13 @@ const showDrawer = ref(false);
       <AwesomeActionSheetGroup :blur="false">
         <AwesomeActionSheetItemButton
           class="flex justify-center items-center text-base space-x-2 h-[4rem]"
-          :href="links.capabilities"
         >
-          <span class="text-[1.5rem]">Capabilities Statement</span>
+          <NuxtLink
+            download="nitm-capabilities-statement.pdf"
+            class="text-[1.5rem]"
+            :href="links.capabilities"
+            >Capabilities Statement</NuxtLink
+          >
         </AwesomeActionSheetItemButton>
         <AwesomeActionSheetItemButton
           class="flex justify-center items-center text-base space-x-2 h-[4rem]"

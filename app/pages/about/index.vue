@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
+import config from '@@/app/content/_pages/about.json';
 import TeamMember from '../../../components/about/TeamMember.vue';
 definePageMeta({ layout: 'page' });
 
@@ -23,47 +24,19 @@ type AboutState = {
   teamMembers: TeamMembers;
 };
 
+const members = (
+  await useAsyncData('_about.members', () =>
+    queryContent('_about/teamMembers').find(),
+  )
+).data as Member[];
+
 const state: AboutState = reactive({
-  heading: 'About',
-  title: 'Curabitur ullamcorper',
-  description:
-    'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus,',
+  heading: config.heading,
+  title: config.title,
+  description: config.description,
   teamMembers: {
-    title: 'Curabitur ullamcorper',
-    members: [
-      {
-        name: 'First name last name',
-        position: 'position',
-        description:
-          'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus,',
-        photo:
-          'https://cdn.builder.io/api/v1/image/assets/TEMP/fa3afd6c6c5a743cfe99388e8deacc7a973a9bca04d383fc33a3b0e09062e521?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-      },
-      {
-        name: 'First name last name',
-        position: 'position',
-        description:
-          'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus,',
-        photo:
-          'https://cdn.builder.io/api/v1/image/assets/TEMP/97d802a2ad26e2b0daed5fddceaca0f7a84cd1462ef7badf49aeeb61b4a9d034?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-      },
-      {
-        name: 'First name last name',
-        position: 'position',
-        description:
-          'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus,',
-        photo:
-          'https://cdn.builder.io/api/v1/image/assets/TEMP/b7d375964646f6369cfabd126fe59600404766a9cf02623b01faed4ee9da4ca0?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-      },
-      {
-        name: 'First name last name',
-        position: 'position',
-        description:
-          'Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus,',
-        photo:
-          'https://cdn.builder.io/api/v1/image/assets/TEMP/ce89edd52ddba5c5b73fba1245062d2c6e7ce2547a5ee7d155f7b477b06ef65b?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa',
-      },
-    ],
+    title: config.teamMembersTitle,
+    members,
   },
 });
 </script>

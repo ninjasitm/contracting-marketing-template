@@ -95,5 +95,10 @@ export default defineAppConfig({
     author: {
       name: appConfig.companyName,
     },
-  },
+  } as NuxtAwesomeAppConfig,
+  nuxtIcon: {
+    aliases: {},
+    class: '',
+    size: '1em',
+  }
 });

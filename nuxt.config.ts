@@ -65,7 +65,6 @@ export default defineNuxtConfig({
   ],
 
   imports: {
-    autoImport: true,
     dirs: [resolve('./stores'), '~/stores'],
   },
 
@@ -82,6 +81,15 @@ export default defineNuxtConfig({
   // module::color-mode
   colorMode: {
     classSuffix: '',
+  },
+
+  content: {
+    markdown: {
+      mdc: true,
+    },
+    highlight: {
+      theme: 'github-dark',
+    },
   },
 
   // module::content
@@ -114,14 +122,6 @@ export default defineNuxtConfig({
   //     }
   //   ]
   // },
-  content: {
-    markdown: {
-      mdc: true,
-    },
-    highlight: {
-      theme: 'github-dark',
-    },
-  },
 
-  compatibilityDate: '2024-09-01',
+  // compatibilityDate: '2024-09-01',
 });

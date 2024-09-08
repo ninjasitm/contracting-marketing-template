@@ -56,6 +56,8 @@
     "unplugin-vue-components": "^0.25.2"
   },
   "devDependencies": {
+    "@nuxt/config": "^2.18.1",
+    "@nuxt/kit": "^3.13.1",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@nuxtjs/eslint-module": "^4.1.0",
     "consola": "^3.2.3",

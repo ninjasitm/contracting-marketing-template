@@ -35,6 +35,17 @@ export interface NuxtAwesomeAppConfig {
     /** social link url */
     url: string;
   }[];
+  /** style */
+  style?: {
+    /** primary color */
+    primaryColor?: string;
+    /** secondary color */
+    secondaryColor?: string;
+    /** background color */
+    backgroundColor?: string;
+    /** text color */
+    textColor?: string;
+  };
   /** layout config */
   layout?: {
     /** page layout */
@@ -115,6 +126,7 @@ export default defineAppConfig({
     author: {
       name: appConfig.companyName,
     },
+    style: appConfig.style || {},
     layout: {
       page: {
         navbar: {
@@ -128,9 +140,9 @@ export default defineAppConfig({
       },
       footer: {
         naicsCodesTitle: appConfig.footer?.naicsCodesTitle as string,
-        containerStyle: {},
-        companyInfoStyle: {},
-        footerStyle: {},
+        containerStyle: appConfig.footer?.containerStyle || {},
+        companyInfoStyle: appConfig.footer?.companyInfoStyle || {},
+        footerStyle: appConfig.footer?.footerStyle || {},
         year: new Date().getFullYear(),
       },
       welcome: {

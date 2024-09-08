@@ -1,6 +1,6 @@
 media:
   input: public/media
-  output: /
+  output: /media
 content:
   - name: homePage
     type: file

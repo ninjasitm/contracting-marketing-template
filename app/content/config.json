@@ -68,13 +68,13 @@
     }
   ],
   "style": {
-    "backgroundColor": "#333",
+    "backgroundColor": "#E4F4FB",
     "textColor": "#fff"
   },
   "footer": {
     "naicsCodesTitle": "NAICS Codes",
     "footerStyle": {
-      "backgroundColor": "#333",
+      "backgroundColor": "transparent",
       "textColor": "#fff"
     },
     "companyInfoStyle": {

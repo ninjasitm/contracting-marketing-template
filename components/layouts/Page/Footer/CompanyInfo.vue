@@ -17,8 +17,8 @@ const { items, naicsCodesTitle, naicsCodes } = toRefs(props);
 
 <template>
   <section class="w-full">
-    <div class="pb-12 pt-6 container max-w-screen-xl mx-auto">
-      <section class="flex flex-wrap p-0 w-full max-md:mt-10 max-md:max-w-full">
+    <div class="pb-12 pt-6 px-6 container max-w-screen-xl mx-auto">
+      <section class="flex flex-wrap px-0 w-full max-md:mt-10 max-md:max-w-full">
         <div
           v-for="(item, index) in items"
           :key="item.label"
@@ -31,7 +31,7 @@ const { items, naicsCodesTitle, naicsCodes } = toRefs(props);
           />
         </div>
       </section>
-      <section class="flex flex-col flex-wrap p-0 w-full max-md:max-w-full">
+      <section class="flex flex-col flex-wrap px-0 w-full max-md:max-w-full">
         <div class="flex flex-col justify-center mt-6 w-full max-md:max-w-full">
           <h3 class="text-sm text-stone-500">
             {{ naicsCodesTitle || 'NAICS' }} Codes

@@ -1,8 +1,10 @@
 {
   "banner": {
-    "title": "Ninjas in the Machine Inc. Specializing in government contracting services for local, state, and federal agencies and organizations.",
+    "title": "Ninjas in the Machine Inc. ",
+    "description": "Specializing in government contracting services for local, state, and federal agencies and organizations.",
     "actionText": "Download Capabilities Statement",
-    "actionUrl": "/capabilities-statement"
+    "actionUrl": "/NITM-Capabilities-Statement.pdf",
+    "backgroundImage": "//images/home/home-banner.jpg"
   },
   "coreCompetencies": {
     "description": "NITM specializes in product management, development, consulting, and team building for complex and deep-tech solutions across various industries and verticals including Healthcare, EdTech, AI, SaaS, Data, HIPAA compliance, and more.",
@@ -46,16 +48,16 @@
     "title": "Differentiators",
     "items": [
       {
-        "description": "Experts at collaboratively developing solutions with minimal information",
-        "icon": "/media/images/database-zap.png"
+        "icon": "/media/images/database-zap.png",
+        "description": "Experts at collaboratively developing solutions with minimal information"
       },
       {
-        "description": "Excellent communication and planning skills leading to 100% customer satisfaction from start to finish",
-        "icon": "/media/images/notepad-text.png"
+        "icon": "/media/images/notepad-text.png",
+        "description": "Excellent communication and planning skills leading to 100% customer satisfaction from start to finish"
       },
       {
-        "description": "Strong dedication to acknowledging issues within an hour and resolving critical needs and problems within 12 hours with sliding scales of responsiveness depending on the nature of any issue",
-        "icon": "/media/images/gallery-horizontal-end.png"
+        "icon": "/media/images/gallery-horizontal-end.png",
+        "description": "Strong dedication to acknowledging issues within an hour and resolving critical needs and problems within 12 hours with sliding scales of responsiveness depending on the nature of any issue"
       }
     ]
   }

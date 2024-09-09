@@ -68,6 +68,66 @@ content:
               - name: description
                 label: Description
                 type: string
+  - name: contactPage
+    type: file
+    label: Contact Page
+    path: app/content/_pages/contact.json
+    fields:
+      - name: title
+        label: Title
+        type: string
+      - name: description
+        label: Description
+        type: rich-text
+      - name: form
+        label: Form
+        type: object
+        fields:
+          - name: sendTo
+            label: Send To this email
+            type: string
+            required: true
+          - name: subject
+            label: Subject
+            type: string
+            required: true
+          - name: category
+            label: Category
+            type: string
+            list: true
+            options:
+              - name: General Inquiry
+              - name: Start a Project
+              - name: Request a Quote
+              - name: Other
+          - name: message
+            label: Message
+            type: text
+      - name: successMessageStyle
+        label: Success Message Style
+        type: object
+        fields:
+          - name: backgroundColor
+            label: Background Color
+            type: string
+            default: '#D7EFF9'
+          - name: textColor
+            label: Text Color
+            type: string
+            default: '#fff'
+          - name: iconColor
+            label: Icon Color
+            type: string
+            default: '#D7EFF9'
+      - name: useEmbed
+        label: Use Embed
+        type: boolean
+        default: true
+      - name: embed
+        label: (Optional) Embed code
+        type: code
+        options:
+          language: html
   - name: aboutPage
     type: file
     label: About Page
@@ -444,6 +504,18 @@ content:
         type: object
         label: Navbar Configuration
         fields:
+          - name: bannerStyle
+            label: Style
+            type: object
+            fields:
+              - name: backgroundColor
+                label: Background Color
+                type: string
+                default: '#0A2840'
+              - name: textColor
+                label: Text Color
+                type: string
+                default: '#fff'
           - name: links
             label: Links
             type: object

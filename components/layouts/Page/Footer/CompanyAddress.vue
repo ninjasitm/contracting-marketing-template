@@ -89,7 +89,7 @@ onMounted(() => {
           v-for="(link, index) in state.links"
           :key="index"
           class="mb-6"
-          :to="link.url"
+          :to="link.to || link.url"
         >
           <img
             v-if="link.icon"

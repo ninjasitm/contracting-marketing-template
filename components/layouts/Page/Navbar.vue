@@ -23,10 +23,43 @@ const showDrawer = ref(false);
 
 <template>
   <header
-    class="container mx-auto w-full px-6 md:max-w-screen-xl flex fixed backdrop-filter backdrop-blur-md top-0 z-40 w-full flex-none transition-colors duration-300 md:z-50 border-b border-gray-950/10 h-[80px] md:h-[150px] bg-transparent dark:bg-gray-900"
+    class="mx-auto w-full flex flex-col fixed backdrop-filter backdrop-blur-md top-0 z-40 flex-none transition-colors duration-300 md:z-50 border-b border-gray-950/10 h-[100px] md:min-h-[175px] bg-transparent dark:bg-gray-900"
   >
+    <!-- header banner -->
+    <div
+      class="w-full h-[47px] flex overflow-hidden space-x-4 group"
+      :style="
+        config.navbar?.bannerStyle || {
+          backgroundColor: '#0A2840',
+        }
+      "
+    >
+      <div
+        class="align-center flex space-x-4 animate-loop-scroll group-hover:paused"
+      >
+        <span
+          v-for="info in config.companyInfo"
+          :key="info.title"
+          class="text-sm text-white text-xs px-2 py-1 flex items-center w-[max-content]"
+          >{{ info.title }}<strong class="ml-2">{{ info.value }}</strong></span
+        >
+      </div>
+      <div
+        class="align-center flex space-x-4 animate-loop-scroll group-hover:paused"
+        aria-hidden="true"
+      >
+        <span
+          v-for="info in config.companyInfo"
+          :key="info.title"
+          class="text-sm text-white text-xs px-2 py-1 flex items-center w-[max-content]"
+          >{{ info.title }} <strong class="ml-2">{{ info.value }}</strong></span
+        >
+      </div>
+    </div>
     <!-- content -->
-    <div class="w-full flex-1 flex items-center justify-between mx-auto">
+    <div
+      class="w-full px-6 max-w-screen-xl flex-1 flex items-center justify-between mx-auto"
+    >
       <!-- title -->
       <div>
         <slot name="title">
@@ -70,14 +103,14 @@ const showDrawer = ref(false);
           <AwesomeButton
             v-if="links?.startProject"
             size="lg"
-            class="gap-2 p-4 text-sm tracking-tight text-white bg-sky-600 rounded-lg"
-            :href="links.startProject"
+            class="gap-2 p-4 text-sm tracking-tight text-white bg-primary rounded-lg"
+            :to="links.startProject"
           >
             Start a Project
           </AwesomeButton>
-          <LayoutPageNavbarDropdownThemeSwitcher
+          <!-- <LayoutPageNavbarDropdownThemeSwitcher
             class="gap-2 p-4 text-sm tracking-tight"
-          />
+          /> -->
         </div>
       </div>
       <!-- drawer:btn -->
@@ -217,18 +250,18 @@ const showDrawer = ref(false);
         </AwesomeActionSheetItemButton>
         <AwesomeActionSheetItemButton
           class="flex justify-center items-center text-base space-x-2 h-[4rem]"
-          :href="links.startProject"
+          :to="links.startProject"
         >
           <span class="text-[1.5rem]">Start a Project</span>
         </AwesomeActionSheetItemButton>
       </AwesomeActionSheetGroup>
-      <AwesomeActionSheetGroup class="fixed bottom-4 right-4">
+      <!-- <AwesomeActionSheetGroup class="fixed bottom-4 right-4">
         <AwesomeActionSheetItem class="flex flex-col">
           <div class="p-2">
             <LayoutPageNavbarDropdownThemeSwitcher horizontal />
           </div>
         </AwesomeActionSheetItem>
-      </AwesomeActionSheetGroup>
+      </AwesomeActionSheetGroup> -->
     </AwesomeActionSheet>
   </header>
 </template>

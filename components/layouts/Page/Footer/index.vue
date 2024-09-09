@@ -55,7 +55,7 @@ const state: FooterState = reactive({
       :company-name="state.companyName"
     />
     <CompanyInfo
-      class="w-full mx-auto px-6"
+      class="w-full mx-auto"
       :items="state.items"
       :naics-codes-title="state.naicsCodesTitle"
       :naics-codes="state.naicsCodes"

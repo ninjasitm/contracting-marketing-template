@@ -18,7 +18,7 @@ const MyTheme = {
       '900': '#000000',
     },
     blue: {
-      DEFAULT: '#0096FF',
+      DEFAULT: '#158AD0',
       '50': '#B8E2FF',
       '100': '#A3D9FF',
       '200': '#7AC8FF',
@@ -65,7 +65,7 @@ export default <Partial<Config>>{
         '8xl': '90rem',
       },
       colors: {
-        primary: MyTheme.colors.green,
+        primary: MyTheme.colors.blue,
         // if want to change primary color to blue
         // primary: MyTheme.colors.blue,
         green: MyTheme.colors.green,
@@ -74,7 +74,17 @@ export default <Partial<Config>>{
         slate: colors.slate,
       },
       fontFamily: {
-        sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+        sans: ['Manrope', ...defaultTheme.fontFamily.sans],
+        heading: ['Sora', ...defaultTheme.fontFamily.sans],
+      },
+      animation: {
+        'loop-scroll': 'loop-scroll 50s linear infinite',
+      },
+      keyframes: {
+        'loop-scroll': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-100%)' },
+        },
       },
     },
   },

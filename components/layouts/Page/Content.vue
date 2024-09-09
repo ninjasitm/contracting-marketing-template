@@ -1,6 +1,6 @@
 <template>
   <main
-    class="flex w-full container max-w-screen-xl px-6 md:px-0"
+    class="flex w-full px-6 md:px-0 mx-auto"
     :style="{ 'min-height': 'var(--layout-page-content-min-height)' }"
   >
     <slot />

@@ -2,20 +2,32 @@ import type { NuxtAwesomeAppConfig } from './app.config';
 
 export default defineNuxtSchema({
   appConfig: {
-    awesome: {
-      name: '',
+    config: {
+      title: '',
       description: '',
-      project: {
-        links: {},
-      },
+      companyName: '',
+      email: '',
+      logo: '',
+      phone: '',
+      url: '',
+      address: '',
+      naicsCodesTitle: '',
+      naicsCodes: [],
+      companyInfo: [],
+      socialLinks: [],
       layout: {
         page: {
           navbar: {
             menus: [],
+            links: {},
           },
         },
         footer: {
           year: new Date().getFullYear(),
+          naicsCodesTitle: '',
+          containerStyle: {},
+          companyInfoStyle: {},
+          footerStyle: {},
         },
         welcome: {
           title: '',

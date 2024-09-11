@@ -1,9 +1,11 @@
-media: media
+media:
+  input: public/media
+  output: /media
 content:
   - name: homePage
     type: file
     label: Home Page
-    path: content/_pages/home.json
+    path: app/content/_pages/home.json
     fields:
       - name: banner
         label: Banner
@@ -66,10 +68,70 @@ content:
               - name: description
                 label: Description
                 type: string
+  - name: contactPage
+    type: file
+    label: Contact Page
+    path: app/content/_pages/contact.json
+    fields:
+      - name: title
+        label: Title
+        type: string
+      - name: description
+        label: Description
+        type: rich-text
+      - name: form
+        label: Form
+        type: object
+        fields:
+          - name: sendTo
+            label: Send To this email
+            type: string
+            required: true
+          - name: subject
+            label: Subject
+            type: string
+            required: true
+          - name: category
+            label: Category
+            type: string
+            list: true
+            options:
+              - name: General Inquiry
+              - name: Start a Project
+              - name: Request a Quote
+              - name: Other
+          - name: message
+            label: Message
+            type: text
+      - name: successMessageStyle
+        label: Success Message Style
+        type: object
+        fields:
+          - name: backgroundColor
+            label: Background Color
+            type: string
+            default: '#D7EFF9'
+          - name: textColor
+            label: Text Color
+            type: string
+            default: '#fff'
+          - name: iconColor
+            label: Icon Color
+            type: string
+            default: '#D7EFF9'
+      - name: useEmbed
+        label: Use Embed
+        type: boolean
+        default: true
+      - name: embed
+        label: (Optional) Embed code
+        type: code
+        options:
+          language: html
   - name: aboutPage
     type: file
     label: About Page
-    path: content/_pages/about.json
+    path: app/content/_pages/about.json
     fields:
       - name: heading
         label: Heading
@@ -86,7 +148,7 @@ content:
   - name: teamMembers
     label: Team Members
     type: file
-    path: content/_about/teamMembers.json
+    path: app/content/_about/teamMembers.json
     fields:
       - name: members
         label: Members
@@ -114,7 +176,7 @@ content:
   - name: processPage
     type: file
     label: Process Page
-    path: content/_pages/process.json
+    path: app/content/_pages/process.json
     fields:
       - name: title
         label: Title
@@ -140,7 +202,7 @@ content:
   - name: workPage
     type: file
     label: Work Page
-    path: content/_pages/work.json
+    path: app/content/_pages/work.json
     fields:
       - name: title
         label: Title
@@ -175,7 +237,7 @@ content:
   - name: work
     type: collection
     label: Work
-    path: content/_work
+    path: app/content/_work
     view:
       fields: [title, client, categories, isOngoing, published, date]
       sort: [date, title]
@@ -364,7 +426,7 @@ content:
     label: Clients
     type: file
     list: true
-    path: content/clients.json
+    path: app/content/clients.json
     fields:
       - name: name
         label: Name
@@ -386,7 +448,7 @@ content:
         pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
   - name: config
     label: App Config
-    path: content/config.json
+    path: app/content/config.json
     type: file
     fields:
       - name: title
@@ -442,6 +504,18 @@ content:
         type: object
         label: Navbar Configuration
         fields:
+          - name: bannerStyle
+            label: Style
+            type: object
+            fields:
+              - name: backgroundColor
+                label: Background Color
+                type: string
+                default: '#0A2840'
+              - name: textColor
+                label: Text Color
+                type: string
+                default: '#fff'
           - name: links
             label: Links
             type: object
@@ -486,6 +560,9 @@ content:
         label: Footer Configuration
         type: object
         fields:
+          - name: naicsCodesTitle
+            label: NAICS Codes Title
+            type: string
           - name: footerStyle
             label: Footer Style
             type: object

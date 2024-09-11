@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { reactive } from 'vue';
-import BackgroundImage from '../../public/images/demo/home/banner.png';
-import config from '../../content/_pages/home.json';
+import { reactive, Teleport } from 'vue';
+import config from '../../app/content/_pages/home.json';
 
 definePageMeta({ layout: 'page' });
 useHead({
@@ -45,31 +44,37 @@ const state: HomeState = reactive(config);
   <div
     class="flex relative flex-col pb-24 w-full min-h-[500px] md:min-h-[800px] max-md:max-w-full"
   >
-    <section
-      class="flex flex-col max-w-full uppercase w-full justify-end min-h-[500px] pb-12 md:pb-24 md:h-[800px]"
-      :style="{
-        backgroundImage: `url('${state.banner.backgroundImage}')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }"
-    >
-      <div class="flex flex-col w-full max-w-screen-xl mx-auto">
-        <div class="flex flex-col w-full lg-w-[692px] px-4">
-          <h2
-            class="text-6xl font-light tracking-tighter text-black max-md:max-w-full max-md:text-4xl"
-            v-html="state.banner.title"
-          ></h2>
-          <AwesomeButton
-            size="lg"
-            class="gap-2 self-start p-4 mt-6 text-sm tracking-tight text-white bg-sky-600 rounded-lg w-full md:w-[max-content]"
-            :href="state.banner.actionUrl"
-          >
-            {{ state.banner.actionText }}
-          </AwesomeButton>
+    <Teleport defer to="#page-banner">
+      <section
+        class="flex flex-col max-w-full uppercase w-full justify-end min-h-[500px] pb-12 md:pb-24 md:h-[800px]"
+        :style="{
+          backgroundImage: `url('${state.banner.backgroundImage}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }"
+      >
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto">
+          <div class="flex flex-col w-full md:w-[692px] px-4">
+            <h2
+              class="text-6xl font-light tracking-tighter text-black max-md:max-w-full max-md:text-4xl"
+              v-html="state.banner.title"
+            ></h2>
+            <p
+              class="mt-6 text-2xl font-light max-md:max-w-full"
+              v-html="state.banner.description"
+            ></p>
+            <AwesomeButton
+              size="lg"
+              class="gap-2 self-start p-4 mt-6 text-sm tracking-tight text-white bg-sky-600 rounded-lg w-full md:w-[max-content]"
+              :href="state.banner.actionUrl"
+            >
+              {{ state.banner.actionText }}
+            </AwesomeButton>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </Teleport>
     <section
       class="flex flex-col w-full max-w-screen-xl mt-5 md:mt-20 mx-auto px-4"
     >

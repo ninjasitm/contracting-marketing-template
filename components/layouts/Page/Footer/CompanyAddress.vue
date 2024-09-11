@@ -77,7 +77,7 @@ onMounted(() => {
           {{ state.email }}
         </a>
         <p class="pt-6 mb-6 mt-4 text-lg">
-          © {{ currentYear }} {{ state.companyName }}.
+          © {{ currentYear }} {{ state.companyName }}
         </p>
       </div>
     </div>
@@ -89,7 +89,7 @@ onMounted(() => {
           v-for="(link, index) in state.links"
           :key="index"
           class="mb-6"
-          :to="link.url"
+          :to="link.to || link.url"
         >
           <img
             v-if="link.icon"

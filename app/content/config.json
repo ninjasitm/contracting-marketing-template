@@ -1,0 +1,85 @@
+{
+  "title": "NITM Inc Local, State and Federal Contracting Services",
+  "companyName": "NITM Inc.",
+  "description": "NITM provides technology planning, design, implementation, maintenance, and training for federal, state, and local governments, and small businesses. With over 10 years of experience developing and delivering solutions from conception to market, we pride ourselves on being efficient, strong communicators from start to finish.",
+  "url": "https://www.nitm.co",
+  "address": "1350 College Ave, Bronx, NY, 10456",
+  "phone": "1 (347) 241-2690",
+  "email": "contracts@nitm.co",
+  "logo": "/media/images/Ninjas-Logo.png",
+  "naicsCodes": [
+    "541511",
+    "611420",
+    "511210",
+    "541430",
+    "541519",
+    "541612",
+    "541618",
+    "519130"
+  ],
+  "companyInfo": [
+    {
+      "title": "Corporation Type",
+      "value": "S-Corp"
+    },
+    {
+      "title": "NY State Vendor ID",
+      "value": "1100315596"
+    },
+    {
+      "title": "CAGE Code",
+      "value": "9AVD1"
+    },
+    {
+      "title": "Unique Entity ID",
+      "value": "QWSTFVKPMQT9"
+    },
+    {
+      "title": "SAM",
+      "value": "Active"
+    },
+    {
+      "title": "Local",
+      "value": "NY State MWBE, NY City MWBE"
+    }
+  ],
+  "navbar": {
+    "links": {
+      "capabilities": "/NITM-Capabilities-Statement.pdf",
+      "startProject": "/contact"
+    }
+  },
+  "socialLinks": [
+    {
+      "title": "Instagram",
+      "url": "https://instagram.com/ninjasitm"
+    },
+    {
+      "title": "Facebook",
+      "url": "https://www.facebook.com/ninjasitm"
+    },
+    {
+      "title": "LinkedIn",
+      "url": "https://www.linkedin.com/company/ninjasitm"
+    },
+    {
+      "title": "Twitter",
+      "url": "https://twitter.com/ninjasitm"
+    }
+  ],
+  "style": {
+    "backgroundColor": "#E4F4FB",
+    "textColor": "#fff"
+  },
+  "footer": {
+    "naicsCodesTitle": "NAICS Codes",
+    "footerStyle": {
+      "backgroundColor": "transparent",
+      "textColor": "#fff"
+    },
+    "companyInfoStyle": {
+      "backgroundColor": "#D7EFF9",
+      "textColor": "#fff"
+    }
+  }
+}

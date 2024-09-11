@@ -1,15 +1,51 @@
 import type { RouteLocationRaw } from 'vue-router';
 import { type NuxtApp } from '#app';
 import { type AwesomeLayoutPageNavbarMenu } from './utils/types';
-import appConfig from './content/config.json';
+import appConfig from './app/content/config.json';
 export interface NuxtAwesomeAppConfig {
   /** title name */
   title?: string;
   /** description */
   description?: string;
+  /** company name */
+  companyName?: string;
+  /** naics codes title */
+  naicsCodesTitle?: string;
+  /** naics codes */
+  naicsCodes?: string[];
+  /** url */
+  url?: string;
+  /** address */
+  address?: string;
+  /** email */
+  email?: string;
+  /** phone */
+  phone?: string;
   /** logo */
   logo?: string;
-
+  /** company info */
+  companyInfo: {
+    title: string;
+    value: string;
+  }[];
+  /** social links */
+  socialLinks?: {
+    /** social link name */
+    title: string;
+    /** social link url */
+    url: string;
+  }[];
+  /** style */
+  style?: {
+    /** primary color */
+    primaryColor?: string;
+    /** secondary color */
+    secondaryColor?: string;
+    /** background color */
+    backgroundColor?: string;
+    /** text color */
+    textColor?: string;
+  };
   /** layout config */
   layout?: {
     /** page layout */
@@ -25,6 +61,14 @@ export interface NuxtAwesomeAppConfig {
     footer?: {
       /** footer year */
       year?: number;
+      /** naics codes title */
+      naicsCodesTitle?: string;
+      /** footer container style */
+      containerStyle?: Record<string, string>;
+      /** footer company info style */
+      companyInfoStyle?: Record<string, string>;
+      /** footer style */
+      footerStyle?: Record<string, string>;
     };
     /** welcome component page */
     welcome?: {
@@ -68,9 +112,21 @@ declare module '@nuxt/schema' {
 
 export default defineAppConfig({
   config: {
-    name: appConfig.title,
     logo: appConfig.logo,
+    title: appConfig.title,
+    companyName: appConfig.companyName,
+    url: appConfig.url,
+    email: appConfig.email,
+    phone: appConfig.phone,
+    address: appConfig.address,
     description: appConfig.description,
+    naicsCodes: appConfig.naicsCodes,
+    companyInfo: appConfig.companyInfo,
+    socialLinks: appConfig.socialLinks,
+    author: {
+      name: appConfig.companyName,
+    },
+    style: appConfig.style || {},
     layout: {
       page: {
         navbar: {
@@ -83,8 +139,10 @@ export default defineAppConfig({
         },
       },
       footer: {
-        ...appConfig.footer,
-        naicsCodes: appConfig.naicsCodes,
+        naicsCodesTitle: appConfig.footer?.naicsCodesTitle as string,
+        containerStyle: appConfig.footer?.containerStyle || {},
+        companyInfoStyle: appConfig.footer?.companyInfoStyle || {},
+        footerStyle: appConfig.footer?.footerStyle || {},
         year: new Date().getFullYear(),
       },
       welcome: {
@@ -92,13 +150,10 @@ export default defineAppConfig({
         disableInfoReplaceIndexInWelcomePage: true,
       },
     },
-    author: {
-      name: appConfig.companyName,
-    },
   } as NuxtAwesomeAppConfig,
   nuxtIcon: {
     aliases: {},
     class: '',
     size: '1em',
-  }
+  },
 });

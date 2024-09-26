@@ -101,6 +101,7 @@ watch(embed, (value: HTMLDivElement | undefined): void => {
         <HubspotForm
           v-if="config.useHubspotForm"
           :options="config.hubspotFormOptions"
+          class="w-full"
         ></HubspotForm>
         <AwesomeAlertBanner
           v-else

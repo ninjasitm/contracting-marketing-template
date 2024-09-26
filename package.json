@@ -39,6 +39,7 @@
     "release": "release-it"
   },
   "dependencies": {
+    "@jagaad/vue-hubspot-form": "*",
     "@nuxt/content": "^2.9.0",
     "@nuxt/devtools": "^1.0.0",
     "@nuxt/image": "^1.7.0",

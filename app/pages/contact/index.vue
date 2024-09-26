@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from 'vue';
 import config from '@@/app/content/_pages/contact.json';
+import HubspotForm from '@jagaad/vue-hubspot-form';
+
 definePageMeta({ layout: 'page' });
 
 console.log(config);
@@ -46,26 +48,27 @@ const onSubmitForm = (event: Event) => {
 };
 
 watch(embed, (value: HTMLDivElement | undefined): void => {
-  console.log(config.embed);
+  console.log(config);
   if (!value) return;
   if (config.useEmbed && config.embed?.length > 0) {
     // Split a string with multiple scripts in config.embed into an array of scripts
-    const dom = new DOMParser().parseFromString(
-      config.embed.replace(/\\"/g, '"'),
-      'text/html',
-    );
-    const scripts = dom.querySelectorAll('script');
-    if (!scripts) return;
-    console.log(scripts);
-    for (const script of scripts) {
-      embed.value?.appendChild(script);
-    }
-    // div.innerHTML = config.embed
-    //   .replace(/\\"/g, '"')
-    //   .replace(/\\x3C/g, '<')
-    //   .replace(/\\x3E/g, '>');
-    // embed.value?.appendChild(div.firstChild as Node);
-    // console.log(embed.value, div.innerHTML);
+    // const dom = new DOMParser().parseFromString(
+    //   config.embed.replace(/\\"/g, '"'),
+    //   'text/html',
+    // );
+    // const scripts = dom.querySelectorAll('script');
+    // if (!scripts) return;
+    // console.log(scripts);
+    // for (const script of scripts) {
+    //   embed.value?.appendChild(script);
+    // }
+    const div = document.createElement('div');
+    div.innerHTML = config.embed
+      .replace(/\\"/g, '"')
+      .replace(/<c/g, '<component :is="\'script\'"')
+      .replace(/<\/script>/, '</component>');
+    embed.value?.appendChild(div.firstChild as Node);
+    console.log(embed.value, div.innerHTML);
   }
 });
 </script>
@@ -93,12 +96,22 @@ watch(embed, (value: HTMLDivElement | undefined): void => {
     >
       <div
         v-if="config.useEmbed"
-        ref="embed"
-        class="flex flex-wrap gap-20 mt-10 w-full max-md:mt-10 max-md:max-w-full h-[max-content] mx-auto"
-      ></div>
+        class="flex flex-wrap gap-20 mt-0 w-full max-md:mt-10 max-md:max-w-full h-[max-content] mx-auto"
+      >
+        <HubspotForm
+          v-if="config.useHubspotForm"
+          :options="config.hubspotFormOptions"
+        ></HubspotForm>
+        <AwesomeAlertBanner
+          v-else
+          title="No form specified!"
+          text="You specified an embedded form but didn't configure a supported one."
+          >No form specified!</AwesomeAlertBanner
+        >
+      </div>
       <div
         v-else
-        class="flex flex-wrap gap-20 mt-10 w-full max-w-screen-sm mx-auto"
+        class="flex flex-wrap gap-20 mt-0 w-full max-w-screen-sm mx-auto"
       >
         <form
           v-if="!state.isFormSubmitted"

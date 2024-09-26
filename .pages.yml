@@ -122,11 +122,16 @@ content:
         label: Use Embed
         type: boolean
         default: true
-      - name: embed
-        label: (Optional) Embed code
-        type: code
-        options:
-          language: html
+      - name: useHubspotForm
+        label: (Optional) Use a HubspotForm
+        type: object
+        fields:
+          - name: region
+            type: string
+          - name: portalId
+            type: string
+          - name: formId
+            type: string
   - name: aboutPage
     type: file
     label: About Page

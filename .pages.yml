@@ -86,11 +86,9 @@ content:
           - name: sendTo
             label: Send To this email
             type: string
-            required: true
           - name: subject
             label: Subject
             type: string
-            required: true
           - name: category
             label: Category
             type: string

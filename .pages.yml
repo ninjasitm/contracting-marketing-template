@@ -124,6 +124,10 @@ content:
         default: true
       - name: useHubspotForm
         label: (Optional) Use a HubspotForm
+        type: boolean
+        default: false
+      - name: hubspotFormOptions
+        label: Configrue the Hubspot form
         type: object
         fields:
           - name: region

@@ -77,6 +77,7 @@ export default defineNuxtConfig({
   // module::color-mode
   colorMode: {
     classSuffix: '',
+    preference: 'light',
   },
 
   content: {

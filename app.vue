@@ -5,6 +5,11 @@ useHead({
   title: config.title,
   titleTemplate: `%s - ${config.title}`,
 });
+
+// Bugfix for forced color dark mode on computers
+if (localStorage.getItem('nuxt-color-mode') === 'system') {
+  localStorage.removeItem('nuxt-color-mode');
+}
 </script>
 
 <template>

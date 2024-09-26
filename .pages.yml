@@ -99,6 +99,7 @@ content:
               - name: General Inquiry
               - name: Start a Project
               - name: Request a Quote
+              - name: Partnership
               - name: Other
           - name: message
             label: Message

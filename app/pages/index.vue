@@ -93,10 +93,11 @@ const state: HomeState = reactive(config);
             <AwesomeButton
               size="lg"
               class="flex gap-1 items-center mt-3 p-3 my-auto text-base tracking-tight uppercase rounded-lg border border-black max-w-[max-content]"
+              :to="{ name: 'process' }"
             >
               <img
                 loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/acf526b3811a56de4e85ac6000b6e7bed2d87916ef2a3c3a3d3aba828eaa5df1?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa"
+                src="/images/open-link.svg"
                 alt=""
                 class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
               />

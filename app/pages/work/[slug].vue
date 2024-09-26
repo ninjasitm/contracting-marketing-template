@@ -352,7 +352,7 @@ isLoading.value = false;
       >
         <img
           loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/f3cd58e252b4f02cf75549f5468ba74e9bedf4be10572a04d9c3b5d1ff2ac199?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa"
+          src="/images/back.svg"
           alt=""
           class="object-cover self-stretch my-auto w-6 aspect-square"
         />
@@ -378,7 +378,7 @@ isLoading.value = false;
       >
         <img
           loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/16ef346dca0a2892d16ae1a4ec110f8e6a9ef8f8a279e5366f3fbee74e4707ca?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa"
+          src="/images/next.svg"
           alt=""
           class="object-cover self-stretch my-auto w-6 aspect-square"
         />

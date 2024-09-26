@@ -1,4 +1,9 @@
 {
   "useEmbed": true,
-  "embed": "<script charset=\"utf-8\" type=\"text/javascript\" src=\"//js.hsforms.net/forms/embed/v2.js\"></script>\n<script>\n  hbspt.forms.create({\n    region: \"na1\",\n    portalId: \"3962365\",\n    formId: \"3bfbc148-e237-48d1-81a5-8a70067511f7\"\n  });\n</script>"
+  "useHubspotForm": true,
+  "hubspotFormOptions": {
+    "region": "na1",
+    "portalId": "3962365",
+    "formId": "3bfbc148-e237-48d1-81a5-8a70067511f7"
+  }
 }

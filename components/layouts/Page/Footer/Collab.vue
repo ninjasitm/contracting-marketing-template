@@ -17,7 +17,7 @@ async function startProject() {
     <AwesomeButton
       size="lg"
       class="flex gap-1 items-center self-stretch p-3 my-auto text-base tracking-tight uppercase rounded-lg border border-black"
-      @click="startProject"
+      :to="{ name: 'contact' }"
     >
       <img
         loading="lazy"

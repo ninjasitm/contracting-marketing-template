@@ -1,1 +1,20 @@
-{}
+{
+  "title": "Process",
+  "sections": [
+    {
+      "title": "Scope Development"
+    },
+    {
+      "title": "Product and Project Management"
+    },
+    {
+      "title": "Design and Prototyping"
+    },
+    {
+      "title": "Development, Maintenance and Support"
+    },
+    {
+      "title": "Team Building and Staff Augmentation"
+    }
+  ]
+}

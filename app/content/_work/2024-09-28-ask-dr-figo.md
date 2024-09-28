@@ -13,6 +13,12 @@ description: Ask Dr. FIGO project is a free, anonymous website that enables
   middle-income countries in the future.
 categories:
   - API
+  - Product and Project Management
+  - Design and Prototyping
+  - React/Vue
+  - Cloud AWS
+  - Privacy
+  - Database
 problem:
   title: Problem
   description: >-

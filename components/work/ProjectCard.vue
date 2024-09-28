@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue';
 import { splitIntoSentences } from '@/utils/utils';
+const backgrounds = Array.from(
+  { length: 5 },
+  (_, i) => `/images/demo/project-backgrounds/${i + 1}.png`,
+);
 
 const props = defineProps<{
   id: string;
@@ -11,28 +15,27 @@ const props = defineProps<{
   client: string;
 }>();
 
-const { imageSrc, description, client, string } = toRefs(props);
+const { imageSrc, description, client, title } = toRefs(props);
 </script>
 
 <template>
   <NuxtLink
-    class="grow shrink h-[330px] min-w-[240px] w-[330px] shadow-sm"
+    class="grow shrink h-[400px] min-w-[240px] w-[330px] shadow-sm"
     :to="{
       name: 'work-slug',
       params: { slug: slug },
     }"
   >
-    <article class="flex flex-col h-full justify-between">
+    <article class="flex flex-col h-full justify-between overflow-visible">
       <img
-        v-if="imageSrc"
-        :src="imageSrc"
+        :src="
+          imageSrc ||
+          backgrounds[Math.floor(Math.random() * backgrounds.length)]
+        "
         :alt="description"
         loading="lazy"
-        class="object-contain w-full rounded-2xl aspect-[0.86] hover:scale-105 transition-transform duration-300"
+        class="object-cover w-full h-[375px] rounded-2xl aspect-[0.86] hover:scale-105 transition-transform duration-300 object-top"
       />
-      <span v-else>
-        {{ title }}
-      </span>
       <div class="flex flex-col mt-6 w-full">
         <p class="text-lg font-light">
           {{ splitIntoSentences(description)[0] }}

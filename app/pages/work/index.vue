@@ -114,9 +114,7 @@ async function onLoadCategory(id: any): Promise<void> {
         v-html="state?.title || 'Our Work'"
       ></h1>
     </section>
-    <section
-      class="flex flex-col text-black w-full max-w-screen-xl mx-auto overflow-x-hidden"
-    >
+    <section class="flex flex-col text-black w-full max-w-screen-xl mx-auto">
       <header
         v-if="state.featuredClient"
         class="flex overflow-hidden flex-col w-full rounded-2xl"
@@ -150,10 +148,10 @@ async function onLoadCategory(id: any): Promise<void> {
         </div>
       </header>
       <nav
-        class="flex gap-4 py-4 items-start self-start mt-16 text-base max-md:mt-10 max-md:max-w-full overflow-x-auto overflow-y-hidden snap-x"
+        class="flex flex-wrap gap-4 py-4 items-start self-start mt-10 text-base max-md:mt-10 max-md:max-w-full snap-x lg:h-[100px]"
       >
         <AwesomeButton
-          class="gap-2 self-stretch text-white bg-sky-600 max-md:px-5 h-14 text-center snap-center text-xs"
+          class="gap-2 self-stretch text-white bg-sky-600 max-md:px-5 h-10 text-center snap-center text-xs"
           @click="() => onLoadCategory(null)"
         >
           All Projects
@@ -162,13 +160,18 @@ async function onLoadCategory(id: any): Promise<void> {
           v-for="(category, index) in state.categories"
           :key="index"
           outline
-          class="gap-2 self-stretch dark:text-white max-md:px-5 h-14 text-center snap-center text-nowrap text-xs"
+          class="gap-2 self-stretch dark:text-white max-md:px-5 h-10 text-center snap-center text-nowrap text-xs"
+          :class="{
+            'bg-sky-600 text-white': state.currentCategory === category.filter,
+          }"
           :text="category.name"
           @click="() => onLoadCategory(category.filter)"
         >
         </AwesomeButton>
       </nav>
-      <main class="flex flex-wrap gap-5 items-start mt-16 w-full max-md:mt-10">
+      <div
+        class="flex flex-wrap gap-5 items-start mt-16 w-full max-md:mt-10 overflow-visible"
+      >
         <div v-if="state.isLoading" class="flex justify-center w-full">
           <Loading />
         </div>
@@ -184,7 +187,7 @@ async function onLoadCategory(id: any): Promise<void> {
           :client="project.client"
           :slug="project.slug"
         />
-      </main>
+      </div>
     </section>
     <section
       class="flex flex-col text-black w-full max-w-screen-xl mt-20 mx-auto"

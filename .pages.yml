@@ -281,7 +281,7 @@ content:
         type: date
         required: true
         options:
-          format: 'MM/DD/YYYY'
+          format: 'MM/dd/YYYY'
       - name: isOngoing
         label: Ongoing
         type: boolean

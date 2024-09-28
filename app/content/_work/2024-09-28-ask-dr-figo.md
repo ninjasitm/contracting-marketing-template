@@ -3,7 +3,7 @@ published: false
 title: Ask Dr. Figo
 slug: adf
 client: Ask Dr. Figo
-url: https://askdrfigo.org
+url: https://www.figo.org/what-we-do/figo-projects/ask-dr-figo
 date: 01/28/2021
 isOngoing: false
 description: Ask Dr. FIGO project is a free, anonymous website that enables
@@ -26,12 +26,12 @@ problem:
 
 
     1.  Ensuring user privacy and anonymity
-        
+
     2.  Providing geographically relevant and legally compliant content
-        
+
     3.  Managing sensitive information across different cultural and legal
     contexts
-        
+
     4.  Connecting users with appropriate medical professionals securely
 solution:
   title: Solution
@@ -68,26 +68,28 @@ process:
   description: The development process involved several stages
   items:
     - alt: Requirements Gathering
-      description: Detailed specifications were outlined in the Statement of Work
+      description:
+        Detailed specifications were outlined in the Statement of Work
         (SOW) and Scope documents.
     - alt: Design Phase
       description: |-
         *   UX designs were created
-            
+
         *   Mobile designs were developed
-            
+
         *   Doctor portal wireframes were produced
-            
+
         *   User flow charts were designed
     - alt: Development
       description: |-
         *   The platform was built with a focus on privacy and security
-            
+
         *   Different portals (Public, Doctor, Admin) were developed
-            
+
         *   Geolocation and content management systems were implemented
     - alt: Testing
-      description: Rigorous testing was likely conducted to ensure the platform's
+      description:
+        Rigorous testing was likely conducted to ensure the platform's
         security and functionality across different geographical locations.
     - alt: Deployment
       description: The platform was launched with considerations for different

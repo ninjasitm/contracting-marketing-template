@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
+import type { ParsedContent } from '@nuxt/content';
 import Loading from '@/components/layouts/Page/Loading.vue';
+import ProjectCard from '@/components/work/ProjectCard.vue';
 definePageMeta({ layout: 'page' });
 
 const $route = useRoute();
@@ -28,6 +30,14 @@ interface Client {
   logo?: string;
   description?: string;
   website?: string;
+}
+
+interface RelatedProject {
+  title: string;
+  description: string;
+  slug: string;
+  bannerImage?: string;
+  client?: string;
 }
 
 interface Project {
@@ -85,41 +95,102 @@ interface SingleProjectState {
 }
 
 const isLoading = ref(true);
-const project = (
-  await useAsyncData('_work.project', () =>
-    queryContent('/_work').where({ slug: $route.params.slug }).findOne(),
-  )
-).data as Project;
-if (project.value) {
-  const client = (
-    await useAsyncData('_client', () =>
-      queryContent('/').where({ name: project.value.client }).findOne(),
+const projectParsedContent =
+  (
+    await useAsyncData(
+      '_work.project',
+      async (): Promise<ParsedContent> =>
+        await queryContent('/_work')
+          .where({ slug: $route.params.slug })
+          .findOne(),
     )
-  ).data as Client;
-  const [previousProject, nextProject] = await queryContent('_work')
-    .only(['title', 'slug', 'description'])
-    .where({ published: true })
-    .findSurround(`_work/${project.value.slug}`);
+  ).data.value || ({} as Project);
+const project = {
+  title: projectParsedContent.title,
+  date: projectParsedContent.date,
+  slug: projectParsedContent.slug,
+  isOngoing: projectParsedContent.isOngoing,
+  description: projectParsedContent.description,
+  client: projectParsedContent.client,
+  url: projectParsedContent.url,
+  bannerImage: projectParsedContent.bannerImage,
+  categories: projectParsedContent.categories,
+  problem: projectParsedContent.problem,
+  solution: projectParsedContent.solution,
+  process: projectParsedContent.process,
+  design: projectParsedContent.design,
+  result: projectParsedContent.result,
+};
+
+let client = {} as Client;
+let projects = [] as RelatedProject[];
+let nextProject = {} as RelatedProject;
+let previousProject = {} as RelatedProject;
+if (project && project.slug) {
+  const clientParsedContent =
+    (
+      await useAsyncData(
+        `_client'.${project.client}`,
+        async (): Promise<ParsedContent> =>
+          await queryContent('/').where({ name: project.client }).findOne(),
+      )
+    ).data.value || ({} as Client);
+  client = {
+    name: clientParsedContent.name,
+    logo: clientParsedContent.logo,
+    description: clientParsedContent.description,
+    website: clientParsedContent.website,
+  };
+
+  const { path } = useRoute();
+  const [previousProjectParsedContent, nextProjectParsedContent] =
+    await queryContent()
+      .only(['title', 'slug', 'description'])
+      .where({ published: true })
+      .findSurround(path);
+
+  nextProject = {
+    title: nextProjectParsedContent?.title as string,
+    slug: nextProjectParsedContent?.slug as string,
+    description: nextProjectParsedContent?.description as string,
+  };
+
+  previousProject = {
+    title: previousProjectParsedContent?.title as string,
+    slug: previousProjectParsedContent?.slug as string,
+    description: previousProjectParsedContent?.description as string,
+  };
 } else {
   // Get three random projects
-  const projects = (
-    await useAsyncData('_work.project.notFound', () =>
-      queryContent('/_work')
-        .only(['id', 'imageSrc', 'description', 'client', 'slug'])
-        .limit(3)
-        .find(),
-    )
-  ).data as Project[];
+  const projectsParsedContent =
+    (
+      await useAsyncData(
+        '_work.project.notFound',
+        async () =>
+          await queryContent('/_work')
+            .only(['title', 'bannerImage', 'description', 'client', 'slug'])
+            .limit(3)
+            .find(),
+      )
+    ).data.value || ([] as RelatedProject[]);
+
+  projects = projectsParsedContent.map((p) => ({
+    title: p.title as string,
+    bannerImage: p.bannerImage,
+    description: p.description,
+    client: p.client,
+    slug: p.slug,
+  }));
 }
 isLoading.value = false;
 </script>
 
 <template>
-  <div v-if="isLoading.value" class="flex justify-center w-full">
+  <div v-if="isLoading" class="flex justify-center w-full">
     <Loading />
   </div>
   <div
-    v-else-if="project"
+    v-else-if="project && project.slug"
     class="flex flex-col items-center mt-40 w-full max-md:mt-10 max-md:max-w-full px-4 lg:px-10"
   >
     <div
@@ -137,19 +208,16 @@ isLoading.value = false;
             class="self-center mt-4 text-6xl tracking-tighter uppercase max-md:max-w-full max-md:text-4xl"
             v-html="project.title"
           ></h2>
-          <p
-            class="mt-4 text-lg max-md:max-w-full"
-            v-html="project.description"
-          ></p>
-          <time
-            datetime="2023-09-28"
-            class="mt-4 leading-relaxed max-md:max-w-full"
-          >
+          <MDC
+            class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
+            :value="project.description"
+          />
+          <time datetime="2023-09-28" class="leading-relaxed max-md:max-w-full">
             {{ project.date }}
           </time>
         </div>
         <div
-          class="flex gap-4 justify-center items-start self-center mt-8 text-base"
+          class="flex gap-4 justify-center items-start self-center mt-4 text-base"
         >
           <AwesomeButton
             v-for="(category, index) in project.categories"
@@ -180,10 +248,10 @@ isLoading.value = false;
           class="text-4xl max-md:max-w-full"
           v-html="project.problem.title"
         ></h2>
-        <p
-          class="mt-6 text-xl leading-8 max-md:max-w-full"
-          v-html="project.problem.description"
-        ></p>
+        <MDC
+          class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
+          :value="project.problem.description"
+        />
         <div
           class="flex overflow-hidden flex-col mt-10 w-full rounded-2xl bg-stone-400 max-md:max-w-full"
         >
@@ -204,10 +272,10 @@ isLoading.value = false;
           class="text-4xl max-md:max-w-full"
           v-html="project.solution.title"
         ></h2>
-        <p
-          class="mt-6 text-xl leading-8 max-md:max-w-full"
-          v-html="project.solution.description"
-        ></p>
+        <MDC
+          class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
+          :value="project.solution.description"
+        />
         <div
           class="flex overflow-hidden flex-col mt-10 w-full rounded-2xl bg-stone-400 max-md:max-w-full"
         >
@@ -228,10 +296,10 @@ isLoading.value = false;
           class="text-4xl max-md:max-w-full"
           v-html="project.process.title"
         ></h2>
-        <p
-          class="mt-6 text-xl leading-8 max-md:max-w-full"
-          v-html="project.process.description"
-        ></p>
+        <MDC
+          class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
+          :value="project.process.description"
+        />
       </section>
 
       <section
@@ -252,7 +320,10 @@ isLoading.value = false;
               class="object-cover self-center w-36 max-w-full rounded-2xl aspect-square hover:scale-105 transition-transform duration-300"
               loading="lazy"
             />
-            <p class="mt-4">{{ item.description }}</p>
+            <MDC
+              class="md-content mt-6 text-sm leading-8 max-md:max-w-full"
+              :value="item.description"
+            />
           </div>
         </div>
       </section>
@@ -265,10 +336,10 @@ isLoading.value = false;
           class="text-4xl max-md:max-w-full"
           v-html="project.design.title"
         ></h2>
-        <p
-          class="mt-6 text-xl leading-8 max-md:max-w-full"
-          v-html="project.design.description"
-        ></p>
+        <MDC
+          class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
+          :value="project.design.description"
+        />
       </section>
       <section
         v-if="project.design?.items"
@@ -300,10 +371,10 @@ isLoading.value = false;
           class="text-4xl max-md:max-w-full"
           v-html="project.result.title"
         ></h2>
-        <p
-          class="mt-6 text-xl leading-8 max-md:max-w-full"
-          v-html="project.result.description"
-        ></p>
+        <MDC
+          class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
+          :value="project.result.description"
+        />
       </section>
       <section
         v-if="project.result?.items"
@@ -342,7 +413,7 @@ isLoading.value = false;
       class="flex flex-wrap gap-5 justify-between items-center mt-28 max-w-full w-full max-w-screen-xl mt-20 mx-auto max-md:mt-10 mb-10"
     >
       <AwesomeButton
-        v-if="previousProject"
+        v-if="previousProject?.slug"
         class="flex gap-1 items-center self-stretch p-4 my-auto w-14 h-14 rounded-lg order-0"
         aria-label="Previous project"
         :to="{
@@ -358,7 +429,7 @@ isLoading.value = false;
         />
       </AwesomeButton>
       <div
-        v-if="nextProject"
+        v-if="nextProject?.slug"
         class="flex flex-col justify-center items-center self-stretch my-auto text-black min-w-[240px] w-[635px] max-md:max-w-full order-first md:order-1"
       >
         <p class="text-base">Next project</p>
@@ -368,7 +439,7 @@ isLoading.value = false;
         ></h2>
       </div>
       <AwesomeButton
-        v-if="nextProject"
+        v-if="nextProject?.slug"
         class="flex gap-1 items-center self-stretch p-4 my-auto w-14 h-14 rounded-lg order-1"
         aria-label="Next project"
         :to="{
@@ -386,20 +457,34 @@ isLoading.value = false;
     </nav>
   </div>
   <template v-else>
-    <div class="min-h-[450px] flex flex-col align-center justify-center mt-20">
+    <div
+      class="min-h-[450px] flex flex-col align-center justify-center mt-60 max-md:max-w-full px-4 lg:px-10"
+    >
       <h2 class="text-4xl">Oops! We didn't find that project.</h2>
       <p class="mt-6 text-xl">You may be interested in the projects below!</p>
-      <main class="flex flex-wrap gap-5 items-start mt-16 w-full max-md:mt-10">
+      <div class="flex flex-wrap gap-5 items-start mt-16 w-full max-md:mt-10">
         <ProjectCard
           v-for="(p, index) in projects"
-          :id="p.id"
+          :id="p.slug"
           :key="index"
-          :image-src="p.imageSrc"
+          class="w-full md:w-[31.5%] lg:w-[23.5%] mb-10"
+          :image-src="p.bannerImage"
           :description="p.description"
           :client="p.client"
           :slug="p.slug"
         />
-      </main>
+      </div>
     </div>
   </template>
 </template>
+<style lang="css">
+.md-content p {
+  margin-bottom: 1.5rem;
+}
+
+.md-content ol li {
+  margin-bottom: 0.5rem;
+  margin-left: 1.5rem;
+  list-style-type: disc;
+}
+</style>

@@ -24,11 +24,22 @@ type AboutState = {
   teamMembers: TeamMembers;
 };
 
-const members = (
-  await useAsyncData('_about.members', () =>
-    queryContent('/_about/teammembers').findOne(),
-  )
-).data.value.members as Member[];
+const membersParsedContent =
+  (
+    await useAsyncData('_about.members', () =>
+      queryContent('/_about/teammembers').findOne(),
+    )
+  ).data.value || ([] as Member[]);
+
+const members = membersParsedContent.map(
+  (member: any): Member => ({
+    name: member.name,
+    position: member.position,
+    description: member.description,
+    photo: member.photo,
+    linkedinUrl: member.linkedinUrl,
+  }),
+);
 
 const state: AboutState = reactive({
   heading: config.heading,
@@ -43,7 +54,7 @@ const state: AboutState = reactive({
 
 <template>
   <div
-    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-2 lg:px-10"
+    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-2"
   >
     <section class="flex flex-col justify-center pt-40 pb-20 lg:pt-60">
       <h2
@@ -117,4 +128,3 @@ const state: AboutState = reactive({
     </section>
   </div>
 </template>
-../../../components/about/TeamMember.vue

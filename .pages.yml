@@ -314,7 +314,7 @@ content:
               categories: [image]
           - name: description
             label: Description
-            type: string
+            type: rich-text
       - name: solution
         label: Solution
         type: object
@@ -330,7 +330,7 @@ content:
               categories: [image]
           - name: description
             label: Description
-            type: string
+            type: rich-text
       - name: process
         label: Process
         type: object
@@ -346,7 +346,7 @@ content:
               categories: [image]
           - name: description
             label: Description
-            type: string
+            type: rich-text
           - name: items
             label: Process Items
             type: object
@@ -363,7 +363,7 @@ content:
                 type: string
               - name: description
                 label: Description
-                type: string
+                type: rich-text
       - name: design
         label: Design
         type: object

@@ -2,7 +2,19 @@
   {
     "name": "BlackFULLNess",
     "slug": "blackfullness",
-    "logo": "/client/logos/blackfullnesslogo.png",
+    "logo": "/media/client/logos/blackfullnesslogo.png",
     "url": "https://blackfullness.com"
+  },
+  {
+    "name": "Ask Dr Figo",
+    "slug": "adf",
+    "logo": "/media/client/logos/adf.png",
+    "url": "https://askdrfigo.org"
+  },
+  {
+    "name": "CHIP Professionals",
+    "slug": "chip",
+    "logo": "/media/client/logos/Chip_blue.png",
+    "url": "https://www.chipprofessionals.com"
   }
 ]

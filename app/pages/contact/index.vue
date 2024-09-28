@@ -74,10 +74,10 @@ const onSubmitForm = (event: Event) => {
 </script>
 <template>
   <div
-    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-4"
+    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-4 lg:px-10"
   >
     <section
-      class="h-[450px] flex flex-col justify-center max-w-screen-xl mx-auto"
+      class="min-h-[450px] flex flex-col justify-center max-w-screen-xl mx-auto"
     >
       <h2
         class="self-center mt-40 max-w-screen-sm text-6xl font-light tracking-tighter text-center text-black uppercase whitespace-nowrap max-md:mt-10 max-md:max-w-full max-md:text-4xl mx-auto"
@@ -169,7 +169,7 @@ const onSubmitForm = (event: Event) => {
           </div>
           <AwesomeButton
             type="submit"
-            class="self-start px-4 py-2 gap-2 text-white rounded-lg w-full uppercase"
+            class="self-start px-4 lg:px-10 py-2 gap-2 text-white rounded-lg w-full uppercase"
             :disabled="state.isLoading || !state.isValid"
           >
             Submit

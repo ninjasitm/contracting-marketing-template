@@ -85,7 +85,7 @@ onMounted(() => {
           </AwesomeButton>
         </AwesomeActionSheetGroup>
         <div
-          class="action-sheet-container flex flex-col overflow-y-auto space-y-1 justify-stretch px-4 pb-2 pt-1 h-full"
+          class="action-sheet-container flex flex-col overflow-y-auto space-y-1 justify-stretch px-4 lg:px-10 pb-2 pt-1 h-full"
         >
           <slot />
         </div>

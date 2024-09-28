@@ -120,7 +120,7 @@ isLoading.value = false;
   </div>
   <div
     v-else-if="project"
-    class="flex flex-col items-center mt-40 w-full max-md:mt-10 max-md:max-w-full px-4"
+    class="flex flex-col items-center mt-40 w-full max-md:mt-10 max-md:max-w-full px-4 lg:px-10"
   >
     <div
       class="flex flex-col max-w-full text-black w-full max-w-screen-xl mt-20 mx-auto"
@@ -318,7 +318,7 @@ isLoading.value = false;
             class="flex overflow-hidden flex-col rounded-2xl bg-stone-400 w-full md:min-w-[240px] md:w-[414px]"
           >
             <div
-              class="flex relative flex-col justify-center px-10 py-40 w-full aspect-[0.863] max-md:px-5 max-md:py-24"
+              class="flex relative flex-col justify-center px-4 lg:px-10 py-40 w-full aspect-[0.863] max-md:px-5 max-md:py-24"
             >
               <img
                 :src="item.imgSrc"

@@ -58,7 +58,7 @@ const showDrawer = ref(false);
     </div>
     <!-- content -->
     <div
-      class="w-full px-6 max-w-screen-xl flex-1 flex items-center justify-between mx-auto"
+      class="w-full px-4 lg:px-10 max-w-screen-xl flex-1 flex items-center justify-between mx-auto"
     >
       <!-- title -->
       <div>
@@ -77,7 +77,7 @@ const showDrawer = ref(false);
       <!-- menus -->
       <div
         v-if="$screen.higherThan('md', $screen.current.value)"
-        class="flex space-x-4 items-center bg-white/[0.75] dark:bg-black/[0.75] rounded-xl px-4 py-4"
+        class="flex space-x-4 items-center bg-white/[0.75] dark:bg-black/[0.75] rounded-xl px-4 lg:px-10 py-4"
       >
         <div class="flex space-x-4 text-sm items-center">
           <!-- dynamic menus -->
@@ -144,13 +144,13 @@ const showDrawer = ref(false);
           <div
             class="flex flex-col text-sm items-center dark:divide-gray-700 text-center text-[1.5rem]"
           >
-            <NulxLink
+            <NuxtLink
               class="flex justify-center items-center text-base space-x-2 h-[4rem] w-full"
-              to="/"
+              :to="{ name: 'index' }"
               @click="() => (showDrawer = false)"
             >
               <span class="text-[1.5rem]">Home</span>
-            </NulxLink>
+            </NuxtLink>
             <template v-for="(item, i) in menus">
               <template v-if="item?.type === 'link'">
                 <NuxtLink
@@ -245,14 +245,20 @@ const showDrawer = ref(false);
             download="nitm-capabilities-statement.pdf"
             class="text-[1.5rem]"
             :href="links.capabilities as string"
+            @click="() => (showDrawer = false)"
             >Capabilities Statement</NuxtLink
           >
         </AwesomeActionSheetItemButton>
         <AwesomeActionSheetItemButton
           class="flex justify-center items-center text-base space-x-2 h-[4rem]"
-          :to="links.startProject"
         >
-          <span class="text-[1.5rem]">Start a Project</span>
+          <NuxtLink
+            class="text-[1.5rem]"
+            :to="links.startProject || { name: 'contact' }"
+            @click="() => (showDrawer = false)"
+          >
+            <span class="text-[1.5rem]">Start a Project</span>
+          </NuxtLink>
         </AwesomeActionSheetItemButton>
       </AwesomeActionSheetGroup>
       <!-- <AwesomeActionSheetGroup class="fixed bottom-4 right-4">

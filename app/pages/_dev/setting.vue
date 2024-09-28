@@ -116,7 +116,9 @@ const validate = async () => {
                       class="w-full md:w-1/3"
                     >
                       <template #prefix-disabled>
-                        <span class="flex-1 px-4 py-2">github.com/</span>
+                        <span class="flex-1 px-4 lg:px-10 py-2"
+                          >github.com/</span
+                        >
                       </template>
                     </AwesomeFormTextInput>
                   </div>

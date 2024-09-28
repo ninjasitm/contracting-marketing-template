@@ -58,7 +58,7 @@ const state: HomeState = reactive(config);
           }"
         >
           <div class="flex flex-col w-full max-w-screen-xl mx-auto">
-            <div class="flex flex-col w-full md:w-[692px] px-4">
+            <div class="flex flex-col w-full md:w-[692px] px-6 lg:px-12">
               <h2
                 class="text-6xl font-light tracking-tighter text-black max-md:max-w-full max-md:text-4xl"
                 v-html="state.banner?.title"
@@ -80,7 +80,7 @@ const state: HomeState = reactive(config);
       </Teleport>
     </ClientOnly>
     <section
-      class="flex flex-col w-full max-w-screen-xl mt-5 md:mt-20 mx-auto px-4"
+      class="flex flex-col w-full max-w-screen-xl mt-5 md:mt-20 mx-auto px-4 lg:px-2"
     >
       <hr class="w-full border border-black mt-10" />
       <h2
@@ -135,7 +135,7 @@ const state: HomeState = reactive(config);
       </div>
     </section>
     <section
-      class="flex flex-col mt-32 w-full font-light max-md:mt-10 max-w-screen-xl mx-auto px-4"
+      class="flex flex-col mt-32 w-full font-light max-md:mt-10 max-w-screen-xl mx-auto px-4 lg:px-2"
     >
       <hr class="w-full border border-black mt-10" />
       <h2
@@ -148,7 +148,7 @@ const state: HomeState = reactive(config);
         <article
           v-for="(differentiator, index) in state.differentiators?.items"
           :key="index"
-          class="flex flex-col grow shrink p-10 bg-white rounded-2xl min-w-[240px] w-[330px] max-md:px-5"
+          class="flex flex-col grow shrink p-2 bg-white rounded-2xl min-w-[240px] w-[330px]"
           :icon="differentiator.icon"
           :description="differentiator.description"
         >

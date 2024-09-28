@@ -85,10 +85,10 @@ async function onLoadCategory(id: any): Promise<void> {
 </script>
 <template>
   <div
-    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-4"
+    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-4 lg:px-10"
   >
     <section
-      class="min-h-[250px] flex flex-col align-center justify-center mt-20"
+      class="flex flex-col align-center justify-center pt-40 pb-20 lg:pt-60"
     >
       <h1
         class="w-full max-w-[1320px] text-6xl font-light tracking-tighter text-center text-black uppercase max-md:max-w-full max-md:text-4xl"
@@ -134,7 +134,7 @@ async function onLoadCategory(id: any): Promise<void> {
         class="flex gap-4 items-start self-start mt-16 text-base max-md:mt-10 max-md:max-w-full overflow-x-auto overfly-y-hidden snap-x"
       >
         <AwesomeButton
-          class="gap-2 self-stretch px-6 py-4 text-white bg-sky-600 rounded-[1000px] max-md:px-5 h-14 text-center snap-center"
+          class="gap-2 self-stretch px-4 lg:px-10 py-4 text-white bg-sky-600 rounded-[1000px] max-md:px-5 h-14 text-center snap-center"
           @click="onLoadCategory"
         >
           All Projects
@@ -142,7 +142,7 @@ async function onLoadCategory(id: any): Promise<void> {
         <AwesomeButton
           v-for="(category, index) in state.categories"
           :key="index"
-          class="gap-2 self-stretch px-6 py-4 dark:text-white rounded-[1000px] max-md:px-5 h-14 text-center snap-center"
+          class="gap-2 self-stretch px-4 lg:px-10 py-4 dark:text-white rounded-[1000px] max-md:px-5 h-14 text-center snap-center"
           :text="category.name"
         >
         </AwesomeButton>

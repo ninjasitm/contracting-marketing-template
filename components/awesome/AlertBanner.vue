@@ -67,7 +67,7 @@ const close = () => {
       leave-to="opacity-0"
     >
       <div
-        :class="`bg-gray-200 dark:bg-gray-800 bg-gradient-to-r shadow-white/50 dark:shadow-gray-950/50 px-6 py-6 rounded-md shadow-lg flex space-x-6 ${selectedStyle}`"
+        :class="`bg-gray-200 dark:bg-gray-800 bg-gradient-to-r shadow-white/50 dark:shadow-gray-950/50 px-4 lg:px-10 py-6 rounded-md shadow-lg flex space-x-6 ${selectedStyle}`"
       >
         <div class="flex items-center justify-center">
           <slot name="icon">

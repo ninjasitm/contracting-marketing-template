@@ -45,9 +45,9 @@ const state: FooterState = reactive({
     class="flex w-full flex-col border-t border-gray-900/10 dark:border-gray-50/[0.2] w-full justify-center align-center"
     :style="state.containerStyle"
   >
-    <Collab class="container max-w-screen-xl mx-auto px-6" />
+    <Collab class="container max-w-screen-xl mx-auto px-6 lg:px-10" />
     <CompanyAddress
-      class="container max-w-screen-xl mx-auto mb-12 px-6"
+      class="container max-w-screen-xl mx-auto mb-12 px-6 lg:px-10"
       :address="state.address"
       :email="state.email"
       :links="state.links"

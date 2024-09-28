@@ -11,6 +11,8 @@ description: Ask Dr. FIGO project is a free, anonymous website that enables
   personalised information from OBGYNs in their own language. Launched as a
   pilot in Ethiopia in July 2021, the project will be scaled to other lower- and
   middle-income countries in the future.
+categories:
+  - API
 problem:
   title: Problem
   description: >-
@@ -68,28 +70,26 @@ process:
   description: The development process involved several stages
   items:
     - alt: Requirements Gathering
-      description:
-        Detailed specifications were outlined in the Statement of Work
+      description: Detailed specifications were outlined in the Statement of Work
         (SOW) and Scope documents.
     - alt: Design Phase
       description: |-
         *   UX designs were created
-
+            
         *   Mobile designs were developed
-
+            
         *   Doctor portal wireframes were produced
-
+            
         *   User flow charts were designed
     - alt: Development
       description: |-
         *   The platform was built with a focus on privacy and security
-
+            
         *   Different portals (Public, Doctor, Admin) were developed
-
+            
         *   Geolocation and content management systems were implemented
     - alt: Testing
-      description:
-        Rigorous testing was likely conducted to ensure the platform's
+      description: Rigorous testing was likely conducted to ensure the platform's
         security and functionality across different geographical locations.
     - alt: Deployment
       description: The platform was launched with considerations for different

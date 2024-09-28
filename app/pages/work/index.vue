@@ -1,29 +1,17 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
 import config from '@@/app/content/_pages/work.json';
+import clients from '@@/app/content/clients.json';
 import ProjectCard from '@/components/work/ProjectCard.vue';
 import Loading from '@/components/layouts/Page/Loading.vue';
+import type { Client, Project } from '@/utils/types';
 
 definePageMeta({ layout: 'page' });
-
-type Project = {
-  id: string;
-  title: string;
-  slug: string;
-  bannerImage: string;
-  description: string;
-  client: string;
-};
 
 type WorkPageState = {
   isLoading: any;
   title: string;
-  featuredClient: {
-    logo: string | undefined;
-    bannerImage: string | undefined;
-    description: string;
-    type: string;
-  };
+  featuredClient: Client;
   footer: {
     title: string;
     description: string;
@@ -41,13 +29,7 @@ const state: WorkPageState = reactive({
   title: config?.title,
   footer: config?.footer,
   currentCategory: null,
-  featuredClient: (
-    await useAsyncData('_work.featuredClient', () =>
-      queryContent('/_work')
-        .only(['slug', 'title', 'description', 'bannerImage'])
-        .findOne(),
-    )
-  ).data,
+  featuredClient: null,
   categories: [],
   projects: [],
 });
@@ -78,11 +60,20 @@ async function loadData(): Promise<void> {
         })),
     ),
   ];
+  config.featuredClient = {
+    client: config.featuredClient?.client || 'adf',
+    ...(config.featuredClient || {}),
+  };
+  state.featuredClient =
+    clients.find((c: Client) => c.slug === config.featuredClient?.client) ||
+    ({} as Client);
+  state.featuredClient.type = config.featuredClient?.type || '';
+  state.featuredClient.description = config.featuredClient?.description || '';
   state.isLoading = false;
 }
 
 async function onLoadCategory(id: any): Promise<void> {
-  state.currentCategory = id;
+  state.currentCategory = id === state.currentCategory ? null : id;
   console.log('Loading category', id);
   // Implement category load logic here
   const query = queryContent('/_work').only([
@@ -93,9 +84,9 @@ async function onLoadCategory(id: any): Promise<void> {
     'title',
   ]);
 
-  if (id) {
+  if (state.currentCategory) {
     query.where({
-      categories: { $contains: id },
+      categories: { $contains: state.currentCategory },
     });
   }
 
@@ -170,7 +161,7 @@ async function onLoadCategory(id: any): Promise<void> {
         </AwesomeButton>
       </nav>
       <div
-        class="flex flex-wrap gap-5 items-start mt-16 w-full max-md:mt-10 overflow-visible"
+        class="flex flex-wrap gap-5 items-start mt-16 w-full lg:mt-6 overflow-visible"
       >
         <div v-if="state.isLoading" class="flex justify-center w-full">
           <Loading />

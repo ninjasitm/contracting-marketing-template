@@ -28,3 +28,51 @@ export type GenericItem = {
 export type StyleObject = {
   [key: string]: string;
 };
+
+export interface Client {
+  slug: string;
+  name: string;
+  logo?: string;
+  description?: string;
+  website?: string;
+}
+
+export interface Project {
+  title: string;
+  date: string;
+  slug: string;
+  isOngoing?: boolean;
+  description?: string;
+  client: string;
+  url: string;
+  bannerImage?: string;
+  categories?: string[];
+  problem?: {
+    title: string;
+    image: string;
+    description: string;
+  };
+  solution?: {
+    title: string;
+    image: string;
+    description: string;
+  };
+  process?: {
+    title: string;
+    image: string;
+    description: string;
+    items: ProcessItem[];
+  };
+  design?: {
+    title: string;
+    image: string;
+    description: string;
+    items: DesignItem[];
+  };
+  result?: {
+    title: string;
+    image: string;
+    description: string;
+    items: ResultItem[];
+  };
+}

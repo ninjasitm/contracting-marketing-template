@@ -20,7 +20,7 @@ const { imageSrc, description, client, title } = toRefs(props);
 
 <template>
   <NuxtLink
-    class="shrink h-[400px] min-w-[240px] w-[330px] shadow-sm"
+    class="shrink h-[450px] min-w-[240px] w-[330px] shadow-sm"
     :to="{
       name: 'work-slug',
       params: { slug: slug },
@@ -34,9 +34,9 @@ const { imageSrc, description, client, title } = toRefs(props);
         "
         :alt="description"
         loading="lazy"
-        class="object-cover w-full h-[375px] rounded-2xl aspect-[0.86] hover:scale-105 transition-transform duration-300 object-top"
+        class="object-cover w-full h-[350px] rounded-2xl aspect-[0.86] hover:scale-105 transition-transform duration-300 object-top"
       />
-      <div class="flex flex-col mt-6 w-full">
+      <div class="flex flex-col mt-6 w-full h-[100px]">
         <p class="text-lg font-light">
           {{ splitIntoSentences(description)[0] }}
         </p>

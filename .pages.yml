@@ -219,12 +219,12 @@ content:
         label: Featured Client
         type: object
         fields:
+          - slug: client
+            label: Client
+            type: string
           - name: description
             label: Description
             type: rich-text
-          - name: type
-            label: Type
-            type: string
       - name: footer
         label: Footer
         type: object

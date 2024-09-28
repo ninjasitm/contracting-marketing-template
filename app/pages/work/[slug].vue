@@ -5,6 +5,8 @@ import type { ParsedContent } from '@nuxt/content';
 import clients from '@/content/clients.json';
 import Loading from '@/components/layouts/Page/Loading.vue';
 import ProjectCard from '@/components/work/ProjectCard.vue';
+import type { Client, Project } from '@/utils/types';
+
 definePageMeta({ layout: 'page' });
 
 const $route = useRoute();
@@ -27,60 +29,12 @@ interface ResultItem {
   description: string;
 }
 
-interface Client {
-  slug: string;
-  name: string;
-  logo?: string;
-  description?: string;
-  website?: string;
-}
-
 interface RelatedProject {
   title: string;
   description: string;
   slug: string;
   bannerImage?: string;
   client?: string;
-}
-
-interface Project {
-  title: string;
-  date: string;
-  slug: string;
-  isOngoing?: boolean;
-  description?: string;
-  client: string;
-  url: string;
-  bannerImage?: string;
-  categories?: string[];
-  problem?: {
-    title: string;
-    image: string;
-    description: string;
-  };
-  solution?: {
-    title: string;
-    image: string;
-    description: string;
-  };
-  process?: {
-    title: string;
-    image: string;
-    description: string;
-    items: ProcessItem[];
-  };
-  design?: {
-    title: string;
-    image: string;
-    description: string;
-    items: DesignItem[];
-  };
-  result?: {
-    title: string;
-    image: string;
-    description: string;
-    items: ResultItem[];
-  };
 }
 
 interface SingleProjectState {

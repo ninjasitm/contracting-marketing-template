@@ -20,7 +20,7 @@ const { imageSrc, description, client, title } = toRefs(props);
 
 <template>
   <NuxtLink
-    class="grow shrink h-[400px] min-w-[240px] w-[330px] shadow-sm"
+    class="shrink h-[400px] min-w-[240px] w-[330px] shadow-sm"
     :to="{
       name: 'work-slug',
       params: { slug: slug },

@@ -65,6 +65,7 @@ solution:
     a neutral website for safety.
 process:
   title: Process
+  description: The development process involved several stages
   items:
     - alt: Requirements Gathering
       description: Detailed specifications were outlined in the Statement of Work

@@ -6,6 +6,11 @@ client: Ask Dr. Figo
 url: https://askdrfigo.org
 date: 01/28/2021
 isOngoing: false
+description: Ask Dr. FIGO project is a free, anonymous website that enables
+  visitors to ask questions about sexual and reproductive health and get
+  personalised information from OBGYNs in their own language. Launched as a
+  pilot in Ethiopia in July 2021, the project will be scaled to other lower- and
+  middle-income countries in the future.
 problem:
   title: Problem
   description: >-

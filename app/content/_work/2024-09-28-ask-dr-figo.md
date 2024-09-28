@@ -2,7 +2,7 @@
 published: false
 title: Ask Dr. Figo
 slug: adf
-client: Ask Dr. Figo
+client: adf
 url: https://www.figo.org/what-we-do/figo-projects/ask-dr-figo
 date: 01/28/2021
 isOngoing: false

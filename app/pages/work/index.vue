@@ -53,13 +53,12 @@ async function loadData(): Promise<void> {
       (await queryContent('/_work').only('categories').find())
         .map((item) => item.categories)
         .flat()
-        .filter((item) => item !== null && item !== undefined)
-        .map((item) => ({
-          name: item,
-          filter: item,
-        })),
+        .filter((item) => item !== null && item !== undefined),
     ),
-  ];
+  ].map((item) => ({
+    name: item,
+    filter: item,
+  }));
   config.featuredClient = {
     client: config.featuredClient?.client || 'adf',
     ...(config.featuredClient || {}),
@@ -139,7 +138,7 @@ async function onLoadCategory(id: any): Promise<void> {
         </div>
       </header>
       <nav
-        class="flex flex-wrap gap-4 py-4 items-start self-start mt-10 text-base max-md:mt-10 max-md:max-w-full snap-x lg:h-[100px]"
+        class="flex flex-wrap gap-4 py-4 items-start self-start mt-10 text-base max-md:mt-10 max-md:max-w-full snap-x lg:min-h-[100px]"
       >
         <AwesomeButton
           class="gap-2 self-stretch text-white bg-sky-600 max-md:px-5 h-10 text-center snap-center text-xs"

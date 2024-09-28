@@ -37,6 +37,24 @@ export interface Client {
   website?: string;
 }
 
+interface ProcessItem {
+  imgSrc: string;
+  alt: string;
+  description: string;
+}
+
+interface DesignItem {
+  imgSrc: string;
+  alt: string;
+}
+
+interface ResultItem {
+  imgSrc: string;
+  alt: string;
+  title: string;
+  description: string;
+}
+
 export interface Project {
   title: string;
   date: string;
@@ -74,5 +92,19 @@ export interface Project {
     image: string;
     description: string;
     items: ResultItem[];
+  };
+}
+
+interface SingleProjectState {
+  project: Project;
+  nextProject?: {
+    id: string;
+    title: string;
+    description: string;
+  };
+  previousProject?: {
+    id: string;
+    title: string;
+    description: string;
   };
 }

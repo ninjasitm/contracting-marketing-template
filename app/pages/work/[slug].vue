@@ -11,24 +11,6 @@ definePageMeta({ layout: 'page' });
 
 const $route = useRoute();
 
-interface ProcessItem {
-  imgSrc: string;
-  alt: string;
-  description: string;
-}
-
-interface DesignItem {
-  imgSrc: string;
-  alt: string;
-}
-
-interface ResultItem {
-  imgSrc: string;
-  alt: string;
-  title: string;
-  description: string;
-}
-
 interface RelatedProject {
   title: string;
   description: string;
@@ -163,7 +145,9 @@ isLoading.value = false;
             class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
             :value="project.description"
           />
+          <AwesomeButton v-if="project.isOngoing">Ongoing</AwesomeButton>
           <time
+            v-else
             :datetime="project.date"
             class="leading-relaxed max-md:max-w-full"
           >

@@ -8,6 +8,7 @@ definePageMeta({ layout: 'page' });
 
 type Project = {
   id: string;
+  title: string;
   slug: string;
   bannerImage: string;
   description: string;
@@ -56,31 +57,49 @@ await loadData();
 async function loadData(): Promise<void> {
   state.isLoading = true;
   state.projects = (
-    await useAsyncData('_work.projects', () =>
-      queryContent('/_work')
-        .only(['slug', 'bannerImage', 'description', 'client'])
-        .limit(6)
-        .find(),
+    await useAsyncData(
+      '_work.projects',
+      async () =>
+        await queryContent('/_work')
+          .only(['slug', 'bannerImage', 'description', 'client', 'title'])
+          .limit(6)
+          .find(),
     )
   ).data;
+  state.categories = [
+    ...new Set(
+      (await queryContent('/_work').only('categories').find())
+        .map((item) => item.categories)
+        .flat()
+        .filter((item) => item !== null && item !== undefined)
+        .map((item) => ({
+          name: item,
+          filter: item,
+        })),
+    ),
+  ];
   state.isLoading = false;
 }
 
 async function onLoadCategory(id: any): Promise<void> {
   state.currentCategory = id;
+  console.log('Loading category', id);
   // Implement category load logic here
-  state.projects = (
-    await useAsyncData('_work.filteredProjects', () =>
-      queryContent('/_work')
-        .only(['slug', 'bannerImage', 'description', 'client'])
-        .where({
-          categories: { $contains: id },
-        })
-        .limit(6)
-        .find(),
-    )
-  ).data;
-  console.log('Loading category');
+  const query = queryContent('/_work').only([
+    'slug',
+    'bannerImage',
+    'description',
+    'client',
+    'title',
+  ]);
+
+  if (id) {
+    query.where({
+      categories: { $contains: id },
+    });
+  }
+
+  state.projects = (await query.limit(6).find()) as Project[];
 }
 </script>
 <template>
@@ -131,19 +150,21 @@ async function onLoadCategory(id: any): Promise<void> {
         </div>
       </header>
       <nav
-        class="flex gap-4 items-start self-start mt-16 text-base max-md:mt-10 max-md:max-w-full overflow-x-auto overfly-y-hidden snap-x"
+        class="flex gap-4 py-4 items-start self-start mt-16 text-base max-md:mt-10 max-md:max-w-full overflow-x-auto overflow-y-hidden snap-x"
       >
         <AwesomeButton
-          class="gap-2 self-stretch px-4 lg:px-10 py-4 text-white bg-sky-600 rounded-[1000px] max-md:px-5 h-14 text-center snap-center"
-          @click="onLoadCategory"
+          class="gap-2 self-stretch text-white bg-sky-600 max-md:px-5 h-14 text-center snap-center text-xs"
+          @click="() => onLoadCategory(null)"
         >
           All Projects
         </AwesomeButton>
         <AwesomeButton
           v-for="(category, index) in state.categories"
           :key="index"
-          class="gap-2 self-stretch px-4 lg:px-10 py-4 dark:text-white rounded-[1000px] max-md:px-5 h-14 text-center snap-center"
+          outline
+          class="gap-2 self-stretch dark:text-white max-md:px-5 h-14 text-center snap-center text-nowrap text-xs"
           :text="category.name"
+          @click="() => onLoadCategory(category.filter)"
         >
         </AwesomeButton>
       </nav>
@@ -156,6 +177,8 @@ async function onLoadCategory(id: any): Promise<void> {
           v-else
           :id="project.id"
           :key="index"
+          class="w-[100%] md:w[31.5%] lg:w-[23.5%] mb-10"
+          :title="project.title"
           :image-src="project.bannerImage"
           :description="project.description"
           :client="project.client"

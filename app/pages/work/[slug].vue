@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
+import moment from 'moment';
 import type { ParsedContent } from '@nuxt/content';
+import clients from '@/content/clients.json';
 import Loading from '@/components/layouts/Page/Loading.vue';
 import ProjectCard from '@/components/work/ProjectCard.vue';
 definePageMeta({ layout: 'page' });
@@ -26,6 +28,7 @@ interface ResultItem {
 }
 
 interface Client {
+  slug: string;
   name: string;
   logo?: string;
   description?: string;
@@ -127,20 +130,7 @@ let projects = [] as RelatedProject[];
 let nextProject = {} as RelatedProject;
 let previousProject = {} as RelatedProject;
 if (project && project.slug) {
-  const clientParsedContent =
-    (
-      await useAsyncData(
-        `_client'.${project.client}`,
-        async (): Promise<ParsedContent> =>
-          await queryContent('/').where({ name: project.client }).findOne(),
-      )
-    ).data.value || ({} as Client);
-  client = {
-    name: clientParsedContent.name,
-    logo: clientParsedContent.logo,
-    description: clientParsedContent.description,
-    website: clientParsedContent.website,
-  };
+  client = clients.find((c) => c.slug === project.client) || ({} as Client);
 
   const { path } = useRoute();
   const [previousProjectParsedContent, nextProjectParsedContent] =
@@ -193,36 +183,46 @@ isLoading.value = false;
     v-else-if="project && project.slug"
     class="flex flex-col items-center mt-40 w-full max-md:mt-10 max-md:max-w-full px-4 lg:px-10"
   >
-    <div
-      class="flex flex-col max-w-full text-black w-full max-w-screen-xl mt-20 mx-auto"
-    >
+    <div class="flex flex-col text-black w-full max-w-screen-xl mt-20 mx-auto">
       <div class="flex flex-col px-32 w-full max-md:px-5 max-md:max-w-full">
         <div
           class="flex flex-col w-full text-xl font-light text-center max-md:max-w-full"
         >
-          <h1
-            class="leading-relaxed max-md:max-w-full"
-            v-html="client?.name"
-          ></h1>
+          <h1 class="leading-relaxed max-md:max-w-full">
+            <template v-if="client.logo">
+              <img
+                :src="client.logo"
+                :alt="client.name"
+                class="object-contain max-h-20 mx-auto"
+              />
+            </template>
+            <template v-else>
+              {{ client.name }}
+            </template>
+          </h1>
           <h2
             class="self-center mt-4 text-6xl tracking-tighter uppercase max-md:max-w-full max-md:text-4xl"
             v-html="project.title"
           ></h2>
           <MDC
+            v-if="project.description"
             class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
             :value="project.description"
           />
-          <time datetime="2023-09-28" class="leading-relaxed max-md:max-w-full">
-            {{ project.date }}
+          <time
+            :datetime="project.date"
+            class="leading-relaxed max-md:max-w-full"
+          >
+            {{ moment(project.date).format('MMMM DD, YYYY') }}
           </time>
         </div>
         <div
-          class="flex gap-4 justify-center items-start self-center mt-4 text-base"
+          class="flex flex-wrap gap-4 justify-center items-start self-center mt-4 text-base"
         >
           <AwesomeButton
             v-for="(category, index) in project.categories"
             :key="index"
-            class="roundex-full"
+            class="roundex-full text-nowrap"
             outline
             :uppercase="false"
           >
@@ -249,6 +249,7 @@ isLoading.value = false;
           v-html="project.problem.title"
         ></h2>
         <MDC
+          v-if="project.problem.description"
           class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
           :value="project.problem.description"
         />
@@ -273,6 +274,7 @@ isLoading.value = false;
           v-html="project.solution.title"
         ></h2>
         <MDC
+          v-if="project.solution.description"
           class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
           :value="project.solution.description"
         />
@@ -297,6 +299,7 @@ isLoading.value = false;
           v-html="project.process.title"
         ></h2>
         <MDC
+          v-if="project.process.description"
           class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
           :value="project.process.description"
         />
@@ -321,6 +324,7 @@ isLoading.value = false;
               loading="lazy"
             />
             <MDC
+              v-if="item.description"
               class="md-content mt-6 text-sm leading-8 max-md:max-w-full"
               :value="item.description"
             />
@@ -337,6 +341,7 @@ isLoading.value = false;
           v-html="project.design.title"
         ></h2>
         <MDC
+          v-if="project.design.description"
           class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
           :value="project.design.description"
         />
@@ -372,6 +377,7 @@ isLoading.value = false;
           v-html="project.result.title"
         ></h2>
         <MDC
+          v-if="project.result.description"
           class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
           :value="project.result.description"
         />

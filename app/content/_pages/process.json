@@ -1,20 +1,68 @@
 {
   "title": "Process",
+  "description": "Ninjas in the Machine Inc. (NITM) is a New York-based, MWBE-certified technology solutions provider specializing in government contracts at state, local, and federal levels. Our expertise spans AI/ML implementation, cloud solutions, and custom software development, all delivered with a commitment to efficiency, strong communication, and 100% customer satisfaction.",
   "sections": [
     {
-      "title": "Scope Development"
+      "title": "Scope Development",
+      "description": "NITM excels in defining and refining project scopes to meet the specific needs of government agencies at all levels.",
+      "items": [
+        "Collaborative ideation and outcome analysis for precise project definition",
+        "Expertise in translating government requirements into actionable tech solutions",
+        "Efficient and communicative approach from project conception to completion",
+        "Experience in developing solutions from minimal initial information"
+      ]
     },
     {
-      "title": "Product and Project Management"
+      "title": "Product and Project Management",
+      "description": "Our product and project management services ensure smooth execution and delivery of government technology initiatives.",
+      "items": [
+        "Technical Product Management tailored to government project lifecycles",
+        "Agile methodologies adapted for government workflows",
+        "Product roadmapping aligned with agency goals and timelines",
+        "100% customer satisfaction record, with projects completed on time and within budget",
+        "Typical response acknowledgment within 60 minutes; problem resolution within 12 hours"
+      ]
     },
     {
-      "title": "Design and Prototyping"
+      "title": "Design and Prototyping",
+      "description": "NITM offers user-centric design and rapid prototyping services to visualize and refine government technology solutions.",
+      "items": [
+        "UX/UI design expertise with a focus on government user needs",
+        "Cultural sensitivity in design, ensuring inclusivity for diverse user bases",
+        "Rapid prototyping to facilitate stakeholder feedback and approvals",
+        "Experience in designing for accessibility and compliance with government standards"
+      ]
     },
     {
-      "title": "Development, Maintenance and Support"
+      "title": "Development, Maintenance and Support",
+      "description": "We provide comprehensive development, maintenance, and support services for government technology infrastructure.",
+      "items": [
+        "Full-stack development capabilities: web applications, mobile apps, APIs, SaaS solutions",
+        "AI/ML technology implementation and deployment",
+        "Cloud expertise: Amazon Web Services, Microsoft Azure, Docker, Kubernetes",
+        "Ongoing maintenance and support with quick response times",
+        "Security-focused development practices aligned with government requirements"
+      ]
     },
     {
-      "title": "Team Building and Staff Augmentation"
+      "title": "Team Building and Staff Augmentation",
+      "description": "NITM offers flexible staffing solutions to supplement government technology teams.",
+      "items": [
+        "Experienced professionals available for short-term or long-term assignments",
+        "Expertise in various technologies and methodologies relevant to government projects",
+        "Seamless integration with existing government teams and processes",
+        "Staff training and knowledge transfer to enhance internal capabilities"
+      ]
+    },
+    {
+      "title": "Advisory and Training",
+      "description": "We provide strategic advisory services and comprehensive training programs to empower government agencies in their technology initiatives.",
+      "items": [
+        "AI/ML strategy, research, planning, and implementation guidance",
+        "Product rollout strategy and analysis tailored for government environments",
+        "Workforce training programs to enhance technology adoption",
+        "Advisory services on emerging technologies and their potential applications in government"
+      ]
     }
   ]
 }

@@ -15,8 +15,11 @@ type Project = {
 };
 
 type WorkPageState = {
+  isLoading: any;
   title: string;
   featuredClient: {
+    logo: string | undefined;
+    bannerImage: string | undefined;
     description: string;
     type: string;
   };
@@ -93,7 +96,7 @@ async function onLoadCategory(id: any): Promise<void> {
       ></h1>
     </section>
     <section
-      class="flex flex-col max-w-full text-black w-full max-w-screen-xl mx-auto overflow-x-hidden"
+      class="flex flex-col text-black w-full max-w-screen-xl mx-auto overflow-x-hidden"
     >
       <header
         v-if="state.featuredClient"
@@ -161,7 +164,7 @@ async function onLoadCategory(id: any): Promise<void> {
       </main>
     </section>
     <section
-      class="flex flex-col max-w-full text-black w-full max-w-screen-xl mt-20 mx-auto"
+      class="flex flex-col text-black w-full max-w-screen-xl mt-20 mx-auto"
     >
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl font-light tracking-tight uppercase max-md:max-w-full"

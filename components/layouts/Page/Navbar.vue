@@ -13,7 +13,7 @@ const menus = computed(
       []) as AwesomeLayoutPageNavbarMenu[],
 );
 
-const links = computed(() => {
+const links = computed((): Record<string, string> => {
   return (config?.layout?.page?.navbar?.links || {}) as {};
 });
 
@@ -40,7 +40,7 @@ const showDrawer = ref(false);
         <span
           v-for="info in config.companyInfo"
           :key="info.title"
-          class="text-sm text-white text-xs px-2 py-1 flex items-center w-[max-content]"
+          class="text-white text-xs px-2 py-1 flex items-center w-[max-content]"
           >{{ info.title }}<strong class="ml-2">{{ info.value }}</strong></span
         >
       </div>
@@ -51,7 +51,7 @@ const showDrawer = ref(false);
         <span
           v-for="info in config.companyInfo"
           :key="info.title"
-          class="text-sm text-white text-xs px-2 py-1 flex items-center w-[max-content]"
+          class="text-white text-xs px-2 py-1 flex items-center w-[max-content]"
           >{{ info.title }} <strong class="ml-2">{{ info.value }}</strong></span
         >
       </div>
@@ -63,7 +63,7 @@ const showDrawer = ref(false);
       <!-- title -->
       <div>
         <slot name="title">
-          <NuxtLink to="/" class="font-bold text-lg">
+          <NuxtLink :to="{ name: 'index' }" class="font-bold text-lg">
             <img
               v-if="config.logo"
               :src="config.logo"
@@ -92,7 +92,7 @@ const showDrawer = ref(false);
             <Icon name="la:language" />
           </AwesomeLink> -->
           <AwesomeButton
-            v-if="links?.capabilities"
+            v-if="links.capabilities"
             download="nitm-capabilities-statement.pdf"
             size="lg"
             class="gap-2 p-4 px-2 text-sm tracking-tight bg-transparent rounded-lg border border-black dark:text-white text-black"
@@ -101,7 +101,7 @@ const showDrawer = ref(false);
             Capabilities Statement
           </AwesomeButton>
           <AwesomeButton
-            v-if="links?.startProject"
+            v-if="links.startProject"
             size="lg"
             class="gap-2 p-4 text-sm tracking-tight text-white bg-primary rounded-lg"
             :to="links.startProject"
@@ -244,7 +244,7 @@ const showDrawer = ref(false);
           <NuxtLink
             download="nitm-capabilities-statement.pdf"
             class="text-[1.5rem]"
-            :href="links.capabilities"
+            :href="links.capabilities as string"
             >Capabilities Statement</NuxtLink
           >
         </AwesomeActionSheetItemButton>

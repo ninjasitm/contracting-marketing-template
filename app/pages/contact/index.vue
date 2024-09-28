@@ -47,30 +47,30 @@ const onSubmitForm = (event: Event) => {
   state.isLoading = false;
 };
 
-watch(embed, (value: HTMLDivElement | undefined): void => {
-  console.log(config);
-  if (!value) return;
-  if (config.useEmbed && config.embed?.length > 0) {
-    // Split a string with multiple scripts in config.embed into an array of scripts
-    // const dom = new DOMParser().parseFromString(
-    //   config.embed.replace(/\\"/g, '"'),
-    //   'text/html',
-    // );
-    // const scripts = dom.querySelectorAll('script');
-    // if (!scripts) return;
-    // console.log(scripts);
-    // for (const script of scripts) {
-    //   embed.value?.appendChild(script);
-    // }
-    const div = document.createElement('div');
-    div.innerHTML = config.embed
-      .replace(/\\"/g, '"')
-      .replace(/<c/g, '<component :is="\'script\'"')
-      .replace(/<\/script>/, '</component>');
-    embed.value?.appendChild(div.firstChild as Node);
-    console.log(embed.value, div.innerHTML);
-  }
-});
+// watch(embed, (value: HTMLDivElement | undefined): void => {
+//   console.log(config);
+//   if (!value) return;
+//   if (config.useEmbed && config.embed?.length > 0) {
+//     // Split a string with multiple scripts in config.embed into an array of scripts
+//     // const dom = new DOMParser().parseFromString(
+//     //   config.embed.replace(/\\"/g, '"'),
+//     //   'text/html',
+//     // );
+//     // const scripts = dom.querySelectorAll('script');
+//     // if (!scripts) return;
+//     // console.log(scripts);
+//     // for (const script of scripts) {
+//     //   embed.value?.appendChild(script);
+//     // }
+//     const div = document.createElement('div');
+//     div.innerHTML = config.embed
+//       .replace(/\\"/g, '"')
+//       .replace(/<c/g, '<component :is="\'script\'"')
+//       .replace(/<\/script>/, '</component>');
+//     embed.value?.appendChild(div.firstChild as Node);
+//     console.log(embed.value, div.innerHTML);
+//   }
+// });
 </script>
 <template>
   <div

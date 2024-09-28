@@ -27,7 +27,7 @@ const isActive = computed(() => {
 </script>
 
 <template>
-  <template v-if="menu.type !== 'dropdown'">
+  <template v-if="menu?.type !== 'dropdown'">
     <LayoutPageNavbarMenuItem :menu="menu" />
   </template>
   <template v-else-if="menu.children && menu.children.length > 0">

@@ -145,8 +145,6 @@ design:
 
 
     \- Tools for managing translations and country-specific content
-  items:
-    - {}
 result:
   title: Result
   description: >-

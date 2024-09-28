@@ -16,5 +16,11 @@
     "slug": "chip",
     "logo": "/media/client/logos/Chip_blue.png",
     "url": "https://www.chipprofessionals.com"
+  },
+  {
+    "name": "1199 SEIU",
+    "slug": "1199",
+    "logo": "/media/client/logos/1199Logo.png",
+    "url": "https://1199seiu.org"
   }
 ]

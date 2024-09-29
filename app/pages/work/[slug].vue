@@ -152,7 +152,7 @@ isLoading.value = false;
           ></h2>
           <MDC
             v-if="project.description"
-            class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
+            class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-center"
             :value="project.description"
           />
           <AwesomeButton v-if="project.isOngoing">Ongoing</AwesomeButton>

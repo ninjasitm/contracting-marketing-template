@@ -241,13 +241,13 @@ const showDrawer = ref(false);
         <AwesomeActionSheetItemButton
           class="flex justify-center items-center text-base space-x-2 h-[4rem]"
         >
-          <NuxtLink
-            download="nitm-capabilities-statement.pdf"
+          <a
             class="text-[1.5rem]"
             :href="links.capabilities as string"
             @click="() => (showDrawer = false)"
-            >Capabilities Statement</NuxtLink
           >
+            Capabilities Statement
+          </a>
         </AwesomeActionSheetItemButton>
         <AwesomeActionSheetItemButton
           class="flex justify-center items-center text-base space-x-2 h-[4rem]"

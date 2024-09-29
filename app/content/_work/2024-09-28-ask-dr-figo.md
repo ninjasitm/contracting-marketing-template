@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 title: Ask Dr. Figo
 slug: adf
 client: adf
@@ -145,6 +145,8 @@ design:
 
 
     \- Tools for managing translations and country-specific content
+  items:
+    - {}
 result:
   title: Result
   description: >-

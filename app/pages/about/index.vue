@@ -29,7 +29,7 @@ const membersParsedContent =
     await useAsyncData('_about.members', () =>
       queryContent('/_about/teammembers').findOne(),
     )
-  ).data.value || ([] as Member[]);
+  ).data.value?.members || ([] as Member[]);
 
 const members = membersParsedContent.map(
   (member: any): Member => ({

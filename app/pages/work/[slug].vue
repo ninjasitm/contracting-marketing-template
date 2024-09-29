@@ -7,6 +7,11 @@ import Loading from '@/components/layouts/Page/Loading.vue';
 import ProjectCard from '@/components/work/ProjectCard.vue';
 import type { Client, Project } from '@/utils/types';
 
+const backgrounds = Array.from(
+  { length: 5 },
+  (_, i) => `/images/demo/project-backgrounds/${i + 1}.png`,
+);
+
 definePageMeta({ layout: 'page' });
 
 const $route = useRoute();
@@ -17,20 +22,6 @@ interface RelatedProject {
   slug: string;
   bannerImage?: string;
   client?: string;
-}
-
-interface SingleProjectState {
-  project: Project;
-  nextProject?: {
-    id: string;
-    title: string;
-    description: string;
-  };
-  previousProject?: {
-    id: string;
-    title: string;
-    description: string;
-  };
 }
 
 const isLoading = ref(true);
@@ -119,8 +110,27 @@ isLoading.value = false;
     v-else-if="project && project.slug"
     class="flex flex-col items-center mt-40 w-full max-md:mt-10 max-md:max-w-full px-4 lg:px-10"
   >
+    <div
+      class="flex flex-col w-full text-xl font-light text-center max-md:max-w-full mt-20"
+    >
+      <AwesomeButton
+        :to="{
+          name: 'work',
+          params: { category: project.client.slug },
+        }"
+        class="flex flex-row gap-1 items-center justify-center p-4 my-auto rounded-lg h-14"
+        aria-label="Back to Work"
+      >
+        <img
+          loading="lazy"
+          src="/images/back.svg"
+          alt=""
+          class="object-cover self-stretch my-auto w-6 aspect-square"
+        />&nbsp;<span>Back</span>
+      </AwesomeButton>
+    </div>
     <div class="flex flex-col text-black w-full max-w-screen-xl mt-20 mx-auto">
-      <div class="flex flex-col px-32 w-full max-md:px-5 max-md:max-w-full">
+      <div class="flex flex-col px-2 w-full lg:px-32 max-md:max-w-full">
         <div
           class="flex flex-col w-full text-xl font-light text-center max-md:max-w-full"
         >
@@ -142,7 +152,7 @@ isLoading.value = false;
           ></h2>
           <MDC
             v-if="project.description"
-            class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
+            class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
             :value="project.description"
           />
           <AwesomeButton v-if="project.isOngoing">Ongoing</AwesomeButton>
@@ -179,7 +189,8 @@ isLoading.value = false;
 
     <div>
       <section
-        v-if="project.problem"
+        v-if="project.problem && project.problem.title"
+        id="problem"
         class="flex flex-col mt-28 max-w-full md:w-[700px] mx-auto max-md:mt-10"
       >
         <h2
@@ -188,7 +199,7 @@ isLoading.value = false;
         ></h2>
         <MDC
           v-if="project.problem.description"
-          class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
+          class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
           :value="project.problem.description"
         />
         <div
@@ -204,7 +215,8 @@ isLoading.value = false;
       </section>
 
       <section
-        v-if="project.solution"
+        v-if="project.solution && project.solution.title"
+        id="solution"
         class="flex flex-col mt-28 max-w-full md:w-[700px] mx-auto max-md:mt-10"
       >
         <h2
@@ -213,7 +225,7 @@ isLoading.value = false;
         ></h2>
         <MDC
           v-if="project.solution.description"
-          class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
+          class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
           :value="project.solution.description"
         />
         <div
@@ -229,7 +241,8 @@ isLoading.value = false;
       </section>
 
       <section
-        v-if="project.process"
+        v-if="project.process && project.process.title"
+        id="process"
         class="flex flex-col mt-28 max-w-full font-light text-black md:w-[700px] mx-auto max-md:mt-10"
       >
         <h2
@@ -238,17 +251,18 @@ isLoading.value = false;
         ></h2>
         <MDC
           v-if="project.process.description"
-          class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
+          class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
           :value="project.process.description"
         />
       </section>
 
       <section
-        v-if="project.process?.items"
-        class="flex flex-col mt-28 max-w-full font-light text-black mx-auto max-md:mt-10"
+        v-if="project.process?.items?.length > 0"
+        id="process-items"
+        class="flex flex-col mt-22 max-w-full font-light text-black mx-auto"
       >
         <div
-          class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full text-base leading-7 text-center"
+          class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full text-base leading-7"
         >
           <div
             v-for="(item, index) in project.process.items"
@@ -256,14 +270,20 @@ isLoading.value = false;
             class="flex flex-col flex-wrap w-full md:min-w-[240px] md:w-[414px]"
           >
             <img
+              v-if="item.imgSrc"
               :src="item.imgSrc"
               :alt="item.alt"
               class="object-cover self-center w-36 max-w-full rounded-2xl aspect-square hover:scale-105 transition-transform duration-300"
               loading="lazy"
             />
+            <h3
+              v-if="item.alt"
+              class="text-2xl mt-6 max-md:max-w-full"
+              v-html="item.alt"
+            ></h3>
             <MDC
               v-if="item.description"
-              class="md-content mt-6 text-sm leading-8 max-md:max-w-full"
+              class="md-content mt-6 text-md leading-8 max-md:max-w-full text-left"
               :value="item.description"
             />
           </div>
@@ -271,7 +291,8 @@ isLoading.value = false;
       </section>
 
       <section
-        v-if="project.design"
+        v-if="project.design && project.design.title"
+        id="design"
         class="flex flex-col mt-28 max-w-full md:w-[700px] mx-auto max-md:mt-10"
       >
         <h2
@@ -285,7 +306,8 @@ isLoading.value = false;
         />
       </section>
       <section
-        v-if="project.design?.items"
+        v-if="project.design?.items?.length > 0"
+        id="design-items"
         class="flex flex-col mt-28 max-w-full w-full mx-auto max-md:mt-10"
       >
         <div
@@ -307,7 +329,8 @@ isLoading.value = false;
       </section>
 
       <section
-        v-if="project.result"
+        v-if="project.result && project.result.title"
+        id="result"
         class="flex flex-col mt-28 max-w-full font-light md:w-[700px] mx-auto max-md:mt-10"
       >
         <h2
@@ -316,36 +339,43 @@ isLoading.value = false;
         ></h2>
         <MDC
           v-if="project.result.description"
-          class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
+          class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
           :value="project.result.description"
         />
       </section>
       <section
-        v-if="project.result?.items"
-        class="flex flex-col mt-28 max-w-full w-full mx-auto max-md:mt-10"
+        v-if="project.result?.items?.length > 0"
+        id="result-items"
+        class="flex mt-2 max-w-full w-full mx-auto"
       >
         <div
-          class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full text-center text-white"
+          class="grid grid-cols-1 md:grid-cols-2 flex-wrap gap-5 justify-center align-center mt-10 w-full text-white lg:max-w-screen-md mx-auto"
         >
           <div
             v-for="(item, index) in project.result.items"
             :key="index"
-            class="flex overflow-hidden flex-col rounded-2xl bg-stone-400 w-full md:min-w-[240px] md:w-[414px]"
+            class="flex flex-grow rounded-2xl bg-stone-400 flex-1 w-full bg-blend-darken bg-gradient-to-t from-black to-transparent"
+            :style="{
+              backgroundImage: `url(${
+                item.imgSrc ||
+                backgrounds[Math.floor(Math.random() * backgrounds.length)]
+              })`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }"
           >
             <div
-              class="flex relative flex-col justify-center px-4 lg:px-10 py-40 w-full aspect-[0.863] max-md:px-5 max-md:py-24"
+              class="flex grow relative flex-col justify-start px-4 lg:px-10 py-10 w-full aspect-[0.863] max-md:px-5"
             >
-              <img
-                :src="item.imgSrc"
-                :alt="item.alt"
-                class="object-cover absolute inset-0 size-full hover:scale-105 transition-transform duration-300"
-                loading="lazy"
-              />
               <div class="flex relative flex-col mb-0 max-md:mb-2.5">
-                <h3 class="text-6xl tracking-tighter max-md:text-4xl">
+                <h3 class="text-3xl tracking-tighter text-left">
                   {{ item.title }}
                 </h3>
-                <p class="mt-2 text-xl leading-8">{{ item.description }}</p>
+                <MDC
+                  v-if="item.description"
+                  class="md-content mt-6 text-md leading-8 max-md:max-w-full text-left"
+                  :value="item.description"
+                />
               </div>
             </div>
           </div>
@@ -354,7 +384,7 @@ isLoading.value = false;
     </div>
 
     <nav
-      class="flex flex-wrap gap-5 justify-between items-center mt-28 max-w-full w-full max-w-screen-xl mt-20 mx-auto max-md:mt-10 mb-10"
+      class="flex flex-wrap gap-5 justify-between items-center max-w-full w-full mt-20 mx-auto max-md:mt-10 mb-10"
     >
       <AwesomeButton
         v-if="previousProject?.slug"
@@ -430,5 +460,10 @@ isLoading.value = false;
   margin-bottom: 0.5rem;
   margin-left: 1.5rem;
   list-style-type: disc;
+}
+.md-content ul li {
+  margin-bottom: 0.5rem;
+  margin-left: 1.5rem;
+  list-style-type: number;
 }
 </style>

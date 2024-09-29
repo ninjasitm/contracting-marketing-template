@@ -44,6 +44,9 @@ async function loadData(): Promise<void> {
       async () =>
         await queryContent('/_work')
           .only(['slug', 'bannerImage', 'description', 'client', 'title'])
+          .where({
+            published: { $eq: true },
+          })
           .limit(6)
           .find(),
     )

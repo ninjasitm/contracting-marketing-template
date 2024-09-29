@@ -49,7 +49,7 @@ const state: HomeState = reactive(config);
     <ClientOnly>
       <Teleport defer to="#page-banner">
         <section
-          class="flex flex-col max-w-full uppercase w-full justify-end min-h-[100vh] pb-12 md:pb-24 md:min-h-[500px] md:h-[800px] bg-blend-darken bg-gradient-to-t from-black to-transparent"
+          class="flex flex-col max-w-full uppercase w-full justify-end min-h-[95vh] pb-12 md:pb-24 md:min-h-[500px] md:h-[800px] bg-blend-darken bg-gradient-to-t from-black to-transparent"
           :style="{
             backgroundImage: `url('${state.banner?.backgroundImage}')`,
             backgroundSize: 'cover',

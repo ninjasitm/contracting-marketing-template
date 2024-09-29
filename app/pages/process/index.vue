@@ -12,7 +12,7 @@ const state = reactive({
 </script>
 <template>
   <div
-    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-4"
+    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-2"
   >
     <section
       class="flex flex-col justify-center max-w-screen-xl mx-auto pt-40 lg:pt-60"

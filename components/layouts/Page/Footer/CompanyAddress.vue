@@ -72,7 +72,7 @@ onMounted(() => {
       <div class="mt-8 divide divide-y divide-black">
         <a
           :href="`mailto:${state.email}`"
-          class="gap-2 pb-4 mt-10 text-6xl tracking-tighter uppercase whitespace-nowrap max-md:max-w-full max-md:text-4xl"
+          class="gap-2 pb-4 mt-10 text-3xl lg:text-6xl tracking-tighter uppercase whitespace-nowrap max-md:max-w-full"
         >
           {{ state.email }}
         </a>

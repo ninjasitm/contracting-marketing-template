@@ -259,7 +259,7 @@ isLoading.value = false;
       <section
         v-if="project.process?.items?.length > 0"
         id="process-items"
-        class="flex flex-col mt-22 max-w-full font-light text-black mx-auto"
+        class="flex flex-col mt-2 max-w-full font-light text-black mx-auto"
       >
         <div
           class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full text-base leading-7"

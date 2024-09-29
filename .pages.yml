@@ -215,6 +215,9 @@ content:
       - name: title
         label: Title
         type: string
+      - name: description
+        label: Description
+        type: rich-text
       - name: featuredClient
         label: Featured Client
         type: object

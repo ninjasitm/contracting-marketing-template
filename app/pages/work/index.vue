@@ -11,6 +11,7 @@ definePageMeta({ layout: 'page' });
 type WorkPageState = {
   isLoading: any;
   title: string;
+  description: string;
   featuredClient: Client;
   footer: {
     title: string;
@@ -27,6 +28,7 @@ type WorkPageState = {
 const state: WorkPageState = reactive({
   isLoading: false,
   title: config?.title,
+  description: config?.description,
   footer: config?.footer,
   currentCategory: null,
   featuredClient: null,
@@ -97,7 +99,7 @@ async function onLoadCategory(id: any): Promise<void> {
 </script>
 <template>
   <div
-    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-4 lg:px-10"
+    class="flex relative flex-col pb-24 w-full max-md:max-w-full px-2 lg:px-10"
   >
     <section
       class="flex flex-col align-center justify-center pt-40 pb-20 lg:pt-60"
@@ -106,6 +108,14 @@ async function onLoadCategory(id: any): Promise<void> {
         class="w-full max-w-[1320px] text-6xl font-light tracking-tighter text-center text-black uppercase max-md:max-w-full max-md:text-4xl"
         v-html="state?.title || 'Our Work'"
       ></h1>
+      <p
+        class="mt-4 text-lg font-light text-center max-w-[1320px] max-md:max-w-full"
+      >
+        <MDC
+          class="mt-4 text-lg font-light text-center max-w-[800px] max-md:max-w-full"
+          :value="state?.description"
+        ></MDC>
+      </p>
     </section>
     <section class="flex flex-col text-black w-full max-w-screen-xl mx-auto">
       <header
@@ -113,7 +123,7 @@ async function onLoadCategory(id: any): Promise<void> {
         class="flex overflow-hidden flex-col w-full rounded-2xl"
       >
         <div
-          class="flex relative flex-col p-16 w-full min-h-[640px] max-md:px-5 max-md:max-w-full"
+          class="flex relative flex-col py-4 pt-0 px-0 lg:px-16 w-full min-h-[250px] lg:min-h-[640px] max-md:max-w-full"
         >
           <img
             loading="lazy"

@@ -251,7 +251,7 @@ isLoading.value = false;
       <section
         v-if="project.process && project.process.title"
         id="process"
-        class="flex flex-col mt-28 max-w-full font-light text-black md:w-[700px] mx-auto max-md:mt-10"
+        class="flex flex-col mt-28 max-w-full font-light text-black md:w-[700px] mx-auto"
       >
         <h2
           class="text-4xl max-md:max-w-full"
@@ -270,7 +270,7 @@ isLoading.value = false;
         class="flex flex-col mt-2 max-w-full font-light text-black mx-auto justify-center align-center"
       >
         <div
-          class="flex flex-col md:flex-row flex-wrap gap-5 items-start self-center mt-10 w-full text-base leading-7"
+          class="flex flex-col md:flex-row flex-wrap gap-5 items-start self-center mb-10 w-full text-base leading-7"
         >
           <div
             v-for="(item, index) in project.process.items"
@@ -278,7 +278,7 @@ isLoading.value = false;
             class="flex flex-wrap flex-col md:flex-row w-full md:w-[48%]"
           >
             <div
-              class="bg-white md:w-[144px] md:h-[144px] flex align-center justify-center"
+              class="bg-white w-[144px] h-[144px] flex align-center justify-center"
             >
               <NuxtImg
                 v-if="item.imgSrc"
@@ -323,10 +323,10 @@ isLoading.value = false;
       <section
         v-if="project.design?.items?.length > 0"
         id="design-items"
-        class="flex flex-col mt-10 max-w-full w-full mx-auto max-md:mt-10"
+        class="flex flex-col max-w-full w-full mx-auto"
       >
         <div
-          class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full"
+          class="flex flex-wrap gap-5 justify-center items-start self-center md:mt-10 w-full"
         >
           <div
             v-for="(item, index) in project.design.items"
@@ -334,7 +334,7 @@ isLoading.value = false;
             class="flex overflow-hidden flex-col rounded-2xl bg-stone-400"
             :class="{
               'w-full': item.fullWidthImage,
-              'w-[49%]': !item.fullWidthImage,
+              'md:w-[49%]': !item.fullWidthImage,
             }"
           >
             <NuxtImg
@@ -351,7 +351,7 @@ isLoading.value = false;
       <section
         v-if="project.result && project.result.title"
         id="result"
-        class="flex flex-col mt-28 max-w-full font-light md:w-[700px] mx-auto max-md:mt-10"
+        class="flex flex-col mt-28 max-w-full font-light md:w-[700px] mx-auto"
       >
         <h2
           class="text-4xl max-md:max-w-full"
@@ -369,7 +369,7 @@ isLoading.value = false;
         class="flex mt-2 max-w-full w-full mx-auto"
       >
         <div
-          class="grid grid-cols-1 md:grid-cols-2 flex-wrap gap-5 justify-center align-center mt-10 w-full text-inherit lg:max-w-screen-md mx-auto"
+          class="grid grid-cols-1 md:grid-cols-2 flex-wrap gap-5 justify-center align-center mb-10 w-full text-inherit lg:max-w-screen-md mx-auto"
         >
           <div
             v-for="(item, index) in project.result.items"

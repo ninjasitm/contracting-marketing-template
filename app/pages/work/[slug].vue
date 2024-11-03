@@ -2,6 +2,7 @@
 import { reactive } from 'vue';
 import moment from 'moment';
 import type { ParsedContent } from '@nuxt/content';
+import OpenLink from '~/public/images/open-link.svg';
 import clients from '@/content/clients.json';
 import Loading from '@/components/layouts/Page/Loading.vue';
 import ProjectCard from '@/components/work/ProjectCard.vue';
@@ -111,14 +112,14 @@ isLoading.value = false;
     class="flex flex-col items-center mt-40 w-full max-md:mt-10 max-md:max-w-full px-4 lg:px-10"
   >
     <div
-      class="flex flex-col w-full text-xl font-light text-center max-md:max-w-full mt-20"
+      class="flex w-full text-xl font-light align-center justify-center max-md:max-w-full mt-20"
     >
       <AwesomeButton
         :to="{
           name: 'work',
           params: { category: project.client.slug },
         }"
-        class="flex flex-row gap-1 items-center justify-center p-4 my-auto rounded-lg h-14"
+        class="flex flex-row gap-1 items-center justify-center p-4 my-auto rounded-lg h-14 w-[100px]"
         aria-label="Back to Work"
       >
         <NuxtImg
@@ -152,20 +153,35 @@ isLoading.value = false;
             class="self-center mt-4 text-6xl tracking-tighter uppercase max-md:max-w-full max-md:text-4xl"
             v-html="project.title"
           ></h2>
+          <div
+            class="flex flex-wrap gap-4 justify-center items-center self-center mt-4 text-base"
+          >
+            <AwesomeButton
+              v-if="project.url"
+              size="lg"
+              class="text-nowrap bg-primary text-white"
+              :href="project.url"
+              >Visit {{ project.title }}
+              <OpenLink class="stroke-white" stroke="#fff"></OpenLink>
+            </AwesomeButton>
+          </div>
           <MDC
             v-if="project.description"
             class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-center"
             :value="project.description"
           />
-          <AwesomeButton v-if="project.url"></AwesomeButton>
-          <AwesomeButton v-if="project.isOngoing">Ongoing</AwesomeButton>
-          <time
-            v-else
-            :datetime="project.date"
-            class="leading-relaxed max-md:max-w-full"
+          <div
+            class="flex flex-wrap gap-4 justify-center items-center self-center mt-4 text-base"
           >
-            {{ moment(project.date).format('MMMM DD, YYYY') }}
-          </time>
+            <AwesomeButton v-if="project.isOngoing">Ongoing</AwesomeButton>
+            <time
+              v-else
+              :datetime="project.date"
+              class="leading-relaxed max-md:max-w-full"
+            >
+              {{ moment(project.date).format('MMMM DD, YYYY') }}
+            </time>
+          </div>
         </div>
         <div
           class="flex flex-wrap gap-4 justify-center items-start self-center mt-4 text-base"
@@ -488,5 +504,14 @@ isLoading.value = false;
   margin-bottom: 0.15rem;
   margin-left: 1.5rem;
   list-style-type: number;
+}
+
+.md-content h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 </style>

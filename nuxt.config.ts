@@ -38,6 +38,7 @@ export default defineNuxtConfig({
     // contents,
     '@nuxt/content',
     '@nuxt/image',
+    'nuxt-svgo-loader',
 
     // todo: feat/localization
     // '@nuxtjs/i18n'
@@ -91,6 +92,7 @@ export default defineNuxtConfig({
       theme: 'github-dark',
     },
   },
+  buildModules: ['@nuxtjs/svg'],
 
   // module::content
   // todo: feat/localization

@@ -387,6 +387,9 @@ content:
             type: object
             list: true
             fields:
+              - name: fullWidthImage
+                label: Make this image full width?
+                type: boolean
               - name: imgSrc
                 label: Image Source
                 type: image

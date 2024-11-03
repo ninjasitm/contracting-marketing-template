@@ -103,16 +103,17 @@ isLoading.value = false;
 </script>
 
 <template>
-  <div v-if="isLoading" class="flex justify-center w-full">
+  <div
+    v-if="isLoading"
+    class="flex justify-center w-full"
+  >
     <Loading />
   </div>
   <div
     v-else-if="project && project.slug"
     class="flex flex-col items-center mt-40 w-full max-md:mt-10 max-md:max-w-full px-4 lg:px-10"
   >
-    <div
-      class="flex flex-col w-full text-xl font-light text-center max-md:max-w-full mt-20"
-    >
+    <div class="flex flex-col w-full text-xl font-light text-center max-md:max-w-full mt-20">
       <AwesomeButton
         :to="{
           name: 'work',
@@ -131,9 +132,7 @@ isLoading.value = false;
     </div>
     <div class="flex flex-col text-black w-full max-w-screen-xl mt-20 mx-auto">
       <div class="flex flex-col px-2 w-full lg:px-32 max-md:max-w-full">
-        <div
-          class="flex flex-col w-full text-xl font-light text-center max-md:max-w-full"
-        >
+        <div class="flex flex-col w-full text-xl font-light text-center max-md:max-w-full">
           <h1 class="leading-relaxed max-md:max-w-full">
             <template v-if="client.logo">
               <img
@@ -164,9 +163,7 @@ isLoading.value = false;
             {{ moment(project.date).format('MMMM DD, YYYY') }}
           </time>
         </div>
-        <div
-          class="flex flex-wrap gap-4 justify-center items-start self-center mt-4 text-base"
-        >
+        <div class="flex flex-wrap gap-4 justify-center items-start self-center mt-4 text-base">
           <AwesomeButton
             v-for="(category, index) in project.categories"
             :key="index"
@@ -181,7 +178,7 @@ isLoading.value = false;
       <img
         v-if="project.bannerImage"
         loading="lazy"
-        class="object-cover mt-20 h-[450px] w-full rounded-2xl max-md:mt-10 max-md:max-w-full hover:scale-105 transition-transform duration-300"
+        class="object-cover mt-20 h-[240px] md:h-[640px] w-full rounded-2xl max-md:mt-10 max-md:max-w-full hover:scale-105 transition-transform duration-300"
         :src="project.bannerImage"
         :alt="project.title"
       />
@@ -203,6 +200,7 @@ isLoading.value = false;
           :value="project.problem.description"
         />
         <div
+          v-if="project.problem.image"
           class="flex overflow-hidden flex-col mt-10 w-full rounded-2xl bg-stone-400 max-md:max-w-full"
         >
           <img
@@ -229,6 +227,7 @@ isLoading.value = false;
           :value="project.solution.description"
         />
         <div
+          v-if="project.solution.image"
           class="flex overflow-hidden flex-col mt-10 w-full rounded-2xl bg-stone-400 max-md:max-w-full"
         >
           <img
@@ -261,31 +260,33 @@ isLoading.value = false;
         id="process-items"
         class="flex flex-col mt-2 max-w-full font-light text-black mx-auto"
       >
-        <div
-          class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full text-base leading-7"
-        >
+        <div class="flex flex-col md:flex-row flex-wrap gap-5 items-start self-center mt-10 w-full text-base leading-7">
           <div
             v-for="(item, index) in project.process.items"
             :key="index"
-            class="flex flex-col flex-wrap w-full md:min-w-[240px] md:w-[414px]"
+            class="flex flex-wrap flex-col md:flex-row w-full md:min-w-[240px] md:w-[414px]"
           >
-            <img
-              v-if="item.imgSrc"
-              :src="item.imgSrc"
-              :alt="item.alt"
-              class="object-cover self-center w-36 max-w-full rounded-2xl aspect-square hover:scale-105 transition-transform duration-300"
-              loading="lazy"
-            />
-            <h3
-              v-if="item.alt"
-              class="text-2xl mt-6 max-md:max-w-full"
-              v-html="item.alt"
-            ></h3>
-            <MDC
-              v-if="item.description"
-              class="md-content mt-6 text-md leading-8 max-md:max-w-full text-left"
-              :value="item.description"
-            />
+            <div class="bg-white md:w-[144px] md:h-[144px] flex align-center justify-center">
+              <img
+                v-if="item.imgSrc"
+                :src="item.imgSrc"
+                :alt="item.alt"
+                class="object-contain self-center w-24 max-w-full rounded-2xl aspect-square hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              />
+            </div>
+            <div class="flex-1 md:px-3">
+              <h3
+                v-if="item.alt"
+                class="text-xl mt-3 max-md:max-w-full"
+                v-html="item.alt"
+              ></h3>
+              <MDC
+                v-if="item.description"
+                class="md-content mt-3 text-sm leading-8 max-md:max-w-full text-left"
+                :value="item.description"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -308,15 +309,17 @@ isLoading.value = false;
       <section
         v-if="project.design?.items?.length > 0"
         id="design-items"
-        class="flex flex-col mt-28 max-w-full w-full mx-auto max-md:mt-10"
+        class="flex flex-col mt-10 max-w-full w-full mx-auto max-md:mt-10"
       >
-        <div
-          class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full"
-        >
+        <div class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full">
           <div
             v-for="(item, index) in project.design.items"
             :key="index"
-            class="flex overflow-hidden flex-col rounded-2xl bg-stone-400 w-full md:min-w-[240px] md:w-[414px]"
+            class="flex overflow-hidden flex-col rounded-2xl bg-stone-400"
+            :class="{
+              'w-full': item.fullWidthImage,
+              'md:min-w-[240px] md:w-[414px]': !item.fullWidthImage
+            }"
           >
             <img
               :src="item.imgSrc"
@@ -348,25 +351,21 @@ isLoading.value = false;
         id="result-items"
         class="flex mt-2 max-w-full w-full mx-auto"
       >
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 flex-wrap gap-5 justify-center align-center mt-10 w-full text-white lg:max-w-screen-md mx-auto"
-        >
+        <div class="grid grid-cols-1 md:grid-cols-2 flex-wrap gap-5 justify-center align-center mt-10 w-full text-inherit lg:max-w-screen-md mx-auto">
           <div
             v-for="(item, index) in project.result.items"
             :key="index"
-            class="flex flex-grow rounded-2xl bg-stone-400 flex-1 w-full bg-blend-darken bg-gradient-to-t from-black to-transparent"
+            class="flex flex-grow rounded-2xl bg-stone-400 flex-1 w-full to-transparent"
             :style="{
-              backgroundImage: `url(${
-                item.imgSrc ||
-                backgrounds[Math.floor(Math.random() * backgrounds.length)]
-              })`,
+              // backgroundImage: `url(${item.imgSrc ||
+              //   backgrounds[Math.floor(Math.random() * backgrounds.length)]
+              //   })`,
+              backgroundColor: '#FFFAF1',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }"
           >
-            <div
-              class="flex grow relative flex-col justify-start px-4 lg:px-10 py-10 w-full aspect-[0.863] max-md:px-5"
-            >
+            <div class="flex grow relative flex-col justify-start px-4 lg:px-10 py-10 w-full aspect-[0.863] max-md:px-5">
               <div class="flex relative flex-col mb-0 max-md:mb-2.5">
                 <h3 class="text-3xl tracking-tighter text-left">
                   {{ item.title }}
@@ -383,9 +382,7 @@ isLoading.value = false;
       </section>
     </div>
 
-    <nav
-      class="flex flex-wrap gap-5 justify-between items-center max-w-full w-full mt-20 mx-auto max-md:mt-10 mb-10"
-    >
+    <nav class="flex flex-wrap gap-5 justify-between items-center max-w-full w-full mt-20 mx-auto max-md:mt-10 mb-10">
       <AwesomeButton
         v-if="previousProject?.slug"
         class="flex gap-1 items-center self-stretch p-4 my-auto w-14 h-14 rounded-lg order-0"
@@ -431,9 +428,7 @@ isLoading.value = false;
     </nav>
   </div>
   <template v-else>
-    <div
-      class="min-h-[450px] flex flex-col align-center justify-center mt-60 max-md:max-w-full px-4 lg:px-10"
-    >
+    <div class="min-h-[450px] flex flex-col align-center justify-center mt-60 max-md:max-w-full px-4 lg:px-10">
       <h2 class="text-4xl">Oops! We didn't find that project.</h2>
       <p class="mt-6 text-xl">You may be interested in the projects below!</p>
       <div class="flex flex-wrap gap-5 items-start mt-16 w-full max-md:mt-10">
@@ -461,6 +456,7 @@ isLoading.value = false;
   margin-left: 1.5rem;
   list-style-type: disc;
 }
+
 .md-content ul li {
   margin-bottom: 0.5rem;
   margin-left: 1.5rem;

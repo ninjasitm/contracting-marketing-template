@@ -27,7 +27,8 @@ const { imageSrc, description, client, title } = toRefs(props);
     }"
   >
     <article class="flex flex-col h-full justify-between overflow-visible">
-      <img
+      <NuxtImg
+        placeholder
         :src="
           imageSrc ||
           backgrounds[Math.floor(Math.random() * backgrounds.length)]

@@ -64,8 +64,9 @@ const showDrawer = ref(false);
       <div>
         <slot name="title">
           <NuxtLink :to="{ name: 'index' }" class="font-bold text-lg">
-            <img
+            <NuxtImg
               v-if="config.logo"
+              placeholder
               :src="config.logo"
               :alt="config.title"
               class="w-auto h-[40px] md:h-[80px] object-contain"

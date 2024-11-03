@@ -99,7 +99,8 @@ const state: HomeState = reactive(config);
               class="flex gap-1 items-center mt-3 p-3 my-auto text-base tracking-tight uppercase rounded-lg border border-black max-w-[max-content]"
               :to="{ name: 'process' }"
             >
-              <img
+              <NuxtImg
+                placeholder
                 loading="lazy"
                 src="/images/open-link.svg"
                 alt=""
@@ -152,7 +153,8 @@ const state: HomeState = reactive(config);
           :icon="differentiator.icon"
           :description="differentiator.description"
         >
-          <img
+          <NuxtImg
+            placeholder
             :src="differentiator.icon"
             :alt="differentiator.description"
             class="object-contain w-14 aspect-square"

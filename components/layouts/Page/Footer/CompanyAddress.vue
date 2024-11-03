@@ -91,8 +91,9 @@ onMounted(() => {
           class="mb-6"
           :to="link.to || link.url"
         >
-          <img
+          <NuxtImg
             v-if="link.icon"
+            placeholder
             :src="link.icon"
             alt=""
             class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square mr-3"
@@ -108,8 +109,9 @@ onMounted(() => {
           :key="index"
           :to="link.url"
         >
-          <img
+          <NuxtImg
             v-if="link.icon"
+            placeholder
             :src="link.icon"
             alt=""
             class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square mr-3"

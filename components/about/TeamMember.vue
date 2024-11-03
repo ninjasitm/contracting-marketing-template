@@ -35,7 +35,8 @@ const { photo, linkedinUrl, name, position, description } = toRefs(props);
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img
+          <NuxtImg
+            placeholder
             :src="linkedInImage"
             alt="LinkedIn"
             class="object-contain shrink-0 self-stretch my-auto w-14 md:w-8 aspect-square"

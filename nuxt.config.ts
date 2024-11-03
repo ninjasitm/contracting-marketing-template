@@ -37,10 +37,13 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     // contents,
     '@nuxt/content',
+    '@nuxt/image',
 
     // todo: feat/localization
     // '@nuxtjs/i18n'
   ],
+
+  image: {},
 
   css: [
     resolve('./assets/scss/_variables.scss'),

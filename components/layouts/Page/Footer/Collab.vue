@@ -19,7 +19,8 @@ async function startProject() {
       class="flex gap-1 items-center self-stretch p-3 my-auto text-base tracking-tight uppercase rounded-lg border border-black"
       :to="{ name: 'contact' }"
     >
-      <img
+      <NuxtImg
+        placeholder
         loading="lazy"
         src="/images/open-link.svg"
         alt=""

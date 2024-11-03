@@ -125,13 +125,15 @@ async function onLoadCategory(id: any): Promise<void> {
         <div
           class="flex relative flex-col py-4 pt-0 px-0 lg:px-16 w-full min-h-[250px] lg:min-h-[640px] max-md:max-w-full"
         >
-          <img
+          <NuxtImg
+            placeholder
             loading="lazy"
             :src="state.featuredClient.bannerImage"
             alt=""
             class="object-cover absolute inset-0 size-full"
           />
-          <img
+          <NuxtImg
+            placeholder
             loading="lazy"
             :src="state.featuredClient.logo"
             alt="Company logo"

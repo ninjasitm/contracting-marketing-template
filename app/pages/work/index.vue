@@ -65,7 +65,7 @@ async function loadData(): Promise<void> {
     filter: item,
   }));
   config.featuredClient = {
-    client: config.featuredClient?.client || 'adf',
+    client: config.featuredClient?.client || 'chip',
     ...(config.featuredClient || {}),
   };
   state.featuredClient =

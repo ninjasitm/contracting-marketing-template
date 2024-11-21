@@ -459,6 +459,12 @@ content:
         label: URL
         type: string
         pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+      - name: bannerImage
+        label: Banner Image
+        type: image
+        options:
+          path: media/client/banners
+          categories: [image]
   - name: config
     label: App Config
     path: app/content/config.json

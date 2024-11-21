@@ -50,7 +50,7 @@ async function loadData(): Promise<void> {
             published: { $eq: true },
           })
           .limit(6)
-          .find(),
+          .find()
     )
   ).data;
   state.categories = [
@@ -58,7 +58,7 @@ async function loadData(): Promise<void> {
       (await queryContent('/_work').only('categories').find())
         .map((item) => item.categories)
         .flat()
-        .filter((item) => item !== null && item !== undefined),
+        .filter((item) => item !== null && item !== undefined)
     ),
   ].map((item) => ({
     name: item,
@@ -122,35 +122,43 @@ async function onLoadCategory(id: any): Promise<void> {
         v-if="state.featuredClient"
         class="flex overflow-hidden flex-col w-full rounded-2xl"
       >
-        <div
-          class="flex relative flex-col py-4 pt-0 px-0 lg:px-16 w-full min-h-[250px] lg:min-h-[640px] max-md:max-w-full"
+        <NuxtLink
+          class="shadow-sm"
+          :to="{
+            name: 'work-slug',
+            params: { slug: state.featuredClient.slug },
+          }"
         >
-          <NuxtImg
-            placeholder
-            loading="lazy"
-            :src="state.featuredClient.bannerImage"
-            alt=""
-            class="object-cover absolute inset-0 size-full"
-          />
-          <NuxtImg
-            placeholder
-            loading="lazy"
-            :src="state.featuredClient.logo"
-            alt="Company logo"
-            class="object-contain self-end aspect-square w-[90px]"
-          />
           <div
-            class="flex relative flex-col mt-80 max-w-full w-[413px] max-md:mt-10"
+            class="flex relative flex-col py-4 pt-0 px-0 lg:px-16 w-full min-h-[250px] lg:min-h-[640px] max-md:max-w-full"
           >
-            <p
-              class="text-lg font-light"
-              v-html="state.featuredClient.description"
-            ></p>
-            <p class="mt-4 text-base tracking-tight uppercase">
-              {{ state.featuredClient.type }}
-            </p>
+            <NuxtImg
+              placeholder
+              loading="lazy"
+              :src="state.featuredClient.bannerImage"
+              alt=""
+              class="object-cover absolute inset-0 size-full"
+            />
+            <NuxtImg
+              placeholder
+              loading="lazy"
+              :src="state.featuredClient.logo"
+              alt="Company logo"
+              class="object-contain self-end aspect-square w-[90px]"
+            />
+            <div
+              class="flex relative flex-col mt-80 max-w-full w-[413px] max-md:mt-10"
+            >
+              <p
+                class="text-lg font-light"
+                v-html="state.featuredClient.description"
+              ></p>
+              <p class="mt-4 text-base tracking-tight uppercase">
+                {{ state.featuredClient.type }}
+              </p>
+            </div>
           </div>
-        </div>
+        </NuxtLink>
       </header>
       <nav
         class="flex flex-wrap gap-4 py-4 items-start self-start mt-10 text-base max-md:mt-10 max-md:max-w-full snap-x lg:min-h-[100px]"

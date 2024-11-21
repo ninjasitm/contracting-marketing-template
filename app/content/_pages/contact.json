@@ -1,1 +1,9 @@
-{}
+{
+    "useEmbed": true,
+    "useHubspotForm": true,
+    "hubspotFormOptions": {
+        "region": "na1",
+        "portalId": "3962365",
+        "formId": "3bfbc148-e237-48d1-81a5-8a70067511f7"
+    }
+}

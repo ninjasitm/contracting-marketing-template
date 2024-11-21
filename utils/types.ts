@@ -28,3 +28,83 @@ export type GenericItem = {
 export type StyleObject = {
   [key: string]: string;
 };
+
+export interface Client {
+  slug: string;
+  name: string;
+  logo?: string;
+  description?: string;
+  website?: string;
+}
+
+interface ProcessItem {
+  imgSrc: string;
+  alt: string;
+  description: string;
+}
+
+interface DesignItem {
+  imgSrc: string;
+  alt: string;
+}
+
+interface ResultItem {
+  imgSrc: string;
+  alt: string;
+  title: string;
+  description: string;
+}
+
+export interface Project {
+  title: string;
+  date: string;
+  slug: string;
+  isOngoing?: boolean;
+  description?: string;
+  client: string;
+  url: string;
+  bannerImage?: string;
+  categories?: string[];
+  problem?: {
+    title: string;
+    image: string;
+    description: string;
+  };
+  solution?: {
+    title: string;
+    image: string;
+    description: string;
+  };
+  process?: {
+    title: string;
+    image: string;
+    description: string;
+    items: ProcessItem[];
+  };
+  design?: {
+    title: string;
+    image: string;
+    description: string;
+    items: DesignItem[];
+  };
+  result?: {
+    title: string;
+    image: string;
+    description: string;
+    items: ResultItem[];
+  };
+}
+
+interface SingleProjectState {
+  project: Project;
+  nextProject?: {
+    id: string;
+    title: string;
+    description: string;
+  };
+  previousProject?: {
+    id: string;
+    title: string;
+    description: string;
+  };
+}

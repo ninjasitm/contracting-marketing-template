@@ -72,7 +72,7 @@ onMounted(() => {
       <div class="mt-8 divide divide-y divide-black">
         <a
           :href="`mailto:${state.email}`"
-          class="gap-2 pb-4 mt-10 text-6xl tracking-tighter uppercase whitespace-nowrap max-md:max-w-full max-md:text-4xl"
+          class="gap-2 pb-4 mt-10 text-3xl lg:text-6xl tracking-tighter uppercase whitespace-nowrap max-md:max-w-full"
         >
           {{ state.email }}
         </a>
@@ -91,8 +91,9 @@ onMounted(() => {
           class="mb-6"
           :to="link.to || link.url"
         >
-          <img
+          <NuxtImg
             v-if="link.icon"
+            placeholder
             :src="link.icon"
             alt=""
             class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square mr-3"
@@ -108,8 +109,9 @@ onMounted(() => {
           :key="index"
           :to="link.url"
         >
-          <img
+          <NuxtImg
             v-if="link.icon"
+            placeholder
             :src="link.icon"
             alt=""
             class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square mr-3"

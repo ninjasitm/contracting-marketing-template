@@ -5,7 +5,7 @@ import config from '../../app/content/_pages/home.json';
 definePageMeta({ layout: 'page' });
 useHead({
   titleTemplate: '',
-  title: config?.title || 'Contracting Starter',
+  title: config?.banner?.title || 'Contracting Starter',
 });
 
 type Differentiator = {
@@ -19,22 +19,23 @@ type CoreCompetency = {
 };
 
 type HomeState = {
-  banner: {
-    title: string;
-    description: string;
-    actionText: string;
-    actionUrl: string;
-    backgroundImage: string;
+  banner?: {
+    title?: string;
+    description?: string;
+    actionText?: string;
+    actionUrl?: string;
+    backgroundImage?: string;
   };
-  coreCompetencies: {
-    title: string;
-    description: string;
-    items: CoreCompetency[];
+  coreCompetencies?: {
+    title?: string;
+    description?: string;
+    items?: CoreCompetency[];
   };
-  differentiators: {
-    title: string;
-    items: Differentiator[];
+  differentiators?: {
+    title?: string;
+    items?: Differentiator[];
   };
+  [key: string]: any;
 };
 
 const state: HomeState = reactive(config);
@@ -44,59 +45,64 @@ const state: HomeState = reactive(config);
   <div
     class="flex relative flex-col pb-24 w-full min-h-[500px] md:min-h-[800px] max-md:max-w-full"
   >
-    <Teleport defer to="#page-banner">
-      <section
-        class="flex flex-col max-w-full uppercase w-full justify-end min-h-[500px] pb-12 md:pb-24 md:h-[800px]"
-        :style="{
-          backgroundImage: `url('${state.banner.backgroundImage}')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }"
-      >
-        <div class="flex flex-col w-full max-w-screen-xl mx-auto">
-          <div class="flex flex-col w-full md:w-[692px] px-4">
-            <h2
-              class="text-6xl font-light tracking-tighter text-black max-md:max-w-full max-md:text-4xl"
-              v-html="state.banner.title"
-            ></h2>
-            <p
-              class="mt-6 text-2xl font-light max-md:max-w-full"
-              v-html="state.banner.description"
-            ></p>
-            <AwesomeButton
-              size="lg"
-              class="gap-2 self-start p-4 mt-6 text-sm tracking-tight text-white bg-sky-600 rounded-lg w-full md:w-[max-content]"
-              :href="state.banner.actionUrl"
-            >
-              {{ state.banner.actionText }}
-            </AwesomeButton>
+    <!-- https://github.com/nuxt/nuxt/issues/12766#issuecomment-1397234526-->
+    <ClientOnly>
+      <Teleport defer to="#page-banner">
+        <section
+          class="flex flex-col max-w-full uppercase w-full justify-end min-h-[95vh] pb-12 md:pb-24 md:min-h-[500px] md:h-[800px] bg-blend-darken bg-gradient-to-t from-black to-transparent"
+          :style="{
+            backgroundImage: `url('${state.banner?.backgroundImage}')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }"
+        >
+          <div class="flex flex-col w-full max-w-screen-xl mx-auto">
+            <div class="flex flex-col w-full md:w-[692px] px-6 lg:px-12">
+              <h2
+                class="text-6xl font-light tracking-tighter text-black max-md:max-w-full max-md:text-4xl"
+                v-html="state.banner?.title"
+              ></h2>
+              <p
+                class="mt-6 text-2xl font-light max-md:max-w-full"
+                v-html="state.banner?.description"
+              ></p>
+              <AwesomeButton
+                size="lg"
+                class="gap-2 self-start p-4 mt-6 text-sm tracking-tight text-white bg-sky-600 rounded-lg w-full md:w-[max-content]"
+                :href="state.banner?.actionUrl"
+              >
+                {{ state.banner?.actionText }}
+              </AwesomeButton>
+            </div>
           </div>
-        </div>
-      </section>
-    </Teleport>
+        </section>
+      </Teleport>
+    </ClientOnly>
     <section
-      class="flex flex-col w-full max-w-screen-xl mt-5 md:mt-20 mx-auto px-4"
+      class="flex flex-col w-full max-w-screen-xl mt-5 md:mt-20 mx-auto px-2 lg:px-2"
     >
       <hr class="w-full border border-black mt-10" />
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl font-light tracking-tight uppercase text-sky-950"
-        v-html="state.coreCompetencies.title"
+        v-html="state.coreCompetencies?.title"
       ></h2>
       <div class="flex flex-col mt-16 w-full text-black max-md:mt-10">
         <div class="flex flex-col w-full max-md:max-w-full">
           <div class="flex flex-col w-full max-md:max-w-full">
             <p
-              class="text-4xl font-light max-md:max-w-full"
-              v-html="state.coreCompetencies.description"
+              class="text-xl lg:text-4xl font-light max-md:max-w-full"
+              v-html="state.coreCompetencies?.description"
             ></p>
             <AwesomeButton
               size="lg"
               class="flex gap-1 items-center mt-3 p-3 my-auto text-base tracking-tight uppercase rounded-lg border border-black max-w-[max-content]"
+              :to="{ name: 'process' }"
             >
-              <img
+              <NuxtImg
+                placeholder
                 loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/acf526b3811a56de4e85ac6000b6e7bed2d87916ef2a3c3a3d3aba828eaa5df1?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa"
+                src="/images/open-link.svg"
                 alt=""
                 class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
               />
@@ -107,7 +113,7 @@ const state: HomeState = reactive(config);
             class="flex flex-wrap gap-20 items-start mt-16 w-full max-md:mt-10"
           >
             <div
-              v-for="(competency, index) in state.coreCompetencies.items"
+              v-for="(competency, index) in state.coreCompetencies?.items"
               :key="index"
               class="flex flex-col flex-1 shrink basis-0 min-w-[240px]"
             >
@@ -130,24 +136,25 @@ const state: HomeState = reactive(config);
       </div>
     </section>
     <section
-      class="flex flex-col mt-32 w-full font-light max-md:mt-10 max-w-screen-xl mx-auto px-4"
+      class="flex flex-col mt-32 w-full font-light max-md:mt-10 max-w-screen-xl mx-auto px-2 lg:px-2"
     >
       <hr class="w-full border border-black mt-10" />
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl tracking-tight uppercase whitespace-nowrap text-sky-950"
-        v-html="state.differentiators.title"
+        v-html="state.differentiators?.title"
       ></h2>
       <div
         class="flex flex-wrap gap-5 mt-16 w-full text-2xl text-black max-md:mt-10"
       >
         <article
-          v-for="(differentiator, index) in state.differentiators.items"
+          v-for="(differentiator, index) in state.differentiators?.items"
           :key="index"
-          class="flex flex-col grow shrink p-10 bg-white rounded-2xl min-w-[240px] w-[330px] max-md:px-5"
+          class="flex flex-col grow shrink p-4 lg:p2 bg-white rounded-2xl min-w-[240px] w-[330px]"
           :icon="differentiator.icon"
           :description="differentiator.description"
         >
-          <img
+          <NuxtImg
+            placeholder
             :src="differentiator.icon"
             :alt="differentiator.description"
             class="object-contain w-14 aspect-square"

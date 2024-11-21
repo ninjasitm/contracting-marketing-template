@@ -13,7 +13,7 @@ const menus = computed(
       []) as AwesomeLayoutPageNavbarMenu[],
 );
 
-const links = computed(() => {
+const links = computed((): Record<string, string> => {
   return (config?.layout?.page?.navbar?.links || {}) as {};
 });
 
@@ -40,7 +40,7 @@ const showDrawer = ref(false);
         <span
           v-for="info in config.companyInfo"
           :key="info.title"
-          class="text-sm text-white text-xs px-2 py-1 flex items-center w-[max-content]"
+          class="text-white text-xs px-2 py-1 flex items-center w-[max-content]"
           >{{ info.title }}<strong class="ml-2">{{ info.value }}</strong></span
         >
       </div>
@@ -51,21 +51,22 @@ const showDrawer = ref(false);
         <span
           v-for="info in config.companyInfo"
           :key="info.title"
-          class="text-sm text-white text-xs px-2 py-1 flex items-center w-[max-content]"
+          class="text-white text-xs px-2 py-1 flex items-center w-[max-content]"
           >{{ info.title }} <strong class="ml-2">{{ info.value }}</strong></span
         >
       </div>
     </div>
     <!-- content -->
     <div
-      class="w-full px-6 max-w-screen-xl flex-1 flex items-center justify-between mx-auto"
+      class="w-full px-4 lg:px-10 max-w-screen-xl flex-1 flex items-center justify-between mx-auto"
     >
       <!-- title -->
       <div>
         <slot name="title">
-          <NuxtLink to="/" class="font-bold text-lg">
-            <img
+          <NuxtLink :to="{ name: 'index' }" class="font-bold text-lg">
+            <NuxtImg
               v-if="config.logo"
+              placeholder
               :src="config.logo"
               :alt="config.title"
               class="w-auto h-[40px] md:h-[80px] object-contain"
@@ -77,7 +78,7 @@ const showDrawer = ref(false);
       <!-- menus -->
       <div
         v-if="$screen.higherThan('md', $screen.current.value)"
-        class="flex space-x-4 items-center bg-white/[0.75] dark:bg-black/[0.75] rounded-xl px-4 py-4"
+        class="flex space-x-4 items-center bg-white/[0.75] dark:bg-black/[0.75] rounded-xl px-4 lg:px-10 py-4"
       >
         <div class="flex space-x-4 text-sm items-center">
           <!-- dynamic menus -->
@@ -92,7 +93,7 @@ const showDrawer = ref(false);
             <Icon name="la:language" />
           </AwesomeLink> -->
           <AwesomeButton
-            v-if="links?.capabilities"
+            v-if="links.capabilities"
             download="nitm-capabilities-statement.pdf"
             size="lg"
             class="gap-2 p-4 px-2 text-sm tracking-tight bg-transparent rounded-lg border border-black dark:text-white text-black"
@@ -101,7 +102,7 @@ const showDrawer = ref(false);
             Capabilities Statement
           </AwesomeButton>
           <AwesomeButton
-            v-if="links?.startProject"
+            v-if="links.startProject"
             size="lg"
             class="gap-2 p-4 text-sm tracking-tight text-white bg-primary rounded-lg"
             :to="links.startProject"
@@ -144,13 +145,13 @@ const showDrawer = ref(false);
           <div
             class="flex flex-col text-sm items-center dark:divide-gray-700 text-center text-[1.5rem]"
           >
-            <NulxLink
+            <NuxtLink
               class="flex justify-center items-center text-base space-x-2 h-[4rem] w-full"
-              to="/"
+              :to="{ name: 'index' }"
               @click="() => (showDrawer = false)"
             >
               <span class="text-[1.5rem]">Home</span>
-            </NulxLink>
+            </NuxtLink>
             <template v-for="(item, i) in menus">
               <template v-if="item?.type === 'link'">
                 <NuxtLink
@@ -241,18 +242,24 @@ const showDrawer = ref(false);
         <AwesomeActionSheetItemButton
           class="flex justify-center items-center text-base space-x-2 h-[4rem]"
         >
-          <NuxtLink
-            download="nitm-capabilities-statement.pdf"
+          <a
             class="text-[1.5rem]"
-            :href="links.capabilities"
-            >Capabilities Statement</NuxtLink
+            :href="links.capabilities as string"
+            @click="() => (showDrawer = false)"
           >
+            Capabilities Statement
+          </a>
         </AwesomeActionSheetItemButton>
         <AwesomeActionSheetItemButton
           class="flex justify-center items-center text-base space-x-2 h-[4rem]"
-          :to="links.startProject"
         >
-          <span class="text-[1.5rem]">Start a Project</span>
+          <NuxtLink
+            class="text-[1.5rem]"
+            :to="links.startProject || { name: 'contact' }"
+            @click="() => (showDrawer = false)"
+          >
+            <span class="text-[1.5rem]">Start a Project</span>
+          </NuxtLink>
         </AwesomeActionSheetItemButton>
       </AwesomeActionSheetGroup>
       <!-- <AwesomeActionSheetGroup class="fixed bottom-4 right-4">

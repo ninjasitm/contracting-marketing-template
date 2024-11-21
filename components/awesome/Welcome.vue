@@ -72,7 +72,9 @@ onMounted(() => {
             <span class="animated-text-fg">{{ item.text }}</span>
           </span>
         </h1>
-        <div class="px-4 mt-6 text-center max-w-[500px] md:max-w-[600px]">
+        <div
+          class="px-4 lg:px-10 mt-6 text-center max-w-[500px] md:max-w-[600px]"
+        >
           {{
             awesome?.description ||
             'a starter template for Nuxt 3 with minimalist themes design, built in components, drawer & menus, and more.'
@@ -80,7 +82,7 @@ onMounted(() => {
         </div>
         <div
           v-if="showAlert"
-          class="mt-4 w-auto text-center text-white bg-gray-800 rounded px-4 py-1 text-sm"
+          class="mt-4 w-auto text-center text-white bg-gray-800 rounded px-4 lg:px-10 py-1 text-sm"
         >
           create file "~/pages/index.vue" to replace this page
         </div>

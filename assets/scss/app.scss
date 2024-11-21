@@ -56,5 +56,11 @@ h6 {
   }
 }
 
+.stroke-white {
+  path {
+    stroke: #fff;
+  }
+}
+
 // components
 @import 'animations/transitions';

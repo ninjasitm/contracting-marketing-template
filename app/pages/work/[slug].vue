@@ -1,160 +1,195 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
+import moment from 'moment';
+import type { ParsedContent } from '@nuxt/content';
+import OpenLink from '~/public/images/open-link.svg';
+import clients from '@/content/clients.json';
 import Loading from '@/components/layouts/Page/Loading.vue';
+import ProjectCard from '@/components/work/ProjectCard.vue';
+import type { Client, Project } from '@/utils/types';
+
+const backgrounds = Array.from(
+  { length: 5 },
+  (_, i) => `/images/demo/project-backgrounds/${i + 1}.png`,
+);
+
 definePageMeta({ layout: 'page' });
 
 const $route = useRoute();
 
-interface ProcessItem {
-  imgSrc: string;
-  alt: string;
-  description: string;
-}
-
-interface DesignItem {
-  imgSrc: string;
-  alt: string;
-}
-
-interface ResultItem {
-  imgSrc: string;
-  alt: string;
+interface RelatedProject {
   title: string;
   description: string;
-}
-
-interface Client {
-  name: string;
-  logo?: string;
-  description?: string;
-  website?: string;
-}
-
-interface Project {
-  title: string;
-  date: string;
   slug: string;
-  isOngoing?: boolean;
-  description?: string;
-  client: string;
-  url: string;
   bannerImage?: string;
-  categories?: string[];
-  problem?: {
-    title: string;
-    image: string;
-    description: string;
-  };
-  solution?: {
-    title: string;
-    image: string;
-    description: string;
-  };
-  process?: {
-    title: string;
-    image: string;
-    description: string;
-    items: ProcessItem[];
-  };
-  design?: {
-    title: string;
-    image: string;
-    description: string;
-    items: DesignItem[];
-  };
-  result?: {
-    title: string;
-    image: string;
-    description: string;
-    items: ResultItem[];
-  };
-}
-
-interface SingleProjectState {
-  project: Project;
-  nextProject?: {
-    id: string;
-    title: string;
-    description: string;
-  };
-  previousProject?: {
-    id: string;
-    title: string;
-    description: string;
-  };
+  client?: string;
 }
 
 const isLoading = ref(true);
-const project = (
-  await useAsyncData('_work.project', () =>
-    queryContent('/_work').where({ slug: $route.params.slug }).findOne(),
-  )
-).data as Project;
-if (project.value) {
-  const client = (
-    await useAsyncData('_client', () =>
-      queryContent('/').where({ name: project.value.client }).findOne(),
+const projectParsedContent =
+  (
+    await useAsyncData(
+      '_work.project',
+      async (): Promise<ParsedContent> =>
+        await queryContent('/_work')
+          .where({ slug: $route.params.slug })
+          .findOne(),
     )
-  ).data as Client;
-  const [previousProject, nextProject] = await queryContent('_work')
-    .only(['title', 'slug', 'description'])
-    .where({ published: true })
-    .findSurround(`_work/${project.value.slug}`);
+  ).data.value || ({} as Project);
+const project = {
+  title: projectParsedContent.title,
+  date: projectParsedContent.date,
+  slug: projectParsedContent.slug,
+  isOngoing: projectParsedContent.isOngoing,
+  description: projectParsedContent.description,
+  client: projectParsedContent.client,
+  url: projectParsedContent.url,
+  bannerImage: projectParsedContent.bannerImage,
+  categories: projectParsedContent.categories,
+  problem: projectParsedContent.problem,
+  solution: projectParsedContent.solution,
+  process: projectParsedContent.process,
+  design: projectParsedContent.design,
+  result: projectParsedContent.result,
+};
+
+let client = {} as Client;
+let projects = [] as RelatedProject[];
+let nextProject = {} as RelatedProject;
+let previousProject = {} as RelatedProject;
+if (project && project.slug) {
+  client = clients.find((c) => c.slug === project.client) || ({} as Client);
+
+  const { path } = useRoute();
+  const [previousProjectParsedContent, nextProjectParsedContent] =
+    await queryContent()
+      .only(['title', 'slug', 'description'])
+      .where({ published: true })
+      .findSurround(path);
+
+  nextProject = {
+    title: nextProjectParsedContent?.title as string,
+    slug: nextProjectParsedContent?.slug as string,
+    description: nextProjectParsedContent?.description as string,
+  };
+
+  previousProject = {
+    title: previousProjectParsedContent?.title as string,
+    slug: previousProjectParsedContent?.slug as string,
+    description: previousProjectParsedContent?.description as string,
+  };
 } else {
   // Get three random projects
-  const projects = (
-    await useAsyncData('_work.project.notFound', () =>
-      queryContent('/_work')
-        .only(['id', 'imageSrc', 'description', 'client', 'slug'])
-        .limit(3)
-        .find(),
-    )
-  ).data as Project[];
+  const projectsParsedContent =
+    (
+      await useAsyncData(
+        '_work.project.notFound',
+        async () =>
+          await queryContent('/_work')
+            .only(['title', 'bannerImage', 'description', 'client', 'slug'])
+            .limit(3)
+            .find(),
+      )
+    ).data.value || ([] as RelatedProject[]);
+
+  projects = projectsParsedContent.map((p) => ({
+    title: p.title as string,
+    bannerImage: p.bannerImage,
+    description: p.description,
+    client: p.client,
+    slug: p.slug,
+  }));
 }
 isLoading.value = false;
 </script>
 
 <template>
-  <div v-if="isLoading.value" class="flex justify-center w-full">
+  <div v-if="isLoading" class="flex justify-center w-full">
     <Loading />
   </div>
   <div
-    v-else-if="project"
-    class="flex flex-col items-center mt-40 w-full max-md:mt-10 max-md:max-w-full px-4"
+    v-else-if="project && project.slug"
+    class="flex flex-col items-center mt-40 w-full max-md:mt-10 max-md:max-w-full px-4 lg:px-10"
   >
     <div
-      class="flex flex-col max-w-full text-black w-full max-w-screen-xl mt-20 mx-auto"
+      class="flex w-full text-xl font-light align-center justify-center max-md:max-w-full mt-20"
     >
-      <div class="flex flex-col px-32 w-full max-md:px-5 max-md:max-w-full">
+      <AwesomeButton
+        :to="{
+          name: 'work',
+          params: { category: project.client.slug },
+        }"
+        class="flex flex-row gap-1 items-center justify-center p-4 my-auto rounded-lg h-14 w-[100px]"
+        aria-label="Back to Work"
+      >
+        <NuxtImg
+          placeholder
+          loading="lazy"
+          src="/images/back.svg"
+          alt=""
+          class="object-cover self-stretch my-auto w-6 aspect-square"
+        />&nbsp;<span>Back</span>
+      </AwesomeButton>
+    </div>
+    <div class="flex flex-col text-black w-full max-w-screen-xl mt-20 mx-auto">
+      <div class="flex flex-col px-2 w-full lg:px-32 max-md:max-w-full">
         <div
           class="flex flex-col w-full text-xl font-light text-center max-md:max-w-full"
         >
-          <h1
-            class="leading-relaxed max-md:max-w-full"
-            v-html="client?.name"
-          ></h1>
+          <h1 class="leading-relaxed max-md:max-w-full">
+            <template v-if="client.logo">
+              <NuxtImg
+                placeholder
+                :src="client.logo"
+                :alt="client.name"
+                class="object-contain max-h-20 mx-auto"
+              />
+            </template>
+            <template v-else>
+              {{ client.name }}
+            </template>
+          </h1>
           <h2
             class="self-center mt-4 text-6xl tracking-tighter uppercase max-md:max-w-full max-md:text-4xl"
             v-html="project.title"
           ></h2>
-          <p
-            class="mt-4 text-lg max-md:max-w-full"
-            v-html="project.description"
-          ></p>
-          <time
-            datetime="2023-09-28"
-            class="mt-4 leading-relaxed max-md:max-w-full"
+          <div
+            class="flex flex-wrap gap-4 justify-center items-center self-center mt-4 text-base"
           >
-            {{ project.date }}
-          </time>
+            <AwesomeButton
+              v-if="project.url"
+              size="lg"
+              class="text-nowrap bg-primary text-white"
+              :href="project.url"
+              >Visit {{ project.title }}
+              <OpenLink class="stroke-white" stroke="#fff"></OpenLink>
+            </AwesomeButton>
+          </div>
+          <MDC
+            v-if="project.description"
+            class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-center"
+            :value="project.description"
+          />
+          <div
+            class="flex flex-wrap gap-4 justify-center items-center self-center mt-4 text-base"
+          >
+            <AwesomeButton v-if="project.isOngoing">Ongoing</AwesomeButton>
+            <time
+              v-else
+              :datetime="project.date"
+              class="leading-relaxed max-md:max-w-full"
+            >
+              {{ moment(project.date).format('MMMM DD, YYYY') }}
+            </time>
+          </div>
         </div>
         <div
-          class="flex gap-4 justify-center items-start self-center mt-8 text-base"
+          class="flex flex-wrap gap-4 justify-center items-start self-center mt-4 text-base"
         >
           <AwesomeButton
             v-for="(category, index) in project.categories"
             :key="index"
-            class="roundex-full"
+            class="roundex-full text-nowrap"
             outline
             :uppercase="false"
           >
@@ -162,10 +197,11 @@ isLoading.value = false;
           </AwesomeButton>
         </div>
       </div>
-      <img
+      <NuxtImg
         v-if="project.bannerImage"
+        placeholder
         loading="lazy"
-        class="object-cover mt-20 h-[450px] w-full rounded-2xl max-md:mt-10 max-md:max-w-full hover:scale-105 transition-transform duration-300"
+        class="object-cover mt-20 h-[240px] md:h-[640px] w-full rounded-2xl max-md:mt-10 max-md:max-w-full hover:scale-105 transition-transform duration-300"
         :src="project.bannerImage"
         :alt="project.title"
       />
@@ -173,21 +209,25 @@ isLoading.value = false;
 
     <div>
       <section
-        v-if="project.problem"
+        v-if="project.problem && project.problem.title"
+        id="problem"
         class="flex flex-col mt-28 max-w-full md:w-[700px] mx-auto max-md:mt-10"
       >
         <h2
           class="text-4xl max-md:max-w-full"
           v-html="project.problem.title"
         ></h2>
-        <p
-          class="mt-6 text-xl leading-8 max-md:max-w-full"
-          v-html="project.problem.description"
-        ></p>
+        <MDC
+          v-if="project.problem.description"
+          class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
+          :value="project.problem.description"
+        />
         <div
+          v-if="project.problem.image"
           class="flex overflow-hidden flex-col mt-10 w-full rounded-2xl bg-stone-400 max-md:max-w-full"
         >
-          <img
+          <NuxtImg
+            placeholder
             loading="lazy"
             class="object-cover w-full aspect-[1.59] max-md:max-w-full hover:scale-105 transition-transform duration-300"
             :src="project.problem.image"
@@ -197,21 +237,25 @@ isLoading.value = false;
       </section>
 
       <section
-        v-if="project.solution"
+        v-if="project.solution && project.solution.title"
+        id="solution"
         class="flex flex-col mt-28 max-w-full md:w-[700px] mx-auto max-md:mt-10"
       >
         <h2
           class="text-4xl max-md:max-w-full"
           v-html="project.solution.title"
         ></h2>
-        <p
-          class="mt-6 text-xl leading-8 max-md:max-w-full"
-          v-html="project.solution.description"
-        ></p>
+        <MDC
+          v-if="project.solution.description"
+          class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
+          :value="project.solution.description"
+        />
         <div
+          v-if="project.solution.image"
           class="flex overflow-hidden flex-col mt-10 w-full rounded-2xl bg-stone-400 max-md:max-w-full"
         >
-          <img
+          <NuxtImg
+            placeholder
             loading="lazy"
             class="object-cover w-full aspect-[1.59] max-md:max-w-full hover:scale-105 transition-transform duration-300"
             :src="project.solution.image"
@@ -221,71 +265,99 @@ isLoading.value = false;
       </section>
 
       <section
-        v-if="project.process"
-        class="flex flex-col mt-28 max-w-full font-light text-black md:w-[700px] mx-auto max-md:mt-10"
+        v-if="project.process && project.process.title"
+        id="process"
+        class="flex flex-col mt-28 max-w-full font-light text-black md:w-[700px] mx-auto"
       >
         <h2
           class="text-4xl max-md:max-w-full"
           v-html="project.process.title"
         ></h2>
-        <p
-          class="mt-6 text-xl leading-8 max-md:max-w-full"
-          v-html="project.process.description"
-        ></p>
+        <MDC
+          v-if="project.process.description"
+          class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
+          :value="project.process.description"
+        />
       </section>
 
       <section
-        v-if="project.process?.items"
-        class="flex flex-col mt-28 max-w-full font-light text-black mx-auto max-md:mt-10"
+        v-if="project.process?.items?.length > 0"
+        id="process-items"
+        class="flex flex-col mt-2 max-w-full font-light text-black mx-auto justify-center align-center"
       >
         <div
-          class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full text-base leading-7 text-center"
+          class="flex flex-col md:flex-row flex-wrap gap-5 items-start self-center mb-10 w-full text-base leading-7"
         >
           <div
             v-for="(item, index) in project.process.items"
             :key="index"
-            class="flex flex-col flex-wrap w-full md:min-w-[240px] md:w-[414px]"
+            class="flex flex-wrap flex-col md:flex-row w-full md:w-[48%]"
           >
-            <img
-              :src="item.imgSrc"
-              :alt="item.alt"
-              class="object-cover self-center w-36 max-w-full rounded-2xl aspect-square hover:scale-105 transition-transform duration-300"
-              loading="lazy"
-            />
-            <p class="mt-4">{{ item.description }}</p>
+            <div
+              class="bg-white w-[144px] h-[144px] flex align-center justify-center"
+            >
+              <NuxtImg
+                v-if="item.imgSrc"
+                placeholder
+                :src="item.imgSrc"
+                :alt="item.alt"
+                class="object-contain self-center w-24 max-w-full rounded-2xl aspect-square hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              />
+            </div>
+            <div class="flex-1 md:px-3">
+              <h3
+                v-if="item.alt"
+                class="text-xl mt-3 max-md:max-w-full"
+                v-html="item.alt"
+              ></h3>
+              <MDC
+                v-if="item.description"
+                class="md-content mt-3 text-sm leading-8 max-md:max-w-full text-left"
+                :value="item.description"
+              />
+            </div>
           </div>
         </div>
       </section>
 
       <section
-        v-if="project.design"
+        v-if="project.design && project.design.title"
+        id="design"
         class="flex flex-col mt-28 max-w-full md:w-[700px] mx-auto max-md:mt-10"
       >
         <h2
           class="text-4xl max-md:max-w-full"
           v-html="project.design.title"
         ></h2>
-        <p
-          class="mt-6 text-xl leading-8 max-md:max-w-full"
-          v-html="project.design.description"
-        ></p>
+        <MDC
+          v-if="project.design.description"
+          class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
+          :value="project.design.description"
+        />
       </section>
       <section
-        v-if="project.design?.items"
-        class="flex flex-col mt-28 max-w-full w-full mx-auto max-md:mt-10"
+        v-if="project.design?.items?.length > 0"
+        id="design-items"
+        class="flex flex-col max-w-full w-full mx-auto"
       >
         <div
-          class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full"
+          class="flex flex-wrap gap-5 justify-center items-start self-center md:mt-10 w-full"
         >
           <div
             v-for="(item, index) in project.design.items"
             :key="index"
-            class="flex overflow-hidden flex-col rounded-2xl bg-stone-400 w-full md:min-w-[240px] md:w-[414px]"
+            class="flex overflow-hidden flex-col rounded-2xl bg-stone-400"
+            :class="{
+              'w-full': item.fullWidthImage,
+              'md:w-[49%]': !item.fullWidthImage,
+            }"
           >
-            <img
+            <NuxtImg
+              placeholder
               :src="item.imgSrc"
               :alt="item.alt"
-              class="object-cover w-full aspect-[0.86] hover:scale-105 transition-transform duration-300"
+              class="object-contain w-full hover:scale-105 transition-transform duration-300"
               loading="lazy"
             />
           </div>
@@ -293,44 +365,53 @@ isLoading.value = false;
       </section>
 
       <section
-        v-if="project.result"
-        class="flex flex-col mt-28 max-w-full font-light md:w-[700px] mx-auto max-md:mt-10"
+        v-if="project.result && project.result.title"
+        id="result"
+        class="flex flex-col mt-28 max-w-full font-light md:w-[700px] mx-auto"
       >
         <h2
           class="text-4xl max-md:max-w-full"
           v-html="project.result.title"
         ></h2>
-        <p
-          class="mt-6 text-xl leading-8 max-md:max-w-full"
-          v-html="project.result.description"
-        ></p>
+        <MDC
+          v-if="project.result.description"
+          class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
+          :value="project.result.description"
+        />
       </section>
       <section
-        v-if="project.result?.items"
-        class="flex flex-col mt-28 max-w-full w-full mx-auto max-md:mt-10"
+        v-if="project.result?.items?.length > 0"
+        id="result-items"
+        class="flex mt-2 max-w-full w-full mx-auto"
       >
         <div
-          class="flex flex-wrap gap-5 justify-center items-start self-center mt-10 w-full text-center text-white"
+          class="grid grid-cols-1 md:grid-cols-2 flex-wrap gap-5 justify-center align-center mb-10 w-full text-inherit lg:max-w-screen-md mx-auto"
         >
           <div
             v-for="(item, index) in project.result.items"
             :key="index"
-            class="flex overflow-hidden flex-col rounded-2xl bg-stone-400 w-full md:min-w-[240px] md:w-[414px]"
+            class="flex flex-grow rounded-2xl bg-stone-400 flex-1 w-full to-transparent"
+            :style="{
+              // backgroundImage: `url(${item.imgSrc ||
+              //   backgrounds[Math.floor(Math.random() * backgrounds.length)]
+              //   })`,
+              backgroundColor: '#FFFAF1',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }"
           >
             <div
-              class="flex relative flex-col justify-center px-10 py-40 w-full aspect-[0.863] max-md:px-5 max-md:py-24"
+              class="flex grow relative flex-col justify-start px-4 lg:px-10 py-10 w-full aspect-[0.863] max-md:px-5"
             >
-              <img
-                :src="item.imgSrc"
-                :alt="item.alt"
-                class="object-cover absolute inset-0 size-full hover:scale-105 transition-transform duration-300"
-                loading="lazy"
-              />
               <div class="flex relative flex-col mb-0 max-md:mb-2.5">
-                <h3 class="text-6xl tracking-tighter max-md:text-4xl">
+                <h3 class="text-3xl tracking-tighter text-left">
                   {{ item.title }}
                 </h3>
-                <p class="mt-2 text-xl leading-8">{{ item.description }}</p>
+                <MDC
+                  v-if="item.description"
+                  class="md-content mt-6 text-md leading-8 max-md:max-w-full text-left"
+                  :value="item.description"
+                />
               </div>
             </div>
           </div>
@@ -339,10 +420,10 @@ isLoading.value = false;
     </div>
 
     <nav
-      class="flex flex-wrap gap-5 justify-between items-center mt-28 max-w-full w-full max-w-screen-xl mt-20 mx-auto max-md:mt-10 mb-10"
+      class="flex flex-wrap gap-5 justify-between items-center max-w-full w-full mt-20 mx-auto max-md:mt-10 mb-10"
     >
       <AwesomeButton
-        v-if="previousProject"
+        v-if="previousProject?.slug"
         class="flex gap-1 items-center self-stretch p-4 my-auto w-14 h-14 rounded-lg order-0"
         aria-label="Previous project"
         :to="{
@@ -350,15 +431,16 @@ isLoading.value = false;
           params: { slug: previousProject.slug },
         }"
       >
-        <img
+        <NuxtImg
+          placeholder
           loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/f3cd58e252b4f02cf75549f5468ba74e9bedf4be10572a04d9c3b5d1ff2ac199?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa"
+          src="/images/back.svg"
           alt=""
           class="object-cover self-stretch my-auto w-6 aspect-square"
         />
       </AwesomeButton>
       <div
-        v-if="nextProject"
+        v-if="nextProject?.slug"
         class="flex flex-col justify-center items-center self-stretch my-auto text-black min-w-[240px] w-[635px] max-md:max-w-full order-first md:order-1"
       >
         <p class="text-base">Next project</p>
@@ -368,7 +450,7 @@ isLoading.value = false;
         ></h2>
       </div>
       <AwesomeButton
-        v-if="nextProject"
+        v-if="nextProject?.slug"
         class="flex gap-1 items-center self-stretch p-4 my-auto w-14 h-14 rounded-lg order-1"
         aria-label="Next project"
         :to="{
@@ -376,9 +458,10 @@ isLoading.value = false;
           params: { slug: nextProject.slug },
         }"
       >
-        <img
+        <NuxtImg
+          placeholder
           loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/16ef346dca0a2892d16ae1a4ec110f8e6a9ef8f8a279e5366f3fbee74e4707ca?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa"
+          src="/images/next.svg"
           alt=""
           class="object-cover self-stretch my-auto w-6 aspect-square"
         />
@@ -386,20 +469,49 @@ isLoading.value = false;
     </nav>
   </div>
   <template v-else>
-    <div class="min-h-[450px] flex flex-col align-center justify-center mt-20">
+    <div
+      class="min-h-[450px] flex flex-col align-center justify-center mt-60 max-md:max-w-full px-4 lg:px-10"
+    >
       <h2 class="text-4xl">Oops! We didn't find that project.</h2>
       <p class="mt-6 text-xl">You may be interested in the projects below!</p>
-      <main class="flex flex-wrap gap-5 items-start mt-16 w-full max-md:mt-10">
+      <div class="flex flex-wrap gap-5 items-start mt-16 w-full max-md:mt-10">
         <ProjectCard
           v-for="(p, index) in projects"
-          :id="p.id"
+          :id="p.slug"
           :key="index"
-          :image-src="p.imageSrc"
+          class="w-full md:w-[31.5%] lg:w-[23.5%] mb-10"
+          :image-src="p.bannerImage"
           :description="p.description"
           :client="p.client"
           :slug="p.slug"
         />
-      </main>
+      </div>
     </div>
   </template>
 </template>
+<style lang="css">
+.md-content p {
+  margin-bottom: 1.5rem;
+}
+
+.md-content ol li {
+  margin-bottom: 0.15rem;
+  margin-left: 1.5rem;
+  list-style-type: disc;
+}
+
+.md-content ul li {
+  margin-bottom: 0.15rem;
+  margin-left: 1.5rem;
+  list-style-type: number;
+}
+
+.md-content h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+</style>

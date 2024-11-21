@@ -86,11 +86,9 @@ content:
           - name: sendTo
             label: Send To this email
             type: string
-            required: true
           - name: subject
             label: Subject
             type: string
-            required: true
           - name: category
             label: Category
             type: string
@@ -99,6 +97,7 @@ content:
               - name: General Inquiry
               - name: Start a Project
               - name: Request a Quote
+              - name: Partnership
               - name: Other
           - name: message
             label: Message
@@ -123,11 +122,20 @@ content:
         label: Use Embed
         type: boolean
         default: true
-      - name: embed
-        label: (Optional) Embed code
-        type: code
-        options:
-          language: html
+      - name: useHubspotForm
+        label: (Optional) Use a HubspotForm
+        type: boolean
+        default: false
+      - name: hubspotFormOptions
+        label: Configrue the Hubspot form
+        type: object
+        fields:
+          - name: region
+            type: string
+          - name: portalId
+            type: string
+          - name: formId
+            type: string
   - name: aboutPage
     type: file
     label: About Page
@@ -207,16 +215,19 @@ content:
       - name: title
         label: Title
         type: string
+      - name: description
+        label: Description
+        type: rich-text
       - name: featuredClient
         label: Featured Client
         type: object
         fields:
+          - slug: client
+            label: Client
+            type: string
           - name: description
             label: Description
             type: rich-text
-          - name: type
-            label: Type
-            type: string
       - name: footer
         label: Footer
         type: object
@@ -271,9 +282,8 @@ content:
       - name: date
         label: Date
         type: date
-        required: true
         options:
-          format: 'MM/DD/YYYY'
+          format: 'MM/dd/yyyy'
       - name: isOngoing
         label: Ongoing
         type: boolean
@@ -306,7 +316,7 @@ content:
               categories: [image]
           - name: description
             label: Description
-            type: string
+            type: rich-text
       - name: solution
         label: Solution
         type: object
@@ -322,7 +332,7 @@ content:
               categories: [image]
           - name: description
             label: Description
-            type: string
+            type: rich-text
       - name: process
         label: Process
         type: object
@@ -338,7 +348,7 @@ content:
               categories: [image]
           - name: description
             label: Description
-            type: string
+            type: rich-text
           - name: items
             label: Process Items
             type: object
@@ -355,7 +365,7 @@ content:
                 type: string
               - name: description
                 label: Description
-                type: string
+                type: rich-text
       - name: design
         label: Design
         type: object
@@ -377,6 +387,9 @@ content:
             type: object
             list: true
             fields:
+              - name: fullWidthImage
+                label: Make this image full width?
+                type: boolean
               - name: imgSrc
                 label: Image Source
                 type: image

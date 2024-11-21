@@ -1,19 +1,23 @@
 <script lang="ts" setup>
-import { reactive } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import config from '@@/app/content/_pages/contact.json';
+import HubspotForm from '@jagaad/vue-hubspot-form';
+
 definePageMeta({ layout: 'page' });
 
+console.log(config);
+const embed = ref<HTMLDivElement>();
 const state = reactive({
+  isValid: false,
   isFormSubmitted: false,
   isLoading: false,
-  embed: config.embed,
   title: config.title,
   description: config.description,
   sections: config.sections,
-  categoryOptions: [
+  categoryOptions: config.category || [
     'General Inquiry',
-    'Feedback',
-    'Support',
+    'Start a Project',
+    'Request a Quote',
     'Partnership',
     'Other',
   ],
@@ -26,19 +30,54 @@ const state = reactive({
 });
 
 const onSubmitForm = (event: Event) => {
+  if (
+    !state.form.name ||
+    !state.form.email ||
+    !state.form.category ||
+    !state.form.message
+  ) {
+    state.isValid = false;
+    return;
+  }
+  state.isValid = true;
   state.isLoading = true;
   event.preventDefault();
   console.log(state.form);
   state.isFormSubmitted = true;
   state.isLoading = false;
 };
+
+// watch(embed, (value: HTMLDivElement | undefined): void => {
+//   console.log(config);
+//   if (!value) return;
+//   if (config.useEmbed && config.embed?.length > 0) {
+//     // Split a string with multiple scripts in config.embed into an array of scripts
+//     // const dom = new DOMParser().parseFromString(
+//     //   config.embed.replace(/\\"/g, '"'),
+//     //   'text/html',
+//     // );
+//     // const scripts = dom.querySelectorAll('script');
+//     // if (!scripts) return;
+//     // console.log(scripts);
+//     // for (const script of scripts) {
+//     //   embed.value?.appendChild(script);
+//     // }
+//     const div = document.createElement('div');
+//     div.innerHTML = config.embed
+//       .replace(/\\"/g, '"')
+//       .replace(/<c/g, '<component :is="\'script\'"')
+//       .replace(/<\/script>/, '</component>');
+//     embed.value?.appendChild(div.firstChild as Node);
+//     console.log(embed.value, div.innerHTML);
+//   }
+// });
 </script>
 <template>
   <div
-    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-4"
+    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-4 lg:px-10"
   >
     <section
-      class="h-[450px] flex flex-col justify-center max-w-screen-xl mx-auto"
+      class="min-h-[450px] flex flex-col justify-center max-w-screen-xl mx-auto"
     >
       <h2
         class="self-center mt-40 max-w-screen-sm text-6xl font-light tracking-tighter text-center text-black uppercase whitespace-nowrap max-md:mt-10 max-md:max-w-full max-md:text-4xl mx-auto"
@@ -53,16 +92,27 @@ const onSubmitForm = (event: Event) => {
       ></p>
     </section>
     <section
-      class="flex flex-col max-w-screen-sm font-light text-black w-full max-w-screen-xl mx-auto justify-center align-center"
+      class="flex flex-col max-w-screen-sm font-light text-black w-full mx-auto justify-center align-center"
     >
       <div
         v-if="config.useEmbed"
-        class="flex flex-wrap gap-20 mt-10 w-full max-md:mt-10 max-md:max-w-full"
-        v-html="state.embed"
-      ></div>
+        class="flex flex-wrap gap-20 mt-0 w-full max-md:mt-10 max-md:max-w-full h-[max-content] mx-auto"
+      >
+        <HubspotForm
+          v-if="config.useHubspotForm"
+          :options="config.hubspotFormOptions"
+          class="w-full"
+        ></HubspotForm>
+        <AwesomeAlertBanner
+          v-else
+          title="No form specified!"
+          text="You specified an embedded form but didn't configure a supported one."
+          >No form specified!</AwesomeAlertBanner
+        >
+      </div>
       <div
         v-else
-        class="flex flex-wrap gap-20 mt-10 w-full mt-10 max-w-screen-sm mx-auto"
+        class="flex flex-wrap gap-20 mt-0 w-full max-w-screen-sm mx-auto"
       >
         <form
           v-if="!state.isFormSubmitted"
@@ -117,12 +167,13 @@ const onSubmitForm = (event: Event) => {
               class="p-2 border border-gray-300 rounded"
             ></textarea>
           </div>
-          <button
+          <AwesomeButton
             type="submit"
-            class="self-start px-4 py-2 text-white bg-black rounded"
+            class="self-start px-4 lg:px-10 py-2 gap-2 text-white rounded-lg w-full uppercase"
+            :disabled="state.isLoading || !state.isValid"
           >
             Submit
-          </button>
+          </AwesomeButton>
         </form>
         <div
           v-else

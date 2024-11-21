@@ -37,10 +37,14 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     // contents,
     '@nuxt/content',
+    '@nuxt/image',
+    'nuxt-svgo-loader',
 
     // todo: feat/localization
     // '@nuxtjs/i18n'
   ],
+
+  image: {},
 
   css: [
     resolve('./assets/scss/_variables.scss'),
@@ -77,6 +81,7 @@ export default defineNuxtConfig({
   // module::color-mode
   colorMode: {
     classSuffix: '',
+    preference: 'light',
   },
 
   content: {
@@ -87,6 +92,7 @@ export default defineNuxtConfig({
       theme: 'github-dark',
     },
   },
+  buildModules: ['@nuxtjs/svg'],
 
   // module::content
   // todo: feat/localization

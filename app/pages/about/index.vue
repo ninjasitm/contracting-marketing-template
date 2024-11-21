@@ -24,11 +24,22 @@ type AboutState = {
   teamMembers: TeamMembers;
 };
 
-const members = (
-  await useAsyncData('_about.members', () =>
-    queryContent('_about/teamMembers').find(),
-  )
-).data as Member[];
+const membersParsedContent =
+  (
+    await useAsyncData('_about.members', () =>
+      queryContent('/_about/teammembers').findOne(),
+    )
+  ).data.value?.members || ([] as Member[]);
+
+const members = membersParsedContent.map(
+  (member: any): Member => ({
+    name: member.name,
+    position: member.position,
+    description: member.description,
+    photo: member.photo,
+    linkedinUrl: member.linkedinUrl,
+  }),
+);
 
 const state: AboutState = reactive({
   heading: config.heading,
@@ -43,16 +54,16 @@ const state: AboutState = reactive({
 
 <template>
   <div
-    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-4"
+    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-2"
   >
-    <section class="h-[450px] flex flex-col justify-center">
+    <section class="flex flex-col justify-center pt-40 pb-20 lg:pt-60">
       <h2
-        class="text-6xl font-light tracking-tighter text-center text-black uppercase whitespace-nowrap mx-auto max-md:max-w-full max-md:text-4xl mt-20"
+        class="text-6xl font-light tracking-tighter text-center text-black uppercase whitespace-nowrap mx-auto max-md:max-w-full max-md:text-4xl"
         v-html="state.heading"
       ></h2>
     </section>
     <section
-      class="flex flex-col max-w-full font-light text-black w-full max-w-screen-xl mx-auto"
+      class="flex flex-col font-light text-black w-full max-w-screen-xl mx-auto"
     >
       <hr class="w-full border border-black" />
       <h2
@@ -60,13 +71,14 @@ const state: AboutState = reactive({
         v-html="state.title"
       ></h2>
       <p
-        class="mt-16 text-4xl max-md:mt-10 max-md:max-w-full"
+        class="mt-16 text-2xl lg:text-4xl max-md:mt-10 max-md:max-w-full"
         v-html="state.description"
       ></p>
     </section>
     <section
-      class="flex flex-col mt-32 max-w-full w-full max-w-screen-xl mt-20 mx-auto max-md:mt-10"
+      class="flex flex-col w-full max-w-screen-xl mt-20 mx-auto max-md:mt-10"
     >
+      <hr class="w-full border border-black" />
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl font-light tracking-tight text-black uppercase"
         v-html="state.teamMembers.title"
@@ -93,7 +105,7 @@ const state: AboutState = reactive({
             class="flex gap-1 items-center p-4 w-14 rounded-lg"
             aria-label="Previous"
           >
-            <img
+            <NuxtImg loading="lazy" placeholder
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/f3cd58e252b4f02cf75549f5468ba74e9bedf4be10572a04d9c3b5d1ff2ac199?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa"
               alt=""
@@ -104,7 +116,7 @@ const state: AboutState = reactive({
             class="flex gap-1 items-center p-4 w-14 rounded-lg"
             aria-label="Next"
           >
-            <img
+            <NuxtImg loading="lazy" placeholder
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/16ef346dca0a2892d16ae1a4ec110f8e6a9ef8f8a279e5366f3fbee74e4707ca?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa"
               alt=""
@@ -116,4 +128,3 @@ const state: AboutState = reactive({
     </section>
   </div>
 </template>
-../../../components/about/TeamMember.vue

@@ -26,7 +26,7 @@ const paddingStyles = reactive<{
 }>({
   xs: 'px-1 py-0.5',
   sm: 'px-2 py-1.5',
-  md: 'px-4 py-2',
+  md: 'px-4 lg:px-10 py-2',
   lg: 'px-5 py-3',
 });
 const fontSizeStyles = reactive<{

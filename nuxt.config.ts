@@ -84,6 +84,34 @@ export default defineNuxtConfig({
     preference: 'light',
   },
 
+  // module::tailwindcss
+  tailwindcss: {
+    // Path to the tailwind.config file
+    configPath: '~/tailwind.config.ts',
+    // Add custom classes before each dev build
+    exposeConfig: {
+      level: 3, // Show all levels of config
+    },
+    // Add utility classes to the viewer
+    viewer: true,
+    // Provide custom CSS file to be imported in the `:root` selector
+    cssPath: '~/assets/scss/tailwind.css',
+    // Use the Tailwind CSS IntelliSense plugin
+    injectPosition: 'first',
+    // Add your custom file paths to be watched by HMR for reloading
+    // Note: Do not add the tailwind config path, it is already included
+    config: {
+      content: [
+        './components/**/*.{vue,js,ts}',
+        './layouts/**/*.vue',
+        './pages/**/*.vue',
+        './plugins/**/*.{js,ts}',
+        './utils/**/*.{js,ts}',
+        './app.{js,ts,vue}',
+      ],
+    },
+  },
+
   content: {
     markdown: {
       mdc: true,

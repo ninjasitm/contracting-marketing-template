@@ -1,0 +1,7 @@
+- Review the docs/ai folder for project and product context
+- Always add code comments
+- Always use a bracket style identifier for console.log, console.error, etc. such as console.log("[File or Module or Context]: Message") or console.error("[File or Module or Context]: Message") and use appropriate string case conventions according to the provided examples
+- Always generate tests for new feature implementations
+- Run npm run lint and ensure all linting errors are fixed
+- Always run npm test and ensure all tests pass
+- Always run npm run build and ensure the build is successful

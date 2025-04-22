@@ -68,6 +68,54 @@ content:
               - name: description
                 label: Description
                 type: string
+  - name: servicesPage
+    type: file
+    label: Services Page
+    path: app/content/_pages/services.json
+    fields:
+      - name: title
+        label: Title
+        type: string
+      - name: description
+        label: Description
+        type: rich-text
+      - name: services
+        label: Services
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: Service Title
+            type: string
+          - name: icon
+            label: Service Icon
+            type: image
+            options:
+              path: media/services/icons
+              categories: [image]
+          - name: description
+            label: Service Description
+            type: rich-text
+          - name: features
+            label: Service Features
+            type: string
+            list: true
+      - name: callToAction
+        label: Call to Action
+        type: object
+        fields:
+          - name: title
+            label: Title
+            type: string
+          - name: description
+            label: Description
+            type: rich-text
+          - name: buttonText
+            label: Button Text
+            type: string
+          - name: buttonUrl
+            label: Button URL
+            type: string
   - name: contactPage
     type: file
     label: Contact Page

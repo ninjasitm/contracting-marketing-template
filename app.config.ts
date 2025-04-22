@@ -132,6 +132,7 @@ export default defineAppConfig({
         navbar: {
           menus: [
             { type: 'link', title: 'Work', to: { name: 'work' } },
+            { type: 'link', title: 'Services', to: { name: 'services' } },
             { type: 'link', title: 'About', to: { name: 'about' } },
             { type: 'link', title: 'Process', to: { name: 'process' } },
           ],

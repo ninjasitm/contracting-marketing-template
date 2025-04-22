@@ -1,0 +1,48 @@
+{
+    "title": "Our Services",
+    "description": "We provide comprehensive technology solutions to help your business succeed in the digital landscape. Our team of experts is ready to assist with your specific needs.",
+    "services": [
+        {
+            "title": "Web Development",
+            "icon": "/media/services/icons/web-dev.svg",
+            "description": "Custom web applications and responsive websites built using modern technologies and best practices.",
+            "features": [
+                "Responsive design for all devices",
+                "Performance optimization",
+                "Accessibility compliance",
+                "Content management systems",
+                "E-commerce solutions"
+            ]
+        },
+        {
+            "title": "Mobile Applications",
+            "icon": "/media/services/icons/mobile-app.svg",
+            "description": "Native and cross-platform mobile applications for iOS and Android devices.",
+            "features": [
+                "Native iOS and Android development",
+                "Cross-platform solutions",
+                "App store submission",
+                "Maintenance and updates",
+                "Integration with backend systems"
+            ]
+        },
+        {
+            "title": "IT Consulting",
+            "icon": "/media/services/icons/consulting.svg",
+            "description": "Strategic technology planning and implementation to meet your business goals.",
+            "features": [
+                "Technology assessment and planning",
+                "Digital transformation strategy",
+                "IT infrastructure optimization",
+                "Software selection and implementation",
+                "Project management"
+            ]
+        }
+    ],
+    "callToAction": {
+        "title": "Ready to Start Your Project?",
+        "description": "Contact us today to discuss how we can help your business achieve its technology goals.",
+        "buttonText": "Get in Touch",
+        "buttonUrl": "/contact"
+    }
+}

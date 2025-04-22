@@ -50,7 +50,7 @@ async function loadData(): Promise<void> {
             published: { $eq: true },
           })
           .limit(6)
-          .find()
+          .find(),
     )
   ).data;
   state.categories = [
@@ -58,7 +58,7 @@ async function loadData(): Promise<void> {
       (await queryContent('/_work').only('categories').find())
         .map((item) => item.categories)
         .flat()
-        .filter((item) => item !== null && item !== undefined)
+        .filter((item) => item !== null && item !== undefined),
     ),
   ].map((item) => ({
     name: item,

@@ -95,6 +95,27 @@ export interface Project {
   };
 }
 
+export interface Service {
+  title: string;
+  icon: string;
+  description: string;
+  features: string[];
+}
+
+export interface CallToAction {
+  title: string;
+  description: string;
+  buttonText: string;
+  buttonUrl: string;
+}
+
+export interface ServicesPageState {
+  title: string;
+  description: string;
+  services: Service[];
+  callToAction: CallToAction;
+}
+
 interface SingleProjectState {
   project: Project;
   nextProject?: {

@@ -1,7 +1,16 @@
 - Review the docs/ai folder for project and product context
 - Always add code comments
+- Always update the docs/ai folder with any new information or context that is relevant to the project such as new feature
 - Always use a bracket style identifier for console.log, console.error, etc. such as console.log("[File or Module or Context]: Message") or console.error("[File or Module or Context]: Message") and use appropriate string case conventions according to the provided examples
 - Always generate tests for new feature implementations
 - Run npm run lint and ensure all linting errors are fixed
 - Always run npm test and ensure all tests pass
 - Always run npm run build and ensure the build is successful
+- Always develop tailwind components and CSS as mobile first
+- Follow SOLID and DRY principles when implementing and refactoring code
+- Follow the project structure and conventions already in place
+- Follow the commit message format: feat: [Feature] - [Short description] or fix: [Bug] - [Short description]
+- Follow the pull request template and ensure all sections are filled out
+- For events prefer use the bus pattern with the emit and mitt functionality instead of using window.addEventListener
+- For components prefer using the composition API and script setup syntax
+- For Vuex and pinia prefer using the composition API and script setup syntax

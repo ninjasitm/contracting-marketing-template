@@ -1,9 +1,38 @@
 {
-    "useEmbed": true,
-    "useHubspotForm": true,
-    "hubspotFormOptions": {
-        "region": "na1",
-        "portalId": "3962365",
-        "formId": "3bfbc148-e237-48d1-81a5-8a70067511f7"
-    }
+  " title\: \Lorem Ipsum Contact\,
+ \description\: \Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\,
+ \sections\: [
+ {
+ \title\: \Lorem Ipsum\,
+ \items\: [
+ \Consectetur adipiscing elit\,
+ \Sed do eiusmod tempor\, 
+ \Incididunt ut labore\,
+ \Et dolore magna aliqua\
+ ]
+ },
+ {
+ \title\: \Dolor Sit Amet\,
+ \items\: [
+ \Ut enim ad minim veniam\,
+ \Quis nostrud exercitation\,
+ \Ullamco laboris nisi\,
+ \Ut aliquip ex ea commodo\
+ ]
+ }
+ ],
+ \category\: [
+ \Lorem Ipsum\,
+ \Dolor Sit\, 
+ \Amet Consectetur\,
+ \Adipiscing Elit\,
+ \Tempor Incididunt\
+ ],
+ \useEmbed\: false,
+ \useHubspotForm\: false,
+ \successMessageStyle\: {
+ \backgroundColor\: \#EEEEEE\,
+ \textColor\: \#333333\,
+ \iconColor\: \#009900\
+ }
 }

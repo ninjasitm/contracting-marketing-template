@@ -4,7 +4,6 @@
   "description": "a Nuxt 3 template and boilerplate with a lot of useful features. Nuxt 3 + Tailwindcss + Nuxt Layer",
   "author": "ninjasitm",
   "private": false,
-  "packageManager": "pnpm@7.0.0",
   "license": "MIT",
   "type": "module",
   "main": "./nuxt.config.ts",
@@ -30,7 +29,7 @@
   ],
   "scripts": {
     "build": "nuxt build ./app",
-    "dev": "nuxt dev ./app --no-clear",
+    "dev": "nuxt dev ./app",
     "generate": "nuxt generate ./app",
     "preview": "nuxt preview ./app",
     "postinstall": "nuxt prepare ./app",

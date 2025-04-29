@@ -1,52 +1,32 @@
 {
-  "members": [
-    {
-      "name": "Malcolm Paul",
-      "position": "Founder",
-      "photo": "/media/team/58ea92c3d171e206813977.jpg",
-      "linkedinUrl": "https://www.linkedin.com/in/malcolm-paul/"
-    },
-    {
-      "name": "Madhu Rathnasekar",
-      "position": "Business Analyst",
-      "photo": "/media/team/1548866702366.jpg",
-      "linkedinUrl": "https://www.linkedin.com/in/madhusekar/"
-    },
-    {
-      "name": "Brendon Paul ",
-      "position": "Project Management",
-      "photo": "/media/team/1624650544304.jpg",
-      "linkedinUrl": "https://www.linkedin.com/in/brendon-lake-bb5072216/"
-    },
-    {
-      "name": "Maya Abdoussala ",
-      "position": "Content and Creative Writing",
-      "photo": "/media/team/1611417487815.jpg",
-      "linkedinUrl": "https://www.linkedin.com/in/maya-abdoussala-56778a189/"
-    },
-    {
-      "name": "Sunal Fontinelle ",
-      "position": "Mobile App Developer",
-      "photo": "/media/team/sunal.jpeg",
-      "linkedinUrl": "https://www.linkedin.com/in/sunal-fontinelle"
-    },
-    {
-      "name": "Christopher Smickle ",
-      "position": "Frontend And WordPress",
-      "photo": "/media/team/chris.jpg",
-      "linkedinUrl": "https://www.linkedin.com/in/christopher-smickle"
-    },
-    {
-      "name": "Gerald Onyango ",
-      "position": "Senior Code and Cloud Architect",
-      "photo": "/media/team/59ced45240950904362349.jpg",
-      "linkedinUrl": "https://www.linkedin.com/in/gerald-onyango/"
-    },
-    {
-      "name": "Eve Elie",
-      "position": "Strategy and Execution Specialist",
-      "photo": "/media/team/EveofStrategy_headshot (1).png",
-      "linkedinUrl": "https://linktr.ee/eveofstrategy"
-    }
-  ]
+  " members\: [
+ {
+ \name\: \Lorem Ipsum\,
+ \position\: \Chief Executive Officer\,
+ \description\: \Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\,
+ \photo\: \/media/avatars/lorem-ipsum.jpg\,
+ \linkedinUrl\: \https://www.linkedin.com/in/loremipsum\
+ },
+ {
+ \name\: \Dolor Sit\,
+ \position\: \Chief Operations Officer\,
+ \description\: \Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.\,
+ \photo\: \/media/avatars/dolor-sit.jpg\,
+ \linkedinUrl\: \https://www.linkedin.com/in/dolorsit\
+ },
+ {
+ \name\: \Amet Consectetur\,
+ \position\: \Chief Technology Officer\,
+ \description\: \Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\,
+ \photo\: \/media/avatars/amet-consectetur.jpg\,
+ \linkedinUrl\: \https://www.linkedin.com/in/ametconsectetur\
+ },
+ {
+ \name\: \Tempor Incididunt\,
+ \position\: \Director of Business Development\,
+ \description\: \Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\,
+ \photo\: \/media/avatars/tempor-incididunt.jpg\,
+ \linkedinUrl\: \https://www.linkedin.com/in/temporincididunt\
+ }
+ ]
 }

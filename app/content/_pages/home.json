@@ -1,64 +1,66 @@
 {
-  "banner": {
-    "title": "Ninjas in the Machine Inc. ",
-    "description": "Solution architects specializing in product and project management, design, development, AI/ML, and Cloud services for governments and organizations.",
-    "actionText": "Download Capabilities Statement",
-    "actionUrl": "/NITM-Capabilities-Statement.pdf",
-    "backgroundImage": "/media/images/home/home-banner.jpg"
-  },
-  "coreCompetencies": {
-    "description": "NITM specializes in product management, development, consulting, and team building for complex and deep-tech solutions across various industries and verticals including Healthcare, EdTech, AI, SaaS, Data, HIPAA compliance, and more.",
-    "items": [
-      {
-        "heading": "Ideation and Research",
-        "items": [
-          "Scoping and Prioritization",
-          "Prototyping, Wireframing",
-          "Design UI/UX",
-          "System Architecture",
-          "Cloud Architecture and Recommendations",
-          "Roadmapping and ROI Strategy"
-        ]
-      },
-      {
-        "heading": "Planning and Documentation",
-        "items": [
-          "AI/ML Strategy",
-          "Database and Data Stack Design",
-          "SaaS",
-          "Mobile Applications",
-          "API Design and Integration",
-          "Security"
-        ]
-      },
-      {
-        "heading": "Execution and Support",
-        "items": [
-          "Team-building and Management",
-          "MVP Business Strategy",
-          "Workforce Training",
-          "Maintenance and Advisory",
-          "Education, Presentations and Continuous Learning",
-          "Salesforce Development"
-        ]
-      }
-    ]
-  },
-  "differentiators": {
-    "title": "Differentiators",
-    "items": [
-      {
-        "icon": "/media/images/database-zap.png",
-        "description": "Experts at collaboratively developing solutions with minimal information"
-      },
-      {
-        "icon": "/media/images/notepad-text.png",
-        "description": "Excellent communication and planning skills leading to 100% customer satisfaction from start to finish"
-      },
-      {
-        "icon": "/media/images/gallery-horizontal-end.png",
-        "description": "Strong dedication to acknowledging issues within an hour and resolving critical needs and problems within 12 hours with sliding scales of responsiveness depending on the nature of any issue"
-      }
-    ]
-  }
+  " banner\: {
+ \title\: \Lorem Ipsum Dolor Sit Amet\,
+ \description\: \Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris.\,
+ \actionText\: \Consectetur\,
+ \actionUrl\: \/contact\,
+ \backgroundImage\: \/media/banners/lorem-banner.jpg\
+ },
+ \coreCompetencies\: {
+ \title\: \Core Competencies\,
+ \description\: \Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.\,
+ \items\: [
+ {
+ \heading\: \Lorem Ipsum\,
+ \items\: [
+ \Consectetur adipiscing elit\,
+ \Sed do eiusmod tempor\,
+ \Incididunt ut labore\,
+ \Et dolore magna aliqua\,
+ \Ut enim ad minim veniam\
+ ]
+ },
+ {
+ \heading\: \Dolor Sit Amet\,
+ \items\: [
+ \Exercitation ullamco\,
+ \Laboris nisi ut aliquip\,
+ \Ex ea commodo consequat\,
+ \Duis aute irure dolor\,
+ \In reprehenderit in voluptate\
+ ]
+ },
+ {
+ \heading\: \Consectetur Elit\,
+ \items\: [
+ \Excepteur sint occaecat\,
+ \Cupidatat non proident\,
+ \Sunt in culpa qui officia\,
+ \Deserunt mollit anim id\,
+ \Est laborum et dolorum\
+ ]
+ }
+ ]
+ },
+ \differentiators\: {
+ \title\: \WHY CHOOSE LOREM IPSUM\,
+ \items\: [
+ {
+ \icon\: \/media/icons/icon-lorem.svg\,
+ \description\: \Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt\
+ },
+ {
+ \icon\: \/media/icons/icon-ipsum.svg\,
+ \description\: \Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore\
+ },
+ {
+ \icon\: \/media/icons/icon-dolor.svg\,
+ \description\: \Ut enim ad minim veniam quis nostrud exercitation ullamco laboris\
+ },
+ {
+ \icon\: \/media/icons/icon-amet.svg\,
+ \description\: \Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod\
+ }
+ ]
+ }
 }

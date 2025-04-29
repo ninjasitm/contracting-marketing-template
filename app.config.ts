@@ -55,6 +55,7 @@ export interface NuxtAwesomeAppConfig {
         /** menus in navbar */
         menus?: AwesomeLayoutPageNavbarMenu[];
         links: Record<string, string>;
+        hasBanner?: boolean;
       };
     };
     /** footer */

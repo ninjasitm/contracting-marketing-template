@@ -1,48 +1,45 @@
 {
-    "title": "Our Services",
-    "description": "We provide comprehensive technology solutions to help your business succeed in the digital landscape. Our team of experts is ready to assist with your specific needs.",
-    "services": [
-        {
-            "title": "Web Development",
-            "icon": "/media/services/icons/web-dev.svg",
-            "description": "Custom web applications and responsive websites built using modern technologies and best practices.",
-            "features": [
-                "Responsive design for all devices",
-                "Performance optimization",
-                "Accessibility compliance",
-                "Content management systems",
-                "E-commerce solutions"
-            ]
-        },
-        {
-            "title": "Mobile Applications",
-            "icon": "/media/services/icons/mobile-app.svg",
-            "description": "Native and cross-platform mobile applications for iOS and Android devices.",
-            "features": [
-                "Native iOS and Android development",
-                "Cross-platform solutions",
-                "App store submission",
-                "Maintenance and updates",
-                "Integration with backend systems"
-            ]
-        },
-        {
-            "title": "IT Consulting",
-            "icon": "/media/services/icons/consulting.svg",
-            "description": "Strategic technology planning and implementation to meet your business goals.",
-            "features": [
-                "Technology assessment and planning",
-                "Digital transformation strategy",
-                "IT infrastructure optimization",
-                "Software selection and implementation",
-                "Project management"
-            ]
-        }
-    ],
-    "callToAction": {
-        "title": "Ready to Start Your Project?",
-        "description": "Contact us today to discuss how we can help your business achieve its technology goals.",
-        "buttonText": "Get in Touch",
-        "buttonUrl": "/contact"
-    }
+  " title\: \Lorem Ipsum Services\,
+ \description\: \Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\,
+ \services\: [
+ {
+ \title\: \Lorem Ipsum\,
+ \icon\: \/media/services/icons/icon-lorem.svg\,
+ \description\: \Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\,
+ \features\: [
+ \Consectetur adipiscing elit\,
+ \Sed do eiusmod tempor\,
+ \Incididunt ut labore\,
+ \Et dolore magna aliqua\
+ ]
+ },
+ {
+ \title\: \Dolor Sit\,
+ \icon\: \/media/services/icons/icon-dolor.svg\,
+ \description\: \Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\,
+ \features\: [
+ \Exercitation ullamco\,
+ \Laboris nisi ut aliquip\,
+ \Ex ea commodo consequat\,
+ \Duis aute irure dolor\
+ ]
+ },
+ {
+ \title\: \Amet Consectetur\,
+ \icon\: \/media/services/icons/icon-amet.svg\,
+ \description\: \Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.\,
+ \features\: [
+ \Excepteur sint occaecat\,
+ \Cupidatat non proident\,
+ \Sunt in culpa qui officia\,
+ \Deserunt mollit anim id\
+ ]
+ }
+ ],
+ \callToAction\: {
+ \title\: \Ready to Begin?\,
+ \description\: \Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit sed quia consequuntur.\,
+ \buttonText\: \Contact Us\,
+ \buttonUrl\: \/contact\
+ }
 }

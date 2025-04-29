@@ -35,7 +35,7 @@
     "preview": "nuxt preview ./app",
     "postinstall": "nuxt prepare ./app",
     "dev:starter": "nuxt dev ./examples/starter",
-    "lint": "eslint --fix --ext \".ts,.js,.vue\" --ignore-path .eslintignore .",
+    "lint": "eslint --fix --ext \".ts,.js,.vue\" --ignore-path .eslintignore . && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",

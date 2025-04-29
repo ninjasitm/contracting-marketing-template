@@ -12,37 +12,37 @@ import { defineConfig } from 'vitest/config';
 import Vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
-    // Plugins for Vue support
-    plugins: [Vue()],
+  // Plugins for Vue support
+  plugins: [Vue()],
 
-    // Test configuration
-    test: {
-        // Enable global test environment setup
-        globals: true,
+  // Test configuration
+  test: {
+    // Enable global test environment setup
+    globals: true,
 
-        // Mock browser environment
-        environment: 'jsdom',
+    // Mock browser environment
+    environment: 'jsdom',
 
-        // Exclude certain files/directories from testing
-        exclude: ['node_modules', 'dist', '.nuxt', 'coverage'],
+    // Exclude certain files/directories from testing
+    exclude: ['node_modules', 'dist', '.nuxt', 'coverage'],
 
-        // Include specific file patterns for testing
-        include: ['./test/**/*.{test,spec}.{js,ts}'],
+    // Include specific file patterns for testing
+    include: ['./test/**/*.{test,spec}.{js,ts}'],
 
-        // Coverage configuration
-        coverage: {
-            provider: 'v8',
-            reporter: ['text', 'json', 'html'],
-            exclude: ['node_modules/', 'test/', '.nuxt/', 'dist/'],
-        },
+    // Coverage configuration
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      exclude: ['node_modules/', 'test/', '.nuxt/', 'dist/'],
     },
+  },
 
-    // Resolve aliases to match Nuxt configuration
-    resolve: {
-        alias: {
-            '@': resolve(__dirname, './'),
-            '~': resolve(__dirname, './'),
-            '#app': resolve(__dirname, 'node_modules/nuxt/dist/app'),
-        },
+  // Resolve aliases to match Nuxt configuration
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './'),
+      '~': resolve(__dirname, './'),
+      '#app': resolve(__dirname, 'node_modules/nuxt/dist/app'),
     },
+  },
 });

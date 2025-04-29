@@ -32,6 +32,8 @@ export default defineNuxtConfig({
     'nuxt-headlessui',
     'nuxt-icon',
     '@nuxtjs/color-mode',
+    // font management
+    '@nuxt/fonts',
     // management
     '@pinia/nuxt',
     '@vueuse/nuxt',
@@ -120,6 +122,32 @@ export default defineNuxtConfig({
       theme: 'github-dark',
     },
   },
+
+  // module::fonts
+  fonts: {
+    // Set default font families
+    families: [
+      {
+        // Primary font used throughout the application
+        name: 'Inter',
+        // Load multiple weights
+        weights: [400, 500, 600, 700],
+        // Include italic variants
+        italic: true,
+      },
+      {
+        // Secondary font for headings
+        name: 'Montserrat',
+        weights: [500, 600, 700],
+        italic: false,
+      },
+    ],
+    // Set default preloading strategy (reduces layout shifts)
+    preload: true,
+    // Use display: swap to ensure text is visible while fonts are loading
+    display: 'swap',
+  },
+
   buildModules: ['@nuxtjs/svg'],
 
   // module::content

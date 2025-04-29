@@ -1,3 +1,4 @@
+- Review the package.json file for a preferred package manager
 - Review the docs/ai folder for project and product context
 - Always add code comments
 - Always update the docs/ai folder with any new information or context that is relevant to the project such as new feature

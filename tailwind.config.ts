@@ -162,8 +162,8 @@ export default <Partial<Config>>{
 
       // Typography
       fontFamily: {
-        sans: ['Manrope', ...defaultTheme.fontFamily.sans],
-        heading: ['Sora', ...defaultTheme.fontFamily.sans],
+        sans: ['Inter', ...defaultTheme.fontFamily.sans],
+        heading: ['Montserrat', 'Inter', ...defaultTheme.fontFamily.sans],
         mono: ['JetBrains Mono', ...defaultTheme.fontFamily.mono],
       },
       fontSize: {

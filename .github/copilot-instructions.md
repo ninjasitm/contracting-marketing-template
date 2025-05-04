@@ -15,3 +15,8 @@
 - For events prefer use the bus pattern with the emit and mitt functionality instead of using window.addEventListener
 - For components prefer using the composition API and script setup syntax
 - For Vuex and pinia prefer using the composition API and script setup syntax
+- Review the PagesCMS documenation here: https://pagescms.org/docs/ to properly understand how to implement the CMS features
+- Use the NUXT queryContent composables to extract CMS data
+- Be sure to update the README.md file with any new features or changes to the project
+- Be sure to update the CHANGELOG.md file with any new features or changes to the project
+- Be sure to update or add any documentation in the docs/ai folder with any new features or changes to the project

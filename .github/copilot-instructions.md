@@ -20,3 +20,4 @@
 - Be sure to update the README.md file with any new features or changes to the project
 - Be sure to update the CHANGELOG.md file with any new features or changes to the project
 - Be sure to update or add any documentation in the docs/ai folder with any new features or changes to the project
+- Prefer to use nuxi to install nuxt-modules versus a direct npm install (npx nuxi@latest module add {{module}})

@@ -50,13 +50,13 @@ The `.pages.yml` file in the root directory defines the content structure for th
 
 ### Content Structure
 
-Content is stored in JSON and Markdown files in the `app/content/` directory:
+Content is stored in JSON and Markdown files in the `content/` directory:
 
-- **Page Content**: `app/content/_pages/` - JSON files for each page
-- **Work Portfolio**: `app/content/_work/` - Markdown files for work examples
-- **Team Members**: `app/content/_about/teamMembers.json` - Team information
-- **Global Config**: `app/content/config.json` - Site-wide settings
-- **Clients**: `app/content/clients.json` - Client information
+- **Page Content**: `content/_pages/` - JSON files for each page
+- **Work Portfolio**: `content/_work/` - Markdown files for work examples
+- **Team Members**: `content/_about/teamMembers.json` - Team information
+- **Global Config**: `content/config.json` - Site-wide settings
+- **Clients**: `content/clients.json` - Client information
 
 ## 📂 Project Structure
 

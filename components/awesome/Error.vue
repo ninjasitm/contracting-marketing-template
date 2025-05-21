@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { resolveComponent, computed } from 'vue';
+
 // components
 const PageWrapper = resolveComponent('LayoutPageWrapper');
 
@@ -41,6 +43,10 @@ const error = computed(() => {
       <span class="font-bold text-8xl block">{{ error.code }}</span>
       <span class="block italic">{{ error.message }}</span>
     </h1>
-    <AwesomeButton text="Home" to="/" size="sm" />
+    <AwesomeButton
+      text="Home"
+      to="/"
+      size="sm"
+    />
   </component>
 </template>

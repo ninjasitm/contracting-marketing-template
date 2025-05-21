@@ -1,6 +1,7 @@
+import '../../shims-vue.d.ts';
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import ServiceFeature from '@/components/services/ServiceFeature.vue';
+import ServiceFeature from '../../../components/services/ServiceFeature.vue';
 
 /**
  * Test suite for the ServiceFeature component

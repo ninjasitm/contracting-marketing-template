@@ -65,7 +65,7 @@ This is a Nuxt 3-based contracting marketing template that uses a flat-file CMS 
   - `layouts/`: Page layouts
   - `assets/`: Static assets (e.g., SCSS files, non-dynamic images)
   - `public/`: Public assets (e.g., favicon, robots.txt, images directly accessible via URL)
-  - `app/content/`: CMS content files (Markdown, JSON)
+  - `content/`: CMS content files (Markdown, JSON)
 
 ### Composition API
 
@@ -173,7 +173,7 @@ This is a Nuxt 3-based contracting marketing template that uses a flat-file CMS 
     console.error('[ContentQuery]: Error fetching content:', error.value);
   }
   ```
-- Files in `app/content/` represent the CMS structure.
+- Files in `content/` represent the CMS structure.
 
 ## Coding Practices
 
@@ -254,7 +254,7 @@ This is a Nuxt 3-based contracting marketing template that uses a flat-file CMS 
 
 - Use Markdown (`.md`) for primary content files, with appropriate syntax for headings, lists, links, code blocks, etc.
 - Use YAML frontmatter within Markdown files for metadata (e.g., `title`, `description`, `author`, `date`, custom fields).
-- JSON (`.json`) files can be used for structured data or configuration within `app/content/`.
+- JSON (`.json`) files can be used for structured data or configuration within `content/`.
 - Use data binding with `{{ $doc.variable }}` or access frontmatter directly from the `data` object returned by `queryContent` within your Vue templates.
 - Leverage Nuxt Content\'s built-in components like `<ContentRenderer>` and `<ContentDoc>` for rendering Markdown content.
 
@@ -349,28 +349,28 @@ This is a Nuxt 3-based contracting marketing template that uses a flat-file CMS 
   ```typescript
   // Debug API handler step-by-step
   export default defineEventHandler(async (event) => {
-  	console.log("[YourAPIEndpoint]: Request received", {
-  		method: event.method,
-  		path: event.path,
-  		query: getQuery(event),
-  	});
+    console.log('[YourAPIEndpoint]: Request received', {
+      method: event.method,
+      path: event.path,
+      query: getQuery(event),
+    });
 
-  	try {
-  		const body = await readBody(event);
-  		console.log("[YourAPIEndpoint]: Request body", body);
+    try {
+      const body = await readBody(event);
+      console.log('[YourAPIEndpoint]: Request body', body);
 
-  		// Process the request...
-  		const result = await yourProcessingLogic(body);
-  		console.log("[YourAPIEndpoint]: Processing result", result);
+      // Process the request...
+      const result = await yourProcessingLogic(body);
+      console.log('[YourAPIEndpoint]: Processing result', result);
 
-  		return { success: true, data: result };
-  	} catch (error) {
-  		console.error("[YourAPIEndpoint]: Error processing request", error);
-  		throw createError({
-  			statusCode: 500,
-  			message: error.message || "An unknown error occurred",
-  		});
-  	}
+      return { success: true, data: result };
+    } catch (error) {
+      console.error('[YourAPIEndpoint]: Error processing request', error);
+      throw createError({
+        statusCode: 500,
+        message: error.message || 'An unknown error occurred',
+      });
+    }
   });
   ```
 

@@ -1,7 +1,10 @@
 import type { RouteLocationRaw } from 'vue-router';
-import { type NuxtApp } from '#app';
-import { type AwesomeLayoutPageNavbarMenu } from './utils/types';
-import appConfig from './app/content/config.json';
+import type { NuxtApp } from '#app';
+import type { AppConfig } from 'nuxt/schema';
+import type { AwesomeLayoutPageNavbarMenu } from './utils/types';
+import appConfig from './content/config.json';
+
+// Define app config for Nuxt 3
 export interface NuxtAwesomeAppConfig {
   /** title name */
   title?: string;
@@ -56,6 +59,7 @@ export interface NuxtAwesomeAppConfig {
         menus?: AwesomeLayoutPageNavbarMenu[];
         links: Record<string, string>;
         hasBanner?: boolean;
+        bannerStyle?: Record<string, string>;
       };
     };
     /** footer */
@@ -77,11 +81,11 @@ export interface NuxtAwesomeAppConfig {
       disableInfoReplaceIndexInWelcomePage?: boolean;
       primaryActionButton?: {
         title?: string;
-        to?: RouteLocationRaw | ((nuxt: NuxtApp) => RouteLocationRaw);
+        to?: RouteLocationRaw | ((_nuxt: NuxtApp) => RouteLocationRaw);
       };
       secondaryActionButton?: {
         title?: string;
-        to?: RouteLocationRaw | ((nuxt: NuxtApp) => RouteLocationRaw);
+        to?: RouteLocationRaw | ((_nuxt: NuxtApp) => RouteLocationRaw);
       };
     };
   };

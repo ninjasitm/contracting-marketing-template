@@ -1,25 +1,27 @@
 <script lang="ts" setup>
-  import { reactive } from 'vue';
-  import Item from './Item.vue';
-  import Separator from './Separator.vue';
+import { reactive } from 'vue';
+import Item from './Item.vue';
+import Separator from './Separator.vue';
 
-  type InfoItem = {
-    id: number;
-    label: string;
-    value: string;
-  };
+type InfoItem = {
+  id: number;
+  label: string;
+  value: string;
+};
 
-  type InfoBarState = {
-    items: InfoItem[];
-  };
+type InfoBarState = {
+  items: InfoItem[];
+};
 
-  const state: InfoBarState = reactive({
-    items: [],
-  });
+const state: InfoBarState = reactive({
+  items: [],
+});
 </script>
 
 <template>
-  <header class="info-bar flex relative flex-wrap gap-5 justify-center items-center px-4 lg:px-10 py-4 w-full text-xs bg-sky-950 max-md:px-5 max-md:max-w-full">
+  <header
+    class="info-bar flex relative flex-wrap gap-5 justify-center items-center px-4 lg:px-10 py-4 w-full text-xs bg-sky-950 max-md:px-5 max-md:max-w-full"
+  >
     <template
       v-for="(item, index) in state.items"
       :key="item.id"

@@ -1,8 +1,10 @@
+import { reactive, ref, onMounted, onUnmounted } from 'vue';
+
 export type ScreenSize = 'sm' | 'md' | 'lg' | 'xl';
 
 // { sm: '640px', md: '768px', lg: '1024px', xl: '1280px', '2xl': '1536px' }
 export const defaultScreenConfig: {
-  [key in ScreenSize]: number;
+  [_key in ScreenSize]: number;
 } = {
   sm: 640,
   md: 768,
@@ -37,7 +39,8 @@ export const useAwesomeScreen = () => {
 
   const higherThan = (size: ScreenSize, defScreenSize?: ScreenSize) => {
     const { sm, md, lg, xl } = defaultScreenConfig;
-    const width = defaultScreenConfig[defScreenSize || current.value];
+    const currentSize = defScreenSize || current.value;
+    const width = defaultScreenConfig[currentSize];
     if (size === 'sm') return width >= Number(sm);
     if (size === 'md') return width >= Number(md);
     if (size === 'lg') return width >= Number(lg);

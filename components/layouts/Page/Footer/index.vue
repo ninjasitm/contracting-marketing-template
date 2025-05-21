@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-import { toRefs, reactive } from 'vue';
+import { reactive } from 'vue';
 
-import type { AppConfig } from '@nuxt/schema';
-import { type NuxtAwesomeAppConfig } from '../../../../app.config';
 import Collab from './Collab.vue';
 import CompanyAddress from './CompanyAddress.vue';
 import CompanyInfo from './CompanyInfo.vue';
+import { useAppConfig } from '#imports';
 
-import type { LinkItem, GenericItem, StyleObject } from '@/utils/types';
+import type { LinkItem, GenericItem, StyleObject } from '~/utils/types';
 
 const { config } = useAppConfig();
 
@@ -22,6 +21,7 @@ type FooterState = {
   containerStyle?: StyleObject;
   footerStyle?: StyleObject;
   companyInfoStyle?: StyleObject;
+  companyName?: string;
 };
 
 const state: FooterState = reactive({
@@ -48,17 +48,17 @@ const state: FooterState = reactive({
     <Collab class="container max-w-screen-xl mx-auto px-6 lg:px-10" />
     <CompanyAddress
       class="container max-w-screen-xl mx-auto mb-12 px-6 lg:px-10"
-      :address="state.address"
-      :email="state.email"
-      :links="state.links"
-      :social-links="state.socialLinks"
-      :company-name="state.companyName"
+      :address="state.address || ''"
+      :email="state.email || ''"
+      :links="state.links || []"
+      :social-links="state.socialLinks || []"
+      :company-name="state.companyName || ''"
     />
     <CompanyInfo
       class="w-full mx-auto"
-      :items="state.items"
-      :naics-codes-title="state.naicsCodesTitle"
-      :naics-codes="state.naicsCodes"
+      :items="state.items || []"
+      :naics-codes-title="state.naicsCodesTitle || ''"
+      :naics-codes="state.naicsCodes || []"
       :style="state.companyInfoStyle"
     />
   </footer>

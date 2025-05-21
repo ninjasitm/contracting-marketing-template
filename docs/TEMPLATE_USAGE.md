@@ -9,7 +9,7 @@ This marketing site template is built with:
 - **Nuxt 3**: Vue.js framework for the frontend
 - **TailwindCSS**: For styling
 - **PagesCMS**: Flat-file CMS for content management
-- **Content Files**: JSON and Markdown files in the `app/content` directory
+- **Content Files**: JSON and Markdown files in the `content` directory
 
 ## Pages Structure
 
@@ -44,17 +44,17 @@ pnpm install
 
 ### Step 3: Update the content files
 
-The content is stored in JSON files in the `app/content` directory:
+The content is stored in JSON files in the `content` directory:
 
-- **General Configuration**: `app/content/config.json` - Update the company name, contact information, and branding
-- **Homepage**: `app/content/_pages/home.json` - Update the banner, core competencies, and differentiators
-- **Services**: `app/content/_pages/services.json` - Update the services offered
-- **About**: `app/content/_pages/about.json` - Update the company information
-- **Team**: `app/content/_about/teamMembers.json` - Update team member information
-- **Process**: `app/content/_pages/process.json` - Update the company's process information
-- **Work**: `app/content/_pages/work.json` - Update the featured work and categories
-- **Work Items**: Files in `app/content/_work/` - Add/modify work portfolio items
-- **Clients**: `app/content/clients.json` - Update client information
+- **General Configuration**: `content/config.json` - Update the company name, contact information, and branding
+- **Homepage**: `content/_pages/home.json` - Update the banner, core competencies, and differentiators
+- **Services**: `content/_pages/services.json` - Update the services offered
+- **About**: `content/_pages/about.json` - Update the company information
+- **Team**: `content/_about/teamMembers.json` - Update team member information
+- **Process**: `content/_pages/process.json` - Update the company's process information
+- **Work**: `content/_pages/work.json` - Update the featured work and categories
+- **Work Items**: Files in `content/_work/` - Add/modify work portfolio items
+- **Clients**: `content/clients.json` - Update client information
 
 ### Step 4: Update images and assets
 
@@ -171,7 +171,7 @@ The Work page structure allows for showcasing client projects:
 
 To add new services:
 
-1. Edit `app/content/_pages/services.json`
+1. Edit `content/_pages/services.json`
 2. Add new service objects to the `services` array
 3. Add corresponding icons in `public/media/services/icons/`
 
@@ -179,7 +179,7 @@ To add new services:
 
 To add team members:
 
-1. Edit `app/content/_about/teamMembers.json`
+1. Edit `content/_about/teamMembers.json`
 2. Add new member objects to the `members` array
 3. Add photos to `public/media/avatars/`
 
@@ -187,7 +187,7 @@ To add team members:
 
 To add new work projects:
 
-1. Create a new Markdown file in `app/content/_work/`
+1. Create a new Markdown file in `content/_work/`
 2. Add the project details following the existing format
 3. Add project images to the appropriate directories
 

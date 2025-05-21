@@ -42,13 +42,13 @@ The project includes several key pages:
 4. **Process Page**: Description of the company's work process
 5. **Contact Page**: Contact form with optional HubSpot form integration
 
-For each page, content is stored in JSON files in app/content/\_pages/, and dynamic content like work items are stored in Markdown files in relevant directories (e.g., app/content/\_work/).
+For each page, content is stored in JSON files in content/\_pages/, and dynamic content like work items are stored in Markdown files in relevant directories (e.g., content/\_work/).
 
 ## How the Content System Works
 
 1. The .pages.yml defines the structure that PagesCMS will use to present an admin interface
 2. Editors use the PagesCMS UI to edit content
-3. The edited content is saved as files in the app/content directory
+3. The edited content is saved as files in the content directory
 4. The Nuxt app reads these files directly using Nuxt Content module to render the website
 5. Content is structured in a way that makes it easy to query and filter
 

@@ -5,17 +5,23 @@ import type { StyleObject } from '@/utils/types';
 const { config } = useAppConfig();
 
 export type LayoutProps = {
-  style: StyleObject;
+  style?: StyleObject;
 };
 const state: LayoutProps = reactive({
-  style: config.style,
+  style: config.style || {},
 });
 </script>
 
 <template>
-  <div class="overflow-x-hidden scroll-smooth mx-auto" :style="state.style">
+  <div
+    class="overflow-x-hidden scroll-smooth mx-auto"
+    :style="state.style"
+  >
     <LayoutPageNavbar />
-    <div id="page-banner" class="w-full"></div>
+    <div
+      id="page-banner"
+      class="w-full"
+    />
     <div class="mx-auto max-w-screen-xl">
       <LayoutPageContent>
         <slot />

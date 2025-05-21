@@ -3,7 +3,9 @@
  * @param string
  * @returns
  */
-export function splitIntoSentences(string: string): string[] {
+export function splitIntoSentences(string: string | undefined): string[] {
+  if (!string) return [];
+
   const sentences = new Intl.Segmenter('en', {
     granularity: 'sentence',
   }).segment(string);

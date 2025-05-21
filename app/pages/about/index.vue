@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
-import config from '@@/app/content/_pages/about.json';
 import TeamMember from '../../../components/about/TeamMember.vue';
+import config from '@@/content/_pages/about.json';
 definePageMeta({ layout: 'page' });
 
 type Member = {
@@ -32,12 +32,12 @@ const membersParsedContent =
   ).data.value?.members || ([] as Member[]);
 
 const members = membersParsedContent.map(
-  (member: any): Member => ({
-    name: member.name,
-    position: member.position,
-    description: member.description,
-    photo: member.photo,
-    linkedinUrl: member.linkedinUrl,
+  (member: Record<string, unknown>): Member => ({
+    name: member.name as string,
+    position: member.position as string,
+    description: member.description as string,
+    photo: member.photo as string,
+    linkedinUrl: member.linkedinUrl as string,
   }),
 );
 
@@ -60,29 +60,29 @@ const state: AboutState = reactive({
       <h2
         class="text-6xl font-light tracking-tighter text-center text-black uppercase whitespace-nowrap mx-auto max-md:max-w-full max-md:text-4xl"
         v-html="state.heading"
-      ></h2>
+      />
     </section>
     <section
       class="flex flex-col font-light text-black w-full max-w-screen-xl mx-auto"
     >
-      <hr class="w-full border border-black" />
+      <hr class="w-full border border-black">
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl tracking-tight uppercase max-md:max-w-full"
         v-html="state.title"
-      ></h2>
+      />
       <p
         class="mt-16 text-2xl lg:text-4xl max-md:mt-10 max-md:max-w-full"
         v-html="state.description"
-      ></p>
+      />
     </section>
     <section
       class="flex flex-col w-full max-w-screen-xl mt-20 mx-auto max-md:mt-10"
     >
-      <hr class="w-full border border-black" />
+      <hr class="w-full border border-black">
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl font-light tracking-tight text-black uppercase"
         v-html="state.teamMembers.title"
-      ></h2>
+      />
       <div class="flex flex-col mt-16 w-full max-md:mt-10 max-md:max-w-full">
         <div
           class="flex flex-wrap gap-5 items-start w-full text-base max-md:max-w-full"

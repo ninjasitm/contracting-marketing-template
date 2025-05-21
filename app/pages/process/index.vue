@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
-import config from '@@/app/content/_pages/process.json';
 import ProcessSection from '../../../components/process/ProcessSection.vue';
+import config from '@@/content/_pages/process.json';
 definePageMeta({ layout: 'page' });
 
 const state = reactive({
@@ -20,11 +20,11 @@ const state = reactive({
       <h2
         class="self-center w-full text-6xl font-light tracking-tighter text-center text-black uppercase whitespace-nowrap max-md:max-w-full max-md:text-4xl mx-auto"
         v-html="state.title"
-      ></h2>
+      />
       <p
         class="mt-6 text-xl leading-8 text-black max-md:max-w-full"
         v-html="state.description"
-      ></p>
+      />
     </section>
     <section
       class="flex flex-col font-light text-black w-full max-w-screen-xl mx-auto"

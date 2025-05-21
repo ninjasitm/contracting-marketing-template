@@ -1,38 +1,45 @@
 <script lang="ts" setup>
-  import { ref, computed } from 'vue';
-  import type { AwesomeLayoutPageNavbarMenu, LinkItem } from 'config-types';
+import { ref, computed } from 'vue';
+import { useAppConfig } from '#imports';
+import { useNavbarParser } from '~/composables/use-navbar-parser';
+import { useAwesomeScreen } from '~/composables/use-awesome-screen';
+import type { AwesomeLayoutPageNavbarMenu } from '~/utils/types';
 
-  const { config } = useAppConfig();
-  const { parseMenuRoute, parseMenuTitle } = useNavbarParser();
-  const $screen = useAwesomeScreen();
-  const nuxtApp = useNuxtApp();
+const { config } = useAppConfig();
+const { parseMenuRoute, parseMenuTitle } = useNavbarParser();
+const $screen = useAwesomeScreen();
 
-  const menus = computed(
-    () =>
-      (config?.layout?.page?.navbar?.menus ||
-        []) as AwesomeLayoutPageNavbarMenu[],
-  );
+const menus = computed(
+  () =>
+    (config?.layout?.page?.navbar?.menus ||
+      []) as AwesomeLayoutPageNavbarMenu[],
+);
 
-  const links = computed((): Record<string, string> => {
-    return (config?.layout?.page?.navbar?.links || {}) as {};
-  });
+const links = computed((): Record<string, string> => {
+  return (config?.layout?.page?.navbar?.links || {}) as Record<string, string>;
+});
 
-  // drawer
-  const showDrawer = ref(false);
+// drawer
+const showDrawer = ref(false);
 </script>
 
 <template>
-  <header class="mx-auto w-full flex flex-col fixed backdrop-filter backdrop-blur-md top-0 z-40 flex-none transition-colors duration-300 md:z-50 border-b border-gray-950/10 h-[100px] md:min-h-[175px] bg-transparent dark:bg-gray-900">
+  <header
+    class="mx-auto w-full flex flex-col fixed backdrop-filter backdrop-blur-md top-0 z-40 flex-none transition-colors duration-300 md:z-50 border-b border-gray-950/10 h-[100px] md:min-h-[175px] bg-transparent dark:bg-gray-900"
+  >
     <!-- header banner -->
     <div
-      v-if="config.navbar.hasBanner"
+      v-if="config.layout?.page?.navbar?.hasBanner"
       class="navbar-banner w-full h-[47px] flex overflow-hidden space-x-4 group"
-      :style="config.navbar?.bannerStyle || {
+      :style="
+        config.layout?.page?.navbar?.bannerStyle || {
           backgroundColor: '#0A2840',
         }
-        "
+      "
     >
-      <div class="align-center flex space-x-4 animate-loop-scroll group-hover:paused">
+      <div
+        class="align-center flex space-x-4 animate-loop-scroll group-hover:paused"
+      >
         <span
           v-for="info in config.companyInfo"
           :key="info.title"
@@ -51,7 +58,9 @@
       </div>
     </div>
     <!-- content -->
-    <div class="w-full px-4 lg:px-10 max-w-screen-xl flex-1 flex items-center justify-between mx-auto">
+    <div
+      class="w-full px-4 lg:px-10 max-w-screen-xl flex-1 flex items-center justify-between mx-auto"
+    >
       <!-- title -->
       <div>
         <slot name="title">
@@ -146,7 +155,9 @@
       >
         <!-- dynamic menus -->
         <AwesomeActionSheetItem>
-          <div class="flex flex-col text-sm items-center dark:divide-gray-700 text-center text-[1.5rem]">
+          <div
+            class="flex flex-col text-sm items-center dark:divide-gray-700 text-center text-[1.5rem]"
+          >
             <NuxtLink
               class="flex justify-center items-center text-base space-x-2 h-[4rem] w-full"
               :to="{ name: 'index' }"
@@ -163,11 +174,13 @@
                   class="flex justify-center items-center text-base space-x-2 h-[4rem] w-full"
                   @click="() => (showDrawer = false)"
                 >
-                  <span :class="{
-                    'text-[1.5rem]': true,
-                    'text-gray-900 dark:text-gray-100 font-bold': isActive,
-                    'text-gray-700 dark:text-gray-300': !isActive,
-                  }">{{ parseMenuTitle(item?.title) }}</span>
+                  <span
+                    :class="{
+                      'text-[1.5rem]': true,
+                      'text-gray-900 dark:text-gray-100 font-bold': isActive,
+                      'text-gray-700 dark:text-gray-300': !isActive,
+                    }"
+                  >{{ parseMenuTitle(item?.title) }}</span>
                 </NuxtLink>
               </template>
               <template v-if="item?.type === 'button'">
@@ -221,11 +234,13 @@
                             #="{ isActive }"
                             class="w-full py-2"
                           >
-                            <span :class="[
-                              isActive
-                                ? 'text-gray-900 dark:text-gray-100 font-bold'
-                                : 'text-gray-700 dark:text-gray-300',
-                            ]">{{ parseMenuTitle(child?.title) }}</span>
+                            <span
+                              :class="[
+                                isActive
+                                  ? 'text-gray-900 dark:text-gray-100 font-bold'
+                                  : 'text-gray-700 dark:text-gray-300',
+                              ]"
+                            >{{ parseMenuTitle(child?.title) }}</span>
                           </NuxtLink>
                         </template>
                       </HeadlessDisclosurePanel>
@@ -238,7 +253,9 @@
         </AwesomeActionSheetItem>
       </AwesomeActionSheetGroup>
       <AwesomeActionSheetGroup :blur="false">
-        <AwesomeActionSheetItemButton class="flex justify-center items-center text-base space-x-2 h-[4rem]">
+        <AwesomeActionSheetItemButton
+          class="flex justify-center items-center text-base space-x-2 h-[4rem]"
+        >
           <a
             class="text-[1.5rem]"
             :href="links.capabilities as string"
@@ -247,7 +264,9 @@
             Capabilities Statement
           </a>
         </AwesomeActionSheetItemButton>
-        <AwesomeActionSheetItemButton class="flex justify-center items-center text-base space-x-2 h-[4rem]">
+        <AwesomeActionSheetItemButton
+          class="flex justify-center items-center text-base space-x-2 h-[4rem]"
+        >
           <NuxtLink
             class="text-[1.5rem]"
             :to="links.startProject || { name: 'contact' }"

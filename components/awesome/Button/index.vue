@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { reactive, computed } from 'vue';
+import { useRouter } from '#imports';
+
 const props = defineProps({
   text: {
     type: String,
@@ -39,7 +42,7 @@ const defaultStyle = `
   ${props.uppercase && 'uppercase'}
   ${props.outline && 'outline outline-1 outline-black'}
   ${props.rounded && 'rounded-full'}
-  transition-color duration-300
+  transition-colors duration-300
   focus:outline-none focus:ring-1 focus:ring-offset-1 focus:dark:ring-offset-gray-50 focus:dark:ring-gray-400 focus:ring-gray-600/[0.6] focus:ring-offset-gray-800/[0.6]
   flex items-center justify-center font-semibold
 `;
@@ -71,7 +74,7 @@ const selectedSize = computed(() => sizes[props.size] || sizes.lg);
 const onClick = (event: MouseEvent) => {
   const router = useRouter();
   if (props.to) {
-    router.push(props.to);
+    void router.push(props.to);
   }
   if (!props.href) {
     event.preventDefault();

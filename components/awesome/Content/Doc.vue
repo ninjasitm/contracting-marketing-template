@@ -1,11 +1,13 @@
 <script lang="ts" setup>
-const props = defineProps({
+const _props = defineProps({
   emptyTip: {
     type: String,
     required: false,
     default: 'This page is empty',
   },
 });
+
+const { emptyTip } = _props;
 </script>
 
 <template>
@@ -22,7 +24,10 @@ const props = defineProps({
       <h1>{{ emptyTip }}</h1>
     </template>
     <template #not-found>
-      <AwesomeError :code="404" wrap />
+      <AwesomeError
+        :code="404"
+        wrap
+      />
     </template>
   </ContentDoc>
 </template>

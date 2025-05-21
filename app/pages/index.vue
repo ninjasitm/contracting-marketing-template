@@ -1,6 +1,9 @@
-<script lang="ts" setup>
-import { reactive, Teleport } from 'vue';
-import config from '../../app/content/_pages/home.json';
+<script setup lang="ts">
+import { reactive } from 'vue';
+import { useHead } from 'nuxt/app';
+import config from '../content/_pages/home.json';
+// Nuxt 3 composables are auto-imported, but for type safety, import from 'nuxt/app'
+import { definePageMeta } from '#imports';
 
 definePageMeta({ layout: 'page' });
 useHead({
@@ -8,37 +11,43 @@ useHead({
   title: config?.banner?.title || 'Contracting Starter',
 });
 
-type Differentiator = {
+interface Differentiator {
   icon: string;
   description: string;
-};
+}
 
-type CoreCompetency = {
+interface CoreCompetency {
   heading: string;
   items: string[];
-};
+}
 
-type HomeState = {
-  banner?: {
-    title?: string;
-    description?: string;
-    actionText?: string;
-    actionUrl?: string;
-    backgroundImage?: string;
-  };
-  coreCompetencies?: {
-    title?: string;
-    description?: string;
-    items?: CoreCompetency[];
-  };
-  differentiators?: {
-    title?: string;
-    items?: Differentiator[];
-  };
-  [key: string]: any;
-};
+interface Banner {
+  title?: string;
+  description?: string;
+  actionText?: string;
+  actionUrl?: string;
+  backgroundImage?: string;
+}
 
-const state: HomeState = reactive(config);
+interface CoreCompetencies {
+  title?: string;
+  description?: string;
+  items?: CoreCompetency[];
+}
+
+interface Differentiators {
+  title?: string;
+  items?: Differentiator[];
+}
+
+interface HomeState {
+  banner?: Banner;
+  coreCompetencies?: CoreCompetencies;
+  differentiators?: Differentiators;
+  [key: string]: unknown;
+}
+
+const state = reactive<HomeState>(config);
 </script>
 
 <template>
@@ -47,7 +56,10 @@ const state: HomeState = reactive(config);
   >
     <!-- https://github.com/nuxt/nuxt/issues/12766#issuecomment-1397234526-->
     <ClientOnly>
-      <Teleport defer to="#page-banner">
+      <Teleport
+        defer
+        to="#page-banner"
+      >
         <section
           class="flex flex-col max-w-full uppercase w-full justify-end min-h-[95vh] pb-12 md:pb-24 md:min-h-[500px] md:h-[800px] bg-blend-darken bg-gradient-to-t from-black to-transparent"
           :style="{
@@ -62,11 +74,11 @@ const state: HomeState = reactive(config);
               <h2
                 class="text-6xl font-light tracking-tighter text-black max-md:max-w-full max-md:text-4xl"
                 v-html="state.banner?.title"
-              ></h2>
+              />
               <p
                 class="mt-6 text-2xl font-light max-md:max-w-full"
                 v-html="state.banner?.description"
-              ></p>
+              />
               <AwesomeButton
                 size="lg"
                 class="gap-2 self-start p-4 mt-6 text-sm tracking-tight text-white bg-sky-600 rounded-lg w-full md:w-[max-content]"
@@ -82,18 +94,18 @@ const state: HomeState = reactive(config);
     <section
       class="flex flex-col w-full max-w-screen-xl mt-5 md:mt-20 mx-auto px-2 lg:px-2"
     >
-      <hr class="w-full border border-black mt-10" />
+      <hr class="w-full border border-black mt-10">
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl font-light tracking-tight uppercase text-sky-950"
         v-html="state.coreCompetencies?.title"
-      ></h2>
+      />
       <div class="flex flex-col mt-16 w-full text-black max-md:mt-10">
         <div class="flex flex-col w-full max-md:max-w-full">
           <div class="flex flex-col w-full max-md:max-w-full">
             <p
               class="text-xl lg:text-4xl font-light max-md:max-w-full"
               v-html="state.coreCompetencies?.description"
-            ></p>
+            />
             <AwesomeButton
               size="lg"
               class="flex gap-1 items-center mt-3 p-3 my-auto text-base tracking-tight uppercase rounded-lg border border-black max-w-[max-content]"
@@ -138,11 +150,11 @@ const state: HomeState = reactive(config);
     <section
       class="flex flex-col mt-32 w-full font-light max-md:mt-10 max-w-screen-xl mx-auto px-2 lg:px-2"
     >
-      <hr class="w-full border border-black mt-10" />
+      <hr class="w-full border border-black mt-10">
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl tracking-tight uppercase whitespace-nowrap text-sky-950"
         v-html="state.differentiators?.title"
-      ></h2>
+      />
       <div
         class="flex flex-wrap gap-5 mt-16 w-full text-2xl text-black max-md:mt-10"
       >
@@ -159,7 +171,9 @@ const state: HomeState = reactive(config);
             :alt="differentiator.description"
             class="object-contain w-14 aspect-square"
           />
-          <p class="mt-10">{{ differentiator.description }}</p>
+          <p class="mt-10">
+            {{ differentiator.description }}
+          </p>
         </article>
       </div>
     </section>

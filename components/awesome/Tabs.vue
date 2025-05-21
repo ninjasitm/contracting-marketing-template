@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { ref, provide, watch, onBeforeMount, onMounted, useSlots } from 'vue';
+
 // types
 interface TabItem {
   name: string;
@@ -47,15 +49,15 @@ watch(activeTab, () => updateIndicator());
 // lifecycle
 onBeforeMount(() => {
   if (slots.default) {
-    slots.default().forEach((element, i) => {
-      const tab = element.props as TabItem;
+    slots.default().forEach((element, i: number) => {
+      const tab = (element.props || {}) as TabItem;
       tabItems.value.push(tab);
       if (i === 0) activeTab.value = tab.name;
     });
   }
 });
 onMounted(() => {
-  (async () => {
+  void (async () => {
     while (
       typeof tabHeaderIndicator.value === 'undefined' ||
       typeof tabs.value === 'undefined'
@@ -70,7 +72,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="tabs" class="tabs">
+  <div
+    ref="tabs"
+    class="tabs"
+  >
     <ClientOnly>
       <div
         class="tabs-header relative overflow-hidden flex space-x-6 text-sm font-bold text-gray-300 bg-primary-700 rounded-t-lg px-5 py-3"
@@ -87,7 +92,10 @@ onMounted(() => {
           }"
           @click="activeTab = item.name"
         >
-          <a href="#" @click.prevent="$emit('click')">
+          <a
+            href="#"
+            @click.prevent="$emit('click')"
+          >
             {{ item.title }}
           </a>
         </div>

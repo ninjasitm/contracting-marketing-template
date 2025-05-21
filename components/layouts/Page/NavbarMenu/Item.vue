@@ -1,8 +1,13 @@
 <script lang="ts" setup>
-const nuxtApp = useNuxtApp();
+import { useNavbarParser } from '~/composables/use-navbar-parser';
+import type {
+  AwesomeLayoutPageNavbarMenu,
+  AwesomeLayoutPageNavbarMenuDropdownItem,
+} from '~/utils/types';
+
 const { parseMenuRoute, parseMenuTitle } = useNavbarParser();
 
-const props = defineProps({
+const _props = defineProps({
   menu: {
     type: Object as () =>
       | AwesomeLayoutPageNavbarMenu
@@ -14,11 +19,16 @@ const props = defineProps({
     default: false,
   },
 });
+
+const { menu } = _props;
 </script>
 
 <template>
   <template v-if="menu?.type === 'link' && isDropdown">
-    <NuxtLink :to="parseMenuRoute(menu?.to)" #="{ isActive }">
+    <NuxtLink
+      :to="parseMenuRoute(menu?.to)"
+      #="{ isActive }"
+    >
       <div
         :class="[
           'transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 px-4 lg:px-10 py-2 rounded-lg w-full',
@@ -32,14 +42,16 @@ const props = defineProps({
     </NuxtLink>
   </template>
   <template v-else-if="menu?.type === 'link'">
-    <NuxtLink :to="parseMenuRoute(menu?.to)" #="{ isActive }">
+    <NuxtLink
+      :to="parseMenuRoute(menu?.to)"
+      #="{ isActive }"
+    >
       <span
         :class="{
           'text-gray-900 dark:text-gray-100 font-bold': isActive,
           'text-gray-700 dark:text-gray-300': !isActive,
         }"
-        >{{ parseMenuTitle(menu?.title) }}</span
-      >
+      >{{ parseMenuTitle(menu?.title) }}</span>
     </NuxtLink>
   </template>
   <template v-else-if="menu?.type === 'button'">

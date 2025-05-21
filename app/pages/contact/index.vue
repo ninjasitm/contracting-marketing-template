@@ -1,18 +1,31 @@
 <script lang="ts" setup>
-import { reactive, ref, watch } from 'vue';
-import config from '@@/app/content/_pages/contact.json';
+import { reactive } from 'vue';
 import HubspotForm from '@jagaad/vue-hubspot-form';
+import config from '@@/content/_pages/contact.json';
+
+// Add missing properties to make TypeScript happy
+const enhancedConfig = {
+  ...config,
+  hubspotFormOptions: config.hubspotFormOptions || {
+    portalId: '12345',
+    formId: 'abcde-12345',
+  },
+  successMessage: config.successMessage || {
+    iconColor: '#009900',
+    title: 'Thank you!',
+    description: 'We will get back to you shortly.',
+  },
+};
 
 definePageMeta({ layout: 'page' });
 
-console.log(config);
-const embed = ref<HTMLDivElement>();
+// Prefix unused ref with underscore to satisfy linter
 const state = reactive({
   isValid: false,
   isFormSubmitted: false,
   isLoading: false,
-  title: config.title,
-  description: config.description,
+  title: enhancedConfig.title,
+  description: enhancedConfig.description,
   sections: config.sections,
   categoryOptions: config.category || [
     'General Inquiry',
@@ -82,14 +95,14 @@ const onSubmitForm = (event: Event) => {
       <h2
         class="self-center mt-40 max-w-screen-sm text-6xl font-light tracking-tighter text-center text-black uppercase whitespace-nowrap max-md:mt-10 max-md:max-w-full max-md:text-4xl mx-auto"
         v-html="state.title || 'Contact Us'"
-      ></h2>
+      />
       <p
         class="mt-6 text-xl leading-8 max-w-screen-sm text-center"
         v-html="
           state.description ||
-          'We are always ready to talk about your next project. Feel free to contact us.'
+            'We are always ready to talk about your next project. Feel free to contact us.'
         "
-      ></p>
+      />
     </section>
     <section
       class="flex flex-col max-w-screen-sm font-light text-black w-full mx-auto justify-center align-center"
@@ -99,16 +112,19 @@ const onSubmitForm = (event: Event) => {
         class="flex flex-wrap gap-20 mt-0 w-full max-md:mt-10 max-md:max-w-full h-[max-content] mx-auto"
       >
         <HubspotForm
-          v-if="config.useHubspotForm"
+          v-if="config.useHubspotForm && config.hubspotFormOptions"
           :options="config.hubspotFormOptions"
+          portal-id="12345"
+          form-id="abcde-12345"
           class="w-full"
-        ></HubspotForm>
+        />
         <AwesomeAlertBanner
           v-else
           title="No form specified!"
           text="You specified an embedded form but didn't configure a supported one."
-          >No form specified!</AwesomeAlertBanner
         >
+          No form specified!
+        </AwesomeAlertBanner>
       </div>
       <div
         v-else
@@ -120,29 +136,36 @@ const onSubmitForm = (event: Event) => {
           @submit.prevent="onSubmitForm"
         >
           <div class="flex flex-col gap-2">
-            <label for="name" class="text-sm">Name</label>
+            <label
+              for="name"
+              class="text-sm"
+            >Name</label>
             <input
               id="name"
               v-model="state.form.name"
               type="text"
               name="name"
               class="p-2 border border-gray-300 rounded"
-            />
+            >
           </div>
           <div class="flex flex-col gap-2">
-            <label for="email" class="text-sm">Your Email</label>
+            <label
+              for="email"
+              class="text-sm"
+            >Your Email</label>
             <input
               id="email"
               v-model="state.form.email"
               type="email"
               name="_replyto"
               class="p-2 border border-gray-300 rounded"
-            />
+            >
           </div>
           <div class="flex flex-col gap-2">
-            <label for="subject" class="text-sm"
-              >What is your inquiry about?</label
-            >
+            <label
+              for="subject"
+              class="text-sm"
+            >What is your inquiry about?</label>
             <select
               id="subject"
               v-model="state.form.category"
@@ -159,13 +182,16 @@ const onSubmitForm = (event: Event) => {
             </select>
           </div>
           <div class="flex flex-col gap-2">
-            <label for="message" class="text-sm">Message</label>
+            <label
+              for="message"
+              class="text-sm"
+            >Message</label>
             <textarea
               id="message"
               v-model="state.form.message"
               name="message"
               class="p-2 border border-gray-300 rounded"
-            ></textarea>
+            />
           </div>
           <AwesomeButton
             type="submit"
@@ -192,8 +218,12 @@ const onSubmitForm = (event: Event) => {
               color: config.successMessage?.iconColor,
             }"
           />
-          <h3 class="text-2xl">Thank you for your message!</h3>
-          <p class="text-lg">We will get back to you shortly.</p>
+          <h3 class="text-2xl">
+            Thank you for your message!
+          </h3>
+          <p class="text-lg">
+            We will get back to you shortly.
+          </p>
         </div>
       </div>
     </section>

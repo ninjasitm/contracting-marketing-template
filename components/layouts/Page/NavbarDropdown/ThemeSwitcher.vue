@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { toRef } from 'vue';
+
 const props = defineProps({
   type: {
     type: String,
@@ -35,7 +37,9 @@ const availableThemes = [
       as="div"
       class="relative flex items-center"
     >
-      <HeadlessListboxLabel class="sr-only">Theme</HeadlessListboxLabel>
+      <HeadlessListboxLabel class="sr-only">
+        Theme
+      </HeadlessListboxLabel>
       <HeadlessListboxButton type="template">
         <AwesomeLink class="dark:text-gray-400 text-gray-600">
           <span class="flex justify-center items-center dark:hidden">
@@ -65,9 +69,18 @@ const availableThemes = [
           }"
         >
           <span class="text-sm mr-2 flex items-center">
-            <Icon v-if="theme.key === 'light'" name="uil:sun" />
-            <Icon v-else-if="theme.key === 'dark'" name="uil:moon" />
-            <Icon v-else-if="theme.key === 'system'" name="uil:laptop" />
+            <Icon
+              v-if="theme.key === 'light'"
+              name="uil:sun"
+            />
+            <Icon
+              v-else-if="theme.key === 'dark'"
+              name="uil:moon"
+            />
+            <Icon
+              v-else-if="theme.key === 'system'"
+              name="uil:laptop"
+            />
           </span>
           {{ theme.text }}
         </HeadlessListboxOption>

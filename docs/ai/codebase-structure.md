@@ -91,7 +91,7 @@ Core UI components that make up the application interface:
 
 ## Content Structure
 
-### Global Configuration (app/content/config.json)
+### Global Configuration (content/config.json)
 
 This file contains global settings including:
 
@@ -102,7 +102,7 @@ This file contains global settings including:
 - Navigation configuration
 - Style/theme settings
 
-### Page-specific Content (app/content/\_pages/)
+### Page-specific Content (content/\_pages/)
 
 Each main page has its own JSON configuration:
 
@@ -132,7 +132,7 @@ Each main page has its own JSON configuration:
    - Form fields and validation settings
    - HubSpot integration settings
 
-### Work Portfolio Items (app/content/\_work/)
+### Work Portfolio Items (content/\_work/)
 
 Each portfolio project is stored as a Markdown file with frontmatter:
 
@@ -144,7 +144,7 @@ Each portfolio project is stored as a Markdown file with frontmatter:
 - Design samples
 - Results metrics
 
-### Client Information (app/content/clients.json)
+### Client Information (content/clients.json)
 
 Contains information about clients:
 
@@ -153,7 +153,7 @@ Contains information about clients:
 - Website URL
 - Banner image
 
-### Team Members (app/content/\_about/teamMembers.json)
+### Team Members (content/\_about/teamMembers.json)
 
 Contains information about team members:
 
@@ -249,7 +249,7 @@ The project is structured to facilitate extension in several ways:
 
 1. **New Page Types**:
 
-   - Add new JSON configuration files in app/content/\_pages/
+   - Add new JSON configuration files in content/\_pages/
    - Create corresponding Vue components in app/pages/
 
 2. **Custom Components**:

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue';
-import linkedInImage from '~/public/images/linkedin.svg';
+// Fix import path - no need to use ~ prefix with public images
+const linkedInImage = '/images/linkedin.svg';
 
 const props = defineProps<{
   name: string;
@@ -24,12 +25,14 @@ const { photo, linkedinUrl, name, position, description } = toRefs(props);
         backgroundPosition: 'center',
       }"
       class="object-contain max-w-full rounded-2xl aspect-[0.86] hover:scale-105 transition-transform duration-300"
-    ></div>
+    />
     <div class="flex flex-col mt-4 w-full">
       <div
         class="flex gap-5 justify-between items-center w-full tracking-tight uppercase"
       >
-        <h3 class="self-stretch my-auto text-sm">{{ name }}</h3>
+        <h3 class="self-stretch my-auto text-sm">
+          {{ name }}
+        </h3>
         <AwesomeButton
           :href="linkedinUrl"
           target="_blank"
@@ -43,7 +46,7 @@ const { photo, linkedinUrl, name, position, description } = toRefs(props);
           />
         </AwesomeButton>
       </div>
-      <hr class="w-full border border-black mt-2" />
+      <hr class="w-full border border-black mt-2">
       <p
         class="gap-2 self-stretch pt-4 mt-1 w-full tracking-tight uppercase whitespace-nowrap text-sm"
       >

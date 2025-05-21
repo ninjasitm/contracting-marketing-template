@@ -68,7 +68,10 @@ const validate = async () => {
       />
     </LayoutPageSection>
     <LayoutPageHeader>
-      <LayoutPageTitle text="Setting" class="capitalize" />
+      <LayoutPageTitle
+        text="Setting"
+        class="capitalize"
+      />
     </LayoutPageHeader>
     <LayoutPageSection>
       <div class="mb-6">
@@ -116,9 +119,7 @@ const validate = async () => {
                       class="w-full md:w-1/3"
                     >
                       <template #prefix-disabled>
-                        <span class="flex-1 px-4 lg:px-10 py-2"
-                          >github.com/</span
-                        >
+                        <span class="flex-1 px-4 lg:px-10 py-2">github.com/</span>
                       </template>
                     </AwesomeFormTextInput>
                   </div>
@@ -145,10 +146,18 @@ const validate = async () => {
               </AwesomeCard>
               <AwesomeCard class="mb-4">
                 <AwesomeCardContent>
-                  <AwesomeCardTitle class="capitalize" text="bot id" />
-                  <p class="mb-2">This is your bot ID.</p>
+                  <AwesomeCardTitle
+                    class="capitalize"
+                    text="bot id"
+                  />
+                  <p class="mb-2">
+                    This is your bot ID.
+                  </p>
                   <div class="flex">
-                    <AwesomeFormTextInput v-model="id" class="w-full md:w-1/3">
+                    <AwesomeFormTextInput
+                      v-model="id"
+                      class="w-full md:w-1/3"
+                    >
                       <template #suffix>
                         <AwesomeButton
                           type="opposite"
@@ -175,8 +184,13 @@ const validate = async () => {
                 }"
               >
                 <AwesomeCardContent>
-                  <AwesomeCardTitle class="capitalize" text="spam protection" />
-                  <p class="mb-2">toggle enable to remove the red border</p>
+                  <AwesomeCardTitle
+                    class="capitalize"
+                    text="spam protection"
+                  />
+                  <p class="mb-2">
+                    toggle enable to remove the red border
+                  </p>
                   <div class="flex">
                     <AwesomeFormSwitch v-model="enableSpamProtection">
                       <span class="capitalize">{{
@@ -210,7 +224,10 @@ const validate = async () => {
                   </div>
                 </AwesomeCardContent>
               </AwesomeCard>
-              <AwesomeCard class="mb-6" :disabled="!enableAdvancedSetting">
+              <AwesomeCard
+                class="mb-6"
+                :disabled="!enableAdvancedSetting"
+              >
                 <AwesomeCardContent>
                   <AwesomeCardTitle
                     class="capitalize"
@@ -221,7 +238,10 @@ const validate = async () => {
                     directory contents will be displayed.
                   </p>
                   <div class="flex">
-                    <AwesomeFormSwitch v-model="enableDirList" on>
+                    <AwesomeFormSwitch
+                      v-model="enableDirList"
+                      on
+                    >
                       <span class="capitalize">{{
                         enableDirList ? 'enabled' : 'disabled'
                       }}</span>

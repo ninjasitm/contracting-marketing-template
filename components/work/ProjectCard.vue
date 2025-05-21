@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue';
-import { splitIntoSentences } from '@/utils/utils';
+import { splitIntoSentences } from '~/utils/utils';
 const backgrounds = Array.from(
   { length: 5 },
   (_, i) => `/images/demo/project-backgrounds/${i + 1}.png`,
@@ -10,12 +10,12 @@ const props = defineProps<{
   id: string;
   title: string;
   slug: string;
-  imageSrc: string;
-  description: string;
-  client: string;
+  imageSrc: string | undefined;
+  description: string | undefined;
+  client: string | undefined;
 }>();
 
-const { imageSrc, description, client, title } = toRefs(props);
+const { imageSrc, description, client } = toRefs(props);
 </script>
 
 <template>
@@ -31,7 +31,7 @@ const { imageSrc, description, client, title } = toRefs(props);
         placeholder
         :src="
           imageSrc ||
-          backgrounds[Math.floor(Math.random() * backgrounds.length)]
+            backgrounds[Math.floor(Math.random() * backgrounds.length)]
         "
         :alt="description"
         loading="lazy"
@@ -39,9 +39,11 @@ const { imageSrc, description, client, title } = toRefs(props);
       />
       <div class="flex flex-col mt-6 w-full h-[100px]">
         <p class="text-sm font-light">
-          {{ splitIntoSentences(description)[0] }}
+          {{ splitIntoSentences(description as string)[0] }}
         </p>
-        <p class="mt-4 text-base tracking-tight uppercase">{{ client }}</p>
+        <p class="mt-4 text-base tracking-tight uppercase">
+          {{ client }}
+        </p>
       </div>
     </article>
   </NuxtLink>

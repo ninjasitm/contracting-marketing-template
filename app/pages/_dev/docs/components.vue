@@ -6,7 +6,10 @@ useHead({ title: 'Blank Page' });
 <template>
   <LayoutPageWrapper>
     <LayoutPageHeader>
-      <LayoutPageTitle text="Components Page" class="capitalize" />
+      <LayoutPageTitle
+        text="Components Page"
+        class="capitalize"
+      />
     </LayoutPageHeader>
     <LayoutPageSection>
       <LayoutPageSectionTitle text="Coming Soon" />

@@ -19,11 +19,11 @@ export default defineNuxtModule({
     // tailwindcss:get_config
     let tsConfigs = {};
     for (const layer of nuxt.options._layers) {
-      let isJs = true;
+      let _isJs = true;
       let storesPath = resolver.resolve(layer.cwd, 'tailwind.config.js');
       if (!existsSync(storesPath) || !statSync(storesPath).isFile()) {
         storesPath = resolver.resolve(layer.cwd, 'tailwind.config.ts');
-        isJs = false;
+        _isJs = false;
       }
 
       if (existsSync(storesPath) && statSync(storesPath).isFile()) {
@@ -33,10 +33,9 @@ export default defineNuxtModule({
         tsConfigs = Object.assign(tsConfigs, config.default);
       }
     }
-    const tsConfig = resolveConfig(tsConfigs as any) as TailwindConfig;
+    const _tsConfig = resolveConfig(tsConfigs as any) as TailwindConfig;
 
     // todo: merge config
-    // @ts-ignore
     nuxt.hook('tailwindcss:config', (config) => {
       return config;
     });

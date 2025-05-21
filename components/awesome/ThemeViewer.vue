@@ -7,7 +7,7 @@
  */
 
 // Props
-const props = defineProps({
+const _props = defineProps({
   showColors: {
     type: Boolean,
     default: true,
@@ -25,6 +25,8 @@ const props = defineProps({
     default: true,
   },
 });
+
+const { showColors, showTypography, showComponents, showUtilities } = _props;
 
 // Sample text for typography demo
 const loremText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
@@ -92,17 +94,26 @@ const fontFamilies = [
   <div
     class="theme-viewer p-8 bg-white dark:bg-dark-bg-primary text-black dark:text-white"
   >
-    <h1 class="text-2xl font-bold mb-6">Theme Viewer</h1>
+    <h1 class="text-2xl font-bold mb-6">
+      Theme Viewer
+    </h1>
 
     <!-- Color Palette -->
-    <section v-if="showColors" class="mb-12">
-      <h2 class="text-xl font-bold mb-4">Color Palette</h2>
+    <section
+      v-if="showColors"
+      class="mb-12"
+    >
+      <h2 class="text-xl font-bold mb-4">
+        Color Palette
+      </h2>
       <div
         v-for="category in colorCategories"
         :key="category.name"
         class="mb-8"
       >
-        <h3 class="text-lg font-semibold mb-2">{{ category.name }}</h3>
+        <h3 class="text-lg font-semibold mb-2">
+          {{ category.name }}
+        </h3>
         <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
           <!-- Default shade -->
           <div class="flex flex-col">
@@ -123,7 +134,9 @@ const fontFamilies = [
                 {{ category.base }}
               </span>
             </div>
-            <p class="text-sm mt-1 text-center">Default</p>
+            <p class="text-sm mt-1 text-center">
+              Default
+            </p>
           </div>
 
           <!-- Color shades -->
@@ -149,30 +162,41 @@ const fontFamilies = [
                 {{ shade }}
               </span>
             </div>
-            <p class="text-sm mt-1 text-center">{{ shade }}</p>
+            <p class="text-sm mt-1 text-center">
+              {{ shade }}
+            </p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Typography -->
-    <section v-if="showTypography" class="mb-12">
-      <h2 class="text-xl font-bold mb-4">Typography</h2>
+    <section
+      v-if="showTypography"
+      class="mb-12"
+    >
+      <h2 class="text-xl font-bold mb-4">
+        Typography
+      </h2>
 
       <!-- Font families -->
       <div class="mb-8">
-        <h3 class="text-lg font-semibold mb-2">Font Families</h3>
+        <h3 class="text-lg font-semibold mb-2">
+          Font Families
+        </h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div
             v-for="font in fontFamilies"
             :key="font.name"
             class="p-4 bg-gray-100 dark:bg-dark-bg-secondary rounded-lg"
           >
-            <p :class="[font.class, 'mb-1']">{{ font.name }}</p>
+            <p :class="[font.class, 'mb-1']">
+              {{ font.name }}
+            </p>
             <p
               :class="[font.class, 'text-sm text-gray-500 dark:text-gray-400']"
             >
-              ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />abcdefghijklmnopqrstuvwxyz<br />0123456789
+              ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789
             </p>
           </div>
         </div>
@@ -180,16 +204,22 @@ const fontFamilies = [
 
       <!-- Typography scale -->
       <div>
-        <h3 class="text-lg font-semibold mb-2">Typography Scale</h3>
+        <h3 class="text-lg font-semibold mb-2">
+          Typography Scale
+        </h3>
         <div class="space-y-4">
           <div
             v-for="type in typographyScale"
             :key="type.name"
             class="p-4 bg-gray-100 dark:bg-dark-bg-secondary rounded-lg flex flex-col md:flex-row md:items-center"
           >
-            <div class="md:w-1/4 font-medium mb-2 md:mb-0">{{ type.name }}</div>
+            <div class="md:w-1/4 font-medium mb-2 md:mb-0">
+              {{ type.name }}
+            </div>
             <div class="md:w-3/4">
-              <p :class="type.class">{{ loremText }}</p>
+              <p :class="type.class">
+                {{ loremText }}
+              </p>
               <p
                 class="mt-2 text-xs text-gray-500 dark:text-gray-400 font-mono"
               >
@@ -202,44 +232,71 @@ const fontFamilies = [
     </section>
 
     <!-- Components -->
-    <section v-if="showComponents" class="mb-12">
-      <h2 class="text-xl font-bold mb-4">Components</h2>
+    <section
+      v-if="showComponents"
+      class="mb-12"
+    >
+      <h2 class="text-xl font-bold mb-4">
+        Components
+      </h2>
 
       <!-- Buttons -->
       <div class="mb-8">
-        <h3 class="text-lg font-semibold mb-2">Buttons</h3>
+        <h3 class="text-lg font-semibold mb-2">
+          Buttons
+        </h3>
         <div class="flex flex-wrap gap-4">
-          <button class="btn-primary">Primary Button</button>
-          <button class="btn-secondary">Secondary Button</button>
-          <button class="btn-outline">Outline Button</button>
-          <button class="btn bg-error text-white">Error Button</button>
-          <button class="btn bg-success text-white">Success Button</button>
+          <button class="btn-primary">
+            Primary Button
+          </button>
+          <button class="btn-secondary">
+            Secondary Button
+          </button>
+          <button class="btn-outline">
+            Outline Button
+          </button>
+          <button class="btn bg-error text-white">
+            Error Button
+          </button>
+          <button class="btn bg-success text-white">
+            Success Button
+          </button>
         </div>
       </div>
 
       <!-- Cards -->
       <div class="mb-8">
-        <h3 class="text-lg font-semibold mb-2">Cards</h3>
+        <h3 class="text-lg font-semibold mb-2">
+          Cards
+        </h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="card">
-            <div class="card-header">Card Title</div>
+            <div class="card-header">
+              Card Title
+            </div>
             <div class="card-body">
               <p>
                 This is a standard card component with header, body, and footer
                 sections.
               </p>
             </div>
-            <div class="card-footer">Card Footer</div>
+            <div class="card-footer">
+              Card Footer
+            </div>
           </div>
 
           <div class="card">
-            <div class="card-header bg-primary text-white">Primary Card</div>
+            <div class="card-header bg-primary text-white">
+              Primary Card
+            </div>
             <div class="card-body">
               <p>
                 A card with a colored header showing the primary theme color.
               </p>
             </div>
-            <div class="card-footer">Card Footer</div>
+            <div class="card-footer">
+              Card Footer
+            </div>
           </div>
 
           <div class="card">
@@ -251,18 +308,26 @@ const fontFamilies = [
                 A card with a colored header showing the secondary theme color.
               </p>
             </div>
-            <div class="card-footer">Card Footer</div>
+            <div class="card-footer">
+              Card Footer
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Forms -->
       <div>
-        <h3 class="text-lg font-semibold mb-2">Form Controls</h3>
+        <h3 class="text-lg font-semibold mb-2">
+          Form Controls
+        </h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label class="form-label">Text Input</label>
-            <input type="text" class="form-input" placeholder="Enter text" />
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Enter text"
+            >
           </div>
 
           <div>
@@ -278,15 +343,24 @@ const fontFamilies = [
     </section>
 
     <!-- Utilities -->
-    <section v-if="showUtilities" class="mb-12">
-      <h2 class="text-xl font-bold mb-4">Utility Classes</h2>
+    <section
+      v-if="showUtilities"
+      class="mb-12"
+    >
+      <h2 class="text-xl font-bold mb-4">
+        Utility Classes
+      </h2>
 
       <!-- Flexbox utilities -->
       <div class="mb-8">
-        <h3 class="text-lg font-semibold mb-2">Flexbox Utilities</h3>
+        <h3 class="text-lg font-semibold mb-2">
+          Flexbox Utilities
+        </h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="p-4 border rounded-lg">
-            <p class="text-sm mb-2 font-mono">.flex-center</p>
+            <p class="text-sm mb-2 font-mono">
+              .flex-center
+            </p>
             <div
               class="flex-center h-24 bg-gray-100 dark:bg-dark-bg-secondary rounded-lg"
             >
@@ -295,7 +369,9 @@ const fontFamilies = [
           </div>
 
           <div class="p-4 border rounded-lg">
-            <p class="text-sm mb-2 font-mono">.flex-between</p>
+            <p class="text-sm mb-2 font-mono">
+              .flex-between
+            </p>
             <div
               class="flex-between h-24 bg-gray-100 dark:bg-dark-bg-secondary rounded-lg px-4"
             >
@@ -308,10 +384,14 @@ const fontFamilies = [
 
       <!-- Position utilities -->
       <div>
-        <h3 class="text-lg font-semibold mb-2">Position Utilities</h3>
+        <h3 class="text-lg font-semibold mb-2">
+          Position Utilities
+        </h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="p-4 border rounded-lg">
-            <p class="text-sm mb-2 font-mono">.absolute-center</p>
+            <p class="text-sm mb-2 font-mono">
+              .absolute-center
+            </p>
             <div
               class="relative h-24 bg-gray-100 dark:bg-dark-bg-secondary rounded-lg"
             >
@@ -322,11 +402,15 @@ const fontFamilies = [
           </div>
 
           <div class="p-4 border rounded-lg">
-            <p class="text-sm mb-2 font-mono">.text-shadow</p>
+            <p class="text-sm mb-2 font-mono">
+              .text-shadow
+            </p>
             <div
               class="flex-center h-24 bg-gray-100 dark:bg-dark-bg-secondary rounded-lg"
             >
-              <p class="text-shadow text-xl font-bold">Text with shadow</p>
+              <p class="text-shadow text-xl font-bold">
+                Text with shadow
+              </p>
             </div>
           </div>
         </div>

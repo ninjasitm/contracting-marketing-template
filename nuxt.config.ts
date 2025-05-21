@@ -1,16 +1,10 @@
 import { createResolver } from '@nuxt/kit';
+import { defineNuxtConfig } from 'nuxt/config';
 const { resolve } = createResolver(import.meta.url);
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
-  typescript: {
-    tsConfig: {
-      compilerOptions: {
-        baseUrl: './',
-      },
-    },
-  },
   // exp
   experimental: {
     localLayerAliases: true,
@@ -25,32 +19,40 @@ export default defineNuxtConfig({
 
   // typescripts
   // todo: feat/strict-type-check
-  // typescript: {
-  //   strict: true,
-  //   typeCheck: true,
-  // },
+  typescript: {
+    strict: true,
+    typeCheck: true,
+  },
+
+  // Simplified server configuration for Replit
+  devServer: {
+    port: 3000,
+    host: '0.0.0.0',
+  },
+  vite: {
+    server: {
+      hmr: {
+        clientPort: 3000,
+      },
+    },
+  },
 
   // modules
   modules: [
     // chore
-    '@nuxtjs/eslint-module',
-    // styling & ui
     '@nuxtjs/tailwindcss',
     'nuxt-headlessui',
     'nuxt-icon',
-    '@nuxtjs/color-mode',
-    // font management
-    '@nuxt/fonts',
-    // management
+    '@nuxtjs/color-mode', // font management
+    '@nuxt/fonts', // management
     '@pinia/nuxt',
-    '@vueuse/nuxt',
-    // contents,
+    '@vueuse/nuxt', // contents,
     '@nuxt/content',
-    '@nuxt/image',
-    'nuxt-svgo-loader',
-
-    // todo: feat/localization
+    '@nuxt/image', // todo: feat/localization
     // '@nuxtjs/i18n'
+    'nuxt-svgo-loader',
+    '@nuxt/eslint',
+    '@nuxt/test-utils/module',
   ],
 
   image: {},
@@ -75,6 +77,11 @@ export default defineNuxtConfig({
 
   imports: {
     dirs: [resolve('./stores'), '~/stores'],
+  },
+
+  alias: {
+    '@': resolve('./'),
+    '~': resolve('./'),
   },
 
   // module::pinia
@@ -105,20 +112,7 @@ export default defineNuxtConfig({
     viewer: true,
     // Provide custom CSS file to be imported in the `:root` selector
     cssPath: '~/assets/scss/tailwind.css',
-    // Use the Tailwind CSS IntelliSense plugin
-    injectPosition: 'first',
-    // Add your custom file paths to be watched by HMR for reloading
-    // Note: Do not add the tailwind config path, it is already included
-    config: {
-      content: [
-        './components/**/*.{vue,js,ts}',
-        './layouts/**/*.vue',
-        './pages/**/*.vue',
-        './plugins/**/*.{js,ts}',
-        './utils/**/*.{js,ts}',
-        './app.{js,ts,vue}',
-      ],
-    },
+    // config is not needed here, handled in tailwind.config.ts
   },
 
   content: {
@@ -139,23 +133,14 @@ export default defineNuxtConfig({
         name: 'Inter',
         // Load multiple weights
         weights: [400, 500, 600, 700],
-        // Include italic variants
-        italic: true,
       },
       {
         // Secondary font for headings
         name: 'Montserrat',
         weights: [500, 600, 700],
-        italic: false,
       },
     ],
-    // Set default preloading strategy (reduces layout shifts)
-    preload: true,
-    // Use display: swap to ensure text is visible while fonts are loading
-    display: 'swap',
   },
-
-  buildModules: ['@nuxtjs/svg'],
 
   // module::content
   // todo: feat/localization

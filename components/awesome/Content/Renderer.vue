@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useAsyncData, queryContent, abortNavigation } from '#imports';
+
 const props = defineProps({
   path: {
     type: String,
@@ -19,7 +21,10 @@ if (!data) abortNavigation('404');
 <template>
   <LayoutPageWrapper>
     <LayoutPageHeader>
-      <LayoutPageTitle :text="pageTitle" class="capitalize" />
+      <LayoutPageTitle
+        :text="pageTitle"
+        class="capitalize"
+      />
     </LayoutPageHeader>
     <LayoutPageSection>
       <ContentRenderer :value="data as any" />

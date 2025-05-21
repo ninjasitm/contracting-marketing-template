@@ -8,10 +8,10 @@
  */
 
 import { resolve } from 'path';
-import { defineConfig } from 'vitest/config';
+import { defineVitestConfig } from '@nuxt/test-utils/config';
 import Vue from '@vitejs/plugin-vue';
 
-export default defineConfig({
+export default defineVitestConfig({
   // Plugins for Vue support
   plugins: [Vue()],
 
@@ -33,7 +33,21 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      exclude: ['node_modules/', 'test/', '.nuxt/', 'dist/'],
+      exclude: [
+        'node_modules/**',
+        'dist/**',
+        'src/tests/**',
+        'prisma/**',
+        '.nuxt/**',
+      ],
+    },
+    environmentOptions: {
+      nuxt: {
+        mock: {
+          intersectionObserver: true,
+          indexedDb: true,
+        },
+      },
     },
   },
 

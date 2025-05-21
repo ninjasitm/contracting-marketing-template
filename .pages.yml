@@ -5,7 +5,7 @@ content:
   - name: homePage
     type: file
     label: Home Page
-    path: app/content/_pages/home.json
+    path: content/_pages/home.json
     fields:
       - name: banner
         label: Banner
@@ -71,7 +71,7 @@ content:
   - name: servicesPage
     type: file
     label: Services Page
-    path: app/content/_pages/services.json
+    path: content/_pages/services.json
     fields:
       - name: title
         label: Title
@@ -119,7 +119,7 @@ content:
   - name: contactPage
     type: file
     label: Contact Page
-    path: app/content/_pages/contact.json
+    path: content/_pages/contact.json
     fields:
       - name: title
         label: Title
@@ -187,7 +187,7 @@ content:
   - name: aboutPage
     type: file
     label: About Page
-    path: app/content/_pages/about.json
+    path: content/_pages/about.json
     fields:
       - name: heading
         label: Heading
@@ -204,7 +204,7 @@ content:
   - name: teamMembers
     label: Team Members
     type: file
-    path: app/content/_about/teamMembers.json
+    path: content/_about/teamMembers.json
     fields:
       - name: members
         label: Members
@@ -232,7 +232,7 @@ content:
   - name: processPage
     type: file
     label: Process Page
-    path: app/content/_pages/process.json
+    path: content/_pages/process.json
     fields:
       - name: title
         label: Title
@@ -258,7 +258,7 @@ content:
   - name: workPage
     type: file
     label: Work Page
-    path: app/content/_pages/work.json
+    path: content/_pages/work.json
     fields:
       - name: title
         label: Title
@@ -296,7 +296,7 @@ content:
   - name: work
     type: collection
     label: Work
-    path: app/content/_work
+    path: content/_work
     view:
       fields: [title, client, categories, isOngoing, published, date]
       sort: [date, title]
@@ -487,7 +487,7 @@ content:
     label: Clients
     type: file
     list: true
-    path: app/content/clients.json
+    path: content/clients.json
     fields:
       - name: name
         label: Name
@@ -515,7 +515,7 @@ content:
           categories: [image]
   - name: config
     label: App Config
-    path: app/content/config.json
+    path: content/config.json
     type: file
     fields:
       - name: title

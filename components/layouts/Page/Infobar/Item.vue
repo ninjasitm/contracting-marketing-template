@@ -10,7 +10,6 @@ const props = defineProps<{
     <span class="self-stretch my-auto text-blue-100">{{ props.label }}</span>
     <span
       class="self-stretch my-auto font-semibold tracking-tight text-white"
-      >{{ props.value }}</span
-    >
+    >{{ props.value }}</span>
   </div>
 </template>

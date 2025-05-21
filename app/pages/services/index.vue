@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
-import config from '@@/app/content/_pages/services.json';
 import ServiceFeature from '../../../components/services/ServiceFeature.vue';
-import type { Service, CallToAction, ServicesPageState } from '@/utils/types';
+import config from '@@/content/_pages/services.json';
+import type { Service, ServicesPageState } from '@/utils/types';
 
 // Define page metadata
 definePageMeta({ layout: 'page' });
@@ -12,11 +12,11 @@ const state: ServicesPageState = reactive({
   title: config.title,
   description: config.description,
   services: config.services.map(
-    (service: any): Service => ({
-      title: service.title,
-      icon: service.icon,
-      description: service.description,
-      features: service.features || [],
+    (service: Record<string, unknown>): Service => ({
+      title: service.title as string,
+      icon: service.icon as string,
+      description: service.description as string,
+      features: (service.features as string[]) || [],
     }),
   ),
   callToAction: {
@@ -37,11 +37,11 @@ const state: ServicesPageState = reactive({
       <h1
         class="text-6xl font-light tracking-tighter text-center text-black uppercase whitespace-nowrap mx-auto max-md:max-w-full max-md:text-4xl"
         v-html="state.title"
-      ></h1>
+      />
       <div
         class="mt-4 text-lg font-light text-center max-w-[800px] mx-auto max-md:max-w-full"
       >
-        <MDC :value="state.description"></MDC>
+        <MDC :value="state.description" />
       </div>
     </section>
 
@@ -49,7 +49,7 @@ const state: ServicesPageState = reactive({
     <section
       class="flex flex-col font-light text-black w-full max-w-screen-xl mx-auto mt-10"
     >
-      <hr class="w-full border border-black" />
+      <hr class="w-full border border-black">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
         <ServiceFeature
           v-for="(service, index) in state.services"
@@ -69,9 +69,9 @@ const state: ServicesPageState = reactive({
       <h2
         class="text-3xl font-light tracking-tight text-center"
         v-html="state.callToAction.title"
-      ></h2>
+      />
       <div class="mt-4 text-lg font-light text-center mx-auto max-w-[800px]">
-        <MDC :value="state.callToAction.description"></MDC>
+        <MDC :value="state.callToAction.description" />
       </div>
       <div class="flex justify-center mt-8">
         <NuxtLink

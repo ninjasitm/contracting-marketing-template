@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { TransitionRoot, TransitionChild } from '@headlessui/vue';
+import { ref, reactive, computed } from 'vue';
 export type IStyles = 'primary' | 'success' | 'warning' | 'danger';
 
 // props
@@ -40,7 +41,7 @@ const textStyles = reactive<{
 });
 
 // selected
-const isDestroyed = ref<Boolean>(false);
+const isDestroyed = ref<boolean>(false);
 const selectedType = computed<IStyles>((): IStyles => {
   if (['primary', 'success', 'warning', 'danger'].includes(props.type))
     return props.type as IStyles;
@@ -56,7 +57,10 @@ const close = () => {
 </script>
 
 <template>
-  <TransitionRoot :show="!isDestroyed" appear>
+  <TransitionRoot
+    :show="!isDestroyed"
+    appear
+  >
     <TransitionChild
       as="template"
       enter="duration-300 ease-out"
@@ -90,10 +94,14 @@ const close = () => {
         </div>
         <div class="flex-1">
           <div :class="`font-bold text-lg mb-0.5 ${selectedTextStyle}`">
-            <slot name="title">{{ props.title }}</slot>
+            <slot name="title">
+              {{ props.title }}
+            </slot>
           </div>
           <div class="text-gray-700 dark:text-gray-100">
-            <slot name="title">{{ props.text }}</slot>
+            <slot name="title">
+              {{ props.text }}
+            </slot>
           </div>
         </div>
         <div>

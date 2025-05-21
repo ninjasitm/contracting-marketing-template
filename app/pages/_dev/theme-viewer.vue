@@ -29,7 +29,9 @@ const toggleDarkMode = () => {
     <!-- Page header -->
     <div class="flex justify-between items-center mb-8">
       <div>
-        <h1 class="text-3xl font-bold">Theme Viewer</h1>
+        <h1 class="text-3xl font-bold">
+          Theme Viewer
+        </h1>
         <p class="text-gray-600 dark:text-gray-400 mt-2">
           A comprehensive view of the design system components and styles
         </p>
@@ -41,11 +43,17 @@ const toggleDarkMode = () => {
         @click="toggleDarkMode"
       >
         <span v-if="colorMode.value === 'dark'">
-          <Icon name="heroicons:sun" class="h-5 w-5 mr-2" />
+          <Icon
+            name="heroicons:sun"
+            class="h-5 w-5 mr-2"
+          />
           Light Mode
         </span>
         <span v-else>
-          <Icon name="heroicons:moon" class="h-5 w-5 mr-2" />
+          <Icon
+            name="heroicons:moon"
+            class="h-5 w-5 mr-2"
+          />
           Dark Mode
         </span>
       </button>
@@ -56,7 +64,9 @@ const toggleDarkMode = () => {
 
     <!-- Documentation link -->
     <div class="mt-10 bg-gray-100 dark:bg-gray-800 p-6 rounded-lg">
-      <h3 class="text-xl font-bold mb-2">Theme Documentation</h3>
+      <h3 class="text-xl font-bold mb-2">
+        Theme Documentation
+      </h3>
       <p class="mb-4">
         For detailed information about how to use the theme system, refer to the
         documentation:
@@ -66,7 +76,10 @@ const toggleDarkMode = () => {
         target="_blank"
         class="btn-primary inline-flex items-center"
       >
-        <Icon name="heroicons:document-text" class="h-5 w-5 mr-2" />
+        <Icon
+          name="heroicons:document-text"
+          class="h-5 w-5 mr-2"
+        />
         View Theme Documentation
       </a>
     </div>

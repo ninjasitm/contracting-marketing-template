@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { reactive } from 'vue';
 import moment from 'moment';
 import type { ParsedContent } from '@nuxt/content';
 import OpenLink from '~/public/images/open-link.svg';
@@ -8,10 +7,10 @@ import Loading from '@/components/layouts/Page/Loading.vue';
 import ProjectCard from '@/components/work/ProjectCard.vue';
 import type { Client, Project } from '@/utils/types';
 
-const backgrounds = Array.from(
-  { length: 5 },
-  (_, i) => `/images/demo/project-backgrounds/${i + 1}.png`,
-);
+// const _backgrounds = Array.from(
+//   { length: 5 },
+//   (_, i) => `/images/demo/project-backgrounds/${i + 1}.png`,
+// );
 
 definePageMeta({ layout: 'page' });
 
@@ -104,7 +103,10 @@ isLoading.value = false;
 </script>
 
 <template>
-  <div v-if="isLoading" class="flex justify-center w-full">
+  <div
+    v-if="isLoading"
+    class="flex justify-center w-full"
+  >
     <Loading />
   </div>
   <div
@@ -152,7 +154,7 @@ isLoading.value = false;
           <h2
             class="self-center mt-4 text-6xl tracking-tighter uppercase max-md:max-w-full max-md:text-4xl"
             v-html="project.title"
-          ></h2>
+          />
           <div
             class="flex flex-wrap gap-4 justify-center items-center self-center mt-4 text-base"
           >
@@ -161,8 +163,12 @@ isLoading.value = false;
               size="lg"
               class="text-nowrap bg-primary text-white"
               :href="project.url"
-              >Visit {{ project.title }}
-              <OpenLink class="stroke-white" stroke="#fff"></OpenLink>
+            >
+              Visit {{ project.title }}
+              <OpenLink
+                class="stroke-white"
+                stroke="#fff"
+              />
             </AwesomeButton>
           </div>
           <MDC
@@ -173,7 +179,9 @@ isLoading.value = false;
           <div
             class="flex flex-wrap gap-4 justify-center items-center self-center mt-4 text-base"
           >
-            <AwesomeButton v-if="project.isOngoing">Ongoing</AwesomeButton>
+            <AwesomeButton v-if="project.isOngoing">
+              Ongoing
+            </AwesomeButton>
             <time
               v-else
               :datetime="project.date"
@@ -216,7 +224,7 @@ isLoading.value = false;
         <h2
           class="text-4xl max-md:max-w-full"
           v-html="project.problem.title"
-        ></h2>
+        />
         <MDC
           v-if="project.problem.description"
           class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
@@ -244,7 +252,7 @@ isLoading.value = false;
         <h2
           class="text-4xl max-md:max-w-full"
           v-html="project.solution.title"
-        ></h2>
+        />
         <MDC
           v-if="project.solution.description"
           class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
@@ -272,7 +280,7 @@ isLoading.value = false;
         <h2
           class="text-4xl max-md:max-w-full"
           v-html="project.process.title"
-        ></h2>
+        />
         <MDC
           v-if="project.process.description"
           class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
@@ -310,7 +318,7 @@ isLoading.value = false;
                 v-if="item.alt"
                 class="text-xl mt-3 max-md:max-w-full"
                 v-html="item.alt"
-              ></h3>
+              />
               <MDC
                 v-if="item.description"
                 class="md-content mt-3 text-sm leading-8 max-md:max-w-full text-left"
@@ -329,7 +337,7 @@ isLoading.value = false;
         <h2
           class="text-4xl max-md:max-w-full"
           v-html="project.design.title"
-        ></h2>
+        />
         <MDC
           v-if="project.design.description"
           class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
@@ -372,7 +380,7 @@ isLoading.value = false;
         <h2
           class="text-4xl max-md:max-w-full"
           v-html="project.result.title"
-        ></h2>
+        />
         <MDC
           v-if="project.result.description"
           class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
@@ -443,11 +451,13 @@ isLoading.value = false;
         v-if="nextProject?.slug"
         class="flex flex-col justify-center items-center self-stretch my-auto text-black min-w-[240px] w-[635px] max-md:max-w-full order-first md:order-1"
       >
-        <p class="text-base">Next project</p>
+        <p class="text-base">
+          Next project
+        </p>
         <h2
           class="mt-2 text-xl font-light tracking-tight text-center uppercase"
           v-html="nextProject.title"
-        ></h2>
+        />
       </div>
       <AwesomeButton
         v-if="nextProject?.slug"
@@ -472,13 +482,18 @@ isLoading.value = false;
     <div
       class="min-h-[450px] flex flex-col align-center justify-center mt-60 max-md:max-w-full px-4 lg:px-10"
     >
-      <h2 class="text-4xl">Oops! We didn't find that project.</h2>
-      <p class="mt-6 text-xl">You may be interested in the projects below!</p>
+      <h2 class="text-4xl">
+        Oops! We didn't find that project.
+      </h2>
+      <p class="mt-6 text-xl">
+        You may be interested in the projects below!
+      </p>
       <div class="flex flex-wrap gap-5 items-start mt-16 w-full max-md:mt-10">
         <ProjectCard
           v-for="(p, index) in projects"
           :id="p.slug"
           :key="index"
+          :title="p.title || ''"
           class="w-full md:w-[31.5%] lg:w-[23.5%] mb-10"
           :image-src="p.bannerImage"
           :description="p.description"

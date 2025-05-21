@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import type { QueryBuilderParams } from '@nuxt/content/dist/runtime/types';
 // compiler micro
 definePageMeta({ layout: 'page' });
 useHead({ title: 'Posts' });
@@ -10,7 +9,10 @@ useHead({ title: 'Posts' });
 <template>
   <LayoutPageWrapper>
     <LayoutPageHeader>
-      <LayoutPageTitle text="Posts" class="capitalize" />
+      <LayoutPageTitle
+        text="Posts"
+        class="capitalize"
+      />
     </LayoutPageHeader>
     <LayoutPageSection>
       <ContentList path="/post">
@@ -26,7 +28,10 @@ useHead({ title: 'Posts' });
                 class="text-sm flex items-center justify-end space-x-1"
                 :href="`https://www.github.com/${article.author}`"
               >
-                <Icon name="mdi:github-face" class="text-xs" />
+                <Icon
+                  name="mdi:github-face"
+                  class="text-xs"
+                />
                 <span>{{ article.author }}</span>
               </AwesomeLink>
             </div>
@@ -45,7 +50,10 @@ useHead({ title: 'Posts' });
                   :to="article._path"
                 >
                   <span>learn more</span>
-                  <Icon name="ic:baseline-arrow-right-alt" class="text-sm" />
+                  <Icon
+                    name="ic:baseline-arrow-right-alt"
+                    class="text-sm"
+                  />
                 </AwesomeLink>
               </div>
             </div>

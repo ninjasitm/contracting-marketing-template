@@ -113,7 +113,7 @@ The `nuxt.config.ts` file defines the main Nuxt configuration:
 1. **Content Management**:
 
    - Content editors use PagesCMS.org to update website content
-   - Changes are saved as JSON and Markdown files in the app/content directory
+   - Changes are saved as JSON and Markdown files in the content directory
    - Git-based workflow for version control of content changes
 
 2. **Content Rendering**:

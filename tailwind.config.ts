@@ -8,7 +8,7 @@
  * @see https://tailwindcss.nuxtjs.org/tailwindcss/configuration
  */
 
-import { resolve } from 'path';
+import { resolve as _resolve } from 'path';
 import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
 import colors from 'tailwindcss/colors';
@@ -85,6 +85,12 @@ export default <Partial<Config>>{
 
   // Paths to all files containing Tailwind class names
   content: [
+    './app/pages/**/*.{vue,js,ts}',
+    './app/components/**/*.{vue,js,ts}',
+    './app/layouts/**/*.vue',
+    './app/composables/**/*.{js,ts}',
+    './app/plugins/**/*.{js,ts}',
+    './app/utils/**/*.{js,ts}',
     './components/**/*.{vue,js,ts}',
     './layouts/**/*.vue',
     './pages/**/*.vue',

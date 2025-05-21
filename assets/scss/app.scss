@@ -1,5 +1,7 @@
-// vars
-@import 'variables';
+@use 'sass:meta';
+@use 'variables';
+@use 'animations/transitions';
+@use 'animations/animations';
 @tailwind utilities;
 
 // Global font settings
@@ -61,6 +63,3 @@ html.dark {
     stroke: #fff;
   }
 }
-
-// components
-@import 'animations/transitions';

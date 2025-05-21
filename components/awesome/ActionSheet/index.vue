@@ -1,6 +1,8 @@
 <script lang="ts" setup>
+import { ref, onMounted } from 'vue';
+
 const emit = defineEmits<{
-  (e: 'close', event: MouseEvent): void;
+  close: [event: MouseEvent];
 }>();
 const props = defineProps({
   blur: {
@@ -81,7 +83,9 @@ onMounted(() => {
               name="uil:times"
               size="32px"
             />
-            <template v-else>{{ closeButtonText }}</template>
+            <template v-else>
+              {{ closeButtonText }}
+            </template>
           </AwesomeButton>
         </AwesomeActionSheetGroup>
         <div

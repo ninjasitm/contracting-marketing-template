@@ -28,7 +28,7 @@ const { items, naicsCodesTitle, naicsCodes } = toRefs(props);
         >
           <CompanyInfoItem
             :key="index"
-            :label="item.title"
+            :label="item.title as string"
             :value="item.value"
           />
         </div>

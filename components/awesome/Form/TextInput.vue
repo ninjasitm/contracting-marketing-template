@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { reactive, computed, useSlots } from 'vue';
+import { useSyncProps } from '~/composables/use-sync-props';
+
 // compiler macro
 const props = defineProps({
   modelValue: {
@@ -38,7 +41,11 @@ const fontSizeStyles = reactive<{
   lg: 'text-lg',
 });
 // states
-const modelValue = useSyncProps<string>(props, 'modelValue', emit);
+const modelValue = useSyncProps<string>(
+  props,
+  'modelValue',
+  emit as () => void,
+);
 const havePreEl = computed(
   () =>
     typeof slots.prefix !== 'undefined' ||
@@ -83,7 +90,7 @@ const selectedFontSizeStyle = computed(
         } ${selectedBorderStyle} ${selectedOnHoverBorderStyle} ${selectedPaddingStyle} ${selectedFontSizeStyle}`"
         :type="type"
         :placeholder="placeholder"
-      />
+      >
     </div>
     <div
       v-if="slots.suffix"

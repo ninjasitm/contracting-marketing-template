@@ -4,7 +4,9 @@ const { resolve } = createResolver(import.meta.url);
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  compatibilityDate: '2025-05-29',
   ssr: false,
+  srcDir: resolve('./'),
   // exp
   experimental: {
     localLayerAliases: true,
@@ -173,5 +175,36 @@ export default defineNuxtConfig({
   //   ]
   // },
 
-  compatibilityDate: '2024-09-01',
+
+  // Nitro server configuration with Cloudflare Workers support
+  nitro: {
+    preset: "cloudflare-pages",
+    compatibilityDate: "2025-05-13",
+    cloudflare: {
+      nodeCompat: true,
+    },
+    rollupConfig: {
+      output: {
+        format: "esm",
+      }
+    }
+  },
+  runtimeConfig: {
+    mail: {
+      message: {
+        to: process.env.GMAIL_EMAIL_TO || 'info@company.com',
+      },
+      smtp: {
+        service: 'gmail',
+        host: process.env.SMTP_HOST || 'smtp.gmail.com',
+        port: parseInt(process.env.SMTP_PORT || '587'),
+        secure: process.env.SMTP_SECURE === 'true',
+        startTls: process.env.SMTP_START_TLS !== 'false',
+      },
+      auth: {
+        user: process.env.GMAIL_APP_USER || 'invalid',
+        pass: process.env.GMAIL_APP_PASSWORD || 'invalid',
+      },
+    }
+  },
 });

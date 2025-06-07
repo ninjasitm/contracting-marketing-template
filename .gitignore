@@ -9,3 +9,8 @@ dist
 .DS_Store
 **.Identifier
 .data
+
+.dev.vars
+
+.env
+.env.production

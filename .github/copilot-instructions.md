@@ -9,9 +9,9 @@
 - **Action**: Before generating any code, offering suggestions, or answering questions, ALWAYS thoroughly review the entire contents of the `docs/ai/` directory (especially `overview.md` and `architecture.md`).
 - **Reason**: This directory contains critical, up-to-date project-specific information, architecture, and feature details essential for accurate and relevant assistance.
 
-### 2. Package Manager: `pnpm`
+### 2. Package Manager: `
 
-- **Action**: This project exclusively uses `pnpm`. All package management commands (e.g., install, add, run) MUST use `pnpm` syntax. Do not suggest `npm` or `yarn` commands.
+- **Action**: This project exclusively uses `ackage management commands (e.g., install, add, run) MUST use `` syntaxgest `pnpm`or`yarn` commands.
 
 ### 3. Core Libraries Awareness
 
@@ -41,10 +41,11 @@ This is a Nuxt 3-based contracting marketing template that uses a flat-file CMS 
 ### Code Quality & Standards
 
 - **Pre-Suggestion/Pre-Commit Checks**: Always ensure the following commands pass successfully before suggesting code changes or as a final step before a commit:
+
   ```
-  pnpm run lint
-  pnpm test
-  pnpm run build
+
+  t
+   run build
   ```
 
 ### TypeScript Standards
@@ -294,97 +295,3 @@ This is a Nuxt 3-based contracting marketing template that uses a flat-file CMS 
 - **Legacy Event Handling**: Avoid using direct DOM event listeners like `window.addEventListener`. Instead, use VueUse's event handling composables (e.g., `useEventListener`, `useEventBus`).
 - **Overriding Core Conventions**: Do not suggest solutions that deviate significantly from established Nuxt conventions or the patterns already present in this project without strong justification.
 - **Ignoring Core Libraries**: Do not implement custom solutions for problems already solved by VueUse, Pinia, or other core libraries in the project.
-- **@azure Rule - Use Azure Best Practices**: When generating code for Azure, running terminal commands for Azure, or performing operations related to Azure, invoke your `azure_development-get_best_practices` tool if available.
-
-## API Development & Testing
-
-### API Implementation
-
-- Follow RESTful principles when designing API endpoints.
-- Use Nuxt's server routes (`/server/api/`) for implementing API endpoints.
-- Implement proper validation for request parameters and body.
-- Return consistent response structures with appropriate status codes.
-- Always include detailed error handling and logging.
-
-### Testing Approach
-
-- **Manual Testing Process**:
-
-  1. Start the development server with `npm run dev`.
-  2. Use browser developer tools or a dedicated API client (like Postman or Insomnia) to make requests.
-  3. Inspect both the request and response, including headers, status codes, and body content.
-  4. Check server logs for any errors or unexpected behavior.
-  5. Iterate on the API implementation until the behavior is stable and meets requirements.
-
-- **API Test Commands**:
-
-  ```bash
-  # Start the development server
-  npm run dev
-
-  # Test GET endpoint with curl
-  curl -X GET http://localhost:3000/api/your-endpoint
-
-  # Test POST endpoint with curl (with JSON body)
-  curl -X POST http://localhost:3000/api/your-endpoint \
-    -H "Content-Type: application/json" \
-    -d '{"key1":"value1", "key2":"value2"}'
-
-  # Test with authorization header if needed
-  curl -X GET http://localhost:3000/api/protected-endpoint \
-    -H "Authorization: Bearer your-token-here"
-  ```
-
-- **Automated Testing**:
-  - Write unit tests for API handlers using Vitest.
-  - Use mocks for external services and database calls.
-  - Test both success and error scenarios.
-  - Example test location: `src/tests/api/your-endpoint.test.ts`
-
-### Debugging API Issues
-
-- Add detailed logging at key points in your API handlers.
-- For complex bugs, implement step-by-step debugging:
-
-  ```typescript
-  // Debug API handler step-by-step
-  export default defineEventHandler(async (event) => {
-    console.log('[YourAPIEndpoint]: Request received', {
-      method: event.method,
-      path: event.path,
-      query: getQuery(event),
-    });
-
-    try {
-      const body = await readBody(event);
-      console.log('[YourAPIEndpoint]: Request body', body);
-
-      // Process the request...
-      const result = await yourProcessingLogic(body);
-      console.log('[YourAPIEndpoint]: Processing result', result);
-
-      return { success: true, data: result };
-    } catch (error) {
-      console.error('[YourAPIEndpoint]: Error processing request', error);
-      throw createError({
-        statusCode: 500,
-        message: error.message || 'An unknown error occurred',
-      });
-    }
-  });
-  ```
-
-### API Stability Verification
-
-- Create a verification checklist for each API endpoint:
-
-  1. Does it handle all required parameters correctly?
-  2. Does it return the expected response structure?
-  3. Does it handle errors gracefully?
-  4. Does it perform well under load (if applicable)?
-  5. Does it integrate properly with the front-end?
-
-- Consider implementing a simple test script that:
-  1. Makes requests to all critical endpoints
-  2. Verifies responses against expected results
-  3. Reports any discrepancies

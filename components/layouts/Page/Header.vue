@@ -1,5 +1,10 @@
+<script setup lang="ts">
+import Navbar from './Navbar.vue';
+</script>
+
 <template>
-  <div class="mb-4">
-    <slot />
-  </div>
+  <header id="main-header" class="bg-white dark:bg-brown-800 w-full">
+    <Navbar />
+  </header>
+  <slot />
 </template>

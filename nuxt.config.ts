@@ -75,6 +75,11 @@ export default defineNuxtConfig({
       path: resolve('./components/awesome'),
       global: true,
     },
+    {
+      prefix: 'App',
+      path: resolve('./components/app'),
+      global: true,
+    },
   ],
 
   imports: {
@@ -175,19 +180,18 @@ export default defineNuxtConfig({
   //   ]
   // },
 
-
   // Nitro server configuration with Cloudflare Workers support
   nitro: {
-    preset: "cloudflare-pages",
-    compatibilityDate: "2025-05-13",
+    preset: 'cloudflare-pages',
+    compatibilityDate: '2025-05-13',
     cloudflare: {
       nodeCompat: true,
     },
     rollupConfig: {
       output: {
-        format: "esm",
-      }
-    }
+        format: 'esm',
+      },
+    },
   },
   runtimeConfig: {
     mail: {
@@ -205,6 +209,6 @@ export default defineNuxtConfig({
         user: process.env.GMAIL_APP_USER || 'invalid',
         pass: process.env.GMAIL_APP_PASSWORD || 'invalid',
       },
-    }
+    },
   },
 });

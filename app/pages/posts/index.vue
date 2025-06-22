@@ -24,7 +24,7 @@ useHead({ title: 'Posts' });
           >
             <div class="mt-1 text-gray-600 dark:text-gray-400 text-right">
               <div>{{ article.date }}</div>
-              <AwesomeLink
+              <NuxtLink
                 class="text-sm flex items-center justify-end space-x-1"
                 :href="`https://www.github.com/${article.author}`"
               >
@@ -33,7 +33,7 @@ useHead({ title: 'Posts' });
                   class="text-xs"
                 />
                 <span>{{ article.author }}</span>
-              </AwesomeLink>
+              </NuxtLink>
             </div>
             <div class="flex flex-col">
               <div
@@ -45,7 +45,7 @@ useHead({ title: 'Posts' });
                 {{ article.description }}
               </div>
               <div class="flex">
-                <AwesomeLink
+                <NuxtLink
                   class="text-sm flex space-x-1 items-center text-primary-500"
                   :to="article._path"
                 >
@@ -54,7 +54,7 @@ useHead({ title: 'Posts' });
                     name="ic:baseline-arrow-right-alt"
                     class="text-sm"
                   />
-                </AwesomeLink>
+                </NuxtLink>
               </div>
             </div>
           </div>

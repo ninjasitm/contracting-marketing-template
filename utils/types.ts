@@ -1,17 +1,17 @@
 import type { NuxtApp } from 'nuxt/schema';
 import type { RouteLocationRaw } from '#vue-router';
 
-export interface AwesomeLayoutPageNavbarMenuDropdownItem {
+export interface LayoutPageNavbarMenuDropdownItem {
   type?: 'link';
   title?: string | ((_nuxt: NuxtApp) => string);
   to?: RouteLocationRaw | ((_nuxt: NuxtApp) => RouteLocationRaw);
 }
 
-export interface AwesomeLayoutPageNavbarMenu {
+export interface LayoutPageNavbarMenu {
   type?: 'link' | 'button' | 'dropdown';
   title?: string | ((_nuxt: NuxtApp) => string);
   to?: RouteLocationRaw | ((_nuxt: NuxtApp) => RouteLocationRaw);
-  children?: AwesomeLayoutPageNavbarMenuDropdownItem[];
+  children?: LayoutPageNavbarMenuDropdownItem[];
 }
 
 export type LinkItem = {

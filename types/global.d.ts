@@ -37,7 +37,7 @@ declare module '@@/content/_pages/contact.json' {
 
 // Add types for NavBar properties
 declare module '@/app/app.config' {
-  interface NuxtAwesomeAppConfig {
+  interface NuxtAppConfig {
     style?: Record<string, string>;
     navbar?: {
       hasBanner?: boolean;

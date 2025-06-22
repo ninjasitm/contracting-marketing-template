@@ -1,0 +1,9 @@
+---
+description:
+globs: *.vue
+alwaysApply: false
+---
+- Use VueUse (`@vueuse/core`) for utilities and event handling.
+- Use Pinia for state management with the composition API.
+- Use TailwindCSS for styling; prefer utility classes over custom CSS.
+- Use shadcn-vue for UI components; check `components/ui` before creating new ones.

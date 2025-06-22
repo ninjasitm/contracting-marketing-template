@@ -2,17 +2,15 @@
 import { ref, computed } from 'vue';
 import { useAppConfig } from '#imports';
 import { useNavbarParser } from '~/composables/use-navbar-parser';
-import { useAwesomeScreen } from '~/composables/use-awesome-screen';
-import type { AwesomeLayoutPageNavbarMenu } from '~/types/types';
+import { useScreen } from '~/composables/use-screen';
+import type { LayoutPageNavbarMenu } from '~/utils/types';
 
 const { config } = useAppConfig();
 const { parseMenuRoute, parseMenuTitle } = useNavbarParser();
-const $screen = useAwesomeScreen();
+const $screen = useScreen();
 
 const menus = computed(
-  () =>
-    (config?.layout?.page?.navbar?.menus ||
-      []) as AwesomeLayoutPageNavbarMenu[],
+  () => (config?.layout?.page?.navbar?.menus || []) as LayoutPageNavbarMenu[],
 );
 
 const links = computed((): Record<string, string> => {
@@ -101,7 +99,7 @@ const getSocialIcon = (title: string) => {
       </div>
       <!-- menus -->
       <div
-        v-if="$screen.higherThan('md', $screen.current.value)"
+        v-if="$screen.greater('md').value"
         class="flex space-x-4 items-center bg-white/[0.75] dark:bg-brown-700/[0.75] rounded-xl px-4 lg:px-10 py-4"
       >
         <div class="flex space-x-4 text-sm items-center">
@@ -130,26 +128,22 @@ const getSocialIcon = (title: string) => {
         <!-- others -->
         <div class="pl-4 flex space-x-4 text-xl align-center items-center">
           <!-- todo: feat/localization -->
-          <!-- <AwesomeLink class="text-gray-400 hover:text-gray-100">
-            <Icon name="la:language" />
-          </AwesomeLink> -->
-          <AwesomeButton
+          <!-- TODO: Add language switcher when localization is implemented -->
+          <a
             v-if="links.capabilities?.length"
             download="nitm-capabilities-statement.pdf"
-            size="lg"
-            class="gap-2 p-4 px-2 text-sm tracking-tight bg-transparent rounded-lg border border-black dark:text-white text-black"
+            class="gap-2 p-4 px-2 text-sm tracking-tight bg-transparent rounded-lg border border-black dark:text-white text-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             :href="links.capabilities"
           >
             Capabilities Statement
-          </AwesomeButton>
-          <AwesomeButton
+          </a>
+          <NuxtLink
             v-if="links.startWorkshop?.length"
-            size="lg"
-            class="gap-2 p-4 text-sm tracking-tight text-white bg-primary rounded-lg"
+            class="gap-2 p-4 text-sm tracking-tight text-white bg-primary rounded-lg hover:bg-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 inline-flex items-center justify-center"
             :to="links.startWorkshop"
           >
             Start a Workshop
-          </AwesomeButton>
+          </NuxtLink>
           <!-- <LayoutPageNavbarDropdownThemeSwitcher
             class="gap-2 p-4 text-sm tracking-tight"
           /> -->
@@ -162,172 +156,160 @@ const getSocialIcon = (title: string) => {
         :class="{ 'divide-x divide-gray-500': menus.length > 0 }"
       >
         <div class="pl-4 flex space-x-3 text-xl">
-          <AwesomeLink
-            class="text-gray-400 hover:text-gray-100"
+          <button
+            type="button"
+            class="text-gray-400 hover:text-gray-100 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             @click.prevent="() => (showDrawer = !showDrawer)"
           >
             <Icon name="heroicons:bars-3-bottom-right-20-solid" size="32px" />
-          </AwesomeLink>
+          </button>
         </div>
       </div>
     </div>
     <!-- misc -->
     <!-- drawer -->
-    <AwesomeActionSheet
-      v-if="!$screen.higherThan('md', $screen.current.value) && showDrawer"
-      @close="() => (showDrawer = false)"
-    >
-      <AwesomeActionSheetGroup
-        class="flex flex-col items-stretch"
-        :blur="false"
-      >
-        <!-- dynamic menus -->
-        <AwesomeActionSheetItem>
-          <div
-            class="flex flex-col text-sm items-center dark:divide-gray-700 text-center text-[1.5rem]"
+    <UiSheet :open="showDrawer" @update:open="showDrawer = $event">
+      <UiSheetContent side="right" class="w-full sm:w-[400px]">
+        <UiSheetHeader class="text-left">
+          <UiSheetTitle>Menu</UiSheetTitle>
+        </UiSheetHeader>
+
+        <div class="flex flex-col space-y-4 mt-6">
+          <!-- Home Link -->
+          <NuxtLink
+            class="flex justify-center items-center text-base space-x-2 h-[4rem] w-full border-b"
+            :to="{ name: 'index' }"
+            @click="() => (showDrawer = false)"
           >
-            <NuxtLink
-              class="flex justify-center items-center text-base space-x-2 h-[4rem] w-full"
-              :to="{ name: 'index' }"
+            <span class="text-lg">Home</span>
+          </NuxtLink>
+
+          <!-- Dynamic menus -->
+          <template v-for="(item, i) in menus" :key="i">
+            <template v-if="item?.type === 'link'">
+              <NuxtLink
+                :to="parseMenuRoute(item.to)"
+                #="{ isActive }"
+                class="flex justify-center items-center text-base space-x-2 h-[4rem] w-full border-b"
+                @click="() => (showDrawer = false)"
+              >
+                <span
+                  :class="{
+                    'text-lg': true,
+                    'text-gray-900 dark:text-gray-100 font-bold': isActive,
+                    'text-gray-700 dark:text-gray-300': !isActive,
+                  }"
+                  >{{ parseMenuTitle(item?.title) }}</span
+                >
+              </NuxtLink>
+            </template>
+
+            <template v-if="item?.type === 'button'">
+              <NuxtLink
+                :to="parseMenuRoute(item.to)"
+                class="flex justify-center items-center text-base space-x-2 h-[4rem] w-full border-b bg-primary text-primary-foreground rounded-md"
+                @click="() => (showDrawer = false)"
+              >
+                <span class="text-lg">{{ parseMenuTitle(item?.title) }}</span>
+              </NuxtLink>
+            </template>
+
+            <template v-if="item?.type === 'dropdown'">
+              <div class="w-full border-b">
+                <HeadlessDisclosure v-slot="{ open }">
+                  <HeadlessDisclosureButton
+                    class="text-gray-700 dark:text-gray-300 w-full py-4 flex items-center justify-center duration-300 transition-all"
+                    :class="{ 'font-bold': open }"
+                  >
+                    <span class="text-lg">{{
+                      parseMenuTitle(item?.title)
+                    }}</span>
+                    <Icon
+                      name="carbon:chevron-right"
+                      class="ml-2"
+                      :class="[
+                        open
+                          ? 'duration-300 transition-all transform rotate-90'
+                          : 'rotate-0',
+                      ]"
+                    />
+                  </HeadlessDisclosureButton>
+                  <Transition
+                    enter-active-class="transition duration-100 ease-out"
+                    enter-from-class="transform scale-95 opacity-0"
+                    enter-to-class="transform scale-100 opacity-100"
+                    leave-active-class="transition duration-75 ease-out"
+                    leave-from-class="transform scale-100 opacity-100"
+                    leave-to-class="transform scale-95 opacity-0"
+                  >
+                    <HeadlessDisclosurePanel class="pb-4">
+                      <template
+                        v-for="(child, j) in item?.children || []"
+                        :key="j"
+                      >
+                        <NuxtLink
+                          :to="parseMenuRoute(child.to)"
+                          #="{ isActive }"
+                          class="block w-full py-2 pl-4 text-sm"
+                          @click="() => (showDrawer = false)"
+                        >
+                          <span
+                            :class="[
+                              isActive
+                                ? 'text-gray-900 dark:text-gray-100 font-bold'
+                                : 'text-gray-700 dark:text-gray-300',
+                            ]"
+                            >{{ parseMenuTitle(child?.title) }}</span
+                          >
+                        </NuxtLink>
+                      </template>
+                    </HeadlessDisclosurePanel>
+                  </Transition>
+                </HeadlessDisclosure>
+              </div>
+            </template>
+          </template>
+
+          <!-- Action Buttons -->
+          <div class="space-y-4 pt-4">
+            <a
+              v-if="links.capabilities?.length"
+              class="flex justify-center items-center text-base h-[4rem] w-full border border-border rounded-md hover:bg-accent transition-colors"
+              :href="links.capabilities"
+              download="nitm-capabilities-statement.pdf"
               @click="() => (showDrawer = false)"
             >
-              <span class="text-[1.5rem]">Home</span>
+              <span class="text-lg">Capabilities Statement</span>
+            </a>
+
+            <NuxtLink
+              v-if="links.startWorkshop?.length"
+              class="flex justify-center items-center text-base h-[4rem] w-full bg-primary text-primary-foreground rounded-md"
+              :to="links.startWorkshop || { name: 'contact' }"
+              @click="() => (showDrawer = false)"
+            >
+              <span class="text-lg">Start a Workshop</span>
             </NuxtLink>
-            <template v-for="(item, i) in menus">
-              <template v-if="item?.type === 'link'">
-                <NuxtLink
-                  :key="i"
-                  :to="parseMenuRoute(item.to)"
-                  #="{ isActive }"
-                  class="flex justify-center items-center text-base space-x-2 h-[4rem] w-full"
-                  @click="() => (showDrawer = false)"
-                >
-                  <span
-                    :class="{
-                      'text-[1.5rem]': true,
-                      'text-gray-900 dark:text-gray-100 font-bold': isActive,
-                      'text-gray-700 dark:text-gray-300': !isActive,
-                    }"
-                    >{{ parseMenuTitle(item?.title) }}</span
-                  >
-                </NuxtLink>
-              </template>
-              <template v-if="item?.type === 'button'">
-                <AwesomeButton
-                  :key="i"
-                  :text="parseMenuTitle(item?.title)"
-                  size="sm"
-                  :to="parseMenuRoute(item.to)"
-                  class="flex justify-center items-center text-base space-x-2 h-[4rem] w-full"
-                />
-              </template>
-              <template v-if="item?.type === 'dropdown'">
-                <div :key="i" class="w-full">
-                  <HeadlessDisclosure v-slot="{ open }">
-                    <HeadlessDisclosureButton
-                      :key="i"
-                      :class="[
-                        'text-gray-700 dark:text-gray-300 w-full py-2 flex items-center justify-center duration-300 transition-all',
-                        open ? 'font-bold' : '',
-                      ]"
-                    >
-                      <span>{{ parseMenuTitle(item?.title) }}</span>
-                      <Icon
-                        name="carbon:chevron-right"
-                        class="ml-1"
-                        :class="[
-                          open
-                            ? 'duration-300 transition-all transform rotate-90'
-                            : 'rotate-0',
-                        ]"
-                      />
-                    </HeadlessDisclosureButton>
-                    <Transition
-                      enter-active-class="transition duration-100 ease-out"
-                      enter-from-class="transform scale-95 opacity-0"
-                      enter-to-class="transform scale-100 opacity-100"
-                      leave-active-class="transition duration-75 ease-out"
-                      leave-from-class="transform scale-100 opacity-100"
-                      leave-to-class="transform scale-95 opacity-0"
-                    >
-                      <HeadlessDisclosurePanel class="text-gray-500 pb-2">
-                        <template
-                          v-for="(child, j) in item?.children || []"
-                          :key="j"
-                        >
-                          <NuxtLink
-                            :to="parseMenuRoute(child.to)"
-                            #="{ isActive }"
-                            class="w-full py-2"
-                          >
-                            <span
-                              :class="[
-                                isActive
-                                  ? 'text-gray-900 dark:text-gray-100 font-bold'
-                                  : 'text-gray-700 dark:text-gray-300',
-                              ]"
-                              >{{ parseMenuTitle(child?.title) }}</span
-                            >
-                          </NuxtLink>
-                        </template>
-                      </HeadlessDisclosurePanel>
-                    </Transition>
-                  </HeadlessDisclosure>
-                </div>
-              </template>
-            </template>
           </div>
-        </AwesomeActionSheetItem>
-      </AwesomeActionSheetGroup>
-      <AwesomeActionSheetGroup :blur="false">
-        <AwesomeActionSheetItemButton
-          v-if="links.capabilities?.length"
-          class="flex justify-center items-center text-base space-x-2 h-[4rem]"
-        >
-          <a
-            class="text-[1.5rem]"
-            :href="links.capabilities"
-            @click="() => (showDrawer = false)"
-          >
-            Capabilities Statement
-          </a>
-        </AwesomeActionSheetItemButton>
-        <AwesomeActionSheetItemButton
-          v-if="links.startWorkshop?.length"
-          class="flex justify-center items-center text-base space-x-2 h-[4rem]"
-        >
-          <NuxtLink
-            class="text-[1.5rem]"
-            :to="links.startWorkshop || { name: 'contact' }"
-            @click="() => (showDrawer = false)"
-          >
-            <span class="text-[1.5rem]">Start a Workshop</span>
-          </NuxtLink>
-        </AwesomeActionSheetItemButton>
-      </AwesomeActionSheetGroup>
-      <AwesomeActionSheetGroup class="fixed bottom-4 right-4">
-        <AwesomeActionSheetItem class="flex flex-col">
-          <div class="p-2">
-            <div class="flex space-x-4 gap-4 items-center">
+
+          <!-- Social Links -->
+          <div class="pt-6 border-t">
+            <div class="flex justify-center space-x-4">
               <a
                 v-for="link in config.socialLinks"
                 :key="link.title"
                 :href="link.url"
-                class="text-white hover:text-orange-400 transition"
+                class="text-foreground hover:text-primary transition-colors p-2"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <span class="sr-only">{{ link.title }}</span>
-                <div
-                  class="w-4 h-4 flex items-center justify-center rounded-full hover:border-orange-400"
-                >
-                  <Icon :name="getSocialIcon(link.title)" class="w-4 h-4" />
-                </div>
+                <Icon :name="getSocialIcon(link.title)" class="w-5 h-5" />
               </a>
             </div>
           </div>
-        </AwesomeActionSheetItem>
-      </AwesomeActionSheetGroup>
-    </AwesomeActionSheet>
+        </div>
+      </UiSheetContent>
+    </UiSheet>
   </div>
 </template>

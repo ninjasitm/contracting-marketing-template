@@ -1,7 +1,10 @@
 <script lang="ts" setup>
-//
-const counter = useCounter();
-const identity = useIdentity();
+// Store usage - explicit imports to avoid VueUse conflicts
+import { useCounterStore } from '../../stores/use-counter';
+import { useIdentityStore } from '../../stores/use-identity';
+
+const counter = useCounterStore();
+const identity = useIdentityStore();
 
 // compiler micro
 definePageMeta({ layout: 'page' });
@@ -11,49 +14,48 @@ useHead({ title: 'Test Page' });
 <template>
   <LayoutPageWrapper>
     <LayoutPageHeader>
-      <LayoutPageTitle
-        text="Testing"
-        class="capitalize"
-      />
+      <LayoutPageTitle text="Testing" class="capitalize" />
     </LayoutPageHeader>
     <LayoutPageSection>
       <LayoutPageSectionTitle text="Stores Test" />
       <!-- store::counter -->
       <div class="mb-6">
-        <div class="mb-2">
-          Counter : {{ counter.count }}
-        </div>
+        <div class="mb-2">Counter : {{ counter.count }}</div>
         <div
           class="flex flex-col items-center justify-items-center space-y-2 md:space-y-0 md:flex-row md:space-x-2"
         >
-          <AwesomeButton
+          <UiButton
             class="w-full md:w-auto capitalize"
-            type="secondary"
+            variant="secondary"
             size="sm"
-            text="increment"
             @click.prevent="counter.increment"
-          />
-          <AwesomeButton
+          >
+            increment
+          </UiButton>
+          <UiButton
             class="w-full md:w-auto"
-            type="secondary"
+            variant="secondary"
             size="sm"
-            text="increment2x"
             @click.prevent="counter.increment2x"
-          />
-          <AwesomeButton
+          >
+            increment2x
+          </UiButton>
+          <UiButton
             class="w-full md:w-auto capitalize"
-            type="secondary"
+            variant="secondary"
             size="sm"
-            text="decrement"
             @click.prevent="counter.decrement"
-          />
-          <AwesomeButton
+          >
+            decrement
+          </UiButton>
+          <UiButton
             class="w-full md:w-auto capitalize"
-            type="secondary"
+            variant="secondary"
             size="sm"
-            text="reset"
             @click.prevent="counter.reset"
-          />
+          >
+            reset
+          </UiButton>
         </div>
       </div>
       <!-- store::identity -->
@@ -66,23 +68,24 @@ useHead({ title: 'Test Page' });
           <div
             class="flex flex-col items-center space-y-2 md:space-y-0 md:flex-row md:space-x-2"
           >
-            <AwesomeFormTextInput
+            <UiInput
               v-model="identity.firstName"
-              size="md"
               class="w-full md:w-1/3"
+              placeholder="First Name"
             />
-            <AwesomeFormTextInput
+            <UiInput
               v-model="identity.lastName"
-              size="md"
               class="w-full md:w-1/3"
+              placeholder="Last Name"
             />
-            <AwesomeButton
+            <UiButton
               class="capitalize w-full md:w-auto"
-              text="reset"
-              type="secondary"
-              size="md"
+              variant="secondary"
+              size="default"
               @click.prevent="identity.reset"
-            />
+            >
+              reset
+            </UiButton>
           </div>
         </div>
       </div>

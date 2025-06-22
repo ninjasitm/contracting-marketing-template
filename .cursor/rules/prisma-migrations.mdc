@@ -1,0 +1,13 @@
+---
+description: Database schema management and Prisma model synchronization
+globs:
+alwaysApply: agent
+---
+- Always pull the latest schema from the remote database using `pnpm run prisma:pull` before making schema changes.
+- Create proper migrations with descriptive names using `pnpm run prisma:migrate -- --name descriptive_migration_name`.
+- Apply migrations to the development database with `pnpm run prisma:migrate:dev`.
+- Maintain a corresponding TypeScript model definition file in `src/models/` for each Prisma model.
+- Ensure model files include proper imports, interfaces matching the schema, CRUD methods, and exports.
+- Export all model files from the main models index file for easy importing elsewhere.
+- After schema changes, update corresponding model files, affected services, and run tests.
+- When creating new Prisma models, add TypeScript model files and update the models index file.

@@ -56,10 +56,7 @@ const state = reactive<HomeState>(config);
   >
     <!-- https://github.com/nuxt/nuxt/issues/12766#issuecomment-1397234526-->
     <ClientOnly>
-      <Teleport
-        defer
-        to="#page-banner"
-      >
+      <Teleport defer to="#page-banner">
         <section
           class="flex flex-col max-w-full uppercase w-full justify-end min-h-[95vh] pb-12 md:pb-24 md:min-h-[500px] md:h-[800px] bg-blend-darken bg-gradient-to-t from-black to-transparent"
           :style="{
@@ -79,13 +76,12 @@ const state = reactive<HomeState>(config);
                 class="mt-6 text-2xl font-light max-md:max-w-full"
                 v-html="state.banner?.description"
               />
-              <AwesomeButton
-                size="lg"
-                class="gap-2 self-start p-4 mt-6 text-sm tracking-tight text-white bg-sky-600 rounded-lg w-full md:w-[max-content]"
+              <a
+                class="gap-2 self-start p-4 mt-6 text-sm tracking-tight text-white bg-sky-600 rounded-lg w-full md:w-[max-content] hover:bg-sky-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 inline-flex items-center justify-center"
                 :href="state.banner?.actionUrl"
               >
                 {{ state.banner?.actionText }}
-              </AwesomeButton>
+              </a>
             </div>
           </div>
         </section>
@@ -94,7 +90,7 @@ const state = reactive<HomeState>(config);
     <section
       class="flex flex-col w-full max-w-screen-xl mt-5 md:mt-20 mx-auto px-2 lg:px-2"
     >
-      <hr class="w-full border border-black mt-10">
+      <hr class="w-full border border-black mt-10" />
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl font-light tracking-tight uppercase text-sky-950"
         v-html="state.coreCompetencies?.title"
@@ -106,9 +102,8 @@ const state = reactive<HomeState>(config);
               class="text-xl lg:text-4xl font-light max-md:max-w-full"
               v-html="state.coreCompetencies?.description"
             />
-            <AwesomeButton
-              size="lg"
-              class="flex gap-1 items-center mt-3 p-3 my-auto text-base tracking-tight uppercase rounded-lg border border-black max-w-[max-content]"
+            <NuxtLink
+              class="flex gap-1 items-center mt-3 p-3 my-auto text-base tracking-tight uppercase rounded-lg border border-black max-w-[max-content] hover:bg-black hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               :to="{ name: 'process' }"
             >
               <NuxtImg
@@ -119,7 +114,7 @@ const state = reactive<HomeState>(config);
                 class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
               />
               <span class="self-stretch my-auto">View our processes</span>
-            </AwesomeButton>
+            </NuxtLink>
           </div>
           <div
             class="flex flex-wrap gap-20 items-start mt-16 w-full max-md:mt-10"
@@ -150,7 +145,7 @@ const state = reactive<HomeState>(config);
     <section
       class="flex flex-col mt-32 w-full font-light max-md:mt-10 max-w-screen-xl mx-auto px-2 lg:px-2"
     >
-      <hr class="w-full border border-black mt-10">
+      <hr class="w-full border border-black mt-10" />
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl tracking-tight uppercase whitespace-nowrap text-sky-950"
         v-html="state.differentiators?.title"

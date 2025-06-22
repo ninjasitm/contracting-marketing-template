@@ -1,0 +1,8 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+- Develop Tailwind components with a mobile-first approach.
+- Adhere to WCAG 2.1 AA, use semantic HTML, and ensure keyboard/focus accessibility.
+- Use skeleton loaders or disable inputs during async operations.

@@ -1,0 +1,8 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+- Ensure `pnpm run lint`, `pnpm test`, and `pnpm run build` pass before suggesting or committing code.
+- Use Vitest for unit/component tests, Playwright for E2E, and place tests alongside implementation files.
+- Prefer VS Code's Testing UI; fall back to terminal as needed.

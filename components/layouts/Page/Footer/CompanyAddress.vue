@@ -85,10 +85,10 @@ onMounted(() => {
       <nav
         class="flex flex-col justify-center text-base text-black whitespace-nowrap"
       >
-        <AwesomeLink
+        <NuxtLink
           v-for="(link, index) in state.links"
           :key="index"
-          class="mb-6"
+          class="mb-6 inline-flex items-center hover:underline transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           :to="link.to || link.url"
         >
           <NuxtImg
@@ -99,14 +99,15 @@ onMounted(() => {
             class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square mr-3"
           />
           <span>{{ link.title }}</span>
-        </AwesomeLink>
+        </NuxtLink>
       </nav>
     </div>
     <div class="flex gap-5 items-center">
       <nav class="flex justify-center text-base text-black whitespace-nowrap">
-        <AwesomeLink
+        <NuxtLink
           v-for="(link, index) in state.socialLinks"
           :key="index"
+          class="inline-flex items-center hover:underline transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           :to="link.url"
         >
           <NuxtImg
@@ -117,7 +118,7 @@ onMounted(() => {
             class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square mr-3"
           />
           <span>{{ link.title }}</span>
-        </AwesomeLink>
+        </NuxtLink>
       </nav>
     </div>
   </section>

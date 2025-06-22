@@ -1,0 +1,288 @@
+---
+description:
+globs: *.vue
+alwaysApply: false
+---
+# Shadcn Integration Rules
+
+Auto-attach to: `components/**/*`, `pages/**/*`, `layouts/**/*`
+
+## Project Overview
+Nuxt 3 + TypeScript project using shadcn/ui with Motiff design system. Follow these patterns for consistent, accessible, and type-safe component usage.
+
+## Component Selection Logic
+
+### Use Shadcn Directly
+```typescript
+// ✅ For layout, system, and structural components
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { Sheet, SheetContent, SheetTrigger, SheetHeader } from '@/components/ui/sheet'
+import { NavigationMenu, NavigationMenuList, NavigationMenuItem } from '@/components/ui/navigation-menu'
+import { Badge } from '@/components/ui/badge'
+import { Input } from '@/components/ui/input'
+
+// Use for: Layout structure, data display, system UI
+```
+
+### Use App* Wrappers
+```typescript
+// ✅ For themed, interactive, and branded components
+import { AppButton } from '@/components/app/AppButton.vue'
+import { AppCard } from '@/components/app/AppCard.vue'
+import { AppCTA } from '@/components/app/AppCTA.vue'
+import { AppHero } from '@/components/app/AppHero.vue'
+
+// Use for: Buttons, CTAs, hero sections, branded UI elements
+```
+
+## Required Import Pattern
+```typescript
+// ✅ ALWAYS include types when importing shadcn components
+import { Button, type ButtonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+
+// ❌ NEVER import without types
+import { Button } from '@/components/ui/button'  // Missing types
+```
+
+## Styling Rules
+
+### className Merging
+```typescript
+// ✅ REQUIRED: Always use cn() utility
+<Button :class="cn('custom-classes', conditionalClasses, props.class)" />
+
+// ❌ FORBIDDEN: String concatenation
+<Button :class="`custom-classes ${conditionalClasses}`" />
+```
+
+### Motiff Theme Classes
+```typescript
+// ✅ Standard Motiff theme classes
+'bg-motiff-dark-primary'     // #121212 - Main dark background
+'bg-motiff-dark-secondary'   // #1A1A1A - Secondary dark background
+'bg-motiff-dark-card'        // #232323 - Card backgrounds
+'bg-motiff-dark-footer'      // #0E0E0E - Footer background
+'bg-motiff-primary'          // #1377B9 - Primary blue
+'text-motiff-text-primary'   // #FFFFFF - Primary text
+'text-motiff-text-secondary' // #B4C5D5 - Secondary text
+'text-motiff-text-muted'     // #AAAAAA - Muted text
+'border-motiff-dark-primary/20'  // Border with opacity
+```
+
+## Common Usage Patterns
+
+### Navigation with Shadcn + Motiff
+```vue
+<template>
+  <!-- Desktop Navigation -->
+  <NavigationMenu>
+    <NavigationMenuList class="space-x-4">
+      <NavigationMenuItem v-for="item in menuItems" :key="item.id">
+        <AppButton
+          variant="ghost"
+          theme="motiff-ghost"
+          :to="item.to"
+          class="text-motiff-text-secondary hover:text-motiff-text-primary"
+        >
+          {{ item.title }}
+        </AppButton>
+      </NavigationMenuItem>
+    </NavigationMenuList>
+  </NavigationMenu>
+
+  <!-- Mobile Navigation -->
+  <Sheet v-model:open="showMobileMenu">
+    <SheetTrigger asChild>
+      <AppButton variant="ghost" size="icon" theme="motiff-ghost">
+        <Icon name="heroicons:bars-3" />
+      </AppButton>
+    </SheetTrigger>
+    <SheetContent class="bg-motiff-dark-secondary border-motiff-dark-primary">
+      <SheetHeader>
+        <SheetTitle class="text-motiff-text-primary">Navigation</SheetTitle>
+      </SheetHeader>
+      <!-- Mobile menu content -->
+    </SheetContent>
+  </Sheet>
+</template>
+```
+
+### Card Layouts with Shadcn + Motiff
+```vue
+<template>
+  <Card class="bg-motiff-dark-card border-motiff-dark-primary/20 hover:border-motiff-primary/40 transition-colors">
+    <CardHeader>
+      <CardTitle class="text-motiff-text-primary font-lexend">
+        {{ title }}
+      </CardTitle>
+      <CardDescription class="text-motiff-text-secondary font-geist">
+        {{ description }}
+      </CardDescription>
+    </CardHeader>
+
+    <CardContent>
+      <div class="flex flex-wrap gap-2">
+        <Badge
+          v-for="tag in tags"
+          :key="tag"
+          variant="secondary"
+          class="bg-motiff-dark-tertiary text-motiff-text-secondary border-motiff-primary/20"
+        >
+          {{ tag }}
+        </Badge>
+      </div>
+    </CardContent>
+
+    <CardFooter v-if="hasAction">
+      <AppButton theme="motiff-outline" :to="actionLink">
+        {{ actionText }}
+        <Icon name="lucide:arrow-right" class="ml-2 w-4 h-4" />
+      </AppButton>
+    </CardFooter>
+  </Card>
+</template>
+```
+
+### Form Components with Shadcn
+```vue
+<template>
+  <Card class="bg-motiff-dark-card border-motiff-dark-primary/20">
+    <CardHeader>
+      <CardTitle class="text-motiff-text-primary">Contact Form</CardTitle>
+    </CardHeader>
+
+    <CardContent class="space-y-4">
+      <div class="space-y-2">
+        <label class="text-motiff-text-secondary text-sm font-medium">
+          Email
+        </label>
+        <Input
+          v-model="email"
+          type="email"
+          placeholder="your@email.com"
+          class="bg-motiff-dark-secondary border-motiff-dark-primary/40 text-motiff-text-primary placeholder:text-motiff-text-muted focus:border-motiff-primary"
+        />
+      </div>
+
+      <Separator class="bg-motiff-dark-primary/20" />
+
+      <div class="flex gap-2">
+        <AppButton theme="motiff" size="lg" @click="handleSubmit">
+          Send Message
+        </AppButton>
+        <AppButton variant="outline" theme="motiff-outline" @click="handleReset">
+          Reset
+        </AppButton>
+      </div>
+    </CardContent>
+  </Card>
+</template>
+```
+
+## TypeScript Integration
+
+### Prop Definitions
+```typescript
+// ✅ Proper interface composition
+interface ComponentProps {
+  variant?: ButtonVariants['variant']  // Inherit from shadcn
+  size?: ButtonVariants['size']        // Inherit from shadcn
+  theme?: 'motiff' | 'motiff-outline' | 'motiff-ghost'  // Custom theme
+  title: string                        // Component-specific props
+  description?: string
+  class?: HTMLAttributes['class']      // Always include for styling
+}
+```
+
+### Composable Integration
+```typescript
+// ✅ Use with VueUse and Pinia patterns
+import { useAppConfig } from '#imports'
+import { useNavbarParser } from '@/composables/use-navbar-parser'
+
+const { config } = useAppConfig()
+const { parseMenuRoute, parseMenuTitle } = useNavbarParser()
+```
+
+## Accessibility Standards
+
+### Required Patterns
+```vue
+<template>
+  <!-- ✅ Maintain semantic HTML -->
+  <nav aria-label="Main navigation">
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <AppButton
+            :to="link"
+            :aria-current="isCurrentPage ? 'page' : undefined"
+            class="focus:ring-2 focus:ring-motiff-primary/50"
+          >
+            {{ title }}
+          </AppButton>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  </nav>
+
+  <!-- ✅ Proper ARIA labels for interactive elements -->
+  <Sheet>
+    <SheetTrigger asChild>
+      <AppButton
+        variant="ghost"
+        size="icon"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+      >
+        <Icon name="heroicons:bars-3" aria-hidden="true" />
+      </AppButton>
+    </SheetTrigger>
+  </Sheet>
+</template>
+```
+
+## Performance Optimization
+
+### Tree Shaking
+```typescript
+// ✅ Import only what you need
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+
+// ❌ Don't import entire component libraries
+import * as UI from '@/components/ui'
+```
+
+### Lazy Loading
+```typescript
+// ✅ Lazy load heavy components
+const AppHero = defineAsyncComponent(() => import('@/components/app/AppHero.vue'))
+const AppCTA = defineAsyncComponent(() => import('@/components/app/AppCTA.vue'))
+```
+
+## Validation Checklist
+
+When using shadcn components:
+- [ ] Import both component and types
+- [ ] Use `cn()` utility for className merging
+- [ ] Apply appropriate Motiff theme classes
+- [ ] Preserve all accessibility attributes
+- [ ] Include proper TypeScript interfaces
+- [ ] Test keyboard navigation
+- [ ] Verify responsive behavior
+- [ ] Check color contrast compliance
+
+## Anti-Patterns (FORBIDDEN)
+
+- ❌ Creating custom UI components without shadcn base
+- ❌ Hardcoding colors instead of using theme classes
+- ❌ Removing ARIA attributes or accessibility features
+- ❌ Using string concatenation for classNames
+- ❌ Skipping TypeScript types in imports
+- ❌ Ignoring responsive design patterns
+- ❌ Overriding shadcn's core design patterns unnecessarily
+
+This ensures consistent, accessible, and maintainable shadcn integration across the entire project while preserving the Motiff design system.

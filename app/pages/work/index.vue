@@ -177,13 +177,13 @@ async function onLoadCategory(id: string | null): Promise<void> {
       <nav
         class="flex flex-wrap gap-4 py-4 items-start self-start mt-10 text-base max-md:mt-10 max-md:max-w-full snap-x lg:min-h-[100px]"
       >
-        <AwesomeButton
+        <UiButton
           class="gap-2 self-stretch text-white bg-sky-600 max-md:px-5 h-10 text-center snap-center text-xs"
           @click="() => onLoadCategory(null)"
         >
           All Projects
-        </AwesomeButton>
-        <AwesomeButton
+        </UiButton>
+        <UiButton
           v-for="(category, index) in state.categories"
           :key="index"
           outline

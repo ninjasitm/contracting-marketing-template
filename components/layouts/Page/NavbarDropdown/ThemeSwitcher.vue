@@ -37,18 +37,19 @@ const availableThemes = [
       as="div"
       class="relative flex items-center"
     >
-      <HeadlessListboxLabel class="sr-only">
-        Theme
-      </HeadlessListboxLabel>
+      <HeadlessListboxLabel class="sr-only"> Theme </HeadlessListboxLabel>
       <HeadlessListboxButton type="template">
-        <AwesomeLink class="dark:text-gray-400 text-gray-600">
+        <button
+          type="button"
+          class="dark:text-gray-400 text-gray-600 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background hover:bg-accent hover:text-accent-foreground h-10 w-10"
+        >
           <span class="flex justify-center items-center dark:hidden">
             <Icon name="uil:sun" />
           </span>
           <span class="justify-center items-center hidden dark:flex">
             <Icon name="uil:moon" />
           </span>
-        </AwesomeLink>
+        </button>
       </HeadlessListboxButton>
       <HeadlessListboxOptions
         class="p-1 absolute z-50 origin-top-right top-full right-0 outline-none bg-white rounded-lg ring-1 ring-gray-900/10 shadow-lg overflow-hidden w-36 py-1 text-sm text-gray-700 font-semibold dark:bg-gray-800 dark:ring-0 dark:highlight-white/5 dark:text-gray-300"
@@ -69,18 +70,9 @@ const availableThemes = [
           }"
         >
           <span class="text-sm mr-2 flex items-center">
-            <Icon
-              v-if="theme.key === 'light'"
-              name="uil:sun"
-            />
-            <Icon
-              v-else-if="theme.key === 'dark'"
-              name="uil:moon"
-            />
-            <Icon
-              v-else-if="theme.key === 'system'"
-              name="uil:laptop"
-            />
+            <Icon v-if="theme.key === 'light'" name="uil:sun" />
+            <Icon v-else-if="theme.key === 'dark'" name="uil:moon" />
+            <Icon v-else-if="theme.key === 'system'" name="uil:laptop" />
           </span>
           {{ theme.text }}
         </HeadlessListboxOption>

@@ -1,0 +1,14 @@
+---
+description: Things to avoid in the codebase
+globs:
+alwaysApply: true
+---
+- No deprecated Nuxt/Vue features.
+- No global CSS outside Tailwind or `assets/scss/`.
+- No direct DOM manipulation; use Vue's reactivity and refs.
+- No custom solutions for problems already solved by core libraries.
+- No inconsistent naming for events or handlers.
+- No server code imports in client components; see server-client-separation.mdc.
+- **NEVER use Awesome* components** - these have been removed. Use shadcn `Ui*` components instead.
+- No `useAwesomeScreen()` - use `useScreen()` composable instead.
+- No `AwesomeLayoutPageNavbarMenu` types - use `LayoutPageNavbarMenu` instead.

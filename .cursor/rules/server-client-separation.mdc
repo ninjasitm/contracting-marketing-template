@@ -1,0 +1,12 @@
+---
+description: Rules for separating server and client code
+globs:
+alwaysApply: agent
+---
+- Never import server-only code in client components
+- Don't import from `~/server/` directory in client components
+- Don't import modules with `.server.ts` extension in client components
+- Use API endpoints in `~/server/api/` to expose server functionality
+- Use Nuxt composables like `useAsyncData` and `useFetch` for server interactions
+- Create shared types in `~/types/` for cross-boundary use
+- Use `.server.ts` extension for server-only modules

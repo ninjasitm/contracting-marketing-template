@@ -116,7 +116,7 @@ isLoading.value = false;
     <div
       class="flex w-full text-xl font-light align-center justify-center max-md:max-w-full mt-20"
     >
-      <AwesomeButton
+      <UiButton
         :to="{
           name: 'work',
           params: { category: project.client.slug },
@@ -131,7 +131,7 @@ isLoading.value = false;
           alt=""
           class="object-cover self-stretch my-auto w-6 aspect-square"
         />&nbsp;<span>Back</span>
-      </AwesomeButton>
+      </UiButton>
     </div>
     <div class="flex flex-col text-black w-full max-w-screen-xl mt-20 mx-auto">
       <div class="flex flex-col px-2 w-full lg:px-32 max-md:max-w-full">
@@ -158,7 +158,7 @@ isLoading.value = false;
           <div
             class="flex flex-wrap gap-4 justify-center items-center self-center mt-4 text-base"
           >
-            <AwesomeButton
+            <UiButton
               v-if="project.url"
               size="lg"
               class="text-nowrap bg-primary text-white"
@@ -169,7 +169,7 @@ isLoading.value = false;
                 class="stroke-white"
                 stroke="#fff"
               />
-            </AwesomeButton>
+            </UiButton>
           </div>
           <MDC
             v-if="project.description"
@@ -179,9 +179,9 @@ isLoading.value = false;
           <div
             class="flex flex-wrap gap-4 justify-center items-center self-center mt-4 text-base"
           >
-            <AwesomeButton v-if="project.isOngoing">
+            <UiButton v-if="project.isOngoing">
               Ongoing
-            </AwesomeButton>
+            </UiButton>
             <time
               v-else
               :datetime="project.date"
@@ -194,7 +194,7 @@ isLoading.value = false;
         <div
           class="flex flex-wrap gap-4 justify-center items-start self-center mt-4 text-base"
         >
-          <AwesomeButton
+          <UiButton
             v-for="(category, index) in project.categories"
             :key="index"
             class="roundex-full text-nowrap"
@@ -202,7 +202,7 @@ isLoading.value = false;
             :uppercase="false"
           >
             {{ category }}
-          </AwesomeButton>
+          </UiButton>
         </div>
       </div>
       <NuxtImg
@@ -430,7 +430,7 @@ isLoading.value = false;
     <nav
       class="flex flex-wrap gap-5 justify-between items-center max-w-full w-full mt-20 mx-auto max-md:mt-10 mb-10"
     >
-      <AwesomeButton
+      <UiButton
         v-if="previousProject?.slug"
         class="flex gap-1 items-center self-stretch p-4 my-auto w-14 h-14 rounded-lg order-0"
         aria-label="Previous project"
@@ -446,7 +446,7 @@ isLoading.value = false;
           alt=""
           class="object-cover self-stretch my-auto w-6 aspect-square"
         />
-      </AwesomeButton>
+      </UiButton>
       <div
         v-if="nextProject?.slug"
         class="flex flex-col justify-center items-center self-stretch my-auto text-black min-w-[240px] w-[635px] max-md:max-w-full order-first md:order-1"
@@ -459,7 +459,7 @@ isLoading.value = false;
           v-html="nextProject.title"
         />
       </div>
-      <AwesomeButton
+      <UiButton
         v-if="nextProject?.slug"
         class="flex gap-1 items-center self-stretch p-4 my-auto w-14 h-14 rounded-lg order-1"
         aria-label="Next project"
@@ -475,7 +475,7 @@ isLoading.value = false;
           alt=""
           class="object-cover self-stretch my-auto w-6 aspect-square"
         />
-      </AwesomeButton>
+      </UiButton>
     </nav>
   </div>
   <template v-else>

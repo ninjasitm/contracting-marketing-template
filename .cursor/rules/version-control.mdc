@@ -1,0 +1,7 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+- Use the specified conventional commit format (e.g., `feat(scope): ...`, `fix(scope): ...`).
+- Follow the provided PR template.

@@ -1,0 +1,11 @@
+---
+description:
+globs: *.vue
+alwaysApply: false
+---
+- Always use the Composition API with <script setup lang="ts"> syntax for components.
+- Follow the provided example structure for props, emits, state, computed, methods, and lifecycle hooks.
+- Use clear and descriptive naming for props, emits, and methods.
+- Keep logic within components focused and manageable.
+- Add code comments for complex logic or non-obvious implementations.
+- Use bracket-style identifiers for all console logs (e.g., [ComponentName]: message).

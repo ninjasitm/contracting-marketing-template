@@ -6,7 +6,7 @@ export interface IIdentityState {
   lastName: string;
 }
 
-export const useIdentity = defineStore('identity', {
+export const useIdentityStore = defineStore('identity', {
   state: (): IIdentityState => ({
     firstName: 'Alfian',
     lastName: 'Dwi',

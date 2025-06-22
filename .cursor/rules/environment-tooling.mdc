@@ -1,0 +1,8 @@
+---
+description: Development environment and tooling standards for the project
+globs:
+alwaysApply: agent
+---
+- Tailor commands to the user's OS and shell (Linux, Bash, WSL2).
+- Use `pnpm` for all package management commands, except when using `npx` is necessary for running binaries (e.g., `nuxi`).
+- Add new Nuxt modules with `npx nuxi@latest module add {{module_name}}`.

@@ -1,0 +1,7 @@
+---
+description: Code documentation and logging standards
+globs:
+alwaysApply: agent
+---
+- Comment complex logic.
+- Use bracket-style identifiers for logs (e.g., `[ComponentName]: message`).

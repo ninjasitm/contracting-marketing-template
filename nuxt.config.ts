@@ -45,17 +45,28 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'nuxt-headlessui',
     'nuxt-icon',
-    '@nuxtjs/color-mode', // font management
-    '@nuxt/fonts', // management
+    // font management
+    '@nuxtjs/color-mode',
+    // management
+    '@nuxt/fonts',
     '@pinia/nuxt',
-    '@vueuse/nuxt', // contents,
+    // contents,
+    '@vueuse/nuxt',
     '@nuxt/content',
-    '@nuxt/image', // todo: feat/localization
+    // todo: feat/localization
+    '@nuxt/image',
     // '@nuxtjs/i18n'
     'nuxt-svgo-loader',
     '@nuxt/eslint',
     '@nuxt/test-utils/module',
+    'shadcn-nuxt',
   ],
+
+  // shadcn configuration
+  shadcn: {
+    prefix: '',
+    componentDir: './components/ui',
+  },
 
   image: {},
 
@@ -71,13 +82,8 @@ export default defineNuxtConfig({
       global: true,
     },
     {
-      prefix: 'Awesome',
-      path: resolve('./components/awesome'),
-      global: true,
-    },
-    {
-      prefix: 'App',
-      path: resolve('./components/app'),
+      prefix: 'Ui',
+      path: resolve('./components/ui'),
       global: true,
     },
   ],

@@ -1,11 +1,11 @@
 import type { RouteLocationRaw } from 'vue-router';
 import type { NuxtApp } from '#app';
 import type { AppConfig } from 'nuxt/schema';
-import type { AwesomeLayoutPageNavbarMenu } from './utils/types';
+import type { LayoutPageNavbarMenu } from './utils/types';
 import appConfig from './content/config.json';
 
 // Define app config for Nuxt 3
-export interface NuxtAwesomeAppConfig {
+export interface NuxtAppConfig {
   /** title name */
   title?: string;
   /** description */
@@ -56,7 +56,7 @@ export interface NuxtAwesomeAppConfig {
       /** navbar */
       navbar?: {
         /** menus in navbar */
-        menus?: AwesomeLayoutPageNavbarMenu[];
+        menus?: LayoutPageNavbarMenu[];
         links: Record<string, string>;
         hasBanner?: boolean;
         bannerStyle?: Record<string, string>;
@@ -111,7 +111,7 @@ export interface NuxtAwesomeAppConfig {
 
 declare module '@nuxt/schema' {
   interface AppConfigInput {
-    config?: NuxtAwesomeAppConfig;
+    config?: NuxtAppConfig;
   }
 }
 
@@ -156,7 +156,7 @@ export default defineAppConfig({
         disableInfoReplaceIndexInWelcomePage: true,
       },
     },
-  } as NuxtAwesomeAppConfig,
+  } as NuxtAppConfig,
   nuxtIcon: {
     aliases: {},
     class: '',

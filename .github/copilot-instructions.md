@@ -197,35 +197,72 @@ This is a Nuxt 3-based contracting marketing template that uses a flat-file CMS 
 ### CSS & UI Development
 
 - Always develop Tailwind CSS components and styles with a mobile-first approach.
-- Adhere to the theme structure defined in the project\'s `tailwind.config.ts`.
-- Prefer Tailwind\'s utility classes over custom CSS. If custom CSS is necessary, place it in `assets/scss/` and keep it minimal and well-justified.
+- Adhere to the theme structure defined in the project's `tailwind.config.ts`.
+- Prefer Tailwind's utility classes over custom CSS. If custom CSS is necessary, place it in `assets/scss/` and keep it minimal and well-justified.
 
-### Code Organization
+### Component Library: shadcn-vue
 
-- Keep functions focused and manageable (generally under 50-75 lines).
-- Follow SOLID and DRY principles when implementing and refactoring code.
-- Use clear, descriptive, and consistent naming conventions for variables, functions, and components.
+This project uses **shadcn-vue** as the primary UI component library. Follow these guidelines:
 
-### Error Handling
+#### Component Usage
 
-- Implement consistent error handling patterns.
-- Use `try-catch` blocks for asynchronous operations that might fail (e.g., API calls, file system operations).
-- Consider using Nuxt\'s error handling utilities (e.g., `showError`, error pages) for page-level errors.
-- Use component error boundaries for isolating errors within specific parts of the UI if applicable.
+- **Use shadcn components**: Always prefer shadcn-vue components over custom implementations for common UI patterns.
+- **Component prefix**: All shadcn components are prefixed with `Ui` (e.g., `UiButton`, `UiCard`, `UiAlert`).
+- **Auto-import**: Components are automatically imported via Nuxt's auto-import feature - no manual imports needed.
 
-## Accessibility & Compatibility
+#### Available Components
 
-### Accessibility (a11y)
+Key shadcn components available in this project:
 
-- Ensure code adheres to WCAG 2.1 AA level minimum.
-- Use semantic HTML5 tags appropriately (e.g., `<nav>`, `<main>`, `<article>`, `<aside>`, `<button>`).
-- Include `aria-*` attributes, `alt` text for images, and other necessary accessibility attributes to enhance usability for assistive technologies.
-- Ensure keyboard navigability and focus states are clear.
+- `UiButton` - For all button interactions
+- `UiCard`, `UiCardHeader`, `UiCardTitle`, `UiCardContent`, `UiCardFooter` - For card layouts
+- `UiAlert`, `UiAlertDescription`, `UiAlertTitle` - For alerts and notifications
+- `UiSheet`, `UiSheetContent`, `UiSheetHeader`, `UiSheetTitle` - For slide-out panels and mobile menus
+- `UiTabs`, `UiTabsList`, `UiTabsTrigger`, `UiTabsContent` - For tabbed interfaces
+- `UiInput`, `UiLabel`, `UiTextarea` - For form inputs
+- `UiSeparator` - For visual separators
 
-### Browser Compatibility
+#### Component Examples
 
-- Prioritize modern browsers. Use feature detection (e.g., `if ('IntersectionObserver' in window)`) for newer browser APIs to ensure graceful degradation or provide polyfills if essential functionality depends on them.
-- Test in multiple browsers (e.g., Chrome, Firefox, Safari, Edge) where possible, especially for critical UI features.
+```vue
+<!-- Button usage -->
+<UiButton variant="default" size="lg">
+  Click me
+</UiButton>
+
+<!-- Card usage -->
+<UiCard>
+  <UiCardHeader>
+    <UiCardTitle>Card Title</UiCardTitle>
+  </UiCardHeader>
+  <UiCardContent>
+    <p>Card content goes here</p>
+  </UiCardContent>
+  <UiCardFooter>
+    <UiButton>Action</UiButton>
+  </UiCardFooter>
+</UiCard>
+
+<!-- Alert usage -->
+<UiAlert>
+  <UiAlertTitle>Attention</UiAlertTitle>
+  <UiAlertDescription>
+    This is an important message.
+  </UiAlertDescription>
+</UiAlert>
+```
+
+#### Adding New Components
+
+- Use the shadcn CLI to add new components: `npx shadcn-vue@latest add [component-name]`
+- Components are automatically added to `components/ui/` directory
+- Follow the New York style guide (pre-configured)
+
+#### Migration Notes
+
+- **Removed**: All `Awesome*` components have been removed and replaced with shadcn equivalents
+- **Screen utilities**: Use `useScreen()` composable instead of removed `useAwesomeScreen()`
+- **Types**: Layout types now use `Layout*` prefix instead of `Awesome*` (e.g., `LayoutPageNavbarMenu`)
 
 ## Documentation & Versioning
 

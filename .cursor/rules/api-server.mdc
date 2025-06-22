@@ -1,0 +1,7 @@
+---
+description:
+globs: api/*
+alwaysApply: false
+---
+- Use Nuxt server routes (`/server/api/`), validate input, and return consistent responses.
+- Use provided scripts and manual testing as described in the documentation.

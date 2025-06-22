@@ -81,7 +81,7 @@ const MyTheme = {
  */
 export default <Partial<Config>>{
   // Dark mode can be toggled with the class strategy
-  darkMode: 'class',
+  darkMode: ['class', 'class'],
 
   // Paths to all files containing Tailwind class names
   content: [
@@ -105,7 +105,6 @@ export default <Partial<Config>>{
 
   // Theme customization
   theme: {
-    // Container sizing
     container: {
       center: true,
       padding: {
@@ -116,22 +115,17 @@ export default <Partial<Config>>{
         '2xl': '6rem',
       },
     },
-
-    // Screen breakpoints
     screens: {
       xs: '475px',
       ...defaultTheme.screens,
       '3xl': '1920px',
     },
-
-    // Extend default theme
     extend: {
       maxWidth: {
         '8xl': '90rem',
         '9xl': '105rem',
         '10xl': '120rem',
       },
-
       zIndex: {
         '60': '60',
         '70': '70',
@@ -139,24 +133,24 @@ export default <Partial<Config>>{
         '90': '90',
         '100': '100',
       },
-
-      // Color palette
       colors: {
-        primary: MyTheme.colors.blue,
-        secondary: MyTheme.colors.green,
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
         success: MyTheme.colors.green,
         warning: colors.amber,
         error: MyTheme.colors.red,
         info: colors.sky,
-
-        // Theme colors
         green: MyTheme.colors.green,
         blue: MyTheme.colors.blue,
         red: MyTheme.colors.red,
         slate: colors.slate,
         grey: MyTheme.colors.grey,
-
-        // Dark mode background colors
         dark: {
           bg: {
             primary: '#121212',
@@ -164,19 +158,52 @@ export default <Partial<Config>>{
             tertiary: '#2D2D2D',
           },
         },
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        chart: {
+          '1': 'hsl(var(--chart-1))',
+          '2': 'hsl(var(--chart-2))',
+          '3': 'hsl(var(--chart-3))',
+          '4': 'hsl(var(--chart-4))',
+          '5': 'hsl(var(--chart-5))',
+        },
       },
-
-      // Typography
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
         heading: ['Montserrat', 'Inter', ...defaultTheme.fontFamily.sans],
         mono: ['JetBrains Mono', ...defaultTheme.fontFamily.mono],
       },
       fontSize: {
-        '2xs': ['0.65rem', { lineHeight: '0.75rem' }],
+        '2xs': [
+          '0.65rem',
+          {
+            lineHeight: '0.75rem',
+          },
+        ],
       },
-
-      // Animations
       animation: {
         'loop-scroll': 'loop-scroll 50s linear infinite',
         'fade-in': 'fade-in 0.5s ease-out',
@@ -188,60 +215,93 @@ export default <Partial<Config>>{
       },
       keyframes: {
         'loop-scroll': {
-          from: { transform: 'translateX(0)' },
-          to: { transform: 'translateX(-100%)' },
+          from: {
+            transform: 'translateX(0)',
+          },
+          to: {
+            transform: 'translateX(-100%)',
+          },
         },
         'fade-in': {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+          '0%': {
+            opacity: '0',
+          },
+          '100%': {
+            opacity: '1',
+          },
         },
         'fade-out': {
-          '0%': { opacity: '1' },
-          '100%': { opacity: '0' },
+          '0%': {
+            opacity: '1',
+          },
+          '100%': {
+            opacity: '0',
+          },
         },
         'scale-in': {
-          '0%': { transform: 'scale(0.95)', opacity: '0' },
-          '100%': { transform: 'scale(1)', opacity: '1' },
+          '0%': {
+            transform: 'scale(0.95)',
+            opacity: '0',
+          },
+          '100%': {
+            transform: 'scale(1)',
+            opacity: '1',
+          },
         },
         'scale-out': {
-          '0%': { transform: 'scale(1)', opacity: '1' },
-          '100%': { transform: 'scale(0.95)', opacity: '0' },
+          '0%': {
+            transform: 'scale(1)',
+            opacity: '1',
+          },
+          '100%': {
+            transform: 'scale(0.95)',
+            opacity: '0',
+          },
         },
         'slide-in-right': {
-          '0%': { transform: 'translateX(100%)', opacity: '0' },
-          '100%': { transform: 'translateX(0)', opacity: '1' },
+          '0%': {
+            transform: 'translateX(100%)',
+            opacity: '0',
+          },
+          '100%': {
+            transform: 'translateX(0)',
+            opacity: '1',
+          },
         },
         'slide-out-right': {
-          '0%': { transform: 'translateX(0)', opacity: '1' },
-          '100%': { transform: 'translateX(100%)', opacity: '0' },
+          '0%': {
+            transform: 'translateX(0)',
+            opacity: '1',
+          },
+          '100%': {
+            transform: 'translateX(100%)',
+            opacity: '0',
+          },
         },
       },
-
-      // Border radius
       borderRadius: {
         '4xl': '2rem',
         '5xl': '2.5rem',
         '6xl': '3rem',
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
-
-      // Spacing
       spacing: {
-        '18': '4.5rem', // 72px
-        '68': '17rem', // 272px
-        '84': '21rem', // 336px
-        '88': '22rem', // 352px
-        '92': '23rem', // 368px
-        '100': '25rem', // 400px
-        '104': '26rem', // 416px
-        '108': '27rem', // 432px
-        '112': '28rem', // 448px
-        '120': '30rem', // 480px
-        '128': '32rem', // 512px
-        '136': '34rem', // 544px
-        '144': '36rem', // 576px
+        '18': '4.5rem',
+        '68': '17rem',
+        '84': '21rem',
+        '88': '22rem',
+        '92': '23rem',
+        '100': '25rem',
+        '104': '26rem',
+        '108': '27rem',
+        '112': '28rem',
+        '120': '30rem',
+        '128': '32rem',
+        '136': '34rem',
+        '144': '36rem',
       },
-
-      // Box shadows
       boxShadow: {
         'inner-md':
           'inset 0 4px 6px -1px rgba(0, 0, 0, 0.1), inset 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
@@ -310,6 +370,8 @@ export default <Partial<Config>>{
       };
       addUtilities(utilities);
     }),
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    require('tailwindcss-animate'),
   ],
 
   // Configure any JIT mode options if needed
@@ -322,7 +384,7 @@ export default <Partial<Config>>{
     'dark',
     {
       pattern:
-        /bg-(primary|secondary|success|error|warning|info)-(50|100|200|300|400|500|600|700|800|900)/,
+        /bg-(green|blue|red|slate|grey)-(50|100|200|300|400|500|600|700|800|900)/,
     },
   ],
 };

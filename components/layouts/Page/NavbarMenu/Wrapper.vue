@@ -3,8 +3,8 @@ import { computed } from 'vue';
 import { useRoute } from '#imports';
 import { useNavbarParser } from '~/composables/use-navbar-parser';
 import type {
-  AwesomeLayoutPageNavbarMenu,
-  AwesomeLayoutPageNavbarMenuDropdownItem,
+  LayoutPageNavbarMenu,
+  LayoutPageNavbarMenuDropdownItem,
 } from '~/utils/types';
 
 const route = useRoute();
@@ -13,15 +13,15 @@ const { parseMenuRoute, parseMenuTitle } = useNavbarParser();
 const props = defineProps({
   menu: {
     type: Object as () =>
-      | AwesomeLayoutPageNavbarMenuDropdownItem
-      | AwesomeLayoutPageNavbarMenu,
+      | LayoutPageNavbarMenuDropdownItem
+      | LayoutPageNavbarMenu,
     required: true,
   },
 });
 const isActive = computed(() => {
   if (!(props.menu as Record<string, unknown>)?.children) return false;
   const childs = ((props.menu as Record<string, unknown>)?.children ||
-    []) as AwesomeLayoutPageNavbarMenu[];
+    []) as LayoutPageNavbarMenu[];
   for (const child of childs) {
     const to = parseMenuRoute(child.to);
     if (typeof to === 'string' && to === route.path) return true;
@@ -63,14 +63,8 @@ const isActive = computed(() => {
           class="absolute z-10 px-2 py-2 rounded-lg min-w-[150px] bg-gray-50 border-gray-300 dark:bg-gray-900 border dark:border-gray-600"
         >
           <div class="grid grid-cols-1">
-            <template
-              v-for="(child, j) in menu.children"
-              :key="j"
-            >
-              <LayoutPageNavbarMenuItem
-                :menu="child"
-                is-dropdown
-              />
+            <template v-for="(child, j) in menu.children" :key="j">
+              <LayoutPageNavbarMenuItem :menu="child" is-dropdown />
             </template>
           </div>
         </HeadlessPopoverPanel>

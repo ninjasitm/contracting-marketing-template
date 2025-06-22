@@ -1,0 +1,10 @@
+---
+description:
+globs: *.vue
+alwaysApply: false
+---
+- All code must be TypeScript. Avoid `any` type unless justified.
+- Use `<script setup lang="ts">` in components.
+- Follow Nuxt's recommended folder and naming conventions.
+- Keep functions focused and manageable (under 50-75 lines).
+- Use try-catch for async operations; leverage Nuxt error utilities.

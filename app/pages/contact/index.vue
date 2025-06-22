@@ -100,7 +100,7 @@ const onSubmitForm = (event: Event) => {
         class="mt-6 text-xl leading-8 max-w-screen-sm text-center"
         v-html="
           state.description ||
-            'We are always ready to talk about your next project. Feel free to contact us.'
+          'We are always ready to talk about your next project. Feel free to contact us.'
         "
       />
     </section>
@@ -118,13 +118,13 @@ const onSubmitForm = (event: Event) => {
           form-id="abcde-12345"
           class="w-full"
         />
-        <AwesomeAlertBanner
+        <UiAlert
           v-else
           title="No form specified!"
           text="You specified an embedded form but didn't configure a supported one."
         >
           No form specified!
-        </AwesomeAlertBanner>
+        </UiAlert>
       </div>
       <div
         v-else
@@ -136,36 +136,29 @@ const onSubmitForm = (event: Event) => {
           @submit.prevent="onSubmitForm"
         >
           <div class="flex flex-col gap-2">
-            <label
-              for="name"
-              class="text-sm"
-            >Name</label>
+            <label for="name" class="text-sm">Name</label>
             <input
               id="name"
               v-model="state.form.name"
               type="text"
               name="name"
               class="p-2 border border-gray-300 rounded"
-            >
+            />
           </div>
           <div class="flex flex-col gap-2">
-            <label
-              for="email"
-              class="text-sm"
-            >Your Email</label>
+            <label for="email" class="text-sm">Your Email</label>
             <input
               id="email"
               v-model="state.form.email"
               type="email"
               name="_replyto"
               class="p-2 border border-gray-300 rounded"
-            >
+            />
           </div>
           <div class="flex flex-col gap-2">
-            <label
-              for="subject"
-              class="text-sm"
-            >What is your inquiry about?</label>
+            <label for="subject" class="text-sm"
+              >What is your inquiry about?</label
+            >
             <select
               id="subject"
               v-model="state.form.category"
@@ -182,10 +175,7 @@ const onSubmitForm = (event: Event) => {
             </select>
           </div>
           <div class="flex flex-col gap-2">
-            <label
-              for="message"
-              class="text-sm"
-            >Message</label>
+            <label for="message" class="text-sm">Message</label>
             <textarea
               id="message"
               v-model="state.form.message"
@@ -193,13 +183,13 @@ const onSubmitForm = (event: Event) => {
               class="p-2 border border-gray-300 rounded"
             />
           </div>
-          <AwesomeButton
+          <button
             type="submit"
-            class="self-start px-4 lg:px-10 py-2 gap-2 text-white rounded-lg w-full uppercase"
+            class="self-start px-4 lg:px-10 py-2 gap-2 text-white rounded-lg w-full uppercase bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:pointer-events-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             :disabled="state.isLoading || !state.isValid"
           >
             Submit
-          </AwesomeButton>
+          </button>
         </form>
         <div
           v-else
@@ -218,12 +208,8 @@ const onSubmitForm = (event: Event) => {
               color: config.successMessage?.iconColor,
             }"
           />
-          <h3 class="text-2xl">
-            Thank you for your message!
-          </h3>
-          <p class="text-lg">
-            We will get back to you shortly.
-          </p>
+          <h3 class="text-2xl">Thank you for your message!</h3>
+          <p class="text-lg">We will get back to you shortly.</p>
         </div>
       </div>
     </section>

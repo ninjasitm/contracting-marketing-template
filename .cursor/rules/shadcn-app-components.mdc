@@ -1,0 +1,181 @@
+---
+description:
+globs: *.vue
+alwaysApply: false
+---
+# Shadcn App Component Rules
+
+Auto-attach to: `components/app/**/*`
+
+## Context
+This project uses shadcn/ui as the base component library with Motiff design system theming. App components are themed wrappers around shadcn base components.
+
+## Required Patterns
+
+### Import Structure
+```typescript
+// ✅ REQUIRED: Always import both component and types
+import { Button, type ButtonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import { cva, type VariantProps } from 'class-variance-authority'
+import type { HTMLAttributes } from 'vue'
+```
+
+### Interface Composition
+```typescript
+// ✅ REQUIRED: Extend shadcn interfaces, never redefine
+interface AppButtonProps {
+  variant?: ButtonVariants['variant']  // Inherit from shadcn
+  size?: ButtonVariants['size']        // Inherit from shadcn
+  theme?: 'motiff' | 'motiff-outline' | 'motiff-ghost'  // Custom only
+  class?: HTMLAttributes['class']
+}
+
+// ❌ FORBIDDEN: Redefining existing shadcn types
+interface AppButtonProps {
+  variant?: 'default' | 'destructive'  // Don't redefine
+}
+```
+
+### CVA Pattern for Custom Variants
+```typescript
+// ✅ REQUIRED: Use CVA for custom styling variants
+const appComponentVariants = cva(
+  'font-medium transition-all duration-200 focus:ring-2 focus:ring-primary/20',
+  {
+    variants: {
+      theme: {
+        motiff: 'bg-motiff-primary hover:bg-motiff-primary/90 text-white border-0',
+        'motiff-outline': 'border border-motiff-primary bg-transparent hover:bg-motiff-primary text-motiff-primary hover:text-white',
+        'motiff-ghost': 'bg-transparent hover:bg-motiff-dark-tertiary text-motiff-text-secondary hover:text-motiff-text-primary',
+        'motiff-secondary': 'bg-motiff-dark-secondary hover:bg-motiff-dark-tertiary text-motiff-text-primary',
+      },
+    },
+    defaultVariants: {
+      theme: 'motiff',
+    },
+  }
+)
+
+// ✅ REQUIRED: Export the variant type
+export type AppComponentVariants = VariantProps<typeof appComponentVariants>
+```
+
+### Component Template Structure
+```vue
+<template>
+  <!-- ✅ REQUIRED: Use cn() for className merging -->
+  <Button
+    :variant="variant"
+    :size="size"
+    :class="cn(motiffButtonStyles({ theme }), $attrs.class)"
+    v-bind="$attrs"
+  >
+    <slot />
+  </Button>
+</template>
+
+<script setup lang="ts">
+// ✅ REQUIRED: Standard App component structure
+import { Button, type ButtonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import { cva } from 'class-variance-authority'
+
+// Define CVA variants
+const motiffButtonStyles = cva(/* variants here */)
+
+// Interface with proper inheritance
+interface Props {
+  variant?: ButtonVariants['variant']
+  size?: ButtonVariants['size']
+  theme?: 'motiff' | 'motiff-outline' | 'motiff-ghost' | 'motiff-secondary'
+}
+
+// Use withDefaults for default values
+withDefaults(defineProps<Props>(), {
+  variant: 'default',
+  size: 'default',
+  theme: 'motiff',
+})
+</script>
+```
+
+## Motiff Theme Classes
+
+### Required CSS Classes
+- **Backgrounds**: `bg-motiff-dark-primary`, `bg-motiff-dark-secondary`, `bg-motiff-dark-card`
+- **Text**: `text-motiff-text-primary`, `text-motiff-text-secondary`, `text-motiff-text-muted`
+- **Primary**: `bg-motiff-primary`, `text-motiff-primary`, `border-motiff-primary`
+- **Borders**: `border-motiff-dark-primary/20`
+- **Hover States**: `hover:bg-motiff-primary/90`, `hover:text-motiff-primary`
+
+### Theme Variant Patterns
+```typescript
+// ✅ Standard Motiff theme variants
+theme: {
+  motiff: 'bg-motiff-primary hover:bg-motiff-primary/90 text-white',
+  'motiff-outline': 'border-motiff-primary text-motiff-primary hover:bg-motiff-primary hover:text-white bg-transparent',
+  'motiff-ghost': 'text-motiff-text-secondary hover:text-motiff-text-primary hover:bg-motiff-dark-tertiary bg-transparent',
+  'motiff-secondary': 'bg-motiff-dark-secondary hover:bg-motiff-dark-tertiary text-motiff-text-primary',
+}
+```
+
+## Accessibility Requirements
+- ✅ Preserve all shadcn ARIA attributes
+- ✅ Maintain keyboard navigation patterns
+- ✅ Keep focus states and screen reader support
+- ✅ Use semantic HTML elements
+- ✅ Ensure proper color contrast with Motiff theme
+
+## File Naming & Structure
+- File: `App{ComponentName}.vue` (PascalCase)
+- Export: Component and type definitions
+- Location: `components/app/`
+- Purpose: Themed wrappers around shadcn base components
+
+## Common Patterns
+
+### Button Component
+```vue
+<template>
+  <Button
+    :variant="variant"
+    :size="size"
+    :class="cn(motiffButtonStyles({ theme }), $attrs.class)"
+    v-bind="$attrs"
+  >
+    <slot />
+  </Button>
+</template>
+```
+
+### Card Component
+```vue
+<template>
+  <Card :class="cn('bg-motiff-dark-card border-motiff-dark-primary/20', props.class)">
+    <CardHeader v-if="$slots.header || title">
+      <CardTitle v-if="title" class="text-motiff-text-primary">{{ title }}</CardTitle>
+      <slot name="header" />
+    </CardHeader>
+    <CardContent>
+      <slot />
+    </CardContent>
+  </Card>
+</template>
+```
+
+## Validation Rules
+1. All App components MUST extend a shadcn base component
+2. All interfaces MUST inherit from shadcn variant types
+3. All className operations MUST use cn() utility
+4. All custom variants MUST use CVA pattern
+5. All components MUST export both component and types
+6. All components MUST preserve shadcn accessibility features
+
+## Anti-Patterns (FORBIDDEN)
+- ❌ Creating UI components without shadcn base
+- ❌ Redefining shadcn variant types manually
+- ❌ Using string concatenation for classNames
+- ❌ Skipping TypeScript types in imports
+- ❌ Removing ARIA attributes or accessibility features
+- ❌ Using `any` type for component props

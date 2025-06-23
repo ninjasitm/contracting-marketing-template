@@ -135,12 +135,12 @@ export default <Partial<Config>>{
       },
       colors: {
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
+          DEFAULT: '#3BA676', // from MyTheme.colors.green.DEFAULT
+          foreground: '#FFFFFF', // white for contrast
         },
         secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
+          DEFAULT: '#158AD0', // from MyTheme.colors.blue.DEFAULT
+          foreground: '#FFFFFF', // white for contrast
         },
         success: MyTheme.colors.green,
         warning: colors.amber,
@@ -158,37 +158,37 @@ export default <Partial<Config>>{
             tertiary: '#2D2D2D',
           },
         },
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
+        background: '#FFFFFF', // light background
+        foreground: '#1E293B', // grey.800 for text
         card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
+          DEFAULT: '#F8FAFC', // grey.50
+          foreground: '#1E293B', // grey.800
         },
         popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))',
+          DEFAULT: '#F1F5F9', // grey.100
+          foreground: '#1E293B', // grey.800
         },
         muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
+          DEFAULT: '#CBD5E1', // grey.300
+          foreground: '#64748B', // grey.500
         },
         accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
+          DEFAULT: '#29A7FF', // blue.400
+          foreground: '#FFFFFF', // white for contrast
         },
         destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
+          DEFAULT: '#FF6464', // red.DEFAULT
+          foreground: '#FFFFFF', // white for contrast
         },
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
+        border: '#E2E8F0', // grey.200
+        input: '#F1F5F9', // grey.100
+        ring: '#158AD0', // blue.DEFAULT
         chart: {
-          '1': 'hsl(var(--chart-1))',
-          '2': 'hsl(var(--chart-2))',
-          '3': 'hsl(var(--chart-3))',
-          '4': 'hsl(var(--chart-4))',
-          '5': 'hsl(var(--chart-5))',
+          '1': '#3BA676', // green.DEFAULT
+          '2': '#158AD0', // blue.DEFAULT
+          '3': '#FF6464', // red.DEFAULT
+          '4': '#FBBF24', // amber.400
+          '5': '#64748B', // grey.DEFAULT
         },
       },
       fontFamily: {

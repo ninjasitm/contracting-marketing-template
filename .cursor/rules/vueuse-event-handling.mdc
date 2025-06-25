@@ -1,0 +1,51 @@
+---
+description:
+globs: *.vue
+alwaysApply: false
+---
+# VueUse Event Handling Guidelines
+
+## Event Bus Pattern
+
+For cross-component communication where props/emits are not suitable, use VueUse composables:
+
+```typescript
+// composables/useAppEventBus.ts
+import { useEventBus } from '@vueuse/core';
+
+export interface AppEvents {
+  customEvent: { message: string };
+  anotherEvent: number;
+}
+
+export const customEventBus = useEventBus<AppEvents['customEvent']>('custom-event');
+```
+
+## Event Listeners
+
+- Use `useEventListener` instead of direct DOM event listeners
+- Avoid `window.addEventListener` - use VueUse alternatives
+- Clean up listeners automatically with composable lifecycle
+
+## Event Handling Best Practices
+
+- Define specific event types and payloads with TypeScript interfaces
+- Create typed event buses for better type safety
+- Use proper cleanup with `onUnmounted` when necessary
+- Emit events with proper payload structures
+
+## Implementation Pattern
+
+```typescript
+// Emitting events
+customEventBus.emit({ message: 'Hello from VueUse!' });
+
+// Listening for events
+onMounted(() => {
+  const unsubscribe = customEventBus.on((payload) => {
+    console.log('[ComponentName]: Event received:', payload.message);
+  });
+
+  onUnmounted(() => unsubscribe());
+});
+```

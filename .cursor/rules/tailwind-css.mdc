@@ -1,0 +1,65 @@
+---
+description:
+globs: *.vue
+alwaysApply: false
+---
+# Tailwind CSS Guidelines
+
+## Core Principles
+
+- **Mobile-first approach**: Always start with mobile styles, then add responsive breakpoints
+- **Utility-first**: Use Tailwind's utility classes over custom CSS
+- **Consistent spacing**: Use the configured spacing scale
+- **Performance**: Purge unused styles in production
+
+## Color System
+
+Use the predefined color tokens for consistency:
+
+### Standard Colors
+- Primary: `bg-primary-500`, `text-primary-500`, `border-primary-500`
+- Backgrounds: `bg-white`, `bg-gray-50`, `bg-gray-100`
+- Text: `text-gray-900`, `text-gray-600`, `text-gray-500`
+- Borders: `border-gray-200`, `border-gray-300`
+
+## Dark Mode
+
+- Use `dark:` prefix for dark mode variants
+- Test both light and dark themes
+- Maintain proper contrast ratios
+
+### Dark Mode Colors
+- `bg-white dark:bg-gray-900`
+- `text-gray-900 dark:text-gray-100`
+- `border-gray-200 dark:border-gray-700`
+
+## Theme Integration
+
+- Use designated theme colors from the configuration
+- Maintain consistent spacing and typography
+- Follow component-based styling patterns
+
+## Responsive Design
+
+- **Mobile-first**: Start with base styles, add breakpoints up
+- **Breakpoints**: `sm:`, `md:`, `lg:`, `xl:`, `2xl:`
+- **Container**: Use `container` class with proper padding
+
+## Typography
+
+- **Headings**: Use `font-heading` for display text
+- **Body**: Use `font-sans` for body text
+- **Scale**: Follow the configured font-size scale
+
+## Component Styling
+
+- **Cards**: Use consistent padding and border radius
+- **Buttons**: Follow the button component variants
+- **Forms**: Use consistent form styling patterns
+- **Layout**: Use flexbox and grid utilities
+
+## Performance
+
+- **Purging**: Ensure unused styles are purged
+- **Critical CSS**: Consider critical path CSS
+- **Custom CSS**: Minimize custom CSS, prefer utilities

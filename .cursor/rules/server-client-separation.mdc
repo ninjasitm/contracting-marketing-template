@@ -1,7 +1,7 @@
 ---
-description: Rules for separating server and client code
-globs:
-alwaysApply: agent
+description:
+globs: server/*
+alwaysApply: false
 ---
 - Never import server-only code in client components
 - Don't import from `~/server/` directory in client components

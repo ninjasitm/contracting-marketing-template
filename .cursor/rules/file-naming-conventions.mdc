@@ -1,0 +1,42 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# File Naming Conventions
+
+## Component Files
+
+- Use PascalCase for component files (e.g., `TeamMember.vue`)
+- App-level components should use `App` prefix (e.g., `AppButton.vue`)
+- UI components follow shadcn structure in `components/ui/`
+
+## Composables
+
+- Use camelCase with 'use' prefix (e.g., `useNavbarParser.ts`)
+- Place in `composables/` directory
+- Export as default function with proper TypeScript types
+
+## Store Files
+
+- Use camelCase with 'use' prefix (e.g., `use-counter.ts`)
+- Place in `stores/` directory
+- Follow Pinia composition API patterns
+
+## Page Files
+
+- Use kebab-case for directories
+- Use `index.vue` for default pages
+- Dynamic routes use bracket notation (e.g., `[slug].vue`)
+
+## Content Files
+
+- Follow structure defined in `.pages.yml`
+- Use kebab-case for file names
+- Date prefix for blog posts (e.g., `2024-01-01-post-title.md`)
+
+## Directory Structure
+
+- Follow Nuxt's recommended folder structure
+- Group related files within appropriate directories
+- Use consistent naming across similar file types

@@ -1,0 +1,36 @@
+---
+description:
+globs: *.vue
+alwaysApply: false
+---
+# SEO & Performance Optimization
+
+## SEO Implementation
+
+- Use `useSeoMeta` for meta tags (title, description, Open Graph)
+- Use `useHead` for additional head elements
+- Implement proper meta descriptions and titles for all pages
+- Include Open Graph tags for social media sharing
+- Use structured data where appropriate
+
+## Performance Guidelines
+
+- Use `useAsyncData` or `useFetch` for data fetching with proper loading states
+- Implement skeleton loaders for async operations
+- Optimize images with `@nuxt/image` module when applicable
+- Use lazy loading for non-critical content
+- Minimize bundle size by avoiding unnecessary imports
+
+## Loading States
+
+- Show loading indicators during async operations
+- Disable form inputs during submission
+- Provide visual feedback for user actions
+- Handle error states gracefully
+
+## Browser Compatibility
+
+- Prioritize modern browsers
+- Use feature detection for newer APIs
+- Provide graceful degradation for unsupported features
+- Test in multiple browsers (Chrome, Firefox, Safari, Edge)

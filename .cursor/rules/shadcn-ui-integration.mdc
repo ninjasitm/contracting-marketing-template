@@ -1,0 +1,48 @@
+---
+description:
+globs: *.vue
+alwaysApply: false
+---
+# Shadcn/UI Integration
+
+## Core Principles
+
+This project uses **shadcn/ui** as the base component library with custom theming.
+
+## Component Structure
+
+- Use shadcn components directly for layout/system components
+- Create App* wrapper components for themed UI elements
+- Never create custom UI components without shadcn base
+
+## Import Patterns
+
+```typescript
+// ✅ REQUIRED: Import both component and types
+import { Button, type ButtonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+```
+
+## TypeScript Integration
+
+- Use VariantProps pattern for extending components
+- Maintain full type safety with shadcn variants
+- Add custom theme variants through CVA
+
+## Component Composition
+
+- Extend shadcn with App* wrappers for consistent theming
+- Preserve all accessibility features from shadcn
+- Use `cn()` utility for className operations
+
+## Theme Integration
+
+- Use standard Tailwind colors throughout
+- Use designated theme colors: `bg-gray-50`, `text-gray-900`
+- Maintain proper contrast ratios for accessibility
+
+## Available Components
+
+- Button, Card, Sheet, NavigationMenu, Badge, Separator, Input
+- All components include full accessibility support
+- Follow shadcn documentation for component APIs

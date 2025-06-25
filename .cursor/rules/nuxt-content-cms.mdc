@@ -1,0 +1,42 @@
+---
+description:
+globs: *.vue
+alwaysApply: false
+---
+# Nuxt Content & PagesCMS Integration
+
+This project uses a flat-file CMS approach with PagesCMS.org and Nuxt Content.
+
+## Content Structure
+
+- Follow PagesCMS documentation: https://pagescms.org/docs/
+- Files in `content/` represent the CMS structure
+- Use Markdown (`.md`) for primary content files
+- Use JSON (`.json`) for structured data or configuration
+
+## Data Fetching
+
+- Use `queryContent` composable for extracting CMS data
+- Implement proper error handling for content queries
+- Use `useAsyncData` pattern for data fetching:
+
+```typescript
+const { data: pageContent, error } = await useAsyncData('page-data', () =>
+  queryContent('/path/to/content').findOne()
+);
+if (error.value) {
+  console.error('[ContentQuery]: Error fetching content:', error.value);
+}
+```
+
+## Content Management
+
+- Use YAML frontmatter for metadata (title, description, author, date)
+- Use `{{ $doc.variable }}` for data binding in templates
+- Leverage `<ContentRenderer>` and `<ContentDoc>` components
+
+## File Conventions
+
+- Follow structure defined in `.pages.yml`
+- Use consistent naming for content files
+- Organize content logically within subdirectories

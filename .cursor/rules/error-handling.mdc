@@ -1,0 +1,40 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# Error Handling Guidelines
+
+## Consistent Error Patterns
+
+- Use `try-catch` blocks for asynchronous operations that might fail
+- Implement proper error logging with bracket-style identifiers:
+  ```typescript
+  console.error('[ServiceName]: Error details:', error);
+  ```
+
+## Nuxt Error Handling
+
+- Use `showError` for page-level errors
+- Create custom error pages for user-friendly error messages
+- Use `clearError` when recovering from errors
+
+## Component Error Handling
+
+- Use component error boundaries for isolating errors within UI parts
+- Provide fallback UI for failed components
+- Handle loading and error states in data fetching
+
+## API Error Handling
+
+- Implement consistent error responses
+- Use proper HTTP status codes
+- Provide meaningful error messages to users
+- Log detailed errors for debugging while showing sanitized messages to users
+
+## Form Validation
+
+- Implement client-side validation with proper error messages
+- Handle server-side validation errors
+- Provide clear feedback for validation failures
+- Use proper ARIA attributes for error announcements

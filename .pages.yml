@@ -1,31 +1,127 @@
 media:
   input: public/media
-  output: /media
+  output: /mediahero:
+    label: Hero
+    type: object
+    fields:
+      - name: title
+        label: Title
+        type: string
+      - name: description
+        label: Description
+        type: rich-text
+      - name: mode
+        label: Hero Mode
+        type: select
+        options:
+          values: [text, typer]
+        default: text
+      - name: highlightText
+        label: Highlight Text
+        type: string
+      - name: suffix
+        label: Suffix Text
+        type: string
+      - name: typerBegin
+        label: Typer Begin Text
+        type: string
+      - name: typerText
+        label: Typer Text Array
+        type: string
+        list: true
+      - name: typerEnd
+        label: Typer End Text
+        type: string
+      - name: actionAlignment
+        label: Action Alignment
+        type: select
+        options:
+          values: [row, column]
+      - name: actions
+        label: Actions
+        type: object
+        list: true
+        fields:
+          - name: text
+            label: Action Text
+            type: string
+          - name: url
+            label: Action URL
+            type: string
+          - name: actionClass
+            type: string
+            default: "bg-primary hover:bg-primary/90 text-white"
+          - name: type
+            label: Action Type
+            type: select
+            options:
+              values: [button, link]
+            default: button
+          - name: size
+            label: Action Size
+            type: select
+            options:
+              values: [tiny, small, medium, large, full]
+      - name: size
+        label: Hero Size
+        type: select
+        options:
+          values: [tiny, small, medium, large, full]
+        default: medium
+      - name: alignment
+        label: Hero Text Alignment
+        type: select
+        options:
+          values: [left, center, right]
+        default: left
+      - name: overlayClass
+        label: Overlay Class
+        type: string
+        description: CSS class for overlay (e.g., bg-black/[0.5])
+      - name: textColor
+        label: Text Color
+        type: string
+        description: Tailwind CSS text color class (e.g., text-white)
+      - name: backgroundImage
+        list: true
+        label: Background Image
+        multiple: true
+        multiple.max: 5
+        type: image
+        extensions: ["jpg", "jpeg", "png", "webp", "gif"]
+        options:
+          path: media/home
+          categories: [image]
+  callToAction:
+    label: Call to Action
+    type: object
+    fields:
+      - name: title
+        label: Title
+        type: string
+      - name: description
+        label: Description
+        type: rich-text
+      - name: primaryButtonText
+        label: Primary Button Text
+        type: string
+      - name: primaryButtonUrl
+        label: Primary Button URL
+        type: string
+      - name: backgroundColor
+        label: Background Color
+        type: string
+      - name: textColor
+        label: Text Color
+        type: string
 content:
   - name: homePage
     type: file
     label: Home Page
     path: content/_pages/home.json
     fields:
-      - name: banner
-        label: Banner
-        type: object
-        fields:
-          - name: title
-            label: Title
-            type: string
-          - name: description
-            label: Description
-            type: rich-text
-          - name: actionText
-            label: Action Text
-            type: string
-          - name: actionUrl
-            label: Action URL
-            type: string
-          - name: backgroundImage
-            label: Background Image
-            type: image
+      - name: hero
+        component: hero
       - name: coreCompetencies
         label: Core Competencies
         type: object
@@ -68,17 +164,15 @@ content:
               - name: description
                 label: Description
                 type: string
+      - name: callToAction
+        component: callToAction
   - name: servicesPage
     type: file
     label: Services Page
     path: content/_pages/services.json
     fields:
-      - name: title
-        label: Title
-        type: string
-      - name: description
-        label: Description
-        type: rich-text
+      - name: hero
+        component: hero
       - name: services
         label: Services
         type: object
@@ -101,32 +195,14 @@ content:
             type: string
             list: true
       - name: callToAction
-        label: Call to Action
-        type: object
-        fields:
-          - name: title
-            label: Title
-            type: string
-          - name: description
-            label: Description
-            type: rich-text
-          - name: buttonText
-            label: Button Text
-            type: string
-          - name: buttonUrl
-            label: Button URL
-            type: string
+        component: callToAction
   - name: contactPage
     type: file
     label: Contact Page
     path: content/_pages/contact.json
     fields:
-      - name: title
-        label: Title
-        type: string
-      - name: description
-        label: Description
-        type: rich-text
+      - name: hero
+        component: hero
       - name: form
         label: Form
         type: object
@@ -184,100 +260,163 @@ content:
             type: string
           - name: formId
             type: string
+      - name: callToAction
+        component: callToAction
   - name: aboutPage
     type: file
     label: About Page
     path: content/_pages/about.json
     fields:
-      - name: heading
-        label: Heading
-        type: string
-      - name: title
-        label: Title
-        type: string
-      - name: description
-        label: Description
-        type: rich-text
-      - name: teamMembersTitle
-        label: Team Members Title
-        type: string
-  - name: teamMembers
-    label: Team Members
-    type: file
-    path: content/_about/teamMembers.json
-    fields:
-      - name: members
-        label: Members
+      - name: hero
+        component: hero
+      - name: aboutSections
+        label: About Sections
         type: object
         list: true
         fields:
-          - name: name
-            label: Name
-            type: string
-          - name: position
-            label: Position
+          - name: heading
+            label: Heading
             type: string
           - name: description
             label: Description
             type: rich-text
-          - name: photo
-            label: Photo
+          - name: image
+            label: Image
             type: image
             options:
-              path: media/avatars
-          - name: linkedinUrl
-            label: LinkedIn URL
+              path: media/images
+              categories: [image]
+          - name: imagePosition
+            label: Image Position
+            type: select
+            options:
+              values: [left, right]
+      - name: team
+        label: Team
+        type: object
+        fields:
+          - name: title
+            label: Title
             type: string
-            pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+          - name: description
+            label: Description
+            type: rich-text
+          - name: teamMembers
+            label: Team Members
+            type: object
+            list: true
+            fields:
+              - name: name
+                label: Name
+                type: string
+              - name: position
+                label: Position
+                type: string
+              - name: bio
+                label: Bio
+                type: text
+              - name: image
+                label: Image
+                type: image
+                options:
+                  path: media/team
+                  categories: [image]
+              - name: linkedin
+                label: LinkedIn Profile URL
+                type: string
+      - name: callToAction
+        component: callToAction
+  - name: teamMembers
+    label: Team Members
+    type: collection
+    path: content/_about/teamMembers
+    view:
+      fields: [name, position, description, photo, linkedinUrl]
+      sort: [order]
+      primary: name
+      default:
+        search: ""
+        sort: order
+        order: asc
+    fields:
+      - name: order
+        label: Order
+        type: number
+        default: 0
+      - name: name
+        label: Name
+        type: string
+        required: true
+      - name: position
+        label: Position
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: rich-text
+        required: true
+      - name: photo
+        label: Photo
+        type: image
+        required: true
+        options:
+          path: media/avatars
+      - name: featurePhoto
+        label: Feature Photo
+        type: image
+        options:
+          path: media/avatars
+      - name: linkedinUrl
+        label: LinkedIn URL
+        type: string
+        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+        required: true
   - name: processPage
     type: file
     label: Process Page
     path: content/_pages/process.json
     fields:
-      - name: title
-        label: Title
-        type: string
-      - name: description
-        label: Description
-        type: rich-text
-      - name: sections
-        label: Sections
+      - name: hero
+        component: hero
+      - name: processSections
+        label: Process Sections
         type: object
         list: true
         fields:
-          - name: title
-            label: Title
+          - name: heading
+            label: Heading
             type: string
           - name: description
             label: Description
             type: rich-text
-          - name: items
-            label: Items
-            type: string
+          - name: steps
+            label: Steps
+            type: object
             list: true
+            fields:
+              - name: title
+                label: Step Title
+                type: string
+              - name: description
+                label: Step Description
+                type: rich-text
+              - name: icon
+                label: Step Icon
+                type: image
+                options:
+                  path: media/work/processes
+                  categories: [image]
+      - name: callToAction
+        component: callToAction
   - name: workPage
     type: file
     label: Work Page
     path: content/_pages/work.json
     fields:
-      - name: title
-        label: Title
-        type: string
-      - name: description
-        label: Description
-        type: rich-text
-      - name: featuredClient
-        label: Featured Client
-        type: object
-        fields:
-          - slug: client
-            label: Client
-            type: string
-          - name: description
-            label: Description
-            type: rich-text
-      - name: footer
-        label: Footer
+      - name: hero
+        component: hero
+      - name: clients
+        label: Clients
         type: object
         fields:
           - name: title
@@ -286,6 +425,23 @@ content:
           - name: description
             label: Description
             type: rich-text
+          - name: clientList
+            label: Client List
+            type: object
+            list: true
+            fields:
+              - name: name
+                label: Client Name
+                type: string
+              - name: logo
+                label: Client Logo
+                type: image
+                options:
+                  path: media/client/logos
+                  categories: [image]
+              - name: url
+                label: Client URL
+                type: string
       - name: currentCategory
         label: Current Category
         type: string
@@ -293,6 +449,8 @@ content:
         label: Categories
         type: string
         list: true
+      - name: callToAction
+        component: callToAction
   - name: work
     type: collection
     label: Work

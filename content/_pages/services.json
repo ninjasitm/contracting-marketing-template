@@ -1,6 +1,8 @@
 {
-  "title": "Lorem Ipsum Services",
-  "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "hero": {
+    "title": "Lorem Ipsum Services",
+    "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  },
   "services": [
     {
       "title": "Lorem Ipsum",
@@ -39,7 +41,7 @@
   "callToAction": {
     "title": "Ready to Begin?",
     "description": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit sed quia consequuntur.",
-    "buttonText": "Contact Us",
-    "buttonUrl": "/contact"
+    "primaryButtonText": "Contact Us",
+    "primaryButtonUrl": "/contact"
   }
 }

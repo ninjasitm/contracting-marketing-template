@@ -14,13 +14,18 @@ useHead({ title: 'Test Page' });
 <template>
   <LayoutPageWrapper>
     <LayoutPageHeader>
-      <LayoutPageTitle text="Testing" class="capitalize" />
+      <LayoutPageTitle
+        text="Testing"
+        class="capitalize"
+      />
     </LayoutPageHeader>
     <LayoutPageSection>
       <LayoutPageSectionTitle text="Stores Test" />
       <!-- store::counter -->
       <div class="mb-6">
-        <div class="mb-2">Counter : {{ counter.count }}</div>
+        <div class="mb-2">
+          Counter : {{ counter.count }}
+        </div>
         <div
           class="flex flex-col items-center justify-items-center space-y-2 md:space-y-0 md:flex-row md:space-x-2"
         >

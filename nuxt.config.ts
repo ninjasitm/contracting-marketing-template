@@ -95,6 +95,7 @@ export default defineNuxtConfig({
   alias: {
     '@': resolve('./'),
     '~': resolve('./'),
+    '@content': resolve('./content'),
   },
 
   // module::pinia

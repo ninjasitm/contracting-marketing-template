@@ -2,10 +2,10 @@
 import moment from 'moment';
 import type { ParsedContent } from '@nuxt/content';
 import OpenLink from '~/public/images/open-link.svg';
-import clients from '@/content/clients.json';
+import clients from '@content/clients.json';
 import Loading from '@/components/layouts/Page/Loading.vue';
 import ProjectCard from '@/components/work/ProjectCard.vue';
-import type { Client, Project } from '@/utils/types';
+import type { Client, Project } from '@/types/types';
 
 // const _backgrounds = Array.from(
 //   { length: 5 },
@@ -43,7 +43,7 @@ const project = {
   description: projectParsedContent.description,
   client: projectParsedContent.client,
   url: projectParsedContent.url,
-  bannerImage: projectParsedContent.bannerImage,
+  heroImage: projectParsedContent.heroImage,
   categories: projectParsedContent.categories,
   problem: projectParsedContent.problem,
   solution: projectParsedContent.solution,
@@ -113,10 +113,9 @@ isLoading.value = false;
     v-else-if="project && project.slug"
     class="flex flex-col items-center mt-40 w-full max-md:mt-10 max-md:max-w-full px-4 lg:px-10"
   >
-    <div
-      class="flex w-full text-xl font-light align-center justify-center max-md:max-w-full mt-20"
-    >
-      <UiButton
+    <LayoutPageSection class="flex w-full text-xl font-light align-center justify-center max-md:max-w-full mt-20">
+      <AppButton
+        variant="outline"
         :to="{
           name: 'work',
           params: { category: project.client.slug },
@@ -131,13 +130,11 @@ isLoading.value = false;
           alt=""
           class="object-cover self-stretch my-auto w-6 aspect-square"
         />&nbsp;<span>Back</span>
-      </UiButton>
-    </div>
-    <div class="flex flex-col text-black w-full max-w-screen-xl mt-20 mx-auto">
+      </AppButton>
+    </LayoutPageSection>
+    <LayoutPageSection class="flex flex-col text-black w-full max-w-screen-xl mt-20 mx-auto">
       <div class="flex flex-col px-2 w-full lg:px-32 max-md:max-w-full">
-        <div
-          class="flex flex-col w-full text-xl font-light text-center max-md:max-w-full"
-        >
+        <div class="flex flex-col w-full text-xl font-light text-center max-md:max-w-full">
           <h1 class="leading-relaxed max-md:max-w-full">
             <template v-if="client.logo">
               <NuxtImg
@@ -155,13 +152,12 @@ isLoading.value = false;
             class="self-center mt-4 text-6xl tracking-tighter uppercase max-md:max-w-full max-md:text-4xl"
             v-html="project.title"
           />
-          <div
-            class="flex flex-wrap gap-4 justify-center items-center self-center mt-4 text-base"
-          >
-            <UiButton
+          <div class="flex flex-wrap gap-4 justify-center items-center self-center mt-4 text-base">
+            <AppButton
               v-if="project.url"
               size="lg"
-              class="text-nowrap bg-primary text-white"
+              variant="default"
+              class="text-nowrap"
               :href="project.url"
             >
               Visit {{ project.title }}
@@ -169,19 +165,21 @@ isLoading.value = false;
                 class="stroke-white"
                 stroke="#fff"
               />
-            </UiButton>
+            </AppButton>
           </div>
           <MDC
             v-if="project.description"
             class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-center"
             :value="project.description"
           />
-          <div
-            class="flex flex-wrap gap-4 justify-center items-center self-center mt-4 text-base"
-          >
-            <UiButton v-if="project.isOngoing">
+          <div class="flex flex-wrap gap-4 justify-center items-center self-center mt-4 text-base">
+            <AppButton
+              v-if="project.isOngoing"
+              variant="secondary"
+              size="sm"
+            >
               Ongoing
-            </UiButton>
+            </AppButton>
             <time
               v-else
               :datetime="project.date"
@@ -191,29 +189,27 @@ isLoading.value = false;
             </time>
           </div>
         </div>
-        <div
-          class="flex flex-wrap gap-4 justify-center items-start self-center mt-4 text-base"
-        >
-          <UiButton
+        <div class="flex flex-wrap gap-4 justify-center items-start self-center mt-4 text-base">
+          <AppButton
             v-for="(category, index) in project.categories"
             :key="index"
-            class="roundex-full text-nowrap"
-            outline
-            :uppercase="false"
+            variant="outline"
+            size="sm"
+            class="text-nowrap"
           >
             {{ category }}
-          </UiButton>
+          </AppButton>
         </div>
       </div>
       <NuxtImg
-        v-if="project.bannerImage"
+        v-if="project.heroImage"
         placeholder
         loading="lazy"
         class="object-cover mt-20 h-[240px] md:h-[640px] w-full rounded-2xl max-md:mt-10 max-md:max-w-full hover:scale-105 transition-transform duration-300"
-        :src="project.bannerImage"
+        :src="project.heroImage"
         :alt="project.title"
       />
-    </div>
+    </LayoutPageSection>
 
     <div>
       <section
@@ -293,17 +289,13 @@ isLoading.value = false;
         id="process-items"
         class="flex flex-col mt-2 max-w-full font-light text-black mx-auto justify-center align-center"
       >
-        <div
-          class="flex flex-col md:flex-row flex-wrap gap-5 items-start self-center mb-10 w-full text-base leading-7"
-        >
+        <div class="flex flex-col md:flex-row flex-wrap gap-5 items-start self-center mb-10 w-full text-base leading-7">
           <div
             v-for="(item, index) in project.process.items"
             :key="index"
             class="flex flex-wrap flex-col md:flex-row w-full md:w-[48%]"
           >
-            <div
-              class="bg-white w-[144px] h-[144px] flex align-center justify-center"
-            >
+            <div class="bg-white w-[144px] h-[144px] flex align-center justify-center">
               <NuxtImg
                 v-if="item.imgSrc"
                 placeholder
@@ -349,9 +341,7 @@ isLoading.value = false;
         id="design-items"
         class="flex flex-col max-w-full w-full mx-auto"
       >
-        <div
-          class="flex flex-wrap gap-5 justify-center items-start self-center md:mt-10 w-full"
-        >
+        <div class="flex flex-wrap gap-5 justify-center items-start self-center md:mt-10 w-full">
           <div
             v-for="(item, index) in project.design.items"
             :key="index"
@@ -392,9 +382,7 @@ isLoading.value = false;
         id="result-items"
         class="flex mt-2 max-w-full w-full mx-auto"
       >
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 flex-wrap gap-5 justify-center align-center mb-10 w-full text-inherit lg:max-w-screen-md mx-auto"
-        >
+        <div class="grid grid-cols-1 md:grid-cols-2 flex-wrap gap-5 justify-center align-center mb-10 w-full text-inherit lg:max-w-screen-md mx-auto">
           <div
             v-for="(item, index) in project.result.items"
             :key="index"
@@ -408,9 +396,7 @@ isLoading.value = false;
               backgroundPosition: 'center',
             }"
           >
-            <div
-              class="flex grow relative flex-col justify-start px-4 lg:px-10 py-10 w-full aspect-[0.863] max-md:px-5"
-            >
+            <div class="flex grow relative flex-col justify-start px-4 lg:px-10 py-10 w-full aspect-[0.863] max-md:px-5">
               <div class="flex relative flex-col mb-0 max-md:mb-2.5">
                 <h3 class="text-3xl tracking-tighter text-left">
                   {{ item.title }}
@@ -427,17 +413,16 @@ isLoading.value = false;
       </section>
     </div>
 
-    <nav
-      class="flex flex-wrap gap-5 justify-between items-center max-w-full w-full mt-20 mx-auto max-md:mt-10 mb-10"
-    >
-      <UiButton
+    <nav class="flex flex-wrap gap-5 justify-between items-center max-w-full w-full mt-20 mx-auto max-md:mt-10 mb-10">
+      <AppButton
         v-if="previousProject?.slug"
-        class="flex gap-1 items-center self-stretch p-4 my-auto w-14 h-14 rounded-lg order-0"
-        aria-label="Previous project"
+        variant="outline"
         :to="{
           name: 'work-slug',
           params: { slug: previousProject.slug },
         }"
+        class="flex gap-1 items-center self-stretch p-4 my-auto w-14 h-14 rounded-lg order-0"
+        aria-label="Previous project"
       >
         <NuxtImg
           placeholder
@@ -446,7 +431,7 @@ isLoading.value = false;
           alt=""
           class="object-cover self-stretch my-auto w-6 aspect-square"
         />
-      </UiButton>
+      </AppButton>
       <div
         v-if="nextProject?.slug"
         class="flex flex-col justify-center items-center self-stretch my-auto text-black min-w-[240px] w-[635px] max-md:max-w-full order-first md:order-1"
@@ -459,14 +444,15 @@ isLoading.value = false;
           v-html="nextProject.title"
         />
       </div>
-      <UiButton
+      <AppButton
         v-if="nextProject?.slug"
-        class="flex gap-1 items-center self-stretch p-4 my-auto w-14 h-14 rounded-lg order-1"
-        aria-label="Next project"
+        variant="outline"
         :to="{
           name: 'work-slug',
           params: { slug: nextProject.slug },
         }"
+        class="flex gap-1 items-center self-stretch p-4 my-auto w-14 h-14 rounded-lg order-1"
+        aria-label="Next project"
       >
         <NuxtImg
           placeholder
@@ -475,13 +461,11 @@ isLoading.value = false;
           alt=""
           class="object-cover self-stretch my-auto w-6 aspect-square"
         />
-      </UiButton>
+      </AppButton>
     </nav>
   </div>
   <template v-else>
-    <div
-      class="min-h-[450px] flex flex-col align-center justify-center mt-60 max-md:max-w-full px-4 lg:px-10"
-    >
+    <div class="min-h-[450px] flex flex-col align-center justify-center mt-60 max-md:max-w-full px-4 lg:px-10">
       <h2 class="text-4xl">
         Oops! We didn't find that project.
       </h2>

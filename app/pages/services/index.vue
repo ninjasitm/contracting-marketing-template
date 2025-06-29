@@ -1,54 +1,40 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
 import ServiceFeature from '../../../components/services/ServiceFeature.vue';
-import config from '@@/content/_pages/services.json';
-import type { Service, ServicesPageState } from '@/utils/types';
+import _config from '@content/_pages/services.json';
+import type { Service, BasePageState } from '@/types/types';
+
+export interface ServicesPageState extends BasePageState {
+  services?: Service[];
+}
 
 // Define page metadata
 definePageMeta({ layout: 'page' });
 
+const config = _config as ServicesPageState;
+
 // Create reactive state for the page content
 const state: ServicesPageState = reactive({
-  title: config.title,
-  description: config.description,
-  services: config.services.map(
-    (service: Record<string, unknown>): Service => ({
-      title: service.title as string,
-      icon: service.icon as string,
-      description: service.description as string,
-      features: (service.features as string[]) || [],
-    }),
-  ),
-  callToAction: {
-    title: config.callToAction.title,
-    description: config.callToAction.description,
-    buttonText: config.callToAction.buttonText,
-    buttonUrl: config.callToAction.buttonUrl,
-  },
+  hero: config.hero,
+  services: config.services as Service[],
+  callToAction: config.callToAction,
 });
 </script>
 
 <template>
-  <div
-    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-2"
-  >
-    <!-- Page header section -->
-    <section class="flex flex-col justify-center pt-40 pb-20 lg:pt-60">
-      <h1
-        class="text-6xl font-light tracking-tighter text-center text-black uppercase whitespace-nowrap mx-auto max-md:max-w-full max-md:text-4xl"
-        v-html="state.title"
-      />
-      <div
-        class="mt-4 text-lg font-light text-center max-w-[800px] mx-auto max-md:max-w-full"
-      >
-        <MDC :value="state.description" />
-      </div>
-    </section>
+  <div class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-2">
+    <!-- Hero Section using AppHero -->
+    <AppHero
+      :title="state.hero?.title"
+      :description="state.hero?.description"
+      :mode="state.hero?.mode || 'text'"
+      :alignment="state.hero?.alignment || 'center'"
+      :size="state.hero?.size || 'medium'"
+      class="pt-40 pb-20 lg:pt-60"
+    />
 
     <!-- Services list section -->
-    <section
-      class="flex flex-col font-light text-black w-full max-w-screen-xl mx-auto mt-10"
-    >
+    <LayoutPageSection class="flex flex-col font-light text-black w-full max-w-screen-xl mx-auto mt-10">
       <hr class="w-full border border-black">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
         <ServiceFeature
@@ -60,27 +46,16 @@ const state: ServicesPageState = reactive({
           :features="service.features"
         />
       </div>
-    </section>
+    </LayoutPageSection>
 
     <!-- Call to Action section -->
-    <section
-      class="flex flex-col text-black w-full max-w-screen-xl mx-auto mt-20 p-8 bg-gray-100 rounded-lg"
-    >
-      <h2
-        class="text-3xl font-light tracking-tight text-center"
-        v-html="state.callToAction.title"
-      />
-      <div class="mt-4 text-lg font-light text-center mx-auto max-w-[800px]">
-        <MDC :value="state.callToAction.description" />
-      </div>
-      <div class="flex justify-center mt-8">
-        <NuxtLink
-          :to="state.callToAction.buttonUrl"
-          class="px-8 py-3 text-white bg-sky-600 rounded-md hover:bg-sky-700 transition-colors"
-        >
-          {{ state.callToAction.buttonText }}
-        </NuxtLink>
-      </div>
-    </section>
+    <AppCTA
+      v-if="state.callToAction"
+      :title="state.callToAction.title"
+      :description="state.callToAction.description"
+      :primary-action="state.callToAction.primaryButtonText"
+      class="w-full max-w-screen-xl mx-auto mt-20"
+      @primary-action="navigateTo(state.callToAction.primaryButtonUrl || '/')"
+    />
   </div>
 </template>

@@ -37,7 +37,9 @@ const availableThemes = [
       as="div"
       class="relative flex items-center"
     >
-      <HeadlessListboxLabel class="sr-only"> Theme </HeadlessListboxLabel>
+      <HeadlessListboxLabel class="sr-only">
+        Theme
+      </HeadlessListboxLabel>
       <HeadlessListboxButton type="template">
         <button
           type="button"
@@ -70,9 +72,18 @@ const availableThemes = [
           }"
         >
           <span class="text-sm mr-2 flex items-center">
-            <Icon v-if="theme.key === 'light'" name="uil:sun" />
-            <Icon v-else-if="theme.key === 'dark'" name="uil:moon" />
-            <Icon v-else-if="theme.key === 'system'" name="uil:laptop" />
+            <Icon
+              v-if="theme.key === 'light'"
+              name="uil:sun"
+            />
+            <Icon
+              v-else-if="theme.key === 'dark'"
+              name="uil:moon"
+            />
+            <Icon
+              v-else-if="theme.key === 'system'"
+              name="uil:laptop"
+            />
           </span>
           {{ theme.text }}
         </HeadlessListboxOption>

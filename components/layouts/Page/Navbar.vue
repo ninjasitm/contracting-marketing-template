@@ -13,9 +13,9 @@ const menus = computed(
   () => (config?.layout?.page?.navbar?.menus || []) as LayoutPageNavbarMenu[],
 );
 
-const links = computed((): Record<string, string> => {
-  return (config?.layout?.page?.navbar?.links || {}) as Record<string, string>;
-});
+// const links = computed((): Record<string, string> => {
+//   return (config?.layout?.page?.navbar?.links || {}) as Record<string, string>;
+// });
 
 // drawer
 const showDrawer = ref(false);
@@ -48,21 +48,17 @@ const getSocialIcon = (title: string) => {
     <div
       v-if="config.layout?.page?.navbar?.hasBanner"
       class="navbar-banner w-full h-[47px] flex overflow-hidden space-x-4 group"
-      :style="
-        config.layout?.page?.navbar?.bannerStyle || {
-          backgroundColor: '#4A7C3C',
-        }
+      :style="config.layout?.page?.navbar?.bannerStyle || {
+        backgroundColor: '#4A7C3C',
+      }
       "
     >
-      <div
-        class="align-center flex space-x-4 animate-loop-scroll group-hover:paused"
-      >
+      <div class="align-center flex space-x-4 animate-loop-scroll group-hover:paused">
         <span
           v-for="info in config.companyInfo"
           :key="info.title"
           class="text-white text-xs px-2 py-1 flex items-center w-[max-content]"
-          >{{ info.title }}<strong class="ml-2">{{ info.value }}</strong></span
-        >
+        >{{ info.title }}<strong class="ml-2">{{ info.value }}</strong></span>
       </div>
       <div
         class="align-center flex space-x-4 animate-loop-scroll group-hover:paused"
@@ -72,18 +68,18 @@ const getSocialIcon = (title: string) => {
           v-for="info in config.companyInfo"
           :key="info.title"
           class="text-white text-xs px-2 py-1 flex items-center w-[max-content]"
-          >{{ info.title }} <strong class="ml-2">{{ info.value }}</strong></span
-        >
+        >{{ info.title }} <strong class="ml-2">{{ info.value }}</strong></span>
       </div>
     </div>
     <!-- content -->
-    <div
-      class="w-full px-4 lg:px-10 max-w-screen-xl flex-1 flex items-center justify-between mx-auto"
-    >
+    <div class="w-full px-4 lg:px-10 max-w-screen-xl flex-1 flex items-center justify-between mx-auto">
       <!-- title -->
       <div>
         <slot name="title">
-          <NuxtLink :to="{ name: 'index' }" class="font-bold text-lg">
+          <NuxtLink
+            :to="{ name: 'index' }"
+            class="font-bold text-lg"
+          >
             <NuxtImg
               v-if="config.logo"
               placeholder
@@ -91,7 +87,10 @@ const getSocialIcon = (title: string) => {
               :alt="config.title"
               class="w-auto h-[50px] md:h-[50px] object-contain"
             />
-            <span v-else class="text-2xl font-bold text-green-500">{{
+            <span
+              v-else
+              class="text-2xl font-bold text-green-500"
+            >{{
               config.title
             }}</span>
           </NuxtLink>
@@ -104,7 +103,10 @@ const getSocialIcon = (title: string) => {
       >
         <div class="flex space-x-4 text-sm items-center">
           <!-- dynamic menus -->
-          <template v-for="(item, i) in menus" :key="i">
+          <template
+            v-for="(item, i) in menus"
+            :key="i"
+          >
             <LayoutPageNavbarMenuWrapper :menu="item" />
           </template>
         </div>
@@ -118,18 +120,19 @@ const getSocialIcon = (title: string) => {
             rel="noopener noreferrer"
           >
             <span class="sr-only">{{ link.title }}</span>
-            <div
-              class="w-4 h-4 flex items-center justify-center rounded-full hover:border-orange-400"
-            >
-              <Icon :name="getSocialIcon(link.title)" class="w-4 h-4" />
+            <div class="w-4 h-4 flex items-center justify-center rounded-full hover:border-orange-400">
+              <Icon
+                :name="getSocialIcon(link.title)"
+                class="w-4 h-4"
+              />
             </div>
           </a>
         </div>
         <!-- others -->
-        <div class="pl-4 flex space-x-4 text-xl align-center items-center">
-          <!-- todo: feat/localization -->
-          <!-- TODO: Add language switcher when localization is implemented -->
-          <a
+        <!-- <div class="pl-4 flex space-x-4 text-xl align-center items-center"> -->
+        <!-- todo: feat/localization -->
+        <!-- TODO: Add language switcher when localization is implemented -->
+        <!-- <a
             v-if="links.capabilities?.length"
             download="nitm-capabilities-statement.pdf"
             class="gap-2 p-4 px-2 text-sm tracking-tight bg-transparent rounded-lg border border-black dark:text-white text-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -143,11 +146,11 @@ const getSocialIcon = (title: string) => {
             :to="links.startWorkshop"
           >
             Start a Workshop
-          </NuxtLink>
-          <!-- <LayoutPageNavbarDropdownThemeSwitcher
+          </NuxtLink> -->
+        <!-- <LayoutPageNavbarDropdownThemeSwitcher
             class="gap-2 p-4 text-sm tracking-tight"
           /> -->
-        </div>
+        <!-- </div> -->
       </div>
       <!-- drawer:btn -->
       <div
@@ -161,15 +164,24 @@ const getSocialIcon = (title: string) => {
             class="text-gray-400 hover:text-gray-100 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             @click.prevent="() => (showDrawer = !showDrawer)"
           >
-            <Icon name="heroicons:bars-3-bottom-right-20-solid" size="32px" />
+            <Icon
+              name="heroicons:bars-3-bottom-right-20-solid"
+              size="32px"
+            />
           </button>
         </div>
       </div>
     </div>
     <!-- misc -->
     <!-- drawer -->
-    <UiSheet :open="showDrawer" @update:open="showDrawer = $event">
-      <UiSheetContent side="right" class="w-full sm:w-[400px]">
+    <UiSheet
+      :open="showDrawer"
+      @update:open="showDrawer = $event"
+    >
+      <UiSheetContent
+        side="right"
+        class="w-full sm:w-[400px]"
+      >
         <UiSheetHeader class="text-left">
           <UiSheetTitle>Menu</UiSheetTitle>
         </UiSheetHeader>
@@ -185,7 +197,10 @@ const getSocialIcon = (title: string) => {
           </NuxtLink>
 
           <!-- Dynamic menus -->
-          <template v-for="(item, i) in menus" :key="i">
+          <template
+            v-for="(item, i) in menus"
+            :key="i"
+          >
             <template v-if="item?.type === 'link'">
               <NuxtLink
                 :to="parseMenuRoute(item.to)"
@@ -199,8 +214,7 @@ const getSocialIcon = (title: string) => {
                     'text-gray-900 dark:text-gray-100 font-bold': isActive,
                     'text-gray-700 dark:text-gray-300': !isActive,
                   }"
-                  >{{ parseMenuTitle(item?.title) }}</span
-                >
+                >{{ parseMenuTitle(item?.title) }}</span>
               </NuxtLink>
             </template>
 
@@ -259,8 +273,7 @@ const getSocialIcon = (title: string) => {
                                 ? 'text-gray-900 dark:text-gray-100 font-bold'
                                 : 'text-gray-700 dark:text-gray-300',
                             ]"
-                            >{{ parseMenuTitle(child?.title) }}</span
-                          >
+                          >{{ parseMenuTitle(child?.title) }}</span>
                         </NuxtLink>
                       </template>
                     </HeadlessDisclosurePanel>
@@ -271,7 +284,7 @@ const getSocialIcon = (title: string) => {
           </template>
 
           <!-- Action Buttons -->
-          <div class="space-y-4 pt-4">
+          <!-- <div class="space-y-4 pt-4">
             <a
               v-if="links.capabilities?.length"
               class="flex justify-center items-center text-base h-[4rem] w-full border border-border rounded-md hover:bg-accent transition-colors"
@@ -290,7 +303,7 @@ const getSocialIcon = (title: string) => {
             >
               <span class="text-lg">Start a Workshop</span>
             </NuxtLink>
-          </div>
+          </div> -->
 
           <!-- Social Links -->
           <div class="pt-6 border-t">
@@ -304,7 +317,10 @@ const getSocialIcon = (title: string) => {
                 rel="noopener noreferrer"
               >
                 <span class="sr-only">{{ link.title }}</span>
-                <Icon :name="getSocialIcon(link.title)" class="w-5 h-5" />
+                <Icon
+                  :name="getSocialIcon(link.title)"
+                  class="w-5 h-5"
+                />
               </a>
             </div>
           </div>

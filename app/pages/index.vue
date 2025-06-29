@@ -1,96 +1,94 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 import { useHead } from 'nuxt/app';
-import config from '../content/_pages/home.json';
+import _config from '@content/_pages/home.json';
+import type { CallToAction, BasePageState } from '@/types/types';
 // Nuxt 3 composables are auto-imported, but for type safety, import from 'nuxt/app'
 import { definePageMeta } from '#imports';
 
+export interface HomePageState extends BasePageState {
+  coreCompetencies?: {
+    title?: string;
+    description?: string;
+    items?: {
+      heading: string;
+      items: string[];
+    }[];
+  };
+  differentiators?: {
+    title?: string;
+    items?: {
+      icon: string;
+      description: string;
+    }[];
+  };
+  callToAction?: CallToAction;
+}
+
 definePageMeta({ layout: 'page' });
+
+const config = _config as HomePageState;
+
 useHead({
   titleTemplate: '',
-  title: config?.banner?.title || 'Contracting Starter',
+  title: config?.hero?.title || 'Contracting Starter',
 });
 
-interface Differentiator {
-  icon: string;
-  description: string;
-}
+// Convert the config to properly typed state
+const state = reactive<HomePageState>({
+  hero: config.hero ? {
+    ...config.hero,
+    actions: config.hero.actions?.map(action => ({
+      ...action,
+      type: (action.type === 'button' || action.type === 'link') ? action.type : 'button'
+    }))
+  } : undefined,
+  coreCompetencies: config.coreCompetencies,
+  differentiators: config.differentiators,
+  callToAction: config.callToAction
+});
 
-interface CoreCompetency {
-  heading: string;
-  items: string[];
-}
+// Transform hero data for AppHero component
+const heroData = computed(() => {
+  if (!state.hero) return {};
 
-interface Banner {
-  title?: string;
-  description?: string;
-  actionText?: string;
-  actionUrl?: string;
-  backgroundImage?: string;
-}
-
-interface CoreCompetencies {
-  title?: string;
-  description?: string;
-  items?: CoreCompetency[];
-}
-
-interface Differentiators {
-  title?: string;
-  items?: Differentiator[];
-}
-
-interface HomeState {
-  banner?: Banner;
-  coreCompetencies?: CoreCompetencies;
-  differentiators?: Differentiators;
-  [key: string]: unknown;
-}
-
-const state = reactive<HomeState>(config);
+  return {
+    title: state.hero.title,
+    description: state.hero.description,
+    backgroundImage: Array.isArray(state.hero.backgroundImage)
+      ? state.hero.backgroundImage[0]
+      : state.hero.backgroundImage,
+    actions: state.hero.actions || []
+  };
+});
 </script>
 
 <template>
-  <div
-    class="flex relative flex-col pb-24 w-full min-h-[500px] md:min-h-[800px] max-md:max-w-full"
-  >
-    <!-- https://github.com/nuxt/nuxt/issues/12766#issuecomment-1397234526-->
+  <div class="flex relative flex-col pb-24 w-full min-h-[500px] md:min-h-[800px] max-md:max-w-full">
+    <!-- Hero Section using AppHero -->
     <ClientOnly>
-      <Teleport defer to="#page-banner">
-        <section
-          class="flex flex-col max-w-full uppercase w-full justify-end min-h-[95vh] pb-12 md:pb-24 md:min-h-[500px] md:h-[800px] bg-blend-darken bg-gradient-to-t from-black to-transparent"
+      <Teleport
+        defer
+        to="#page-banner"
+      >
+        <AppHero
+          :title="heroData.title"
+          :description="heroData.description"
+          :actions="heroData.actions"
           :style="{
-            backgroundImage: `url('${state.banner?.backgroundImage}')`,
+            backgroundImage: `url('${heroData.backgroundImage}')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
           }"
-        >
-          <div class="flex flex-col w-full max-w-screen-xl mx-auto">
-            <div class="flex flex-col w-full md:w-[692px] px-6 lg:px-12">
-              <h2
-                class="text-6xl font-light tracking-tighter text-black max-md:max-w-full max-md:text-4xl"
-                v-html="state.banner?.title"
-              />
-              <p
-                class="mt-6 text-2xl font-light max-md:max-w-full"
-                v-html="state.banner?.description"
-              />
-              <a
-                class="gap-2 self-start p-4 mt-6 text-sm tracking-tight text-white bg-sky-600 rounded-lg w-full md:w-[max-content] hover:bg-sky-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 inline-flex items-center justify-center"
-                :href="state.banner?.actionUrl"
-              >
-                {{ state.banner?.actionText }}
-              </a>
-            </div>
-          </div>
-        </section>
+          class="min-h-[95vh] md:min-h-[500px] md:h-[800px] bg-blend-darken bg-gradient-to-t from-black to-transparent text-white"
+        />
       </Teleport>
     </ClientOnly>
-    <section
-      class="flex flex-col w-full max-w-screen-xl mt-5 md:mt-20 mx-auto px-2 lg:px-2"
-    >
-      <hr class="w-full border border-black mt-10" />
+
+    <!-- Core Competencies Section -->
+    <LayoutPageSection class="flex flex-col w-full max-w-screen-xl mt-5 md:mt-20 mx-auto px-2 lg:px-2">
+      <hr class="w-full border border-black mt-10">
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl font-light tracking-tight uppercase text-sky-950"
         v-html="state.coreCompetencies?.title"
@@ -116,9 +114,7 @@ const state = reactive<HomeState>(config);
               <span class="self-stretch my-auto">View our processes</span>
             </NuxtLink>
           </div>
-          <div
-            class="flex flex-wrap gap-20 items-start mt-16 w-full max-md:mt-10"
-          >
+          <div class="flex flex-wrap gap-20 items-start mt-16 w-full max-md:mt-10">
             <div
               v-for="(competency, index) in state.coreCompetencies?.items"
               :key="index"
@@ -141,36 +137,45 @@ const state = reactive<HomeState>(config);
           </div>
         </div>
       </div>
-    </section>
-    <section
-      class="flex flex-col mt-32 w-full font-light max-md:mt-10 max-w-screen-xl mx-auto px-2 lg:px-2"
-    >
-      <hr class="w-full border border-black mt-10" />
+    </LayoutPageSection>
+
+    <!-- Differentiators Section -->
+    <LayoutPageSection class="flex flex-col mt-32 w-full font-light max-md:mt-10 max-w-screen-xl mx-auto px-2 lg:px-2">
+      <hr class="w-full border border-black mt-10">
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl tracking-tight uppercase whitespace-nowrap text-sky-950"
         v-html="state.differentiators?.title"
       />
-      <div
-        class="flex flex-wrap gap-5 mt-16 w-full text-2xl text-black max-md:mt-10"
-      >
-        <article
+      <div class="flex flex-wrap gap-5 mt-16 w-full text-2xl text-black max-md:mt-10">
+        <AppCard
           v-for="(differentiator, index) in state.differentiators?.items"
           :key="index"
-          class="flex flex-col grow shrink p-4 lg:p2 bg-white rounded-2xl min-w-[240px] w-[330px]"
-          :icon="differentiator.icon"
-          :description="differentiator.description"
+          variant="default"
+          class="flex flex-col grow shrink p-4 lg:p-2 bg-white rounded-2xl min-w-[240px] w-[330px]"
         >
-          <NuxtImg
-            placeholder
-            :src="differentiator.icon"
-            :alt="differentiator.description"
-            class="object-contain w-14 aspect-square"
-          />
-          <p class="mt-10">
+          <template #header>
+            <NuxtImg
+              placeholder
+              :src="differentiator.icon"
+              :alt="differentiator.description"
+              class="object-contain w-14 aspect-square mb-4"
+            />
+          </template>
+          <p class="mt-6">
             {{ differentiator.description }}
           </p>
-        </article>
+        </AppCard>
       </div>
-    </section>
+    </LayoutPageSection>
+
+    <!-- Call to Action Section -->
+    <AppCTA
+      v-if="state.callToAction && (state.callToAction.title || state.callToAction.description)"
+      :title="state.callToAction.title"
+      :description="state.callToAction.description"
+      :primary-action="state.callToAction.primaryButtonText"
+      class="w-full max-w-screen-xl mx-auto mt-20"
+      @primary-action="navigateTo(state.callToAction.primaryButtonUrl)"
+    />
   </div>
 </template>

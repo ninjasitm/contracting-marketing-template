@@ -25,7 +25,10 @@ const { menu } = _props;
 
 <template>
   <template v-if="menu?.type === 'link' && isDropdown">
-    <NuxtLink :to="parseMenuRoute(menu?.to)" #="{ isActive }">
+    <NuxtLink
+      :to="parseMenuRoute(menu?.to)"
+      #="{ isActive }"
+    >
       <div
         :class="[
           'transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 px-4 lg:px-10 py-2 rounded-lg w-full',
@@ -39,14 +42,16 @@ const { menu } = _props;
     </NuxtLink>
   </template>
   <template v-else-if="menu?.type === 'link'">
-    <NuxtLink :to="parseMenuRoute(menu?.to)" #="{ isActive }">
+    <NuxtLink
+      :to="parseMenuRoute(menu?.to)"
+      #="{ isActive }"
+    >
       <span
         :class="{
           'text-gray-900 dark:text-gray-100 font-bold': isActive,
           'text-gray-700 dark:text-gray-300': !isActive,
         }"
-        >{{ parseMenuTitle(menu?.title) }}</span
-      >
+      >{{ parseMenuTitle(menu?.title) }}</span>
     </NuxtLink>
   </template>
   <template v-else-if="menu?.type === 'button'">

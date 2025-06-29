@@ -1,6 +1,8 @@
 {
-  "title": "Lorem Ipsum Contact",
-  "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "hero": {
+    "title": "Lorem Ipsum Contact",
+    "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  },
   "sections": [
     {
       "title": "Lorem Ipsum",
@@ -34,5 +36,13 @@
     "backgroundColor": "#EEEEEE",
     "textColor": "#333333",
     "iconColor": "#009900"
+  },
+  "callToAction": {
+    "title": "",
+    "description": "",
+    "primaryButtonText": "",
+    "primaryButtonUrl": "",
+    "backgroundColor": "",
+    "textColor": ""
   }
 }

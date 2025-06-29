@@ -1,37 +1,48 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
-import config from '@@/content/_pages/work.json';
-import clients from '@@/content/clients.json';
+import _config from '@content/_pages/work.json';
+import clients from '@content/clients.json';
 import ProjectCard from '@/components/work/ProjectCard.vue';
 import Loading from '@/components/layouts/Page/Loading.vue';
-import type { Client, Project } from '@/utils/types';
+import type { Client, Project, BasePageState } from '@/types/types';
 
-definePageMeta({ layout: 'page' });
-
-type WorkPageState = {
-  isLoading: boolean;
-  title: string;
-  description: string;
-  featuredClient: Client & { type?: string; bannerImage?: string };
-  footer: {
+export interface WorkPageState extends BasePageState {
+  featuredClient?: {
+    client: string;
+    type?: string;
+    description?: string;
+    heroImage?: string;
+  };
+  footer?: {
     title: string;
     description: string;
   };
+}
+
+definePageMeta({ layout: 'page' });
+
+const config = _config as WorkPageState;
+
+// Extended WorkPageState to include additional properties
+interface ExtendedWorkPageState extends WorkPageState {
+  isLoading: boolean;
   currentCategory: string | number | null;
   categories: {
     name: string;
     filter: string;
   }[];
   projects: Project[];
-};
+  featuredClientData: Client;
+}
 
-const state: WorkPageState = reactive({
+const state: ExtendedWorkPageState = reactive({
   isLoading: false,
-  title: config?.title,
-  description: config?.description,
-  footer: config?.footer,
+  hero: config.hero,
+  featuredClient: config.featuredClient,
+  footer: config.footer,
+  callToAction: config.callToAction,
   currentCategory: null,
-  featuredClient: {} as Client & { type?: string; bannerImage?: string },
+  featuredClientData: {} as Client,
   categories: [],
   projects: [],
 });
@@ -46,7 +57,7 @@ async function loadData(): Promise<void> {
         '_work.projects',
         async () =>
           await queryContent('/_work')
-            .only(['slug', 'bannerImage', 'description', 'client', 'title'])
+            .only(['slug', 'heroImage', 'description', 'client', 'title'])
             .where({
               published: { $eq: true },
             })
@@ -63,7 +74,7 @@ async function loadData(): Promise<void> {
     date: '', // Add a default date
     client: item.client || '',
     url: '', // Add a default URL
-    bannerImage: item.bannerImage,
+    heroImage: item.heroImage,
     description: item.description,
   }));
 
@@ -78,15 +89,13 @@ async function loadData(): Promise<void> {
     name: item,
     filter: item,
   }));
-  config.featuredClient = {
-    ...(config.featuredClient || {}),
-    client: config.featuredClient?.client || 'chip',
-  };
-  state.featuredClient =
-    clients.find((c: Client) => c.slug === config.featuredClient?.client) ||
+
+  const featuredClientConfig = state.featuredClient || { client: 'chip' };
+  state.featuredClientData =
+    clients.find((c: Client) => c.slug === featuredClientConfig.client) ||
     ({} as Client);
-  state.featuredClient.type = config.featuredClient?.type || '';
-  state.featuredClient.description = config.featuredClient?.description || '';
+  state.featuredClientData.type = featuredClientConfig.type || '';
+  state.featuredClientData.description = featuredClientConfig.description || '';
   state.isLoading = false;
 }
 
@@ -96,7 +105,7 @@ async function onLoadCategory(id: string | null): Promise<void> {
   // Implement category load logic here
   const query = queryContent('/_work').only([
     'slug',
-    'bannerImage',
+    'heroImage',
     'description',
     'client',
     'title',
@@ -112,92 +121,83 @@ async function onLoadCategory(id: string | null): Promise<void> {
 }
 </script>
 <template>
-  <div
-    class="flex relative flex-col pb-24 w-full max-md:max-w-full px-2 lg:px-10"
-  >
-    <section
-      class="flex flex-col align-center justify-center pt-40 pb-20 lg:pt-60"
-    >
-      <h1
-        class="w-full max-w-[1320px] text-6xl font-light tracking-tighter text-center text-black uppercase max-md:max-w-full max-md:text-4xl"
-        v-html="state?.title || 'Our Work'"
-      />
-      <p
-        class="mt-4 text-lg font-light text-center max-w-[1320px] max-md:max-w-full"
-      >
-        <MDC
-          class="mt-4 text-lg font-light text-center max-w-[800px] max-md:max-w-full"
-          :value="state?.description"
-        />
-      </p>
-    </section>
-    <section class="flex flex-col text-black w-full max-w-screen-xl mx-auto">
+  <div class="flex relative flex-col pb-24 w-full max-md:max-w-full px-2 lg:px-10">
+    <!-- Hero Section using AppHero -->
+    <AppHero
+      :title="state.hero?.title"
+      :description="state.hero?.description"
+      :mode="state.hero?.mode || 'text'"
+      :alignment="state.hero?.alignment || 'center'"
+      :size="state.hero?.size || 'medium'"
+      class="pt-40 pb-20 lg:pt-60"
+    />
+
+    <!-- Work Projects Section -->
+    <LayoutPageSection class="flex flex-col text-black w-full max-w-screen-xl mx-auto">
       <header
-        v-if="state.featuredClient"
+        v-if="state.featuredClientData && state.featuredClientData.slug"
         class="flex overflow-hidden flex-col w-full rounded-2xl"
       >
         <NuxtLink
           class="shadow-sm"
           :to="{
             name: 'work-slug',
-            params: { slug: state.featuredClient.slug },
+            params: { slug: state.featuredClientData.slug },
           }"
         >
-          <div
-            class="flex relative flex-col py-4 pt-0 px-0 lg:px-16 w-full min-h-[250px] lg:min-h-[640px] max-md:max-w-full"
-          >
+          <div class="flex relative flex-col py-4 pt-0 px-0 lg:px-16 w-full min-h-[250px] lg:min-h-[640px] max-md:max-w-full">
             <NuxtImg
               placeholder
               loading="lazy"
-              :src="state.featuredClient.bannerImage"
+              :src="state.featuredClientData.heroImage"
               alt=""
               class="object-cover absolute inset-0 size-full"
             />
             <NuxtImg
               placeholder
               loading="lazy"
-              :src="state.featuredClient.logo"
+              :src="state.featuredClientData.logo"
               alt="Company logo"
               class="object-contain self-end aspect-square w-[90px]"
             />
-            <div
-              class="flex relative flex-col mt-80 max-w-full w-[413px] max-md:mt-10"
-            >
+            <div class="flex relative flex-col mt-80 max-w-full w-[413px] max-md:mt-10">
               <p
                 class="text-lg font-light"
-                v-html="state.featuredClient.description"
+                v-html="state.featuredClientData.description"
               />
               <p class="mt-4 text-base tracking-tight uppercase">
-                {{ state.featuredClient.type }}
+                {{ state.featuredClientData.type }}
               </p>
             </div>
           </div>
         </NuxtLink>
       </header>
-      <nav
-        class="flex flex-wrap gap-4 py-4 items-start self-start mt-10 text-base max-md:mt-10 max-md:max-w-full snap-x lg:min-h-[100px]"
-      >
-        <UiButton
-          class="gap-2 self-stretch text-white bg-sky-600 max-md:px-5 h-10 text-center snap-center text-xs"
+
+      <!-- Category Navigation -->
+      <nav class="flex flex-wrap gap-4 py-4 items-start self-start mt-10 text-base max-md:mt-10 max-md:max-w-full snap-x lg:min-h-[100px]">
+        <AppButton
+          class="h-10 text-center snap-center text-xs"
+          variant="default"
           @click="() => onLoadCategory(null)"
         >
           All Projects
-        </UiButton>
-        <UiButton
+        </AppButton>
+        <AppButton
           v-for="(category, index) in state.categories"
           :key="index"
-          outline
-          class="gap-2 self-stretch dark:text-white max-md:px-5 h-10 text-center snap-center text-nowrap text-xs"
+          variant="outline"
+          class="h-10 text-center snap-center text-nowrap text-xs"
           :class="{
             'bg-sky-600 text-white': state.currentCategory === category.filter,
           }"
-          :text="category.name"
           @click="() => onLoadCategory(category.filter)"
-        />
+        >
+          {{ category.name }}
+        </AppButton>
       </nav>
-      <div
-        class="flex flex-wrap gap-5 items-start mt-16 w-full lg:mt-6 overflow-visible"
-      >
+
+      <!-- Projects Grid -->
+      <div class="flex flex-wrap gap-5 items-start mt-16 w-full lg:mt-6 overflow-visible">
         <div
           v-if="state.isLoading"
           class="flex justify-center w-full"
@@ -205,34 +205,28 @@ async function onLoadCategory(id: string | null): Promise<void> {
           <Loading />
         </div>
         <ProjectCard
-          v-for="(project, index) in state.projects"
-          v-else
-          :id="project.id as string"
-          :key="index"
-          class="w-[100%] md:w[31.5%] lg:w-[23.5%] mb-10"
+          v-for="project in state.projects"
+          :id="project.id || project.slug"
+          :key="project.id"
           :title="project.title"
-          :image-src="project.bannerImage"
-          :description="project.description"
-          :client="project.client"
           :slug="project.slug"
+          :client="project.client"
+          :image-src="project.heroImage"
+          :description="project.description"
         />
       </div>
-    </section>
-    <section
-      class="flex flex-col text-black w-full max-w-screen-xl mt-20 mx-auto"
-    >
-      <h2
-        class="gap-2 self-stretch pt-6 w-full text-xl font-light tracking-tight uppercase max-md:max-w-full"
-        v-html="state.footer?.title"
-      />
-      <div
-        class="flex flex-col mt-16 w-full max-w-[1320px] max-md:mt-10 max-md:max-w-full"
-      >
-        <p
-          class="text-4xl font-light max-md:max-w-full"
-          v-html="state.footer?.description"
-        />
-      </div>
-    </section>
+    </LayoutPageSection>
+
+    <!-- Call to Action Section -->
+    <AppCTA
+      v-if="state.callToAction && (state.callToAction.title || state.callToAction.primaryButtonText)"
+      :title="state.callToAction.title || 'Ready to Start Your Project?'"
+      :description="state.callToAction.description || 'Let us discuss your project and see how we can help bring your vision to life.'"
+      :primary-action="state.callToAction.primaryButtonText || 'Get Started'"
+      secondary-action="Learn Our Process"
+      class="w-full max-w-screen-xl mx-auto mt-20"
+      @primary-action="navigateTo(state.callToAction.primaryButtonUrl || '/contact')"
+      @secondary-action="navigateTo('/process')"
+    />
   </div>
 </template>

@@ -29,9 +29,8 @@ const { imageSrc, description, client } = toRefs(props);
     <article class="flex flex-col h-full justify-between overflow-visible">
       <NuxtImg
         placeholder
-        :src="
-          imageSrc ||
-            backgrounds[Math.floor(Math.random() * backgrounds.length)]
+        :src="imageSrc ||
+          backgrounds[Math.floor(Math.random() * backgrounds.length)]
         "
         :alt="description"
         loading="lazy"

@@ -1,10 +1,18 @@
 {
-  "banner": {
+  "hero": {
     "title": "Lorem Ipsum Dolor Sit Amet",
     "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris.",
-    "actionText": "Consectetur",
-    "actionUrl": "/contact",
-    "backgroundImage": "/media/banners/lorem-banner.jpg"
+    "backgroundImage": [
+      "/media/banners/lorem-banner.jpg"
+    ],
+    "actions": [
+      {
+        "text": "Consectetur",
+        "url": "/contact",
+        "actionClass": "bg-primary hover:bg-primary/90 text-white",
+        "type": "button"
+      }
+    ]
   },
   "coreCompetencies": {
     "title": "Core Competencies",
@@ -62,5 +70,13 @@
         "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod"
       }
     ]
+  },
+  "callToAction": {
+    "title": "",
+    "description": "",
+    "primaryButtonText": "",
+    "primaryButtonUrl": "",
+    "backgroundColor": "",
+    "textColor": ""
   }
 }

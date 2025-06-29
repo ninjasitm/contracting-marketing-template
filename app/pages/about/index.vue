@@ -1,8 +1,19 @@
 <script lang="ts" setup>
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 import TeamMember from '../../../components/about/TeamMember.vue';
-import config from '@@/content/_pages/about.json';
+import _config from '@content/_pages/about.json';
+import type { BasePageState } from '@/types/types';
+
+export interface AboutPageState extends BasePageState {
+  heading?: string;
+  title?: string;
+  description?: string;
+  teamMembersTitle?: string;
+}
+
 definePageMeta({ layout: 'page' });
+
+const config = _config as AboutPageState;
 
 type Member = {
   name: string;
@@ -17,12 +28,10 @@ type TeamMembers = {
   members: Member[];
 };
 
-type AboutState = {
-  heading: string;
-  title: string;
-  description: string;
+// Extended AboutPageState to include teamMembers
+interface ExtendedAboutPageState extends AboutPageState {
   teamMembers: TeamMembers;
-};
+}
 
 const membersParsedContent =
   (
@@ -41,30 +50,40 @@ const members = membersParsedContent.map(
   }),
 );
 
-const state: AboutState = reactive({
+const state: ExtendedAboutPageState = reactive({
+  hero: config.hero,
   heading: config.heading,
   title: config.title,
   description: config.description,
+  teamMembersTitle: config.teamMembersTitle,
+  callToAction: config.callToAction,
   teamMembers: {
-    title: config.teamMembersTitle,
+    title: config.teamMembersTitle || 'Team',
     members,
   },
 });
+
+// Computed properties for CTA fallbacks
+const ctaTitle = computed(() => state.callToAction?.title || "Let's Work Together");
+const ctaDescription = computed(() => state.callToAction?.description || "Ready to collaborate with our experienced team? We'd love to hear about your project and discuss how we can help achieve your goals.");
+const ctaPrimaryAction = computed(() => state.callToAction?.primaryButtonText || "Get In Touch");
+const ctaPrimaryUrl = computed(() => state.callToAction?.primaryButtonUrl || "/contact");
 </script>
 
 <template>
-  <div
-    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-2"
-  >
-    <section class="flex flex-col justify-center pt-40 pb-20 lg:pt-60">
-      <h2
-        class="text-6xl font-light tracking-tighter text-center text-black uppercase whitespace-nowrap mx-auto max-md:max-w-full max-md:text-4xl"
-        v-html="state.heading"
-      />
-    </section>
-    <section
-      class="flex flex-col font-light text-black w-full max-w-screen-xl mx-auto"
-    >
+  <div class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-2">
+    <!-- Hero Section using AppHero -->
+    <AppHero
+      :title="state.hero?.title || state.heading"
+      :description="state.hero?.description"
+      mode="text"
+      alignment="center"
+      size="medium"
+      class="pt-40 pb-20 lg:pt-60"
+    />
+
+    <!-- About Description Section -->
+    <LayoutPageSection class="flex flex-col font-light text-black w-full max-w-screen-xl mx-auto">
       <hr class="w-full border border-black">
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl tracking-tight uppercase max-md:max-w-full"
@@ -74,19 +93,17 @@ const state: AboutState = reactive({
         class="mt-16 text-2xl lg:text-4xl max-md:mt-10 max-md:max-w-full"
         v-html="state.description"
       />
-    </section>
-    <section
-      class="flex flex-col w-full max-w-screen-xl mt-20 mx-auto max-md:mt-10"
-    >
+    </LayoutPageSection>
+
+    <!-- Team Members Section -->
+    <LayoutPageSection class="flex flex-col w-full max-w-screen-xl mt-20 mx-auto max-md:mt-10">
       <hr class="w-full border border-black">
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl font-light tracking-tight text-black uppercase"
         v-html="state.teamMembers.title"
       />
       <div class="flex flex-col mt-16 w-full max-md:mt-10 max-md:max-w-full">
-        <div
-          class="flex flex-wrap gap-5 items-start w-full text-base max-md:max-w-full"
-        >
+        <div class="flex flex-wrap gap-5 items-start w-full text-base max-md:max-w-full">
           <TeamMember
             v-for="(member, index) in state.teamMembers.members"
             :key="index"
@@ -98,33 +115,19 @@ const state: AboutState = reactive({
             :linkedin-url="member.linkedinUrl"
           />
         </div>
-        <!-- <div
-          class="flex flex-wrap gap-4 items-start mt-10 w-full max-md:max-w-full"
-        >
-          <button
-            class="flex gap-1 items-center p-4 w-14 rounded-lg"
-            aria-label="Previous"
-          >
-            <NuxtImg loading="lazy" placeholder
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/f3cd58e252b4f02cf75549f5468ba74e9bedf4be10572a04d9c3b5d1ff2ac199?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa"
-              alt=""
-              class="object-contain self-stretch my-auto w-6 aspect-square"
-            />
-          </button>
-          <button
-            class="flex gap-1 items-center p-4 w-14 rounded-lg"
-            aria-label="Next"
-          >
-            <NuxtImg loading="lazy" placeholder
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/16ef346dca0a2892d16ae1a4ec110f8e6a9ef8f8a279e5366f3fbee74e4707ca?apiKey=3963d39927114ac982c49f7f4c7787aa&&apiKey=3963d39927114ac982c49f7f4c7787aa"
-              alt=""
-              class="object-contain self-stretch my-auto w-6 aspect-square"
-            />
-          </button>
-        </div> -->
       </div>
-    </section>
+    </LayoutPageSection>
+
+    <!-- Call to Action Section -->
+    <AppCTA
+      v-if="state.callToAction && (state.callToAction.title || state.callToAction.primaryButtonText)"
+      :title="ctaTitle"
+      :description="ctaDescription"
+      :primary-action="ctaPrimaryAction"
+      secondary-action="View Our Work"
+      class="w-full max-w-screen-xl mx-auto mt-20"
+      @primary-action="navigateTo(ctaPrimaryUrl)"
+      @secondary-action="navigateTo('/work')"
+    />
   </div>
 </template>

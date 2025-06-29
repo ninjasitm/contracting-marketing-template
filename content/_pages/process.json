@@ -1,6 +1,8 @@
 {
-  "title": "Lorem Ipsum Process",
-  "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  "hero": {
+    "title": "Lorem Ipsum Process",
+    "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+  },
   "sections": [
     {
       "title": "Lorem Ipsum Dolor",
@@ -32,5 +34,13 @@
         "Deserunt mollit anim id"
       ]
     }
-  ]
+  ],
+  "callToAction": {
+    "title": "",
+    "description": "",
+    "primaryButtonText": "",
+    "primaryButtonUrl": "",
+    "backgroundColor": "",
+    "textColor": ""
+  }
 }

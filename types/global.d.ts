@@ -9,7 +9,7 @@ declare module '@nuxt/content/dist' {
 }
 
 // Declare the config object type with all properties used in components
-declare module '@@/content/_pages/contact.json' {
+declare module '@content/_pages/contact.json' {
   const config: {
     title: string;
     description: string;

@@ -4,7 +4,7 @@
   <section
     class="flex flex-wrap gap-5 justify-center items-center py-12 w-full text-black max-md:max-w-full"
   >
-    <hr class="w-full border border-black mt-5 mb-5" />
+    <hr class="w-full border border-black mt-5 mb-5">
     <h2 class="self-stretch my-auto text-2xl font-light">
       Ready to collaborate?
     </h2>
@@ -21,6 +21,6 @@
       />
       <span class="self-stretch my-auto">Start a Project</span>
     </NuxtLink>
-    <hr class="w-full border border-black mt-5" />
+    <hr class="w-full border border-black mt-5">
   </section>
 </template>

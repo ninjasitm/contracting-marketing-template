@@ -1,6 +1,5 @@
 import type { RouteLocationRaw } from 'vue-router';
 import type { NuxtApp } from '#app';
-import type { AppConfig } from 'nuxt/schema';
 import type { LayoutPageNavbarMenu } from './utils/types';
 import appConfig from './content/config.json';
 

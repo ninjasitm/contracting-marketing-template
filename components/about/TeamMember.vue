@@ -48,7 +48,7 @@ const { photo, linkedinUrl, name, position, description } = toRefs(props);
           />
         </NuxtLink>
       </div>
-      <hr class="w-full border border-black mt-2" />
+      <hr class="w-full border border-black mt-2">
       <p
         class="gap-2 self-stretch pt-4 mt-1 w-full tracking-tight uppercase whitespace-nowrap text-sm"
       >

@@ -16,6 +16,7 @@ export default withNuxt(
       vue: pluginVue
     },
     rules: {
+      "semi": "error", // enforce semicolon at the end of statements
       'vue/multi-word-component-names': 'off', // allow single word component names
       "@typescript-eslint/no-floating-promises": "error", // disallow floating promises
       'vue/no-v-html': 'off', // allow v-html directive

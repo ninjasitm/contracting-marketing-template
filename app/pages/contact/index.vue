@@ -1,8 +1,17 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
+import { useForm, Field } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/zod';
+import * as z from 'zod';
 import HubspotForm from '@jagaad/vue-hubspot-form';
 import _config from '@content/_pages/contact.json';
 import type { BasePageState } from '@/types/types';
+
+// Import shadcn/ui form components
+import UiFormItem from '@/components/ui/form/FormItem.vue';
+import UiFormLabel from '@/components/ui/form/FormLabel.vue';
+import UiFormControl from '@/components/ui/form/FormControl.vue';
+import UiFormMessage from '@/components/ui/form/FormMessage.vue';
 
 export interface ContactPageState extends BasePageState {
   sections?: {
@@ -27,8 +36,6 @@ definePageMeta({ layout: 'page' });
 
 const config = _config as ContactPageState;
 
-// Removed unused enhancedConfig
-
 // Create reactive state using proper types
 const state: ContactPageState = reactive({
   hero: config.hero,
@@ -47,12 +54,18 @@ const state: ContactPageState = reactive({
   callToAction: config.callToAction,
 });
 
-// Form state
-const formState = reactive({
-  isValid: false,
-  isFormSubmitted: false,
-  isLoading: false,
-  form: {
+// Form validation schema using Zod
+const contactFormSchema = toTypedSchema(z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters').max(50, 'Name must be less than 50 characters'),
+  email: z.string().email('Please enter a valid email address'),
+  category: z.string().min(1, 'Please select a category'),
+  message: z.string().min(10, 'Message must be at least 10 characters').max(1000, 'Message must be less than 1000 characters'),
+}));
+
+// Form state using vee-validate
+const { handleSubmit, isSubmitting } = useForm({
+  validationSchema: contactFormSchema,
+  initialValues: {
     name: '',
     email: '',
     category: 'General Inquiry',
@@ -60,23 +73,27 @@ const formState = reactive({
   },
 });
 
-const onSubmitForm = (event: Event) => {
-  if (
-    !formState.form.name ||
-    !formState.form.email ||
-    !formState.form.category ||
-    !formState.form.message
-  ) {
-    formState.isValid = false;
-    return;
+// Form submission state
+const formState = reactive({
+  isFormSubmitted: false,
+});
+
+const onSubmitForm = handleSubmit(async (formValues) => {
+  console.log('[ContactForm]: Submitting form with values:', formValues);
+
+  // Here you would typically send the form data to your backend
+  // For now, we'll just simulate the submission
+  try {
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    console.log('[ContactForm]: Form submitted successfully');
+    formState.isFormSubmitted = true;
+  } catch (error) {
+    console.error('[ContactForm]: Error submitting form:', error);
+    // Handle error (show error message, etc.)
   }
-  formState.isValid = true;
-  formState.isLoading = true;
-  event.preventDefault();
-  console.log(formState.form);
-  formState.isFormSubmitted = true;
-  formState.isLoading = false;
-};
+});
 
 // watch(embed, (value: HTMLDivElement | undefined): void => {
 //   console.log(config);
@@ -136,6 +153,7 @@ const onSubmitForm = (event: Event) => {
           No form specified!
         </UiAlert>
       </div>
+      <!-- Local Form using shadcn/ui Form Components -->
       <div
         v-else
         class="flex flex-wrap gap-20 mt-0 w-full max-w-screen-sm mx-auto"
@@ -143,91 +161,124 @@ const onSubmitForm = (event: Event) => {
         <form
           v-if="!formState.isFormSubmitted"
           class="flex flex-col gap-6 w-full max-md:max-w-full"
-          @submit.prevent="onSubmitForm"
+          @submit="onSubmitForm"
         >
-          <div class="flex flex-col gap-2">
-            <UiLabel
-              for="name"
-              class="text-sm"
-            >
-              Name
-            </UiLabel>
-            <UiInput
-              id="name"
-              v-model="formState.form.name"
-              type="text"
-              name="name"
-              placeholder="Your name"
-            />
-          </div>
-          <div class="flex flex-col gap-2">
-            <UiLabel
-              for="email"
-              class="text-sm"
-            >
-              Your Email
-            </UiLabel>
-            <UiInput
-              id="email"
-              v-model="formState.form.email"
-              type="email"
-              name="_replyto"
-              placeholder="your.email@example.com"
-            />
-          </div>
-          <div class="flex flex-col gap-2">
-            <UiLabel
-              for="subject"
-              class="text-sm"
-            >
-              What is your inquiry about?
-            </UiLabel>
-            <select
-              id="subject"
-              v-model="formState.form.category"
-              name="subject"
-              class="p-2 border border-gray-300 rounded"
-            >
-              <option
-                v-for="option in state.category"
-                :key="option"
-                :value="option"
-              >
-                {{ option }}
-              </option>
-            </select>
-          </div>
-          <div class="flex flex-col gap-2">
-            <UiLabel
-              for="message"
-              class="text-sm"
-            >
-              Message
-            </UiLabel>
-            <UiTextarea
-              id="message"
-              v-model="formState.form.message"
-              name="message"
-              placeholder="Tell us about your project..."
-            />
-          </div>
+          <!-- Name Field -->
+          <Field
+            v-slot="{ componentField, errorMessage }"
+            name="name"
+          >
+            <UiFormItem>
+              <UiFormLabel for="name">
+                Name
+              </UiFormLabel>
+              <UiFormControl>
+                <UiInput
+                  id="name"
+                  v-bind="componentField"
+                  type="text"
+                  placeholder="Your name"
+                  :class="errorMessage ? 'border-destructive focus-visible:ring-destructive' : ''"
+                />
+              </UiFormControl>
+              <UiFormMessage />
+            </UiFormItem>
+          </Field>
+
+          <!-- Email Field -->
+          <Field
+            v-slot="{ componentField, errorMessage }"
+            name="email"
+          >
+            <UiFormItem>
+              <UiFormLabel for="email">
+                Your Email
+              </UiFormLabel>
+              <UiFormControl>
+                <UiInput
+                  id="email"
+                  v-bind="componentField"
+                  type="email"
+                  placeholder="your.email@example.com"
+                  :class="errorMessage ? 'border-destructive focus-visible:ring-destructive' : ''"
+                />
+              </UiFormControl>
+              <UiFormMessage />
+            </UiFormItem>
+          </Field>
+
+          <!-- Category Field -->
+          <Field
+            v-slot="{ componentField, errorMessage }"
+            name="category"
+          >
+            <UiFormItem>
+              <UiFormLabel for="category">
+                What is your inquiry about?
+              </UiFormLabel>
+              <UiFormControl>
+                <select
+                  id="category"
+                  v-bind="componentField"
+                  :class="[
+                    'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
+                    errorMessage ? 'border-destructive focus-visible:ring-destructive' : ''
+                  ]"
+                >
+                  <option
+                    v-for="option in state.category"
+                    :key="option"
+                    :value="option"
+                  >
+                    {{ option }}
+                  </option>
+                </select>
+              </UiFormControl>
+              <UiFormMessage />
+            </UiFormItem>
+          </Field>
+
+          <!-- Message Field -->
+          <Field
+            v-slot="{ componentField, errorMessage }"
+            name="message"
+          >
+            <UiFormItem>
+              <UiFormLabel for="message">
+                Message
+              </UiFormLabel>
+              <UiFormControl>
+                <UiTextarea
+                  id="message"
+                  v-bind="componentField"
+                  placeholder="Tell us about your project..."
+                  :class="errorMessage ? 'border-destructive focus-visible:ring-destructive' : ''"
+                />
+              </UiFormControl>
+              <UiFormMessage />
+            </UiFormItem>
+          </Field>
+
+          <!-- Submit Button -->
           <AppButton
             type="submit"
             class="self-start w-full uppercase"
             variant="default"
             size="lg"
-            :disabled="formState.isLoading || !formState.isValid"
+            :disabled="isSubmitting"
           >
-            Submit
+            <span v-if="isSubmitting">Submitting...</span>
+            <span v-else>Submit</span>
           </AppButton>
         </form>
+
+        <!-- Success Message -->
         <AppCard
           v-else
           class="flex flex-col gap-6 w-full max-w-screen-sm text-center justify-center align-center h-[300px] transition-all transition-fade"
           :style="state.successMessageStyle || {
             backgroundColor: '#D7EFF9',
-          }
-          "
+          }"
         >
           <Icon
             name="mdi:thumbs-up"

@@ -50,6 +50,7 @@
     "@nuxtjs/svg": "^0.4.1",
     "@nuxtjs/tailwindcss": "^6.14.0",
     "@pinia/nuxt": "^0.5.5",
+    "@vee-validate/zod": "^4.15.1",
     "@vueuse/core": "^10.11.1",
     "@vueuse/nuxt": "^10.11.1",
     "class-variance-authority": "^0.7.1",
@@ -67,8 +68,10 @@
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
     "unplugin-vue-components": "^0.25.2",
+    "vee-validate": "^4.15.1",
     "vue-typewriter-effect": "^1.0.1",
-    "worker-mailer": "^1.1.4"
+    "worker-mailer": "^1.1.4",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",

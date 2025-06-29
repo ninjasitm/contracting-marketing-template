@@ -1,6 +1,8 @@
 media:
   input: public/media
-  output: /mediahero:
+  output: /media
+components:
+  hero:
     label: Hero
     type: object
     fields:

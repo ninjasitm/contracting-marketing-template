@@ -117,6 +117,159 @@ components:
         label: Text Color
         type: string
 content:
+  - name: config
+    label: App Config
+    path: content/config.json
+    type: file
+    fields:
+      - name: title
+        label: Website title
+        type: string
+      - name: companyName
+        label: Company Name
+        type: string
+      - name: description
+        label: Website description
+        type: rich-text
+        description: Will be provided for any page with no description.
+      - name: url
+        label: Website URL
+        type: string
+        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+      - name: address
+        label: Address
+        type: string
+      - name: phone
+        label: Phone
+        type: string
+      - name: email
+        label: Email
+        type: string
+      - name: logo
+        label: Logo
+        type: image
+        description: Image used in the header of the website.
+      - name: cover
+        label: Preview image
+        type: image
+        description: Image used in the social preview on social networks (e.g. Facebook, Twitter...)
+      - name: naicsCodesTitle
+        label: NAICS Codes Title
+        type: string
+      - name: naicsCodes
+        label: NAICS Codes
+        type: string
+        list: true
+      - name: companyInfo
+        label: Company Info
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: Title
+            type: string
+          - name: value
+            label: Value
+            type: string
+      - name: navbar
+        type: object
+        label: Navbar Configuration
+        fields:
+          - name: bannerStyle
+            label: Style
+            type: object
+            fields:
+              - name: backgroundColor
+                label: Background Color
+                type: string
+                default: '#0A2840'
+              - name: textColor
+                label: Text Color
+                type: string
+                default: '#fff'
+          - name: links
+            label: Links
+            type: object
+            fields:
+              - name: capabilities
+                label: Capabilities
+                type: string
+              - name: startProject
+                label: Start a Project
+                type: string
+      - name: socialLinks
+        label: Social Links
+        list: true
+        type: object
+        fields:
+          - name: title
+            label: Title
+            type: string
+          - name: url
+            label: URL
+            type: string
+            pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+          - name: icon
+            label: Icon
+            type: image
+            options:
+              path: media/social
+              categories: [image]
+      - name: style
+        label: Style
+        type: object
+        fields:
+          - name: backgroundColor
+            label: Background Color
+            type: string
+            default: '#333'
+          - name: textColor
+            label: Text Color
+            type: string
+            default: '#fff'
+      - name: footer
+        label: Footer Configuration
+        type: object
+        fields:
+          - name: naicsCodesTitle
+            label: NAICS Codes Title
+            type: string
+          - name: footerStyle
+            label: Footer Style
+            type: object
+            fields:
+              - name: backgroundColor
+                label: Background Color
+                type: string
+                default: '#333'
+              - name: textColor
+                label: Text Color
+                type: string
+                default: '#fff'
+          - name: companyInfoStyle
+            label: Company Info Style
+            type: object
+            fields:
+              - name: backgroundColor
+                label: Background Color
+                type: string
+                default: '#333'
+              - name: textColor
+                label: Text Color
+                type: string
+                default: '#fff'
+          - name: links
+            label: Links
+            list: true
+            type: object
+            fields:
+              - name: title
+                label: Title
+                type: string
+              - name: url
+                label: URL
+                type: string
+                pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
   - name: homePage
     type: file
     label: Home Page
@@ -673,156 +826,3 @@ content:
         options:
           path: media/client/banners
           categories: [image]
-  - name: config
-    label: App Config
-    path: content/config.json
-    type: file
-    fields:
-      - name: title
-        label: Website title
-        type: string
-      - name: companyName
-        label: Company Name
-        type: string
-      - name: description
-        label: Website description
-        type: rich-text
-        description: Will be provided for any page with no description.
-      - name: url
-        label: Website URL
-        type: string
-        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
-      - name: address
-        label: Address
-        type: string
-      - name: phone
-        label: Phone
-        type: string
-      - name: email
-        label: Email
-        type: string
-      - name: logo
-        label: Logo
-        type: image
-        description: Image used in the header of the website.
-      - name: cover
-        label: Preview image
-        type: image
-        description: Image used in the social preview on social networks (e.g. Facebook, Twitter...)
-      - name: naicsCodesTitle
-        label: NAICS Codes Title
-        type: string
-      - name: naicsCodes
-        label: NAICS Codes
-        type: string
-        list: true
-      - name: companyInfo
-        label: Company Info
-        type: object
-        list: true
-        fields:
-          - name: title
-            label: Title
-            type: string
-          - name: value
-            label: Value
-            type: string
-      - name: navbar
-        type: object
-        label: Navbar Configuration
-        fields:
-          - name: bannerStyle
-            label: Style
-            type: object
-            fields:
-              - name: backgroundColor
-                label: Background Color
-                type: string
-                default: '#0A2840'
-              - name: textColor
-                label: Text Color
-                type: string
-                default: '#fff'
-          - name: links
-            label: Links
-            type: object
-            fields:
-              - name: capabilities
-                label: Capabilities
-                type: string
-              - name: startProject
-                label: Start a Project
-                type: string
-      - name: socialLinks
-        label: Social Links
-        list: true
-        type: object
-        fields:
-          - name: title
-            label: Title
-            type: string
-          - name: url
-            label: URL
-            type: string
-            pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
-          - name: icon
-            label: Icon
-            type: image
-            options:
-              path: media/social
-              categories: [image]
-      - name: style
-        label: Style
-        type: object
-        fields:
-          - name: backgroundColor
-            label: Background Color
-            type: string
-            default: '#333'
-          - name: textColor
-            label: Text Color
-            type: string
-            default: '#fff'
-      - name: footer
-        label: Footer Configuration
-        type: object
-        fields:
-          - name: naicsCodesTitle
-            label: NAICS Codes Title
-            type: string
-          - name: footerStyle
-            label: Footer Style
-            type: object
-            fields:
-              - name: backgroundColor
-                label: Background Color
-                type: string
-                default: '#333'
-              - name: textColor
-                label: Text Color
-                type: string
-                default: '#fff'
-          - name: companyInfoStyle
-            label: Company Info Style
-            type: object
-            fields:
-              - name: backgroundColor
-                label: Background Color
-                type: string
-                default: '#333'
-              - name: textColor
-                label: Text Color
-                type: string
-                default: '#fff'
-          - name: links
-            label: Links
-            list: true
-            type: object
-            fields:
-              - name: title
-                label: Title
-                type: string
-              - name: url
-                label: URL
-                type: string
-                pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$

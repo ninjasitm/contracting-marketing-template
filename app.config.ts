@@ -1,7 +1,7 @@
 import type { RouteLocationRaw } from 'vue-router';
 import type { NuxtApp } from '#app';
 import type { LayoutPageNavbarMenu } from './utils/types';
-import appConfig from './content/config.json';
+import _config from './content/config.json';
 
 // Define app config for Nuxt 3
 export interface NuxtAppConfig {
@@ -9,6 +9,7 @@ export interface NuxtAppConfig {
   title?: string;
   /** description */
   description?: string;
+  enableColorMode?: boolean;
   /** company name */
   companyName?: string;
   /** naics codes title */
@@ -25,6 +26,8 @@ export interface NuxtAppConfig {
   phone?: string;
   /** logo */
   logo?: string;
+  /** Alt logo */
+  logoAlt?: string;
   /** company info */
   companyInfo: {
     title: string;
@@ -114,9 +117,15 @@ declare module '@nuxt/schema' {
   }
 }
 
+type FullAppConfig = NuxtAppConfig & typeof _config;
+
+const appConfig: FullAppConfig = _config as FullAppConfig;
+
 export default defineAppConfig({
   config: {
     logo: appConfig.logo,
+    logoAlt: appConfig.logoAlt,
+    enableColorMode: appConfig.enableColorMode || true,
     title: appConfig.title,
     companyName: appConfig.companyName,
     url: appConfig.url,

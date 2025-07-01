@@ -55,12 +55,20 @@ const state: ContactPageState = reactive({
 });
 
 // Form validation schema using Zod
-const contactFormSchema = toTypedSchema(z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters').max(50, 'Name must be less than 50 characters'),
-  email: z.string().email('Please enter a valid email address'),
-  category: z.string().min(1, 'Please select a category'),
-  message: z.string().min(10, 'Message must be at least 10 characters').max(1000, 'Message must be less than 1000 characters'),
-}));
+const contactFormSchema = toTypedSchema(
+  z.object({
+    name: z
+      .string()
+      .min(2, 'Name must be at least 2 characters')
+      .max(50, 'Name must be less than 50 characters'),
+    email: z.string().email('Please enter a valid email address'),
+    category: z.string().min(1, 'Please select a category'),
+    message: z
+      .string()
+      .min(10, 'Message must be at least 10 characters')
+      .max(1000, 'Message must be less than 1000 characters'),
+  }),
+);
 
 // Form state using vee-validate
 const { handleSubmit, isSubmitting } = useForm({
@@ -85,7 +93,7 @@ const onSubmitForm = handleSubmit(async (formValues) => {
   // For now, we'll just simulate the submission
   try {
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     console.log('[ContactForm]: Form submitted successfully');
     formState.isFormSubmitted = true;
@@ -121,11 +129,16 @@ const onSubmitForm = handleSubmit(async (formValues) => {
 // });
 </script>
 <template>
-  <div class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-4 lg:px-10">
+  <div
+    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-4 lg:px-10"
+  >
     <!-- Hero Section using AppHero -->
     <AppHero
       :title="state.hero?.title || 'Contact Us'"
-      :description="state.hero?.description || 'We are always ready to talk about your next project. Feel free to contact us.'"
+      :description="
+        state.hero?.description ||
+        'We are always ready to talk about your next project. Feel free to contact us.'
+      "
       mode="text"
       alignment="center"
       size="medium"
@@ -133,7 +146,9 @@ const onSubmitForm = handleSubmit(async (formValues) => {
     />
 
     <!-- Contact Form Section -->
-    <LayoutPageSection class="flex flex-col max-w-screen-sm font-light text-black w-full mx-auto justify-center align-center">
+    <LayoutPageSection
+      class="flex flex-col max-w-screen-sm font-light text-black dark:text-white w-full mx-auto justify-center align-center"
+    >
       <div
         v-if="state.useEmbed"
         class="flex flex-wrap gap-20 mt-0 w-full max-md:mt-10 max-md:max-w-full h-[max-content] mx-auto"
@@ -164,21 +179,20 @@ const onSubmitForm = handleSubmit(async (formValues) => {
           @submit="onSubmitForm"
         >
           <!-- Name Field -->
-          <Field
-            v-slot="{ componentField, errorMessage }"
-            name="name"
-          >
+          <Field v-slot="{ componentField, errorMessage }" name="name">
             <UiFormItem>
-              <UiFormLabel for="name">
-                Name
-              </UiFormLabel>
+              <UiFormLabel for="name"> Name </UiFormLabel>
               <UiFormControl>
                 <UiInput
                   id="name"
                   v-bind="componentField"
                   type="text"
                   placeholder="Your name"
-                  :class="errorMessage ? 'border-destructive focus-visible:ring-destructive' : ''"
+                  :class="
+                    errorMessage
+                      ? 'border-destructive focus-visible:ring-destructive'
+                      : ''
+                  "
                 />
               </UiFormControl>
               <UiFormMessage />
@@ -186,21 +200,20 @@ const onSubmitForm = handleSubmit(async (formValues) => {
           </Field>
 
           <!-- Email Field -->
-          <Field
-            v-slot="{ componentField, errorMessage }"
-            name="email"
-          >
+          <Field v-slot="{ componentField, errorMessage }" name="email">
             <UiFormItem>
-              <UiFormLabel for="email">
-                Your Email
-              </UiFormLabel>
+              <UiFormLabel for="email"> Your Email </UiFormLabel>
               <UiFormControl>
                 <UiInput
                   id="email"
                   v-bind="componentField"
                   type="email"
                   placeholder="your.email@example.com"
-                  :class="errorMessage ? 'border-destructive focus-visible:ring-destructive' : ''"
+                  :class="
+                    errorMessage
+                      ? 'border-destructive focus-visible:ring-destructive'
+                      : ''
+                  "
                 />
               </UiFormControl>
               <UiFormMessage />
@@ -208,10 +221,7 @@ const onSubmitForm = handleSubmit(async (formValues) => {
           </Field>
 
           <!-- Category Field -->
-          <Field
-            v-slot="{ componentField, errorMessage }"
-            name="category"
-          >
+          <Field v-slot="{ componentField, errorMessage }" name="category">
             <UiFormItem>
               <UiFormLabel for="category">
                 What is your inquiry about?
@@ -222,7 +232,9 @@ const onSubmitForm = handleSubmit(async (formValues) => {
                   v-bind="componentField"
                   :class="[
                     'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
-                    errorMessage ? 'border-destructive focus-visible:ring-destructive' : ''
+                    errorMessage
+                      ? 'border-destructive focus-visible:ring-destructive'
+                      : '',
                   ]"
                 >
                   <option
@@ -239,20 +251,19 @@ const onSubmitForm = handleSubmit(async (formValues) => {
           </Field>
 
           <!-- Message Field -->
-          <Field
-            v-slot="{ componentField, errorMessage }"
-            name="message"
-          >
+          <Field v-slot="{ componentField, errorMessage }" name="message">
             <UiFormItem>
-              <UiFormLabel for="message">
-                Message
-              </UiFormLabel>
+              <UiFormLabel for="message"> Message </UiFormLabel>
               <UiFormControl>
                 <UiTextarea
                   id="message"
                   v-bind="componentField"
                   placeholder="Tell us about your project..."
-                  :class="errorMessage ? 'border-destructive focus-visible:ring-destructive' : ''"
+                  :class="
+                    errorMessage
+                      ? 'border-destructive focus-visible:ring-destructive'
+                      : ''
+                  "
                 />
               </UiFormControl>
               <UiFormMessage />
@@ -276,9 +287,11 @@ const onSubmitForm = handleSubmit(async (formValues) => {
         <AppCard
           v-else
           class="flex flex-col gap-6 w-full max-w-screen-sm text-center justify-center align-center h-[300px] transition-all transition-fade"
-          :style="state.successMessageStyle || {
-            backgroundColor: '#D7EFF9',
-          }"
+          :style="
+            state.successMessageStyle || {
+              backgroundColor: '#D7EFF9',
+            }
+          "
         >
           <Icon
             name="mdi:thumbs-up"
@@ -288,12 +301,8 @@ const onSubmitForm = handleSubmit(async (formValues) => {
               color: state.successMessageStyle?.iconColor,
             }"
           />
-          <h3 class="text-2xl">
-            Thank you for your message!
-          </h3>
-          <p class="text-lg">
-            We will get back to you shortly.
-          </p>
+          <h3 class="text-2xl">Thank you for your message!</h3>
+          <p class="text-lg">We will get back to you shortly.</p>
         </AppCard>
       </div>
     </LayoutPageSection>

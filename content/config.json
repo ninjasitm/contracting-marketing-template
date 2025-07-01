@@ -7,6 +7,7 @@
   "phone": "1 555 123-4567",
   "email": "info@loremipsum.com",
   "logo": "/media/images/logo.png",
+  "logoAlt": "/media/images/logo-alt.png",
   "naicsCodes": [
     "541511",
     "611420",
@@ -67,27 +68,12 @@
       "url": "https://twitter.com/loremipsum"
     }
   ],
-  "style": {
-    "backgroundColor": "#F8F9FA",
-    "textColor": "#333"
-  },
+  "style": {},
   "footer": {
     "naicsCodesTitle": "NAICS Codes",
-    "footerStyle": {
-      "backgroundColor": "transparent",
-      "textColor": "#333"
-    },
-    "companyInfoStyle": {
-      "backgroundColor": "#EEEEEE",
-      "textColor": "#333"
-    },
-    "socialLinksStyle": {
-      "backgroundColor": "#EEEEEE",
-      "textColor": "#333"
-    },
-    "containerStyle": {
-      "backgroundColor": "#EEEEEE",
-      "textColor": "#333"
-    }
+    "footerStyle": {},
+    "companyInfoStyle": {},
+    "socialLinksStyle": {},
+    "containerStyle": {}
   }
 }

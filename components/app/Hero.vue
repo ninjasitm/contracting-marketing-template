@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import VueTypewriterEffect from "vue-typewriter-effect";
+import VueTypewriterEffect from 'vue-typewriter-effect';
 import type { Hero as AppHeroProps } from '@/types/types';
-
 
 const props = defineProps<AppHeroProps>();
 
@@ -16,7 +15,7 @@ const backgroundImages = computed(() => {
 
 const randomBackgroundImage = ref(
   backgroundImages.value[
-  Math.floor(Math.random() * backgroundImages.value.length)
+    Math.floor(Math.random() * backgroundImages.value.length)
   ],
 );
 
@@ -94,7 +93,7 @@ onMounted(() => {
   backgroundImageInterval = setInterval(() => {
     randomBackgroundImage.value =
       backgroundImages.value[
-      Math.floor(Math.random() * backgroundImages.value.length)
+        Math.floor(Math.random() * backgroundImages.value.length)
       ];
   }, 5000);
 });
@@ -103,7 +102,11 @@ onMounted(() => {
 <template>
   <section
     class="app-hero relative w-full flex flex-col justify-end transition-all duration-500 ease-in-out"
-    :class="[heightClass, props.backgroundClass || 'bg-linear-to-b bg-gradient-to-b from-[#0F1A2A] to-[#171717]']"
+    :class="[
+      heightClass,
+      props.backgroundClass ||
+        'bg-linear-to-b bg-gradient-to-b from-[#0F1A2A] to-[#171717]',
+    ]"
   >
     <Transition name="slide-fade">
       <div
@@ -126,7 +129,9 @@ onMounted(() => {
     >
       <div class="w-full flex flex-col justify-start align-end">
         <template v-if="mode === 'typer'">
-          <h1 class="text-6xl md:text-8xl lg:text-9xl font-normal leading-tight mb-8 animate-slide-up-fade">
+          <h1
+            class="text-6xl md:text-8xl lg:text-9xl font-normal leading-tight mb-8 animate-slide-up-fade"
+          >
             <span
               class="text-foreground"
               v-html="typerBegin || '_'"
@@ -134,7 +139,9 @@ onMounted(() => {
             <span class="text-primary">
               <VueTypewriterEffect
                 loop
-                :strings="Array.isArray(typerText) ? typerText : [typerText || '']"
+                :strings="
+                  Array.isArray(typerText) ? typerText : [typerText || '']
+                "
               />
             </span>
             <span
@@ -157,7 +164,9 @@ onMounted(() => {
             v-html="description"
           />
         </template>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up-fade-long-delay">
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up-fade-long-delay"
+        >
           <component
             :is="action.type === 'link' ? 'NuxtLink' : 'AppButton'"
             v-for="action in actions"

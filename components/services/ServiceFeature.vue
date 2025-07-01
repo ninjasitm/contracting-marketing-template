@@ -57,7 +57,7 @@ const onImageError = (event: string | Event) => {
 
 <template>
   <div
-    class="flex flex-col p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow h-full"
+    class="flex flex-col p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow h-full"
   >
     <div class="flex items-center mb-4">
       <NuxtImg
@@ -68,18 +68,18 @@ const onImageError = (event: string | Event) => {
         class="w-12 h-12 mr-4 object-contain"
         @error="onImageError"
       />
-      <h3 class="text-2xl font-medium">
+      <h3 class="text-2xl font-medium text-black dark:text-white">
         {{ title }}
       </h3>
     </div>
     <div class="flex-grow">
       <p
-        class="text-lg mb-6"
+        class="text-lg mb-6 text-gray-700 dark:text-gray-300"
         v-html="description"
       />
       <ul
         v-if="features && features.length > 0"
-        class="list-disc pl-6 space-y-2"
+        class="list-disc pl-6 space-y-2 text-gray-600 dark:text-gray-400"
       >
         <li
           v-for="(feature, index) in features"

@@ -86,6 +86,11 @@ export default defineNuxtConfig({
       path: resolve('./components/ui'),
       global: true,
     },
+    {
+      prefix: 'App',
+      path: resolve('./components/app'),
+      global: true,
+    },
   ],
 
   imports: {
@@ -111,7 +116,8 @@ export default defineNuxtConfig({
   // module::color-mode
   colorMode: {
     classSuffix: '',
-    preference: 'light',
+    preference: 'system', // default value of $colorMode.preference
+    fallback: 'light',
   },
 
   // module::tailwindcss

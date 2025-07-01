@@ -5,7 +5,7 @@ import Navbar from './Navbar.vue';
 <template>
   <header
     id="main-header"
-    class="bg-white dark:bg-brown-800 w-full"
+    class="bg-background border-b border-border w-full"
   >
     <Navbar />
   </header>

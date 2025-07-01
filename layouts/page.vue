@@ -14,7 +14,7 @@ const state: LayoutProps = reactive({
 
 <template>
   <div
-    class="overflow-x-hidden scroll-smooth mx-auto"
+    class="overflow-x-hidden scroll-smooth mx-auto dark:bg-background-dark dark:text-foreground-dark text-foreground bg-background"
     :style="state.style"
   >
     <LayoutPageHeader />

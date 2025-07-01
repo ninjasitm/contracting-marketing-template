@@ -6,6 +6,15 @@ import ProjectCard from '@/components/work/ProjectCard.vue';
 import Loading from '@/components/layouts/Page/Loading.vue';
 import type { Client, Project, BasePageState } from '@/types/types';
 
+interface ProjectContentData {
+  title?: string;
+  slug?: string;
+  client?: string;
+  heroImage?: string;
+  bannerImage?: string;
+  description?: string;
+}
+
 export interface WorkPageState extends BasePageState {
   featuredClient?: {
     client: string;
@@ -51,44 +60,29 @@ await loadData();
 
 async function loadData(): Promise<void> {
   state.isLoading = true;
-  const projectsData =
-    ((
-      await useAsyncData(
-        '_work.projects',
-        async () =>
-          await queryContent('/_work')
-            .only(['slug', 'heroImage', 'description', 'client', 'title'])
-            .where({
-              published: { $eq: true },
-            })
-            .limit(6)
-            .find(),
-      )
-    ).data.value as Project[]) || ([] as Project[]);
+
+  // Load projects using the new composable
+  const { data: projectsData } = await useContentQueries.useWorkProjects({
+    limit: 6,
+  });
 
   // Convert the data to Project objects with correct types
-  state.projects = projectsData.map((item) => ({
-    id: item.slug as string,
-    title: item.title,
-    slug: item.slug,
-    date: '', // Add a default date
-    client: item.client || '',
-    url: '', // Add a default URL
-    heroImage: item.heroImage,
-    description: item.description,
-  }));
+  state.projects = (projectsData.value || []).map(
+    (item: ProjectContentData) => ({
+      id: item.slug || '',
+      title: item.title || '',
+      slug: item.slug || '',
+      date: '', // Add a default date
+      client: item.client || '',
+      url: '', // Add a default URL
+      heroImage: item.heroImage || item.bannerImage,
+      description: item.description || '',
+    }),
+  );
 
-  state.categories = [
-    ...new Set(
-      (await queryContent('/_work').only('categories').find())
-        .map((item) => item.categories)
-        .flat()
-        .filter((item) => item !== null && item !== undefined),
-    ),
-  ].map((item) => ({
-    name: item,
-    filter: item,
-  }));
+  // Load categories using the new composable
+  const { data: categoriesData } = await useContentQueries.useWorkCategories();
+  state.categories = categoriesData.value || [];
 
   const featuredClientConfig = state.featuredClient || { client: 'chip' };
   state.featuredClientData =
@@ -102,26 +96,32 @@ async function loadData(): Promise<void> {
 async function onLoadCategory(id: string | null): Promise<void> {
   state.currentCategory = id === state.currentCategory ? null : id;
   console.log('Loading category', id);
-  // Implement category load logic here
-  const query = queryContent('/_work').only([
-    'slug',
-    'heroImage',
-    'description',
-    'client',
-    'title',
-  ]);
 
-  if (state.currentCategory) {
-    query.where({
-      categories: { $contains: state.currentCategory },
-    });
-  }
+  // Use the composable for category filtering
+  const { data: projectsData } = await useContentQueries.useWorkProjects({
+    category: state.currentCategory || undefined,
+    limit: 6,
+  });
 
-  state.projects = (await query.limit(6).find()) as Project[];
+  // Convert the data to Project objects with correct types
+  state.projects = (projectsData.value || []).map(
+    (item: ProjectContentData) => ({
+      id: item.slug || '',
+      title: item.title || '',
+      slug: item.slug || '',
+      date: '', // Add a default date
+      client: item.client || '',
+      url: '', // Add a default URL
+      heroImage: item.heroImage || item.bannerImage,
+      description: item.description || '',
+    }),
+  );
 }
 </script>
 <template>
-  <div class="flex relative flex-col pb-24 w-full max-md:max-w-full px-2 lg:px-10">
+  <div
+    class="flex relative flex-col pb-24 w-full max-md:max-w-full px-2 lg:px-10"
+  >
     <!-- Hero Section using AppHero -->
     <AppHero
       :title="state.hero?.title"
@@ -133,7 +133,9 @@ async function onLoadCategory(id: string | null): Promise<void> {
     />
 
     <!-- Work Projects Section -->
-    <LayoutPageSection class="flex flex-col text-black w-full max-w-screen-xl mx-auto">
+    <LayoutPageSection
+      class="flex flex-col text-black w-full max-w-screen-xl mx-auto"
+    >
       <header
         v-if="state.featuredClientData && state.featuredClientData.slug"
         class="flex overflow-hidden flex-col w-full rounded-2xl"
@@ -145,7 +147,9 @@ async function onLoadCategory(id: string | null): Promise<void> {
             params: { slug: state.featuredClientData.slug },
           }"
         >
-          <div class="flex relative flex-col py-4 pt-0 px-0 lg:px-16 w-full min-h-[250px] lg:min-h-[640px] max-md:max-w-full">
+          <div
+            class="flex relative flex-col py-4 pt-0 px-0 lg:px-16 w-full min-h-[250px] lg:min-h-[640px] max-md:max-w-full"
+          >
             <NuxtImg
               placeholder
               loading="lazy"
@@ -160,7 +164,9 @@ async function onLoadCategory(id: string | null): Promise<void> {
               alt="Company logo"
               class="object-contain self-end aspect-square w-[90px]"
             />
-            <div class="flex relative flex-col mt-80 max-w-full w-[413px] max-md:mt-10">
+            <div
+              class="flex relative flex-col mt-80 max-w-full w-[413px] max-md:mt-10"
+            >
               <p
                 class="text-lg font-light"
                 v-html="state.featuredClientData.description"
@@ -174,7 +180,9 @@ async function onLoadCategory(id: string | null): Promise<void> {
       </header>
 
       <!-- Category Navigation -->
-      <nav class="flex flex-wrap gap-4 py-4 items-start self-start mt-10 text-base max-md:mt-10 max-md:max-w-full snap-x lg:min-h-[100px]">
+      <nav
+        class="flex flex-wrap gap-4 py-4 items-start self-start mt-10 text-base max-md:mt-10 max-md:max-w-full snap-x lg:min-h-[100px]"
+      >
         <AppButton
           class="h-10 text-center snap-center text-xs"
           variant="default"
@@ -197,7 +205,9 @@ async function onLoadCategory(id: string | null): Promise<void> {
       </nav>
 
       <!-- Projects Grid -->
-      <div class="flex flex-wrap gap-5 items-start mt-16 w-full lg:mt-6 overflow-visible">
+      <div
+        class="flex flex-wrap gap-5 items-start mt-16 w-full lg:mt-6 overflow-visible"
+      >
         <div
           v-if="state.isLoading"
           class="flex justify-center w-full"
@@ -219,13 +229,21 @@ async function onLoadCategory(id: string | null): Promise<void> {
 
     <!-- Call to Action Section -->
     <AppCTA
-      v-if="state.callToAction && (state.callToAction.title || state.callToAction.primaryButtonText)"
+      v-if="
+        state.callToAction &&
+          (state.callToAction.title || state.callToAction.primaryButtonText)
+      "
       :title="state.callToAction.title || 'Ready to Start Your Project?'"
-      :description="state.callToAction.description || 'Let us discuss your project and see how we can help bring your vision to life.'"
+      :description="
+        state.callToAction.description ||
+          'Let us discuss your project and see how we can help bring your vision to life.'
+      "
       :primary-action="state.callToAction.primaryButtonText || 'Get Started'"
       secondary-action="Learn Our Process"
       class="w-full max-w-screen-xl mx-auto mt-20"
-      @primary-action="navigateTo(state.callToAction.primaryButtonUrl || '/contact')"
+      @primary-action="
+        navigateTo(state.callToAction.primaryButtonUrl || '/contact')
+      "
       @secondary-action="navigateTo('/process')"
     />
   </div>

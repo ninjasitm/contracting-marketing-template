@@ -23,7 +23,9 @@ const state: ProcessPageState = reactive({
 });
 </script>
 <template>
-  <div class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-2">
+  <div
+    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-2"
+  >
     <!-- Hero Section using AppHero -->
     <AppHero
       :title="state.hero?.title"
@@ -35,8 +37,12 @@ const state: ProcessPageState = reactive({
     />
 
     <!-- Process Sections -->
-    <LayoutPageSection class="flex flex-col font-light text-black w-full max-w-screen-xl mx-auto">
-      <div class="flex flex-wrap gap-20 mt-10 w-full max-md:mt-10 max-md:max-w-full">
+    <LayoutPageSection
+      class="flex flex-col font-light text-black dark:text-white w-full max-w-screen-xl mx-auto"
+    >
+      <div
+        class="flex flex-wrap gap-20 mt-10 w-full max-md:mt-10 max-md:max-w-full"
+      >
         <ProcessSection
           v-for="(section, index) in state.sections"
           :key="index"
@@ -49,12 +55,22 @@ const state: ProcessPageState = reactive({
 
     <!-- Call to Action Section -->
     <AppCTA
-      v-if="state.callToAction && (state.callToAction.title || state.callToAction.primaryButtonText)"
+      v-if="
+        state.callToAction &&
+        (state.callToAction.title || state.callToAction.primaryButtonText)
+      "
       :title="state.callToAction.title || 'Ready to Get Started?'"
-      :description="state.callToAction.description || 'Now that you understand our process, let us discuss your project and how we can help bring your vision to life.'"
-      :primary-action="state.callToAction.primaryButtonText || 'Start Your Project'"
+      :description="
+        state.callToAction.description ||
+        'Now that you understand our process, let us discuss your project and how we can help bring your vision to life.'
+      "
+      :primary-action="
+        state.callToAction.primaryButtonText || 'Start Your Project'
+      "
       class="w-full max-w-screen-xl mx-auto mt-20"
-      @primary-action="navigateTo(state.callToAction.primaryButtonUrl || '/contact')"
+      @primary-action="
+        navigateTo(state.callToAction.primaryButtonUrl || '/contact')
+      "
     />
   </div>
 </template>

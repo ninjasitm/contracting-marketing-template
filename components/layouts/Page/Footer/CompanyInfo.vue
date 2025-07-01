@@ -35,10 +35,12 @@ const { items, naicsCodesTitle, naicsCodes } = toRefs(props);
       </section>
       <section class="flex flex-col flex-wrap px-0 w-full max-md:max-w-full">
         <div class="flex flex-col justify-center mt-6 w-full max-md:max-w-full">
-          <h3 class="text-sm text-stone-500">
+          <h3 class="text-sm text-stone-500 dark:text-stone-400">
             {{ naicsCodesTitle || 'NAICS' }} Codes
           </h3>
-          <p class="mt-2 text-base text-black max-md:max-w-full">
+          <p
+            class="mt-2 text-base text-black dark:text-white max-md:max-w-full"
+          >
             {{ naicsCodes?.join(', ') }}
           </p>
         </div>

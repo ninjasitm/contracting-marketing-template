@@ -81,7 +81,7 @@ const MyTheme = {
  */
 export default <Partial<Config>>{
   // Dark mode can be toggled with the class strategy
-  darkMode: ['class', 'class'],
+  darkMode: 'class',
 
   // Paths to all files containing Tailwind class names
   content: [
@@ -135,12 +135,12 @@ export default <Partial<Config>>{
       },
       colors: {
         primary: {
-          DEFAULT: '#3BA676', // from MyTheme.colors.green.DEFAULT
-          foreground: '#FFFFFF', // white for contrast
+          DEFAULT: '#000000',
+          foreground: '#FFFFFF',
         },
         secondary: {
-          DEFAULT: '#158AD0', // from MyTheme.colors.blue.DEFAULT
-          foreground: '#FFFFFF', // white for contrast
+          DEFAULT: '#158AD0',
+          foreground: '#FFFFFF',
         },
         success: MyTheme.colors.green,
         warning: colors.amber,
@@ -151,44 +151,90 @@ export default <Partial<Config>>{
         red: MyTheme.colors.red,
         slate: colors.slate,
         grey: MyTheme.colors.grey,
-        dark: {
-          bg: {
-            primary: '#121212',
-            secondary: '#1E1E1E',
-            tertiary: '#2D2D2D',
-          },
+
+        // Enhanced dark mode color system
+        background: {
+          DEFAULT: '#FFFFFF',
+          dark: '#0F172A', // grey.900
         },
-        background: '#FFFFFF', // light background
-        foreground: '#1E293B', // grey.800 for text
+        foreground: {
+          DEFAULT: '#1E293B', // grey.800
+          dark: '#F1F5F9', // grey.100
+        },
+
+        // Card colors with dark mode support
         card: {
-          DEFAULT: '#F8FAFC', // grey.50
-          foreground: '#1E293B', // grey.800
+          DEFAULT: '#FFFFFF',
+          foreground: '#1E293B',
+          dark: '#1E293B', // grey.800
+          'dark-foreground': '#F1F5F9', // grey.100
         },
+
+        // Popover colors with dark mode support
         popover: {
+          DEFAULT: '#FFFFFF',
+          foreground: '#1E293B',
+          dark: '#1E293B', // grey.800
+          'dark-foreground': '#F1F5F9', // grey.100
+        },
+
+        // Muted colors with dark mode support
+        muted: {
+          DEFAULT: '#F1F5F9', // grey.100
+          foreground: '#64748B', // grey.500
+          dark: '#334155', // grey.700
+          'dark-foreground': '#94A3B8', // grey.400
+        },
+
+        // Accent colors with dark mode support
+        accent: {
           DEFAULT: '#F1F5F9', // grey.100
           foreground: '#1E293B', // grey.800
+          dark: '#334155', // grey.700
+          'dark-foreground': '#F1F5F9', // grey.100
         },
-        muted: {
-          DEFAULT: '#CBD5E1', // grey.300
-          foreground: '#64748B', // grey.500
-        },
-        accent: {
-          DEFAULT: '#29A7FF', // blue.400
-          foreground: '#FFFFFF', // white for contrast
-        },
+
+        // Destructive colors (same for both modes)
         destructive: {
-          DEFAULT: '#FF6464', // red.DEFAULT
-          foreground: '#FFFFFF', // white for contrast
+          DEFAULT: '#FF6464',
+          foreground: '#FFFFFF',
         },
-        border: '#E2E8F0', // grey.200
-        input: '#F1F5F9', // grey.100
-        ring: '#158AD0', // blue.DEFAULT
+
+        // Border colors with dark mode support
+        border: {
+          DEFAULT: '#E2E8F0', // grey.200
+          dark: '#475569', // grey.600
+        },
+
+        // Input colors with dark mode support
+        input: {
+          DEFAULT: '#E2E8F0', // grey.200
+          dark: '#475569', // grey.600
+        },
+
+        // Ring colors with dark mode support
+        ring: {
+          DEFAULT: '#158AD0',
+          dark: '#29A7FF', // lighter blue for dark mode
+        },
+
+        // Chart colors (consistent across modes)
         chart: {
           '1': '#3BA676', // green.DEFAULT
           '2': '#158AD0', // blue.DEFAULT
           '3': '#FF6464', // red.DEFAULT
           '4': '#FBBF24', // amber.400
           '5': '#64748B', // grey.DEFAULT
+        },
+
+        // Additional semantic colors for better dark mode support
+        surface: {
+          DEFAULT: '#F8FAFC', // grey.50
+          dark: '#1E293B', // grey.800
+        },
+        overlay: {
+          DEFAULT: 'rgba(0, 0, 0, 0.5)',
+          dark: 'rgba(255, 255, 255, 0.1)',
         },
       },
       fontFamily: {
@@ -314,22 +360,67 @@ export default <Partial<Config>>{
   // Plugins for additional functionality
   plugins: [
     plugin(function ({ addBase, theme }) {
-      // Apply basic styles to html and body elements
+      // CSS variables for consistent theming
       addBase({
+        ':root': {
+          '--background': '0 0% 100%', // white
+          '--foreground': '222.2 84% 4.9%', // grey.800
+          '--card': '0 0% 100%', // white
+          '--card-foreground': '222.2 84% 4.9%', // grey.800
+          '--popover': '0 0% 100%', // white
+          '--popover-foreground': '222.2 84% 4.9%', // grey.800
+          '--primary': '0 0% 0%', // black
+          '--primary-foreground': '0 0% 100%', // white
+          '--secondary': '199 89% 48%', // blue.DEFAULT
+          '--secondary-foreground': '0 0% 100%', // white
+          '--muted': '210 40% 96%', // grey.100
+          '--muted-foreground': '215.4 16.3% 46.9%', // grey.500
+          '--accent': '210 40% 96%', // grey.100
+          '--accent-foreground': '222.2 84% 4.9%', // grey.800
+          '--destructive': '0 84% 60%', // red.DEFAULT
+          '--destructive-foreground': '0 0% 100%', // white
+          '--border': '214.3 31.8% 91.4%', // grey.200
+          '--input': '214.3 31.8% 91.4%', // grey.200
+          '--ring': '199 89% 48%', // blue.DEFAULT
+          '--radius': '0.5rem',
+          '--chart-1': '152 57% 52%', // green.DEFAULT
+          '--chart-2': '199 89% 48%', // blue.DEFAULT
+          '--chart-3': '0 84% 60%', // red.DEFAULT
+          '--chart-4': '43 96% 56%', // amber.400
+          '--chart-5': '215.4 16.3% 46.9%', // grey.DEFAULT
+        },
+        '.dark': {
+          '--background': '222.2 84% 4.9%', // grey.900
+          '--foreground': '210 40% 96%', // grey.100
+          '--card': '222.2 84% 4.9%', // grey.900
+          '--card-foreground': '210 40% 96%', // grey.100
+          '--popover': '222.2 84% 4.9%', // grey.900
+          '--popover-foreground': '210 40% 96%', // grey.100
+          '--primary': '0 0% 100%', // white
+          '--primary-foreground': '0 0% 0%', // black
+          '--secondary': '199 89% 60%', // lighter blue for dark mode
+          '--secondary-foreground': '0 0% 100%', // white
+          '--muted': '217.2 32.6% 17.5%', // grey.700
+          '--muted-foreground': '215 20.2% 65.1%', // grey.400
+          '--accent': '217.2 32.6% 17.5%', // grey.700
+          '--accent-foreground': '210 40% 96%', // grey.100
+          '--destructive': '0 84% 60%', // red.DEFAULT (same)
+          '--destructive-foreground': '0 0% 100%', // white
+          '--border': '217.2 32.6% 17.5%', // grey.700
+          '--input': '217.2 32.6% 17.5%', // grey.700
+          '--ring': '199 89% 60%', // lighter blue for dark mode
+        },
+
+        // Apply basic styles to html and body elements
         html: {
           fontSize: '16px',
           scrollBehavior: 'smooth',
         },
         body: {
           fontFamily: theme('fontFamily.sans'),
-          color: theme('colors.grey.800'),
-          backgroundColor: theme('colors.white'),
-          transition: 'background-color 0.3s ease',
-        },
-        // Dark mode styles
-        '.dark body': {
-          color: theme('colors.grey.200'),
-          backgroundColor: theme('colors.dark.bg.primary'),
+          color: 'hsl(var(--foreground))',
+          backgroundColor: 'hsl(var(--background))',
+          transition: 'background-color 0.3s ease, color 0.3s ease',
         },
       });
     }),
@@ -366,6 +457,112 @@ export default <Partial<Config>>{
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
+        },
+        // Dark mode utilities
+        '.bg-background': {
+          backgroundColor: 'hsl(var(--background))',
+        },
+        '.bg-foreground': {
+          backgroundColor: 'hsl(var(--foreground))',
+        },
+        '.bg-card': {
+          backgroundColor: 'hsl(var(--card))',
+        },
+        '.bg-card-foreground': {
+          backgroundColor: 'hsl(var(--card-foreground))',
+        },
+        '.bg-popover': {
+          backgroundColor: 'hsl(var(--popover))',
+        },
+        '.bg-popover-foreground': {
+          backgroundColor: 'hsl(var(--popover-foreground))',
+        },
+        '.bg-primary': {
+          backgroundColor: 'hsl(var(--primary))',
+        },
+        '.bg-primary-foreground': {
+          backgroundColor: 'hsl(var(--primary-foreground))',
+        },
+        '.bg-secondary': {
+          backgroundColor: 'hsl(var(--secondary))',
+        },
+        '.bg-secondary-foreground': {
+          backgroundColor: 'hsl(var(--secondary-foreground))',
+        },
+        '.bg-muted': {
+          backgroundColor: 'hsl(var(--muted))',
+        },
+        '.bg-muted-foreground': {
+          backgroundColor: 'hsl(var(--muted-foreground))',
+        },
+        '.bg-accent': {
+          backgroundColor: 'hsl(var(--accent))',
+        },
+        '.bg-accent-foreground': {
+          backgroundColor: 'hsl(var(--accent-foreground))',
+        },
+        '.bg-destructive': {
+          backgroundColor: 'hsl(var(--destructive))',
+        },
+        '.bg-destructive-foreground': {
+          backgroundColor: 'hsl(var(--destructive-foreground))',
+        },
+        '.text-background': {
+          color: 'hsl(var(--background))',
+        },
+        '.text-foreground': {
+          color: 'hsl(var(--foreground))',
+        },
+        '.text-card': {
+          color: 'hsl(var(--card))',
+        },
+        '.text-card-foreground': {
+          color: 'hsl(var(--card-foreground))',
+        },
+        '.text-popover': {
+          color: 'hsl(var(--popover))',
+        },
+        '.text-popover-foreground': {
+          color: 'hsl(var(--popover-foreground))',
+        },
+        '.text-primary': {
+          color: 'hsl(var(--primary))',
+        },
+        '.text-primary-foreground': {
+          color: 'hsl(var(--primary-foreground))',
+        },
+        '.text-secondary': {
+          color: 'hsl(var(--secondary))',
+        },
+        '.text-secondary-foreground': {
+          color: 'hsl(var(--secondary-foreground))',
+        },
+        '.text-muted': {
+          color: 'hsl(var(--muted))',
+        },
+        '.text-muted-foreground': {
+          color: 'hsl(var(--muted-foreground))',
+        },
+        '.text-accent': {
+          color: 'hsl(var(--accent))',
+        },
+        '.text-accent-foreground': {
+          color: 'hsl(var(--accent-foreground))',
+        },
+        '.text-destructive': {
+          color: 'hsl(var(--destructive))',
+        },
+        '.text-destructive-foreground': {
+          color: 'hsl(var(--destructive-foreground))',
+        },
+        '.border-border': {
+          borderColor: 'hsl(var(--border))',
+        },
+        '.border-input': {
+          borderColor: 'hsl(var(--input))',
+        },
+        '.ring-ring': {
+          '--tw-ring-color': 'hsl(var(--ring))',
         },
       };
       addUtilities(utilities);

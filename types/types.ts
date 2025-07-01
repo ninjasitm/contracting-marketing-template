@@ -178,8 +178,8 @@ export interface HeroActions {
 }
 
 export interface Hero {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   overlayClass?: string;
   subtitle?: string;
   highlightText?: string;

@@ -2,7 +2,7 @@
 import { reactive, computed } from 'vue';
 import { useHead } from 'nuxt/app';
 import _config from '@content/_pages/home.json';
-import type { CallToAction, BasePageState } from '@/types/types';
+import type { Hero, CallToAction, BasePageState } from '@/types/types';
 // Nuxt 3 composables are auto-imported, but for type safety, import from 'nuxt/app'
 import { definePageMeta } from '#imports';
 
@@ -36,64 +36,76 @@ useHead({
 
 // Convert the config to properly typed state
 const state = reactive<HomePageState>({
-  hero: config.hero ? {
-    ...config.hero,
-    actions: config.hero.actions?.map(action => ({
-      ...action,
-      type: (action.type === 'button' || action.type === 'link') ? action.type : 'button'
-    }))
-  } : undefined,
+  hero: config.hero
+    ? {
+        ...config.hero,
+        actions: config.hero.actions?.map((action) => ({
+          ...action,
+          type:
+            action.type === 'button' || action.type === 'link'
+              ? action.type
+              : 'button',
+        })),
+      }
+    : undefined,
   coreCompetencies: config.coreCompetencies,
   differentiators: config.differentiators,
-  callToAction: config.callToAction
+  callToAction: config.callToAction,
 });
 
 // Transform hero data for AppHero component
-const heroData = computed(() => {
+const heroData = computed<Hero>(() => {
   if (!state.hero) return {};
 
   return {
     title: state.hero.title,
     description: state.hero.description,
-    backgroundImage: Array.isArray(state.hero.backgroundImage)
-      ? state.hero.backgroundImage[0]
-      : state.hero.backgroundImage,
-    actions: state.hero.actions || []
+    actions: state.hero.actions || [],
+    highlightText: state.hero.highlightText || '',
+    subtitle: state.hero.subtitle || '',
+    suffix: state.hero.suffix || '',
+    size: state.hero.size || 'default',
+    overlayColor: 'rgba(0, 0, 0, 0.5)', // Default overlay color
+    overlayClass: state.hero.overlayClass || 'bg-black bg-opacity-50',
+    featuredType: state.hero.featuredType || 'default',
+    featuredItems: state.hero.featuredItems || [],
+    mode: state.hero.mode || 'default',
+    alignment: state.hero.alignment || 'center',
+    textColor: state.hero.textColor || 'white',
+    backgroundImage: state.hero.backgroundImage || '',
+    typerBegin: state.hero.typerBegin || '',
+    typerEnd: state.hero.typerEnd || '',
+    typerText: state.hero.typerText || '',
+    backgroundClass:
+      state.hero.backgroundClass ||
+      'bg-blend-darken bg-gradient-to-t from-black to-transparent text-white',
   };
 });
 </script>
 
 <template>
-  <div class="flex relative flex-col pb-24 w-full min-h-[500px] md:min-h-[800px] max-md:max-w-full">
+  <div
+    class="flex relative flex-col pb-24 w-full min-h-[500px] md:min-h-[800px] max-md:max-w-full"
+  >
     <!-- Hero Section using AppHero -->
     <ClientOnly>
-      <Teleport
-        defer
-        to="#page-banner"
-      >
-        <AppHero
-          :title="heroData.title"
-          :description="heroData.description"
-          :actions="heroData.actions"
-          :style="{
-            backgroundImage: `url('${heroData.backgroundImage}')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-          }"
-          class="min-h-[95vh] md:min-h-[500px] md:h-[800px] bg-blend-darken bg-gradient-to-t from-black to-transparent text-white"
-        />
+      <Teleport defer to="#page-banner">
+        <AppHero v-bind="heroData" />
       </Teleport>
     </ClientOnly>
 
     <!-- Core Competencies Section -->
-    <LayoutPageSection class="flex flex-col w-full max-w-screen-xl mt-5 md:mt-20 mx-auto px-2 lg:px-2">
-      <hr class="w-full border border-black mt-10">
+    <LayoutPageSection
+      class="flex flex-col w-full max-w-screen-xl mt-5 md:mt-20 mx-auto px-2 lg:px-2"
+    >
+      <hr class="w-full border border-black dark:border-white mt-10" />
       <h2
-        class="gap-2 self-stretch pt-6 w-full text-xl font-light tracking-tight uppercase text-sky-950"
+        class="gap-2 self-stretch pt-6 w-full text-xl font-light tracking-tight uppercase text-sky-950 dark:text-sky-300"
         v-html="state.coreCompetencies?.title"
       />
-      <div class="flex flex-col mt-16 w-full text-black max-md:mt-10">
+      <div
+        class="flex flex-col mt-16 w-full text-black dark:text-white max-md:mt-10"
+      >
         <div class="flex flex-col w-full max-md:max-w-full">
           <div class="flex flex-col w-full max-md:max-w-full">
             <p
@@ -101,7 +113,7 @@ const heroData = computed(() => {
               v-html="state.coreCompetencies?.description"
             />
             <NuxtLink
-              class="flex gap-1 items-center mt-3 p-3 my-auto text-base tracking-tight uppercase rounded-lg border border-black max-w-[max-content] hover:bg-black hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              class="flex gap-1 items-center mt-3 p-3 my-auto text-base tracking-tight uppercase rounded-lg border border-black dark:border-white max-w-[max-content] hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               :to="{ name: 'process' }"
             >
               <NuxtImg
@@ -114,7 +126,9 @@ const heroData = computed(() => {
               <span class="self-stretch my-auto">View our processes</span>
             </NuxtLink>
           </div>
-          <div class="flex flex-wrap gap-20 items-start mt-16 w-full max-md:mt-10">
+          <div
+            class="flex flex-wrap gap-20 items-start mt-16 w-full max-md:mt-10"
+          >
             <div
               v-for="(competency, index) in state.coreCompetencies?.items"
               :key="index"
@@ -127,7 +141,7 @@ const heroData = computed(() => {
                 <li
                   v-for="(item, i) in competency.items"
                   :key="i"
-                  class="flex-1 shrink gap-4 pb-4 mt-4 w-full border-b border-black"
+                  class="flex-1 shrink gap-4 pb-4 mt-4 w-full border-b border-black dark:border-white"
                   :class="{ 'mt-0': i === 0 }"
                 >
                   {{ item }}
@@ -140,18 +154,22 @@ const heroData = computed(() => {
     </LayoutPageSection>
 
     <!-- Differentiators Section -->
-    <LayoutPageSection class="flex flex-col mt-32 w-full font-light max-md:mt-10 max-w-screen-xl mx-auto px-2 lg:px-2">
-      <hr class="w-full border border-black mt-10">
+    <LayoutPageSection
+      class="flex flex-col mt-32 w-full font-light max-md:mt-10 max-w-screen-xl mx-auto px-2 lg:px-2"
+    >
+      <hr class="w-full border border-black dark:border-white mt-10" />
       <h2
-        class="gap-2 self-stretch pt-6 w-full text-xl tracking-tight uppercase whitespace-nowrap text-sky-950"
+        class="gap-2 self-stretch pt-6 w-full text-xl tracking-tight uppercase whitespace-nowrap text-sky-950 dark:text-sky-300"
         v-html="state.differentiators?.title"
       />
-      <div class="flex flex-wrap gap-5 mt-16 w-full text-2xl text-black max-md:mt-10">
+      <div
+        class="flex flex-wrap gap-5 mt-16 w-full text-2xl text-black dark:text-white max-md:mt-10"
+      >
         <AppCard
           v-for="(differentiator, index) in state.differentiators?.items"
           :key="index"
           variant="default"
-          class="flex flex-col grow shrink p-4 lg:p-2 bg-white rounded-2xl min-w-[240px] w-[330px]"
+          class="flex flex-col grow shrink p-4 lg:p-2 bg-white dark:bg-gray-800 rounded-2xl min-w-[240px] w-[330px]"
         >
           <template #header>
             <NuxtImg
@@ -170,7 +188,10 @@ const heroData = computed(() => {
 
     <!-- Call to Action Section -->
     <AppCTA
-      v-if="state.callToAction && (state.callToAction.title || state.callToAction.description)"
+      v-if="
+        state.callToAction &&
+        (state.callToAction.title || state.callToAction.description)
+      "
       :title="state.callToAction.title"
       :description="state.callToAction.description"
       :primary-action="state.callToAction.primaryButtonText"

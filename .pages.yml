@@ -122,6 +122,16 @@ content:
     path: content/config.json
     type: file
     fields:
+      - name: enableColorMode
+        label: Enable Color Mode
+        type: boolean
+        default: false
+      - name: colorMode
+        label: Color Mode
+        type: select
+        options:
+          values: [light, dark]
+        default: light
       - name: title
         label: Website title
         type: string
@@ -182,11 +192,11 @@ content:
               - name: backgroundColor
                 label: Background Color
                 type: string
-                default: '#0A2840'
+                default: "#0A2840"
               - name: textColor
                 label: Text Color
                 type: string
-                default: '#fff'
+                default: "#fff"
           - name: links
             label: Links
             type: object
@@ -222,11 +232,11 @@ content:
           - name: backgroundColor
             label: Background Color
             type: string
-            default: '#333'
+            default: "#333"
           - name: textColor
             label: Text Color
             type: string
-            default: '#fff'
+            default: "#fff"
       - name: footer
         label: Footer Configuration
         type: object
@@ -241,11 +251,11 @@ content:
               - name: backgroundColor
                 label: Background Color
                 type: string
-                default: '#333'
+                default: "#333"
               - name: textColor
                 label: Text Color
                 type: string
-                default: '#fff'
+                default: "#fff"
           - name: companyInfoStyle
             label: Company Info Style
             type: object
@@ -253,11 +263,11 @@ content:
               - name: backgroundColor
                 label: Background Color
                 type: string
-                default: '#333'
+                default: "#333"
               - name: textColor
                 label: Text Color
                 type: string
-                default: '#fff'
+                default: "#fff"
           - name: links
             label: Links
             list: true
@@ -315,7 +325,7 @@ content:
                 label: Icon
                 type: image
                 options:
-                  extensions: ['svg', 'png', 'jpg', 'jpeg', 'gif', 'webp']
+                  extensions: ["svg", "png", "jpg", "jpeg", "gif", "webp"]
               - name: description
                 label: Description
                 type: string
@@ -388,15 +398,15 @@ content:
           - name: backgroundColor
             label: Background Color
             type: string
-            default: '#D7EFF9'
+            default: "#D7EFF9"
           - name: textColor
             label: Text Color
             type: string
-            default: '#fff'
+            default: "#fff"
           - name: iconColor
             label: Icon Color
             type: string
-            default: '#D7EFF9'
+            default: "#D7EFF9"
       - name: useEmbed
         label: Use Embed
         type: boolean
@@ -446,39 +456,6 @@ content:
             type: select
             options:
               values: [left, right]
-      - name: team
-        label: Team
-        type: object
-        fields:
-          - name: title
-            label: Title
-            type: string
-          - name: description
-            label: Description
-            type: rich-text
-          - name: teamMembers
-            label: Team Members
-            type: object
-            list: true
-            fields:
-              - name: name
-                label: Name
-                type: string
-              - name: position
-                label: Position
-                type: string
-              - name: bio
-                label: Bio
-                type: text
-              - name: image
-                label: Image
-                type: image
-                options:
-                  path: media/team
-                  categories: [image]
-              - name: linkedin
-                label: LinkedIn Profile URL
-                type: string
       - name: callToAction
         component: callToAction
   - name: teamMembers
@@ -602,20 +579,24 @@ content:
         type: string
       - name: categories
         label: Categories
-        type: string
+        type: reference
+        options:
+          collection: workCategories
+          multiple: true
+          search: "slug,name"
         list: true
       - name: callToAction
         component: callToAction
   - name: work
     type: collection
     label: Work
-    path: content/_work
+    path: content/_work/data
     view:
       fields: [title, client, categories, isOngoing, published, date]
       sort: [date, title]
       primary: slug
       default:
-        search: ''
+        search: ""
         sort: date
         order: desc
     fields:
@@ -644,7 +625,7 @@ content:
         label: Date
         type: date
         options:
-          format: 'MM/dd/yyyy'
+          format: "MM/dd/yyyy"
       - name: isOngoing
         label: Ongoing
         type: boolean
@@ -660,7 +641,11 @@ content:
         type: rich-text
       - name: categories
         label: Categories
-        type: string
+        type: reference
+        options:
+          collection: workCategories
+          multiple: true
+          search: "slug,name"
         list: true
       - name: problem
         label: Problem
@@ -796,6 +781,42 @@ content:
               - name: description
                 label: Description
                 type: rich-text
+  - name: workCategories
+    label: Work Categories
+    type: collection
+    path: content/_work/categories
+    view:
+      fields: [name, slug, description, color, featured]
+      sort: [order]
+      primary: name
+      default:
+        search: ""
+        sort: order
+        order: asc
+    fields:
+      - name: order
+        label: Order
+        type: number
+        default: 0
+      - name: name
+        label: Category Name
+        type: string
+        required: true
+      - name: slug
+        label: Slug
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: text
+      - name: color
+        label: Color
+        type: string
+        description: Hex color code for category display (e.g., #3B82F6)
+      - name: featured
+        label: Featured Category
+        type: boolean
+        default: false
   - name: clients
     label: Clients
     type: file
@@ -826,3 +847,133 @@ content:
         options:
           path: media/client/banners
           categories: [image]
+  - name: postsPage
+    type: file
+    label: Posts Page
+    path: content/_pages/posts.json
+    fields:
+      - name: hero
+        label: Hero
+        component: hero
+        fields:
+          - name: featuredPost
+            label: Featured Post
+            type: reference
+            options:
+              collection: posts
+              search: "title"
+  - name: posts
+    type: collection
+    label: Posts
+    path: content/_posts/data
+    view:
+      fields: [title, author, published, tags, featured, date]
+      sort: [date, title]
+      primary: slug
+      default:
+        search: ""
+        sort: date
+        order: desc
+    fields:
+      - name: published
+        label: Published
+        type: boolean
+        default: false
+      - name: featured
+        label: Featured
+        type: boolean
+        default: false
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: slug
+        label: Slug
+        type: string
+        required: true
+      - name: author
+        label: Author
+        type: reference
+        options:
+          collection: teamMembers
+          search: name
+          multiple: false
+        required: true
+      - name: date
+        label: Date
+        type: date
+        options:
+          format: "MM/dd/yyyy"
+      - name: summary
+        label: Summary
+        type: text
+        required: true
+      - name: heroImage
+        label: Hero Image
+        type: image
+        options:
+          path: media/posts/banners
+          categories: [image]
+      - name: heroImages
+        label: Hero Images
+        type: image
+        list: true
+        multiple: true
+        multiple.max: 10
+        options:
+          path: media/posts/banners
+          categories: [image]
+        extensions: ["jpg", "jpeg", "png", "webp", "gif"]
+      - name: readTime
+        label: Read Time
+        type: string
+      - name: tags
+        label: Categories
+        type: reference
+        options:
+          collection: postCategories
+          multiple: true
+          search: "name,slug"
+        list: true
+      - name: body
+        label: Body
+        type: rich-text
+        options:
+          path: media/posts
+          extensions: [jpg, jpeg, png, webp, gif]
+  - name: postCategories
+    label: Post Categories
+    type: collection
+    path: content/_posts/categories
+    view:
+      fields: [name, slug, description, color, featured]
+      sort: [order]
+      primary: name
+      default:
+        search: ""
+        sort: order
+        order: asc
+    fields:
+      - name: order
+        label: Order
+        type: number
+        default: 0
+      - name: name
+        label: Category Name
+        type: string
+        required: true
+      - name: slug
+        label: Slug
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: text
+      - name: color
+        label: Color
+        type: string
+        description: Hex color code for category display (e.g., #3B82F6)
+      - name: featured
+        label: Featured Category
+        type: boolean
+        default: false

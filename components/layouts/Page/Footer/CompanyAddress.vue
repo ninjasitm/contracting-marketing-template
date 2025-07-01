@@ -64,12 +64,12 @@ onMounted(() => {
     class="flex flex-wrap gap-5 justify-between items-start pt-6 mt-10 w-full max-md:max-w-full"
   >
     <div
-      class="flex flex-col justify-center font-light text-black min-w-[240px] max-md:max-w-full"
+      class="flex flex-col justify-center font-light text-black dark:text-white min-w-[240px] max-md:max-w-full"
     >
       <address class="text-xl tracking-tight uppercase not-italic">
         {{ state.address }}
       </address>
-      <div class="mt-8 divide divide-y divide-black">
+      <div class="mt-8 divide divide-y divide-black dark:divide-white">
         <a
           :href="`mailto:${state.email}`"
           class="gap-2 pb-4 mt-10 text-3xl lg:text-6xl tracking-tighter uppercase whitespace-nowrap max-md:max-w-full"
@@ -83,7 +83,7 @@ onMounted(() => {
     </div>
     <div class="flex gap-5 items-center">
       <nav
-        class="flex flex-col justify-center text-base text-black whitespace-nowrap"
+        class="flex flex-col justify-center text-base text-black dark:text-white whitespace-nowrap"
       >
         <NuxtLink
           v-for="(link, index) in state.links"
@@ -103,7 +103,9 @@ onMounted(() => {
       </nav>
     </div>
     <div class="flex gap-5 items-center">
-      <nav class="flex justify-center text-base text-black whitespace-nowrap">
+      <nav
+        class="flex justify-center text-base text-black dark:text-white whitespace-nowrap"
+      >
         <NuxtLink
           v-for="(link, index) in state.socialLinks"
           :key="index"

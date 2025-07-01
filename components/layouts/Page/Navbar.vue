@@ -5,6 +5,7 @@ import { useNavbarParser } from '~/composables/use-navbar-parser';
 import { useScreen } from '~/composables/use-screen';
 import type { LayoutPageNavbarMenu } from '~/utils/types';
 
+const colorMode = useColorMode();
 const { config } = useAppConfig();
 const { parseMenuRoute, parseMenuTitle } = useNavbarParser();
 const $screen = useScreen();
@@ -42,18 +43,21 @@ const getSocialIcon = (title: string) => {
 <template>
   <div
     id="main-navbar"
-    class="mx-auto w-full flex flex-col fixed backdrop-filter backdrop-blur-md top-0 z-40 flex-none transition-colors duration-300 md:z-50 border-b border-gray-950/10 h-[75px] md:min-h-[75px] bg-white dark:bg-brown-800"
+    class="mx-auto w-full flex flex-col fixed backdrop-filter backdrop-blur-md top-0 z-40 flex-none transition-colors duration-300 md:z-50 border-b border-border h-[75px] md:min-h-[75px] bg-background/80 dark:bg-background-dark"
   >
     <!-- header banner -->
     <div
       v-if="config.layout?.page?.navbar?.hasBanner"
       class="navbar-banner w-full h-[47px] flex overflow-hidden space-x-4 group"
-      :style="config.layout?.page?.navbar?.bannerStyle || {
-        backgroundColor: '#4A7C3C',
-      }
+      :style="
+        config.layout?.page?.navbar?.bannerStyle || {
+          backgroundColor: '#4A7C3C',
+        }
       "
     >
-      <div class="align-center flex space-x-4 animate-loop-scroll group-hover:paused">
+      <div
+        class="align-center flex space-x-4 animate-loop-scroll group-hover:paused"
+      >
         <span
           v-for="info in config.companyInfo"
           :key="info.title"
@@ -72,7 +76,9 @@ const getSocialIcon = (title: string) => {
       </div>
     </div>
     <!-- content -->
-    <div class="w-full px-4 lg:px-10 max-w-screen-xl flex-1 flex items-center justify-between mx-auto">
+    <div
+      class="w-full px-4 lg:px-10 max-w-screen-xl flex-1 flex items-center justify-between mx-auto"
+    >
       <!-- title -->
       <div>
         <slot name="title">
@@ -83,7 +89,9 @@ const getSocialIcon = (title: string) => {
             <NuxtImg
               v-if="config.logo"
               placeholder
-              :src="config.logo"
+              :src="
+                colorMode.preference === 'dark' ? config.logoAlt : config.logo
+              "
               :alt="config.title"
               class="w-auto h-[50px] md:h-[50px] object-contain"
             />
@@ -99,7 +107,7 @@ const getSocialIcon = (title: string) => {
       <!-- menus -->
       <div
         v-if="$screen.greater('md').value"
-        class="flex space-x-4 items-center bg-white/[0.75] dark:bg-brown-700/[0.75] rounded-xl px-4 lg:px-10 py-4"
+        class="flex space-x-4 items-center px-4 lg:px-10 py-4"
       >
         <div class="flex space-x-4 text-sm items-center">
           <!-- dynamic menus -->
@@ -115,12 +123,14 @@ const getSocialIcon = (title: string) => {
             v-for="link in config.socialLinks"
             :key="link.title"
             :href="link.url"
-            class="text-white hover:text-orange-400 transition"
+            class="text-black dark:text-white hover:text-orange-400 transition"
             target="_blank"
             rel="noopener noreferrer"
           >
             <span class="sr-only">{{ link.title }}</span>
-            <div class="w-4 h-4 flex items-center justify-center rounded-full hover:border-orange-400">
+            <div
+              class="w-4 h-4 flex items-center justify-center rounded-full hover:border-orange-400"
+            >
               <Icon
                 :name="getSocialIcon(link.title)"
                 class="w-4 h-4"
@@ -128,6 +138,9 @@ const getSocialIcon = (title: string) => {
             </div>
           </a>
         </div>
+
+        <!-- Theme toggle -->
+        <UiThemeToggle />
         <!-- others -->
         <!-- <div class="pl-4 flex space-x-4 text-xl align-center items-center"> -->
         <!-- todo: feat/localization -->

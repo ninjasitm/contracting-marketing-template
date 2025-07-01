@@ -20,7 +20,7 @@ const state: InfoBarState = reactive({
 
 <template>
   <header
-    class="info-bar flex relative flex-wrap gap-5 justify-center items-center px-4 lg:px-10 py-4 w-full text-xs bg-sky-950 max-md:px-5 max-md:max-w-full"
+    class="info-bar flex relative flex-wrap gap-5 justify-center items-center px-4 lg:px-10 py-4 w-full text-xs bg-sky-950 dark:bg-sky-900 max-md:px-5 max-md:max-w-full"
   >
     <template
       v-for="(item, index) in state.items"

@@ -2,14 +2,14 @@
 
 <template>
   <section
-    class="flex flex-wrap gap-5 justify-center items-center py-12 w-full text-black max-md:max-w-full"
+    class="flex flex-wrap gap-5 justify-center items-center py-12 w-full text-black dark:text-white max-md:max-w-full"
   >
-    <hr class="w-full border border-black mt-5 mb-5">
+    <hr class="w-full border border-black dark:border-white mt-5 mb-5">
     <h2 class="self-stretch my-auto text-2xl font-light">
       Ready to collaborate?
     </h2>
     <NuxtLink
-      class="flex gap-1 items-center self-stretch p-3 my-auto text-base tracking-tight uppercase rounded-lg border border-black hover:bg-black hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+      class="flex gap-1 items-center self-stretch p-3 my-auto text-base tracking-tight uppercase rounded-lg border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       :to="{ name: 'contact' }"
     >
       <NuxtImg
@@ -21,6 +21,6 @@
       />
       <span class="self-stretch my-auto">Start a Project</span>
     </NuxtLink>
-    <hr class="w-full border border-black mt-5">
+    <hr class="w-full border border-black dark:border-white mt-5">
   </section>
 </template>

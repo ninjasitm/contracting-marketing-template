@@ -4,36 +4,36 @@ import { cn } from '@/lib/utils';
 
 interface Props {
   variant?:
-  | 'default'
-  | 'destructive'
-  | 'outline'
-  | 'secondary'
-  | 'ghost'
-  | 'link';
+    | 'default'
+    | 'destructive'
+    | 'outline'
+    | 'secondary'
+    | 'ghost'
+    | 'link';
   size?: 'default' | 'sm' | 'lg' | 'icon' | 'xs' | 'xxl' | 'xl' | 'md';
   theme?: 'primary' | 'outline' | 'ghost' | 'secondary';
   rounded?:
-  | 'none'
-  | 'sm'
-  | 'md'
-  | 'lg'
-  | 'xl'
-  | '2xl'
-  | '3xl'
-  | '4xl'
-  | '5xl'
-  | boolean;
+    | 'none'
+    | 'sm'
+    | 'md'
+    | 'lg'
+    | 'xl'
+    | '2xl'
+    | '3xl'
+    | '4xl'
+    | '5xl'
+    | boolean;
   shadow?:
-  | 'none'
-  | 'sm'
-  | 'md'
-  | 'lg'
-  | 'xl'
-  | '2xl'
-  | '3xl'
-  | '4xl'
-  | '5xl'
-  | boolean;
+    | 'none'
+    | 'sm'
+    | 'md'
+    | 'lg'
+    | 'xl'
+    | '2xl'
+    | '3xl'
+    | '4xl'
+    | '5xl'
+    | boolean;
   uppercase?: boolean;
   outline?: boolean;
   as?: 'button' | 'a' | 'div' | 'span';
@@ -55,7 +55,12 @@ withDefaults(defineProps<Props>(), {
   <Button
     :variant="variant"
     :size="size"
-    :class="cn($attrs.class as string)"
+    :class="
+      cn($attrs.class as string, [
+        'dark:text-foreground-dark',
+        'dark:bg-background-dark',
+      ])
+    "
     v-bind="$attrs"
   >
     <slot />

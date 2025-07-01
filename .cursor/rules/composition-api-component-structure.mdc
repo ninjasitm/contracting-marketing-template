@@ -9,3 +9,4 @@ alwaysApply: false
 - Keep logic within components focused and manageable.
 - Add code comments for complex logic or non-obvious implementations.
 - Use bracket-style identifiers for all console logs (e.g., [ComponentName]: message).
+- Use a central state property with an interface that extends from BasePageState to ensure consistency across components.

@@ -2,24 +2,30 @@
 import { reactive } from 'vue';
 import ProcessSection from '../../../components/process/ProcessSection.vue';
 import _config from '@content/_pages/process.json';
+import _appConfig from '@content/config.json';
 import type { BasePageState } from '@/types/types';
+import { useSeoConfig } from '@/composables/useSeoConfig';
 
 export interface ProcessPageState extends BasePageState {
-  sections?: {
+  sections?: Array<{
     title: string;
     description: string;
     items: string[];
-  }[];
+  }>;
 }
 
 definePageMeta({ layout: 'page' });
 
-const config = _config as ProcessPageState;
+const processConfig = _config as ProcessPageState;
+const appConfig = _appConfig;
+
+// Configure SEO metadata
+useSeoConfig(processConfig.seo, processConfig.hero, appConfig);
 
 const state: ProcessPageState = reactive({
-  hero: config.hero,
-  sections: config.sections,
-  callToAction: config.callToAction,
+  hero: processConfig.hero,
+  sections: processConfig.sections,
+  callToAction: processConfig.callToAction,
 });
 </script>
 <template>
@@ -57,12 +63,12 @@ const state: ProcessPageState = reactive({
     <AppCTA
       v-if="
         state.callToAction &&
-        (state.callToAction.title || state.callToAction.primaryButtonText)
+          (state.callToAction.title || state.callToAction.primaryButtonText)
       "
       :title="state.callToAction.title || 'Ready to Get Started?'"
       :description="
         state.callToAction.description ||
-        'Now that you understand our process, let us discuss your project and how we can help bring your vision to life.'
+          'Now that you understand our process, let us discuss your project and how we can help bring your vision to life.'
       "
       :primary-action="
         state.callToAction.primaryButtonText || 'Start Your Project'

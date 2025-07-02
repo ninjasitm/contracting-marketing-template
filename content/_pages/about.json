@@ -12,5 +12,13 @@
     "primaryButtonUrl": "",
     "backgroundColor": "",
     "textColor": ""
+  },
+  "seo": {
+    "title": "About Us | Lorem Ipsum Company",
+    "description": "Learn about our team and company values. Dolor sit amet consectetur adipiscing elit with dedicated professionals.",
+    "keywords": "about us, team, company, professionals, expertise",
+    "ogImage": "/og-image.png",
+    "twitterCard": "summary_large_image",
+    "robots": "index,follow"
   }
 }

@@ -1,7 +1,22 @@
 <script lang="ts" setup>
-// compiler micro
+import _config from '@content/_pages/posts.json';
+import _appConfig from '@content/config.json';
+import type { BasePageState } from '@/types/types';
+import { useSeoConfig } from '@/composables/useSeoConfig';
+
+// Define page metadata
 definePageMeta({ layout: 'page' });
-useHead({ title: 'Posts' });
+
+const postsConfig = _config as BasePageState;
+const appConfig = _appConfig;
+
+// Configure SEO metadata
+useSeoConfig(postsConfig.seo, postsConfig.hero, appConfig);
+
+// Fallback title for basic useHead
+useHead({
+  title: postsConfig.hero?.title || 'Posts',
+});
 // query
 // const query: QueryBuilderParams = { path: '/post' }
 </script>
@@ -9,10 +24,7 @@ useHead({ title: 'Posts' });
 <template>
   <LayoutPageWrapper>
     <LayoutPageHeader>
-      <LayoutPageTitle
-        text="Posts"
-        class="capitalize"
-      />
+      <LayoutPageTitle text="Posts" class="capitalize" />
     </LayoutPageHeader>
     <LayoutPageSection>
       <ContentList path="/post">
@@ -28,10 +40,7 @@ useHead({ title: 'Posts' });
                 class="text-sm flex items-center justify-end space-x-1"
                 :href="`https://www.github.com/${article.author}`"
               >
-                <Icon
-                  name="mdi:github-face"
-                  class="text-xs"
-                />
+                <Icon name="mdi:github-face" class="text-xs" />
                 <span>{{ article.author }}</span>
               </NuxtLink>
             </div>
@@ -50,10 +59,7 @@ useHead({ title: 'Posts' });
                   :to="article._path"
                 >
                   <span>learn more</span>
-                  <Icon
-                    name="ic:baseline-arrow-right-alt"
-                    class="text-sm"
-                  />
+                  <Icon name="ic:baseline-arrow-right-alt" class="text-sm" />
                 </NuxtLink>
               </div>
             </div>

@@ -116,6 +116,55 @@ components:
       - name: textColor
         label: Text Color
         type: string
+  seo:
+    label: SEO Metadata
+    type: object
+    fields:
+      - name: title
+        label: Meta Title
+        type: string
+        description: Page title for search engines (defaults to hero title if not provided)
+      - name: description
+        label: Meta Description
+        type: text
+        description: Page description for search engines (defaults to hero description if not provided)
+      - name: keywords
+        label: Keywords
+        type: string
+        description: Comma-separated keywords for SEO
+      - name: ogImage
+        label: Open Graph Image
+        type: image
+        description: Social media preview image (defaults to /og-image.png if not provided)
+        options:
+          path: media/seo
+          categories: [image]
+      - name: twitterCard
+        label: Twitter Card Type
+        type: select
+        options:
+          values: [summary, summary_large_image]
+        default: summary_large_image
+      - name: canonicalUrl
+        label: Canonical URL
+        type: string
+        description: Canonical URL for this page (optional)
+        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+      - name: robots
+        label: Robots Meta
+        type: select
+        options:
+          values:
+            [
+              index,
+              noindex,
+              follow,
+              nofollow,
+              "index,follow",
+              "noindex,nofollow",
+            ]
+        default: "index,follow"
+        description: Instructions for search engine crawlers
 content:
   - name: config
     label: App Config
@@ -331,6 +380,8 @@ content:
                 type: string
       - name: callToAction
         component: callToAction
+      - name: seo
+        component: seo
   - name: servicesPage
     type: file
     label: Services Page
@@ -361,6 +412,8 @@ content:
             list: true
       - name: callToAction
         component: callToAction
+      - name: seo
+        component: seo
   - name: contactPage
     type: file
     label: Contact Page
@@ -427,6 +480,8 @@ content:
             type: string
       - name: callToAction
         component: callToAction
+      - name: seo
+        component: seo
   - name: aboutPage
     type: file
     label: About Page
@@ -458,6 +513,8 @@ content:
               values: [left, right]
       - name: callToAction
         component: callToAction
+      - name: seo
+        component: seo
   - name: teamMembers
     label: Team Members
     type: collection
@@ -540,6 +597,8 @@ content:
                   categories: [image]
       - name: callToAction
         component: callToAction
+      - name: seo
+        component: seo
   - name: workPage
     type: file
     label: Work Page
@@ -587,6 +646,8 @@ content:
         list: true
       - name: callToAction
         component: callToAction
+      - name: seo
+        component: seo
   - name: work
     type: collection
     label: Work
@@ -862,6 +923,8 @@ content:
             options:
               collection: posts
               search: "title"
+      - name: seo
+        component: seo
   - name: posts
     type: collection
     label: Posts

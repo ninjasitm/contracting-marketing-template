@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { computed, onMounted, reactive } from 'vue';
+import { useGetSocialIcon } from '~/composables/use-social-media';
 
 import type { LinkItem } from '~/utils/types';
 
@@ -119,7 +120,13 @@ onMounted(() => {
             alt=""
             class="object-contain shrink-0 self-stretch my-auto w-6 aspect-square mr-3"
           />
-          <span>{{ link.title }}</span>
+          <template v-else>
+            <span class="sr-only">{{ link.title }}</span>
+            <Icon
+              :name="useGetSocialIcon(link.title)"
+              class="w-5 h-5"
+            />
+          </template>
         </NuxtLink>
       </nav>
     </div>

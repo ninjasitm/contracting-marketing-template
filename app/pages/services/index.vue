@@ -2,7 +2,9 @@
 import { reactive } from 'vue';
 import ServiceFeature from '../../../components/services/ServiceFeature.vue';
 import _config from '@content/_pages/services.json';
+import _appConfig from '@content/config.json';
 import type { Service, BasePageState } from '@/types/types';
+import { useSeoConfig } from '@/composables/useSeoConfig';
 
 export interface ServicesPageState extends BasePageState {
   services?: Service[];
@@ -11,18 +13,24 @@ export interface ServicesPageState extends BasePageState {
 // Define page metadata
 definePageMeta({ layout: 'page' });
 
-const config = _config as ServicesPageState;
+const servicesConfig = _config as ServicesPageState;
+const appConfig = _appConfig;
+
+// Configure SEO metadata
+useSeoConfig(servicesConfig.seo, servicesConfig.hero, appConfig);
 
 // Create reactive state for the page content
 const state: ServicesPageState = reactive({
-  hero: config.hero,
-  services: config.services as Service[],
-  callToAction: config.callToAction,
+  hero: servicesConfig.hero,
+  services: servicesConfig.services as Service[],
+  callToAction: servicesConfig.callToAction,
 });
 </script>
 
 <template>
-  <div class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-2">
+  <div
+    class="flex relative flex-col pb-24 w-full md:min-h-[800px] max-md:max-w-full px-2"
+  >
     <!-- Hero Section using AppHero -->
     <AppHero
       :title="state.hero?.title"
@@ -34,7 +42,9 @@ const state: ServicesPageState = reactive({
     />
 
     <!-- Services list section -->
-    <LayoutPageSection class="flex flex-col font-light text-black w-full max-w-screen-xl mx-auto mt-10">
+    <LayoutPageSection
+      class="flex flex-col font-light text-black w-full max-w-screen-xl mx-auto mt-10"
+    >
       <hr class="w-full border border-black">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
         <ServiceFeature

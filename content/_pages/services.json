@@ -43,5 +43,13 @@
     "description": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit sed quia consequuntur.",
     "primaryButtonText": "Contact Us",
     "primaryButtonUrl": "/contact"
+  },
+  "seo": {
+    "title": "Our Services | Lorem Ipsum Company",
+    "description": "Discover our comprehensive service offerings. Lorem ipsum dolor sit amet consectetur adipiscing elit with professional expertise.",
+    "keywords": "services, professional services, solutions, expertise, consulting",
+    "ogImage": "/og-image.png",
+    "twitterCard": "summary_large_image",
+    "robots": "index,follow"
   }
 }

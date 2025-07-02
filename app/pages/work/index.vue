@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
 import _config from '@content/_pages/work.json';
+import _appConfig from '@content/config.json';
 import clients from '@content/clients.json';
 import ProjectCard from '@/components/work/ProjectCard.vue';
 import Loading from '@/components/layouts/Page/Loading.vue';
 import type { Client, Project, BasePageState } from '@/types/types';
+import { useSeoConfig } from '@/composables/useSeoConfig';
 
 interface ProjectContentData {
   title?: string;
@@ -16,6 +18,20 @@ interface ProjectContentData {
 }
 
 export interface WorkPageState extends BasePageState {
+  clients?: {
+    title?: string;
+    description?: string;
+    clientList?: Array<{
+      name: string;
+      logo?: string;
+      url?: string;
+    }>;
+  };
+  currentCategory?: string;
+  categories?: Array<{
+    name: string;
+    filter: string;
+  }>;
   featuredClient?: {
     client: string;
     type?: string;
@@ -30,12 +46,16 @@ export interface WorkPageState extends BasePageState {
 
 definePageMeta({ layout: 'page' });
 
-const config = _config as WorkPageState;
+const workConfig = _config as WorkPageState;
+const appConfig = _appConfig;
+
+// Configure SEO metadata
+useSeoConfig(workConfig.seo, workConfig.hero, appConfig);
 
 // Extended WorkPageState to include additional properties
 interface ExtendedWorkPageState extends WorkPageState {
   isLoading: boolean;
-  currentCategory: string | number | null;
+  currentCategory: string | undefined;
   categories: {
     name: string;
     filter: string;
@@ -46,11 +66,11 @@ interface ExtendedWorkPageState extends WorkPageState {
 
 const state: ExtendedWorkPageState = reactive({
   isLoading: false,
-  hero: config.hero,
-  featuredClient: config.featuredClient,
-  footer: config.footer,
-  callToAction: config.callToAction,
-  currentCategory: null,
+  hero: workConfig.hero,
+  featuredClient: workConfig.featuredClient,
+  footer: workConfig.footer,
+  callToAction: workConfig.callToAction,
+  currentCategory: undefined,
   featuredClientData: {} as Client,
   categories: [],
   projects: [],
@@ -94,7 +114,8 @@ async function loadData(): Promise<void> {
 }
 
 async function onLoadCategory(id: string | null): Promise<void> {
-  state.currentCategory = id === state.currentCategory ? null : id;
+  state.currentCategory =
+    id === state.currentCategory ? undefined : id || undefined;
   console.log('Loading category', id);
 
   // Use the composable for category filtering

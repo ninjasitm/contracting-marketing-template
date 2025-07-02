@@ -111,7 +111,10 @@ isLoading.value = false;
 </script>
 
 <template>
-  <div v-if="isLoading" class="flex justify-center w-full">
+  <div
+    v-if="isLoading"
+    class="flex justify-center w-full"
+  >
     <Loading />
   </div>
   <div
@@ -174,7 +177,10 @@ isLoading.value = false;
               :href="project.url"
             >
               Visit {{ project.title }}
-              <OpenLink class="stroke-white" stroke="#fff" />
+              <OpenLink
+                class="stroke-white"
+                stroke="#fff"
+              />
             </AppButton>
           </div>
           <MDC
@@ -185,7 +191,11 @@ isLoading.value = false;
           <div
             class="flex flex-wrap gap-4 justify-center items-center self-center mt-4 text-base"
           >
-            <AppButton v-if="project.isOngoing" variant="secondary" size="sm">
+            <AppButton
+              v-if="project.isOngoing"
+              variant="secondary"
+              size="sm"
+            >
               Ongoing
             </AppButton>
             <time
@@ -227,7 +237,10 @@ isLoading.value = false;
         id="problem"
         class="flex flex-col mt-28 max-w-full md:w-[700px] mx-auto max-md:mt-10"
       >
-        <h2 class="text-4xl max-md:max-w-full" v-html="project.problem.title" />
+        <h2
+          class="text-4xl max-md:max-w-full"
+          v-html="project.problem.title"
+        />
         <MDC
           v-if="project.problem.description"
           class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
@@ -280,7 +293,10 @@ isLoading.value = false;
         id="process"
         class="flex flex-col mt-28 max-w-full font-light text-black dark:text-white md:w-[700px] mx-auto"
       >
-        <h2 class="text-4xl max-md:max-w-full" v-html="project.process.title" />
+        <h2
+          class="text-4xl max-md:max-w-full"
+          v-html="project.process.title"
+        />
         <MDC
           v-if="project.process.description"
           class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
@@ -334,7 +350,10 @@ isLoading.value = false;
         id="design"
         class="flex flex-col mt-28 max-w-full md:w-[700px] mx-auto max-md:mt-10"
       >
-        <h2 class="text-4xl max-md:max-w-full" v-html="project.design.title" />
+        <h2
+          class="text-4xl max-md:max-w-full"
+          v-html="project.design.title"
+        />
         <MDC
           v-if="project.design.description"
           class="md-content mt-6 text-xl leading-8 max-md:max-w-full"
@@ -374,7 +393,10 @@ isLoading.value = false;
         id="result"
         class="flex flex-col mt-28 max-w-full font-light md:w-[700px] mx-auto"
       >
-        <h2 class="text-4xl max-md:max-w-full" v-html="project.result.title" />
+        <h2
+          class="text-4xl max-md:max-w-full"
+          v-html="project.result.title"
+        />
         <MDC
           v-if="project.result.description"
           class="md-content mt-6 text-xl leading-8 max-md:max-w-full text-left"
@@ -443,7 +465,9 @@ isLoading.value = false;
         v-if="nextProject?.slug"
         class="flex flex-col justify-center items-center self-stretch my-auto text-black dark:text-white min-w-[240px] w-[635px] max-md:max-w-full order-first md:order-1"
       >
-        <p class="text-base">Next project</p>
+        <p class="text-base">
+          Next project
+        </p>
         <h2
           class="mt-2 text-xl font-light tracking-tight text-center uppercase"
           v-html="nextProject.title"
@@ -473,8 +497,12 @@ isLoading.value = false;
     <div
       class="min-h-[450px] flex flex-col align-center justify-center mt-60 max-md:max-w-full px-4 lg:px-10"
     >
-      <h2 class="text-4xl">Oops! We didn't find that project.</h2>
-      <p class="mt-6 text-xl">You may be interested in the projects below!</p>
+      <h2 class="text-4xl">
+        Oops! We didn't find that project.
+      </h2>
+      <p class="mt-6 text-xl">
+        You may be interested in the projects below!
+      </p>
       <div class="flex flex-wrap gap-5 items-start mt-16 w-full max-md:mt-10">
         <ProjectCard
           v-for="(p, index) in projects"

@@ -1,0 +1,56 @@
+name: Build and Upload
+on:
+  push:
+    branches:
+      - "*"
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+env:
+  artifact_package_name: contracting-marketing-starter
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+        environment: [UAT, PROD]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Save tag as environment variable
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+      - name: Store artifact package name as environment variable
+        run: echo ARTIFACT_NAME=${{ env.artifact_package_name }}-${{ env.TAG_NAME }}-${{ matrix.environment }}.tar.gz >> $GITHUB_ENV
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install
+      - name: Load Environment Variables
+        run: |
+          echo "STRAPI_URL=${{ secrets[format('{0}_STRAPI_URL', matrix.environment)] }}" > .env
+      - name: Build Nuxt App
+        run: |
+          pnpm build
+      - name: Pack build artifacts
+        run: >
+          tar zcvf ${{ env.ARTIFACT_NAME }} .output
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.ARTIFACT_NAME }}

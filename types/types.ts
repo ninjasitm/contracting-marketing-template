@@ -199,7 +199,24 @@ export interface Hero {
   actions?: HeroActions[]; // Optional, used for buttons or links in the banner
 }
 
+export interface SeoMetadata {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string;
+  twitterCard?: 'summary' | 'summary_large_image';
+  canonicalUrl?: string;
+  robots?:
+    | 'index'
+    | 'noindex'
+    | 'follow'
+    | 'nofollow'
+    | 'index,follow'
+    | 'noindex,nofollow';
+}
+
 export interface BasePageState {
+  seo?: SeoMetadata;
   hero?: Hero;
   callToAction?: CallToAction;
 }

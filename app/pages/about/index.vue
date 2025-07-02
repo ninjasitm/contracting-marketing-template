@@ -2,16 +2,30 @@
 import { reactive, computed } from 'vue';
 import TeamMember from '../../../components/about/TeamMember.vue';
 import _config from '@content/_pages/about.json';
+import _appConfig from '@content/config.json';
 import type { BasePageState } from '@/types/types';
+import { useSeoConfig } from '@/composables/useSeoConfig';
 
 export interface AboutPageState extends BasePageState {
   heading?: string;
   title?: string;
   description?: string;
   teamMembersTitle?: string;
+  aboutSections?: Array<{
+    heading: string;
+    description: string;
+    image?: string;
+    imagePosition?: 'left' | 'right';
+  }>;
 }
 
 definePageMeta({ layout: 'page' });
+
+const aboutConfig = _config as AboutPageState;
+const appConfig = _appConfig;
+
+// Configure SEO metadata
+useSeoConfig(aboutConfig.seo, aboutConfig.hero, appConfig);
 
 const config = _config as AboutPageState;
 
@@ -46,12 +60,12 @@ const members = (membersParsedContent.value || []).map(
 );
 
 const state: ExtendedAboutPageState = reactive({
-  hero: config.hero,
-  heading: config.heading,
-  title: config.title,
-  description: config.description,
-  teamMembersTitle: config.teamMembersTitle,
-  callToAction: config.callToAction,
+  hero: aboutConfig.hero,
+  heading: aboutConfig.heading,
+  title: aboutConfig.title,
+  description: aboutConfig.description,
+  teamMembersTitle: aboutConfig.teamMembersTitle,
+  callToAction: aboutConfig.callToAction,
   teamMembers: {
     title: config.teamMembersTitle || 'Team',
     members,
@@ -93,7 +107,7 @@ const ctaPrimaryUrl = computed(
     <LayoutPageSection
       class="flex flex-col font-light text-black dark:text-white w-full max-w-screen-xl mx-auto"
     >
-      <hr class="w-full border border-black dark:border-white" />
+      <hr class="w-full border border-black dark:border-white">
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl tracking-tight uppercase max-md:max-w-full"
         v-html="state.title"
@@ -108,7 +122,7 @@ const ctaPrimaryUrl = computed(
     <LayoutPageSection
       class="flex flex-col w-full max-w-screen-xl mt-20 mx-auto max-md:mt-10"
     >
-      <hr class="w-full border border-black dark:border-white" />
+      <hr class="w-full border border-black dark:border-white">
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl font-light tracking-tight text-black dark:text-white uppercase"
         v-html="state.teamMembers.title"
@@ -135,7 +149,7 @@ const ctaPrimaryUrl = computed(
     <AppCTA
       v-if="
         state.callToAction &&
-        (state.callToAction.title || state.callToAction.primaryButtonText)
+          (state.callToAction.title || state.callToAction.primaryButtonText)
       "
       :title="ctaTitle"
       :description="ctaDescription"

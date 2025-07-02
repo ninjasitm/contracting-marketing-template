@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { reactive, computed } from 'vue';
-import { useHead } from 'nuxt/app';
 import _config from '@content/_pages/home.json';
-import type { Hero, CallToAction, BasePageState } from '@/types/types';
+import _appConfig from '@content/config.json';
+import type { BasePageState, Hero } from '@/types/types';
+import { useSeoConfig } from '@/composables/useSeoConfig';
 // Nuxt 3 composables are auto-imported, but for type safety, import from 'nuxt/app'
 import { definePageMeta } from '#imports';
 
@@ -22,17 +23,15 @@ export interface HomePageState extends BasePageState {
       description: string;
     }[];
   };
-  callToAction?: CallToAction;
 }
 
 definePageMeta({ layout: 'page' });
 
 const config = _config as HomePageState;
+const appConfig = _appConfig;
 
-useHead({
-  titleTemplate: '',
-  title: config?.hero?.title || 'Contracting Starter',
-});
+// Configure SEO metadata
+useSeoConfig(config.seo, config.hero, appConfig);
 
 // Convert the config to properly typed state
 const state = reactive<HomePageState>({
@@ -89,7 +88,10 @@ const heroData = computed<Hero>(() => {
   >
     <!-- Hero Section using AppHero -->
     <ClientOnly>
-      <Teleport defer to="#page-banner">
+      <Teleport
+        defer
+        to="#page-banner"
+      >
         <AppHero v-bind="heroData" />
       </Teleport>
     </ClientOnly>
@@ -98,7 +100,7 @@ const heroData = computed<Hero>(() => {
     <LayoutPageSection
       class="flex flex-col w-full max-w-screen-xl mt-5 md:mt-20 mx-auto px-2 lg:px-2"
     >
-      <hr class="w-full border border-black dark:border-white mt-10" />
+      <hr class="w-full border border-black dark:border-white mt-10">
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl font-light tracking-tight uppercase text-sky-950 dark:text-sky-300"
         v-html="state.coreCompetencies?.title"
@@ -157,7 +159,7 @@ const heroData = computed<Hero>(() => {
     <LayoutPageSection
       class="flex flex-col mt-32 w-full font-light max-md:mt-10 max-w-screen-xl mx-auto px-2 lg:px-2"
     >
-      <hr class="w-full border border-black dark:border-white mt-10" />
+      <hr class="w-full border border-black dark:border-white mt-10">
       <h2
         class="gap-2 self-stretch pt-6 w-full text-xl tracking-tight uppercase whitespace-nowrap text-sky-950 dark:text-sky-300"
         v-html="state.differentiators?.title"
@@ -190,7 +192,7 @@ const heroData = computed<Hero>(() => {
     <AppCTA
       v-if="
         state.callToAction &&
-        (state.callToAction.title || state.callToAction.description)
+          (state.callToAction.title || state.callToAction.description)
       "
       :title="state.callToAction.title"
       :description="state.callToAction.description"

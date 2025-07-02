@@ -2,9 +2,7 @@
   "hero": {
     "title": "Lorem Ipsum Dolor Sit Amet",
     "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris.",
-    "backgroundImage": [
-      "/media/banners/lorem-banner.jpg"
-    ],
+    "backgroundImage": ["/media/banners/lorem-banner.jpg"],
     "actions": [
       {
         "text": "Consectetur",
@@ -78,5 +76,13 @@
     "primaryButtonUrl": "",
     "backgroundColor": "",
     "textColor": ""
+  },
+  "seo": {
+    "title": "Professional Contracting Services | Lorem Ipsum Company",
+    "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit. Expert contracting services with proven results and dedicated support.",
+    "keywords": "contracting, professional services, construction, project management, Lorem Ipsum",
+    "ogImage": "/og-image.png",
+    "twitterCard": "summary_large_image",
+    "robots": "index,follow"
   }
 }

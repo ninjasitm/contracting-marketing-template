@@ -5,7 +5,9 @@ import { toTypedSchema } from '@vee-validate/zod';
 import * as z from 'zod';
 import HubspotForm from '@jagaad/vue-hubspot-form';
 import _config from '@content/_pages/contact.json';
+import _appConfig from '@content/config.json';
 import type { BasePageState } from '@/types/types';
+import { useSeoConfig } from '@/composables/useSeoConfig';
 
 // Import shadcn/ui form components
 import UiFormItem from '@/components/ui/form/FormItem.vue';
@@ -14,6 +16,12 @@ import UiFormControl from '@/components/ui/form/FormControl.vue';
 import UiFormMessage from '@/components/ui/form/FormMessage.vue';
 
 export interface ContactPageState extends BasePageState {
+  form?: {
+    sendTo?: string;
+    subject?: string;
+    category?: string[];
+    message?: string;
+  };
   sections?: {
     title: string;
     items: string[];
@@ -34,24 +42,28 @@ export interface ContactPageState extends BasePageState {
 
 definePageMeta({ layout: 'page' });
 
-const config = _config as ContactPageState;
+const contactConfig = _config as ContactPageState;
+const appConfig = _appConfig;
+
+// Configure SEO metadata
+useSeoConfig(contactConfig.seo, contactConfig.hero, appConfig);
 
 // Create reactive state using proper types
 const state: ContactPageState = reactive({
-  hero: config.hero,
-  sections: config.sections,
-  category: config.category || [
+  hero: contactConfig.hero,
+  sections: contactConfig.sections,
+  category: contactConfig.category || [
     'General Inquiry',
     'Start a Project',
     'Request a Quote',
     'Partnership',
     'Other',
   ],
-  useEmbed: config.useEmbed || false,
-  hubspotFormOptions: config.hubspotFormOptions,
-  useHubspotForm: config.useHubspotForm || false,
-  successMessageStyle: config.successMessageStyle,
-  callToAction: config.callToAction,
+  useEmbed: contactConfig.useEmbed || false,
+  hubspotFormOptions: contactConfig.hubspotFormOptions,
+  useHubspotForm: contactConfig.useHubspotForm || false,
+  successMessageStyle: contactConfig.successMessageStyle,
+  callToAction: contactConfig.callToAction,
 });
 
 // Form validation schema using Zod
@@ -137,7 +149,7 @@ const onSubmitForm = handleSubmit(async (formValues) => {
       :title="state.hero?.title || 'Contact Us'"
       :description="
         state.hero?.description ||
-        'We are always ready to talk about your next project. Feel free to contact us.'
+          'We are always ready to talk about your next project. Feel free to contact us.'
       "
       mode="text"
       alignment="center"
@@ -179,9 +191,14 @@ const onSubmitForm = handleSubmit(async (formValues) => {
           @submit="onSubmitForm"
         >
           <!-- Name Field -->
-          <Field v-slot="{ componentField, errorMessage }" name="name">
+          <Field
+            v-slot="{ componentField, errorMessage }"
+            name="name"
+          >
             <UiFormItem>
-              <UiFormLabel for="name"> Name </UiFormLabel>
+              <UiFormLabel for="name">
+                Name
+              </UiFormLabel>
               <UiFormControl>
                 <UiInput
                   id="name"
@@ -200,9 +217,14 @@ const onSubmitForm = handleSubmit(async (formValues) => {
           </Field>
 
           <!-- Email Field -->
-          <Field v-slot="{ componentField, errorMessage }" name="email">
+          <Field
+            v-slot="{ componentField, errorMessage }"
+            name="email"
+          >
             <UiFormItem>
-              <UiFormLabel for="email"> Your Email </UiFormLabel>
+              <UiFormLabel for="email">
+                Your Email
+              </UiFormLabel>
               <UiFormControl>
                 <UiInput
                   id="email"
@@ -221,7 +243,10 @@ const onSubmitForm = handleSubmit(async (formValues) => {
           </Field>
 
           <!-- Category Field -->
-          <Field v-slot="{ componentField, errorMessage }" name="category">
+          <Field
+            v-slot="{ componentField, errorMessage }"
+            name="category"
+          >
             <UiFormItem>
               <UiFormLabel for="category">
                 What is your inquiry about?
@@ -251,9 +276,14 @@ const onSubmitForm = handleSubmit(async (formValues) => {
           </Field>
 
           <!-- Message Field -->
-          <Field v-slot="{ componentField, errorMessage }" name="message">
+          <Field
+            v-slot="{ componentField, errorMessage }"
+            name="message"
+          >
             <UiFormItem>
-              <UiFormLabel for="message"> Message </UiFormLabel>
+              <UiFormLabel for="message">
+                Message
+              </UiFormLabel>
               <UiFormControl>
                 <UiTextarea
                   id="message"
@@ -301,8 +331,12 @@ const onSubmitForm = handleSubmit(async (formValues) => {
               color: state.successMessageStyle?.iconColor,
             }"
           />
-          <h3 class="text-2xl">Thank you for your message!</h3>
-          <p class="text-lg">We will get back to you shortly.</p>
+          <h3 class="text-2xl">
+            Thank you for your message!
+          </h3>
+          <p class="text-lg">
+            We will get back to you shortly.
+          </p>
         </AppCard>
       </div>
     </LayoutPageSection>

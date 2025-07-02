@@ -1,0 +1,14 @@
+{
+  "hero": {
+    "title": "Latest Posts & Insights",
+    "description": "Stay updated with our latest insights, industry news, and thought leadership articles."
+  },
+  "seo": {
+    "title": "Blog & Insights | Lorem Ipsum Company",
+    "description": "Read our latest blog posts, industry insights, and expert perspectives on contracting and project management.",
+    "keywords": "blog, articles, insights, industry news, expertise, thought leadership",
+    "ogImage": "/og-image.png",
+    "twitterCard": "summary_large_image",
+    "robots": "index,follow"
+  }
+}

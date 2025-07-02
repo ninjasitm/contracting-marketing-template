@@ -10,5 +10,13 @@
     "primaryButtonUrl": "",
     "backgroundColor": "",
     "textColor": ""
+  },
+  "seo": {
+    "title": "Our Work & Projects | Lorem Ipsum Company",
+    "description": "Explore our portfolio of successful projects. Lorem ipsum dolor sit amet consectetur adipiscing elit with proven results.",
+    "keywords": "portfolio, projects, work, case studies, results, achievements",
+    "ogImage": "/og-image.png",
+    "twitterCard": "summary_large_image",
+    "robots": "index,follow"
   }
 }

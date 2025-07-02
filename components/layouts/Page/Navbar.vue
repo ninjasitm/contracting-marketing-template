@@ -2,13 +2,14 @@
 import { ref, computed } from 'vue';
 import { useAppConfig } from '#imports';
 import { useNavbarParser } from '~/composables/use-navbar-parser';
-import { useScreen } from '~/composables/use-screen';
+import { useBreakpoints, breakpointsTailwind } from '@vueuse/core';
 import type { LayoutPageNavbarMenu } from '~/utils/types';
+import { useGetSocialIcon } from '~/composables/use-social-media';
 
 const colorMode = useColorMode();
 const { config } = useAppConfig();
 const { parseMenuRoute, parseMenuTitle } = useNavbarParser();
-const $screen = useScreen();
+const breakpoints = useBreakpoints(breakpointsTailwind);
 
 const menus = computed(
   () => (config?.layout?.page?.navbar?.menus || []) as LayoutPageNavbarMenu[],
@@ -20,24 +21,6 @@ const menus = computed(
 
 // drawer
 const showDrawer = ref(false);
-
-/**
- * Get social icon component based on platform name
- */
-const getSocialIcon = (title: string) => {
-  switch (title.toLowerCase()) {
-    case 'instagram':
-      return 'i-mdi-instagram';
-    case 'facebook':
-      return 'i-mdi-facebook';
-    case 'linkedin':
-      return 'i-mdi-linkedin';
-    case 'twitter':
-      return 'i-mdi-twitter';
-    default:
-      return 'i-mdi-link';
-  }
-};
 </script>
 
 <template>
@@ -106,7 +89,7 @@ const getSocialIcon = (title: string) => {
       </div>
       <!-- menus -->
       <div
-        v-if="$screen.greater('md').value"
+        v-if="breakpoints.greaterOrEqual('lg')"
         class="flex space-x-4 items-center px-4 lg:px-10 py-4"
       >
         <div class="flex space-x-4 text-sm items-center">
@@ -132,7 +115,7 @@ const getSocialIcon = (title: string) => {
               class="w-4 h-4 flex items-center justify-center rounded-full hover:border-orange-400"
             >
               <Icon
-                :name="getSocialIcon(link.title)"
+                :name="useGetSocialIcon(link.title)"
                 class="w-4 h-4"
               />
             </div>
@@ -331,7 +314,7 @@ const getSocialIcon = (title: string) => {
               >
                 <span class="sr-only">{{ link.title }}</span>
                 <Icon
-                  :name="getSocialIcon(link.title)"
+                  :name="useGetSocialIcon(link.title)"
                   class="w-5 h-5"
                 />
               </a>

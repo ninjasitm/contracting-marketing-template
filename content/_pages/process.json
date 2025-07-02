@@ -42,5 +42,13 @@
     "primaryButtonUrl": "",
     "backgroundColor": "",
     "textColor": ""
+  },
+  "seo": {
+    "title": "Our Process | Lorem Ipsum Company",
+    "description": "Learn about our proven methodology. Lorem ipsum dolor sit amet consectetur adipiscing elit with structured approach to success.",
+    "keywords": "process, methodology, approach, workflow, project management, procedure",
+    "ogImage": "/og-image.png",
+    "twitterCard": "summary_large_image",
+    "robots": "index,follow"
   }
 }

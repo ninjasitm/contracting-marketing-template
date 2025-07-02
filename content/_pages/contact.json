@@ -44,5 +44,13 @@
     "primaryButtonUrl": "",
     "backgroundColor": "",
     "textColor": ""
+  },
+  "seo": {
+    "title": "Contact Us | Lorem Ipsum Company",
+    "description": "Get in touch with our team. Lorem ipsum dolor sit amet consectetur adipiscing elit. We're here to help with your project needs.",
+    "keywords": "contact, get in touch, support, consultation, project inquiry",
+    "ogImage": "/og-image.png",
+    "twitterCard": "summary_large_image",
+    "robots": "index,follow"
   }
 }

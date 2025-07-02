@@ -1,11 +1,7 @@
 name: Run Tests
 on:
   workflow_run:
-    workflows: ["Build and Upload"]
-    branches:
-      - "*"
-    tags:
-      - "v*"
+    workflows: ['Build and Upload']
     types:
       - completed
 
@@ -18,6 +14,33 @@ jobs:
         environment: [UAT, PROD]
     steps:
       - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Store package.json version as environment variable
+        run: |
+          if [ -f package.json ]; then
+            echo "package.json found, proceeding to set version."
+          else
+            echo "package.json not found, exiting."
+            exit 1
+          fi
+          echo "PACKAGE_JSON=$(jq -c . < package.json)" >> $GITHUB_ENV
+          echo '${{ fromJson(env.PACKAGE_JSON).packageManager }}' > package.json.pnpmVersion
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ fromJson(env.PACKAGE_JSON).packageManager }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
       - name: Download All Artifacts
         uses: actions/download-artifact@v4
         with:

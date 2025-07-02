@@ -2,9 +2,9 @@ name: Build and Upload
 on:
   push:
     branches:
-      - "*"
+      - '*'
     tags:
-      - "v*"
+      - 'v*'
 
 permissions:
   contents: write
@@ -25,6 +25,16 @@ jobs:
         run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
       - name: Store artifact package name as environment variable
         run: echo ARTIFACT_NAME=${{ env.artifact_package_name }}-${{ env.TAG_NAME }}-${{ matrix.environment }}.tar.gz >> $GITHUB_ENV
+      - name: Store package.json version as environment variable
+        run: |
+          if [ -f package.json ]; then
+            echo "package.json found, proceeding to set version."
+          else
+            echo "package.json not found, exiting."
+            exit 1
+          fi
+          echo "PACKAGE_JSON=$(jq -c . < package.json)" >> $GITHUB_ENV
+          echo '${{ fromJson(env.PACKAGE_JSON).packageManager }}' > package.json.pnpmVersion
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -32,17 +42,14 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10
+          version: ${{ fromJson(env.PACKAGE_JSON).packageManager }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
+          cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
-      - name: Load Environment Variables
-        run: |
-          echo "STRAPI_URL=${{ secrets[format('{0}_STRAPI_URL', matrix.environment)] }}" > .env
       - name: Build Nuxt App
         run: |
           pnpm build

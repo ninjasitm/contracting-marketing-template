@@ -1,9 +1,9 @@
 name: Release
 on:
   workflow_run:
-    workflows: ["Run Tests"]
+    workflows: ['Run Tests']
     tags:
-      - "v*"
+      - 'v*'
     types:
       - completed
 permissions:
@@ -14,7 +14,6 @@ env:
 
 jobs:
   release:
-    needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -27,6 +26,19 @@ jobs:
         with:
           path: dist
           merge-multiple: true
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8.5.1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
       - name: Save tag as environment variable
         run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
       - name: Store previous tag

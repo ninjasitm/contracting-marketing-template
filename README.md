@@ -6,6 +6,14 @@ A professional marketing website template specifically designed for contracting 
 ![NPM](https://img.shields.io/npm/l/%40nuxt-awesome%2Ftheme)
 ![npm](https://img.shields.io/npm/dm/%40nuxt-awesome/theme)
 
+## Status
+
+[![Build and Upload](https://github.com/ninjasitm/contracting-marketing-template/actions/workflows/build.yml/badge.svg)](https://github.com/ninjasitm/contracting-marketing-template/actions/workflows/build.yml)
+
+[![Run Tests](https://github.com/ninjasitm/contracting-marketing-template/actions/workflows/test.yml/badge.svg)](https://github.com/ninjasitm/contracting-marketing-template/actions/workflows/test.yml)
+
+[![Release](https://github.com/ninjasitm/contracting-marketing-template/actions/workflows/release.yml/badge.svg)](https://github.com/ninjasitm/contracting-marketing-template/actions/workflows/release.yml)
+
 ## 🌟 Features
 
 - **Flat-file CMS** - Content management through PagesCMS without needing a backend API

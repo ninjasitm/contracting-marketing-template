@@ -2,9 +2,9 @@ name: Build and Upload
 on:
   push:
     branches:
-      - "*"
+      - '*'
     tags:
-      - "v*"
+      - 'v*'
 
 permissions:
   contents: write
@@ -32,17 +32,14 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10
+          version: 8.5.1
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
+          cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
-      - name: Load Environment Variables
-        run: |
-          echo "STRAPI_URL=${{ secrets[format('{0}_STRAPI_URL', matrix.environment)] }}" > .env
       - name: Build Nuxt App
         run: |
           pnpm build

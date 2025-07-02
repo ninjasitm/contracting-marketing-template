@@ -9,9 +9,7 @@ A professional marketing website template specifically designed for contracting 
 ## Status
 
 [![Build and Upload](https://github.com/ninjasitm/contracting-marketing-template/actions/workflows/build.yml/badge.svg)](https://github.com/ninjasitm/contracting-marketing-template/actions/workflows/build.yml)
-
 [![Run Tests](https://github.com/ninjasitm/contracting-marketing-template/actions/workflows/test.yml/badge.svg)](https://github.com/ninjasitm/contracting-marketing-template/actions/workflows/test.yml)
-
 [![Release](https://github.com/ninjasitm/contracting-marketing-template/actions/workflows/release.yml/badge.svg)](https://github.com/ninjasitm/contracting-marketing-template/actions/workflows/release.yml)
 
 ## 🌟 Features

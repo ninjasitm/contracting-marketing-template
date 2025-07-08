@@ -45,7 +45,8 @@ const showDrawer = ref(false);
           v-for="info in config.companyInfo"
           :key="info.title"
           class="text-white text-xs px-2 py-1 flex items-center w-[max-content]"
-        >{{ info.title }}<strong class="ml-2">{{ info.value }}</strong></span>
+          >{{ info.title }}<strong class="ml-2">{{ info.value }}</strong></span
+        >
       </div>
       <div
         class="align-center flex space-x-4 animate-loop-scroll group-hover:paused"
@@ -55,7 +56,8 @@ const showDrawer = ref(false);
           v-for="info in config.companyInfo"
           :key="info.title"
           class="text-white text-xs px-2 py-1 flex items-center w-[max-content]"
-        >{{ info.title }} <strong class="ml-2">{{ info.value }}</strong></span>
+          >{{ info.title }} <strong class="ml-2">{{ info.value }}</strong></span
+        >
       </div>
     </div>
     <!-- content -->
@@ -65,10 +67,7 @@ const showDrawer = ref(false);
       <!-- title -->
       <div>
         <slot name="title">
-          <NuxtLink
-            :to="{ name: 'index' }"
-            class="font-bold text-lg"
-          >
+          <NuxtLink :to="{ name: 'index' }" class="font-bold text-lg">
             <NuxtImg
               v-if="config.logo"
               placeholder
@@ -78,10 +77,7 @@ const showDrawer = ref(false);
               :alt="config.title"
               class="w-auto h-[50px] md:h-[50px] object-contain"
             />
-            <span
-              v-else
-              class="text-2xl font-bold text-green-500"
-            >{{
+            <span v-else class="text-2xl font-bold text-green-500">{{
               config.title
             }}</span>
           </NuxtLink>
@@ -94,10 +90,7 @@ const showDrawer = ref(false);
       >
         <div class="flex space-x-4 text-sm items-center">
           <!-- dynamic menus -->
-          <template
-            v-for="(item, i) in menus"
-            :key="i"
-          >
+          <template v-for="(item, i) in menus" :key="i">
             <LayoutPageNavbarMenuWrapper :menu="item" />
           </template>
         </div>
@@ -114,10 +107,7 @@ const showDrawer = ref(false);
             <div
               class="w-4 h-4 flex items-center justify-center rounded-full hover:border-orange-400"
             >
-              <Icon
-                :name="useGetSocialIcon(link.title)"
-                class="w-4 h-4"
-              />
+              <Icon :name="useGetSocialIcon(link.title)" class="w-4 h-4" />
             </div>
           </a>
         </div>
@@ -143,9 +133,9 @@ const showDrawer = ref(false);
           >
             Start a Workshop
           </NuxtLink> -->
-        <!-- <LayoutPageNavbarDropdownThemeSwitcher
-            class="gap-2 p-4 text-sm tracking-tight"
-          /> -->
+        <LayoutPageNavbarDropdownThemeSwitcher
+          class="gap-2 p-4 text-sm tracking-tight"
+        />
         <!-- </div> -->
       </div>
       <!-- drawer:btn -->
@@ -154,34 +144,23 @@ const showDrawer = ref(false);
         class="flex space-x-4 items-center"
         :class="{ 'divide-x divide-gray-500': menus.length > 0 }"
       >
+        <!-- Theme Switcher (Desktop) -->
+        <LayoutPageNavbarDropdownThemeSwitcher v-if="config.enableColorMode" />
         <div class="pl-4 flex space-x-3 text-xl">
           <button
             type="button"
             class="text-gray-400 hover:text-gray-100 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             @click.prevent="() => (showDrawer = !showDrawer)"
           >
-            <Icon
-              name="heroicons:bars-3-bottom-right-20-solid"
-              size="32px"
-            />
+            <Icon name="heroicons:bars-3-bottom-right-20-solid" size="32px" />
           </button>
         </div>
       </div>
     </div>
     <!-- misc -->
     <!-- drawer -->
-    <UiSheet
-      :open="showDrawer"
-      @update:open="showDrawer = $event"
-    >
-      <UiSheetContent
-        side="right"
-        class="w-full sm:w-[400px]"
-      >
-        <UiSheetHeader class="text-left">
-          <UiSheetTitle>Menu</UiSheetTitle>
-        </UiSheetHeader>
-
+    <UiSheet :open="showDrawer" @update:open="showDrawer = $event">
+      <UiSheetContent side="right" class="w-full sm:w-[400px]">
         <div class="flex flex-col space-y-4 mt-6">
           <!-- Home Link -->
           <NuxtLink
@@ -193,10 +172,7 @@ const showDrawer = ref(false);
           </NuxtLink>
 
           <!-- Dynamic menus -->
-          <template
-            v-for="(item, i) in menus"
-            :key="i"
-          >
+          <template v-for="(item, i) in menus" :key="i">
             <template v-if="item?.type === 'link'">
               <NuxtLink
                 :to="parseMenuRoute(item.to)"
@@ -210,7 +186,8 @@ const showDrawer = ref(false);
                     'text-gray-900 dark:text-gray-100 font-bold': isActive,
                     'text-gray-700 dark:text-gray-300': !isActive,
                   }"
-                >{{ parseMenuTitle(item?.title) }}</span>
+                  >{{ parseMenuTitle(item?.title) }}</span
+                >
               </NuxtLink>
             </template>
 
@@ -269,7 +246,8 @@ const showDrawer = ref(false);
                                 ? 'text-gray-900 dark:text-gray-100 font-bold'
                                 : 'text-gray-700 dark:text-gray-300',
                             ]"
-                          >{{ parseMenuTitle(child?.title) }}</span>
+                            >{{ parseMenuTitle(child?.title) }}</span
+                          >
                         </NuxtLink>
                       </template>
                     </HeadlessDisclosurePanel>
@@ -313,10 +291,7 @@ const showDrawer = ref(false);
                 rel="noopener noreferrer"
               >
                 <span class="sr-only">{{ link.title }}</span>
-                <Icon
-                  :name="useGetSocialIcon(link.title)"
-                  class="w-5 h-5"
-                />
+                <Icon :name="useGetSocialIcon(link.title)" class="w-5 h-5" />
               </a>
             </div>
           </div>

@@ -4,7 +4,7 @@ import { toRef } from 'vue';
 const props = defineProps({
   type: {
     type: String,
-    default: 'dropdown-right-top',
+    default: 'button',
   },
   horizontal: {
     type: Boolean,
@@ -12,6 +12,7 @@ const props = defineProps({
   },
 });
 const currentStyle = toRef(props, 'type');
+const colorMode = useColorMode();
 
 const availableThemes = [
   {
@@ -27,34 +28,41 @@ const availableThemes = [
     text: 'System',
   },
 ];
+
+// Get current theme icon
+const currentIcon = computed(() => {
+  if (
+    colorMode.preference === 'dark' ||
+    (colorMode.preference === 'system' && colorMode.value === 'dark')
+  ) {
+    return 'uil:moon';
+  }
+  return 'uil:sun';
+});
+
+const toggleTheme = () => {
+  colorMode.preference = colorMode.preference === 'light' ? 'dark' : 'light';
+};
 </script>
 
 <template>
   <div class="flex items-center">
     <HeadlessListbox
       v-if="currentStyle === 'dropdown-right-top'"
-      v-model="$colorMode.preference"
+      v-model="colorMode.preference"
       as="div"
       class="relative flex items-center"
     >
-      <HeadlessListboxLabel class="sr-only">
-        Theme
-      </HeadlessListboxLabel>
+      <HeadlessListboxLabel class="sr-only"> Theme </HeadlessListboxLabel>
       <HeadlessListboxButton type="template">
-        <button
-          type="button"
-          class="dark:text-gray-400 text-gray-600 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background hover:bg-accent hover:text-accent-foreground h-10 w-10"
+        <AwesomeLink
+          class="text-muted-foreground hover:text-foreground transition-colors dark:text-white"
         >
-          <span class="flex justify-center items-center dark:hidden">
-            <Icon name="uil:sun" />
-          </span>
-          <span class="justify-center items-center hidden dark:flex">
-            <Icon name="uil:moon" />
-          </span>
-        </button>
+          <Icon :name="currentIcon" class="w-5 h-5" />
+        </AwesomeLink>
       </HeadlessListboxButton>
       <HeadlessListboxOptions
-        class="p-1 absolute z-50 origin-top-right top-full right-0 outline-none bg-white rounded-lg ring-1 ring-gray-900/10 shadow-lg overflow-hidden w-36 py-1 text-sm text-gray-700 font-semibold dark:bg-gray-800 dark:ring-0 dark:highlight-white/5 dark:text-gray-300"
+        class="p-1 absolute z-50 origin-top-right top-full right-0 outline-none bg-popover rounded-lg ring-1 ring-border shadow-lg overflow-hidden w-36 py-1 text-sm text-popover-foreground font-semibold border border-border"
         :class="{
           'flex flex-row mt-[-30px] mr-[60px]': props.horizontal,
         }"
@@ -64,26 +72,16 @@ const availableThemes = [
           :key="theme.key"
           :value="theme.key"
           :class="{
-            'py-2 px-2 flex items-center cursor-pointer': true,
-            'text-sky-500 bg-gray-100 dark:bg-gray-600/30':
-              $colorMode.preference === theme.key,
-            'hover:bg-gray-50 dark:hover:bg-gray-700/30':
-              $colorMode.preference !== theme.key,
+            'py-2 px-2 flex items-center cursor-pointer transition-colors': true,
+            'text-primary bg-accent': colorMode.preference === theme.key,
+            'hover:bg-accent/50 text-muted-foreground':
+              colorMode.preference !== theme.key,
           }"
         >
           <span class="text-sm mr-2 flex items-center">
-            <Icon
-              v-if="theme.key === 'light'"
-              name="uil:sun"
-            />
-            <Icon
-              v-else-if="theme.key === 'dark'"
-              name="uil:moon"
-            />
-            <Icon
-              v-else-if="theme.key === 'system'"
-              name="uil:laptop"
-            />
+            <Icon v-if="theme.key === 'light'" name="uil:sun" />
+            <Icon v-else-if="theme.key === 'dark'" name="uil:moon" />
+            <Icon v-else-if="theme.key === 'system'" name="uil:laptop" />
           </span>
           {{ theme.text }}
         </HeadlessListboxOption>
@@ -91,8 +89,8 @@ const availableThemes = [
     </HeadlessListbox>
     <select
       v-if="currentStyle === 'select-box'"
-      v-model="$colorMode.preference"
-      class="w-full px-2 pr-3 py-1 outline-none rounded border bg-transparent text-gray-700 dark:text-gray-300 border-gray-900/10 dark:border-gray-50/[0.2]"
+      v-model="colorMode.preference"
+      class="w-full px-2 pr-3 py-1 outline-none rounded border bg-background-secondary text-foreground border-border focus:border-primary transition-colors"
     >
       <option
         v-for="theme in availableThemes"
@@ -102,5 +100,15 @@ const availableThemes = [
         {{ theme.text }}
       </option>
     </select>
+    <AppButton
+      v-if="currentStyle === 'button'"
+      variant="link"
+      shadow="none"
+      color="none"
+      size="icon"
+      @click="toggleTheme"
+    >
+      <Icon :name="currentIcon" class="w-5 h-5" />
+    </AppButton>
   </div>
 </template>

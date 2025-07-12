@@ -21,6 +21,7 @@ const props = defineProps<{
   links: LinkItem[];
   socialLinks: LinkItem[];
   companyName: string;
+  enableSocialLinks: boolean;
 }>();
 
 const state: CompanyAddressState = reactive({
@@ -61,12 +62,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <section
-    class="flex flex-wrap gap-5 justify-between items-start pt-6 mt-10 w-full max-md:max-w-full"
-  >
-    <div
-      class="flex flex-col justify-center font-light text-black dark:text-white min-w-[240px] max-md:max-w-full"
-    >
+  <section class="flex flex-wrap gap-5 justify-between items-start pt-6 mt-10 w-full max-md:max-w-full">
+    <div class="flex flex-col justify-center font-light text-black dark:text-white min-w-[240px] max-md:max-w-full">
       <address class="text-xl tracking-tight uppercase not-italic">
         {{ state.address }}
       </address>
@@ -83,9 +80,7 @@ onMounted(() => {
       </div>
     </div>
     <div class="flex gap-5 items-center">
-      <nav
-        class="flex flex-col justify-center text-base text-black dark:text-white whitespace-nowrap"
-      >
+      <nav class="flex flex-col justify-center text-base text-black dark:text-white whitespace-nowrap">
         <NuxtLink
           v-for="(link, index) in state.links"
           :key="index"
@@ -103,10 +98,11 @@ onMounted(() => {
         </NuxtLink>
       </nav>
     </div>
-    <div class="flex gap-5 items-center">
-      <nav
-        class="flex justify-center text-base text-black dark:text-white whitespace-nowrap"
-      >
+    <div
+      v-if="props.enableSocialLinks"
+      class="flex gap-5 items-center"
+    >
+      <nav class="flex justify-center text-base text-black dark:text-white whitespace-nowrap">
         <NuxtLink
           v-for="(link, index) in state.socialLinks"
           :key="index"

@@ -53,6 +53,7 @@ const state: FooterState = reactive({
       :links="state.links || []"
       :social-links="state.socialLinks || []"
       :company-name="state.companyName || ''"
+      :enable-social-links="config.layout?.footer?.enableSocialLinks || false"
     />
     <CompanyInfo
       class="w-full mx-auto"

@@ -62,10 +62,13 @@ export interface NuxtAppConfig {
         links: Record<string, string>;
         hasBanner?: boolean;
         bannerStyle?: Record<string, string>;
+        enableSocialLinks?: boolean;
       };
     };
     /** footer */
     footer?: {
+      /** footer social links */
+      enableSocialLinks?: boolean;
       /** footer year */
       year?: number;
       /** naics codes title */

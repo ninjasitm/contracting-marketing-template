@@ -234,6 +234,10 @@ content:
         type: object
         label: Navbar Configuration
         fields:
+          - name: enableSocialLinks
+            label: Enable Social Links
+            type: boolean
+            default: true
           - name: bannerStyle
             label: Style
             type: object
@@ -290,6 +294,10 @@ content:
         label: Footer Configuration
         type: object
         fields:
+          - name: enableSocialLinks
+            label: Enable Social Links
+            type: boolean
+            default: true
           - name: naicsCodesTitle
             label: NAICS Codes Title
             type: string

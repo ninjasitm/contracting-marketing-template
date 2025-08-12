@@ -22,8 +22,11 @@ jobs:
             echo "package.json not found, exiting."
             exit 1
           fi
-          PNPM_VERSION=$(jq -r '.packageManager // "latest"' package.json | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' || echo "latest")
+          PACKAGE_MANAGER=$(jq -r '.packageManager // "pnpm@latest"' package.json)
+          PNPM_VERSION=$(echo "$PACKAGE_MANAGER" | sed 's/pnpm@//' || echo "latest")
+          echo "PACKAGE_MANAGER=$PACKAGE_MANAGER" >> $GITHUB_ENV
           echo "PNPM_VERSION=$PNPM_VERSION" >> $GITHUB_ENV
+          echo "Full packageManager string: $PACKAGE_MANAGER"
           echo "Extracted pnpm version: $PNPM_VERSION"
       - name: Install pnpm
         uses: pnpm/action-setup@v4

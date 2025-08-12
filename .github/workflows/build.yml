@@ -2,9 +2,9 @@ name: Build and Upload
 on:
   push:
     branches:
-      - '*'
+      - "*"
     tags:
-      - 'v*'
+      - "v*"
 
 permissions:
   contents: write
@@ -25,29 +25,26 @@ jobs:
         run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
       - name: Store artifact package name as environment variable
         run: echo ARTIFACT_NAME=${{ env.artifact_package_name }}-${{ env.TAG_NAME }}-${{ matrix.environment }}.tar.gz >> $GITHUB_ENV
-      - name: Store package.json version as environment variable
+      - name: Extract pnpm version from package.json
         run: |
           if [ -f package.json ]; then
-            echo "package.json found, proceeding to set version."
+            echo "package.json found, proceeding to extract pnpm version."
           else
             echo "package.json not found, exiting."
             exit 1
           fi
-          echo "PACKAGE_JSON=$(jq -c . < package.json)" >> $GITHUB_ENV
-          echo '${{ fromJson(env.PACKAGE_JSON).packageManager }}' > package.json.pnpmVersion
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
+          PNPM_VERSION=$(jq -r '.packageManager // "latest"' package.json | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' || echo "latest")
+          echo "PNPM_VERSION=$PNPM_VERSION" >> $GITHUB_ENV
+          echo "Extracted pnpm version: $PNPM_VERSION"
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: ${{ fromJson(env.PACKAGE_JSON).packageManager }}
-      - name: Use Node.js ${{ matrix.node-version }}
+          version: ${{ env.PNPM_VERSION }}
+      - name: Setup Node.js with pnpm cache
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+          cache: "pnpm"
       - name: Install dependencies
         run: pnpm install
       - name: Build Nuxt App

@@ -53,12 +53,17 @@ const toggleTheme = () => {
       as="div"
       class="relative flex items-center"
     >
-      <HeadlessListboxLabel class="sr-only"> Theme </HeadlessListboxLabel>
+      <HeadlessListboxLabel class="sr-only">
+        Theme
+      </HeadlessListboxLabel>
       <HeadlessListboxButton type="template">
         <AwesomeLink
           class="text-muted-foreground hover:text-foreground transition-colors dark:text-white"
         >
-          <Icon :name="currentIcon" class="w-5 h-5" />
+          <Icon
+            :name="currentIcon"
+            class="w-5 h-5"
+          />
         </AwesomeLink>
       </HeadlessListboxButton>
       <HeadlessListboxOptions
@@ -79,9 +84,18 @@ const toggleTheme = () => {
           }"
         >
           <span class="text-sm mr-2 flex items-center">
-            <Icon v-if="theme.key === 'light'" name="uil:sun" />
-            <Icon v-else-if="theme.key === 'dark'" name="uil:moon" />
-            <Icon v-else-if="theme.key === 'system'" name="uil:laptop" />
+            <Icon
+              v-if="theme.key === 'light'"
+              name="uil:sun"
+            />
+            <Icon
+              v-else-if="theme.key === 'dark'"
+              name="uil:moon"
+            />
+            <Icon
+              v-else-if="theme.key === 'system'"
+              name="uil:laptop"
+            />
           </span>
           {{ theme.text }}
         </HeadlessListboxOption>
@@ -108,7 +122,10 @@ const toggleTheme = () => {
       size="icon"
       @click="toggleTheme"
     >
-      <Icon :name="currentIcon" class="w-5 h-5" />
+      <Icon
+        :name="currentIcon"
+        class="w-5 h-5"
+      />
     </AppButton>
   </div>
 </template>

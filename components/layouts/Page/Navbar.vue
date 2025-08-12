@@ -2,18 +2,34 @@
 import { ref, computed } from 'vue';
 import { useAppConfig } from '#imports';
 import { useNavbarParser } from '~/composables/use-navbar-parser';
-import { useBreakpoints, breakpointsTailwind } from '@vueuse/core';
 import type { LayoutPageNavbarMenu } from '~/utils/types';
+import { useScreen } from '~/composables/use-screen';
 import { useGetSocialIcon } from '~/composables/use-social-media';
 
 const colorMode = useColorMode();
 const { config } = useAppConfig();
 const { parseMenuRoute, parseMenuTitle } = useNavbarParser();
-const breakpoints = useBreakpoints(breakpointsTailwind);
+const $screen = useScreen();
 
 const menus = computed(
   () => (config?.layout?.page?.navbar?.menus || []) as LayoutPageNavbarMenu[],
 );
+
+const useCenteredLogo = computed(() =>
+  Boolean(config?.layout?.page?.navbar?.useCenteredLogo),
+);
+
+const leftMenus = computed(() => {
+  const items = menus.value || [];
+  const midpoint = Math.floor(items.length / 2);
+  return items.slice(0, midpoint);
+});
+
+const rightMenus = computed(() => {
+  const items = menus.value || [];
+  const midpoint = Math.floor(items.length / 2);
+  return items.slice(midpoint);
+});
 
 // const links = computed((): Record<string, string> => {
 //   return (config?.layout?.page?.navbar?.links || {}) as Record<string, string>;
@@ -26,16 +42,21 @@ const showDrawer = ref(false);
 <template>
   <div
     id="main-navbar"
-    class="mx-auto w-full flex flex-col fixed backdrop-filter backdrop-blur-md top-0 z-40 flex-none transition-colors duration-300 md:z-50 border-b border-border h-[75px] md:min-h-[75px] bg-background/80 dark:bg-background-dark"
+    class="mx-auto w-full flex flex-col fixed backdrop-filter backdrop-blur-md top-0 z-40 flex-none transition-colors duration-300 md:z-50 border-b border-border bg-background/80 dark:bg-background-dark"
+    :class="{
+      'min-h-[75px] max-h-[150px]':
+        config.layout?.page?.navbar?.useCenteredLogo,
+      'h-[75px] md:min-h-[75px]': !config.layout?.page?.navbar?.useCenteredLogo,
+    }"
   >
     <!-- header banner -->
     <div
       v-if="config.layout?.page?.navbar?.hasBanner"
       class="navbar-banner w-full h-[47px] flex overflow-hidden space-x-4 group"
       :style="config.layout?.page?.navbar?.bannerStyle || {
-          backgroundColor: '#4A7C3C',
-        }
-        "
+        backgroundColor: '#4A7C3C',
+      }
+      "
     >
       <div class="align-center flex space-x-4 animate-loop-scroll group-hover:paused">
         <span
@@ -56,90 +77,151 @@ const showDrawer = ref(false);
       </div>
     </div>
     <!-- content -->
-    <div class="w-full px-4 lg:px-10 max-w-screen-xl flex-1 flex items-center justify-between mx-auto">
-      <!-- title -->
-      <div>
-        <slot name="title">
-          <NuxtLink
-            :to="{ name: 'index' }"
-            class="font-bold text-lg"
-          >
-            <NuxtImg
-              v-if="config.logo"
-              placeholder
-              :src="colorMode.preference === 'dark' ? config.logoAlt : config.logo
-                "
-              :alt="config.title"
-              class="w-auto h-[50px] md:h-[50px] object-contain"
-            />
-            <span
-              v-else
-              class="text-2xl font-bold text-green-500"
-            >{{
-              config.title
-            }}</span>
-          </NuxtLink>
-        </slot>
-      </div>
-      <!-- menus -->
+    <!-- content -->
+    <div class="w-full px-4 lg:px-10 max-w-screen-xl flex-1 mx-auto align-center flex">
+      <!-- Desktop: centered logo layout -->
       <div
-        v-if="breakpoints.greaterOrEqual('lg')"
-        class="flex space-x-4 items-center px-4 lg:px-10 py-4"
+        v-if="$screen.greater('md').value && !useCenteredLogo"
+        class="grid grid-cols-3 items-center w-full"
       >
-        <div class="flex space-x-4 text-sm items-center">
-          <!-- dynamic menus -->
-          <template
-            v-for="(item, i) in menus"
-            :key="i"
-          >
-            <LayoutPageNavbarMenuWrapper :menu="item" />
-          </template>
-        </div>
-        <div
-          v-if="config.layout?.page?.navbar?.enableSocialLinks"
-          class="flex space-x-4 gap-4 items-center"
-        >
-          <a
-            v-for="link in config.socialLinks"
-            :key="link.title"
-            :href="link.url"
-            class="text-black dark:text-white hover:text-orange-400 transition"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span class="sr-only">{{ link.title }}</span>
-            <div class="w-4 h-4 flex items-center justify-center rounded-full hover:border-orange-400">
-              <Icon
-                :name="useGetSocialIcon(link.title)"
-                class="w-4 h-4"
+        <!-- left menus -->
+        <div class="flex items-center space-x-10">
+          <div class="flex space-x-10 text-lg items-center">
+            <template
+              v-for="(item, i) in leftMenus"
+              :key="i"
+            >
+              <LayoutPageNavbarMenuWrapper
+                :menu="item"
+                class="text-white font-medium hover:text-light-green transition-colors"
               />
-            </div>
-          </a>
+            </template>
+          </div>
         </div>
+        <!-- centered logo -->
+        <div class="flex justify-center">
+          <slot name="title">
+            <NuxtLink
+              :to="{ name: 'index' }"
+              class="font-bold text-lg"
+            >
+              <NuxtImg
+                v-if="config.logo"
+                placeholder
+                :src="colorMode.preference === 'dark' ? config.logoAlt : config.logo
+                "
+                :alt="config.title"
+                class="w-auto object-contain"
+                :class="{
+                  'max-h-[100px]': config.layout?.page?.navbar?.useCenteredLogo,
+                  'h-[50px] md:h-[50px]':
+                    !config.layout?.page?.navbar?.useCenteredLogo,
+                }"
+              />
+              <span
+                v-else
+                class="text-2xl font-bold text-white"
+              >{{
+                config.title
+              }}</span>
+            </NuxtLink>
+          </slot>
+        </div>
+        <!-- right menus + socials -->
+        <div class="flex items-center justify-end space-x-10">
+          <div class="flex space-x-10 text-lg items-center">
+            <template
+              v-for="(item, i) in rightMenus"
+              :key="i"
+            >
+              <LayoutPageNavbarMenuWrapper
+                :menu="item"
+                class="text-white font-medium hover:text-light-green transition-colors"
+              />
+            </template>
+          </div>
+          <div class="flex space-x-4 gap-4 items-center">
+            <a
+              v-for="link in config.socialLinks"
+              :key="link.title"
+              :href="link.url"
+              class="text-white hover:text-orange-400 transition"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="sr-only">{{ link.title }}</span>
+              <div class="w-4 h-4 flex items-center justify-center rounded-full hover:border-orange-400">
+                <Icon
+                  :name="useGetSocialIcon(link.title)"
+                  class="w-4 h-4"
+                />
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
 
-        <!-- Theme toggle -->
-        <UiThemeToggle />
-        <!-- others -->
-        <!-- <div class="pl-4 flex space-x-4 text-xl align-center items-center"> -->
-        <!-- todo: feat/localization -->
-        <!-- TODO: Add language switcher when localization is implemented -->
-        <!-- <a
-            v-if="links.capabilities?.length"
-            download="nitm-capabilities-statement.pdf"
-            class="gap-2 p-4 px-2 text-sm tracking-tight bg-transparent rounded-lg border border-black dark:text-white text-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            :href="links.capabilities"
-          >
-            Capabilities Statement
-          </a>
-          <NuxtLink
-            v-if="links.startWorkshop?.length"
-            class="gap-2 p-4 text-sm tracking-tight text-white bg-primary rounded-lg hover:bg-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 inline-flex items-center justify-center"
-            :to="links.startWorkshop"
-          >
-            Start a Workshop
-          </NuxtLink> -->
-        <LayoutPageNavbarDropdownThemeSwitcher class="gap-2 p-4 text-sm tracking-tight" />
-        <!-- </div> -->
+      <!-- Desktop: default layout -->
+      <div
+        v-else-if="$screen.greater('md').value"
+        class="flex items-center justify-between w-full"
+      >
+        <!-- title -->
+        <div>
+          <slot name="title">
+            <NuxtLink
+              :to="{ name: 'index' }"
+              class="font-bold text-lg"
+            >
+              <NuxtImg
+                v-if="config.logo"
+                placeholder
+                :src="config.logo"
+                :alt="config.title"
+                class="w-auto h-[50px] md:h-[50px] object-contain"
+              />
+              <span
+                v-else
+                class="text-2xl font-bold text-white"
+              >{{
+                config.title
+              }}</span>
+            </NuxtLink>
+          </slot>
+        </div>
+        <!-- menus -->
+        <div class="flex space-x-10 items-center">
+          <div class="flex space-x-10 text-sm items-center">
+            <!-- dynamic menus -->
+            <template
+              v-for="(item, i) in menus"
+              :key="i"
+            >
+              <LayoutPageNavbarMenuWrapper
+                :menu="item"
+                class="text-white font-medium hover:text-light-green transition-colors"
+              />
+            </template>
+          </div>
+          <div class="flex space-x-4 gap-4 items-center">
+            <a
+              v-for="link in config.socialLinks"
+              :key="link.title"
+              :href="link.url"
+              class="text-white hover:text-orange-400 transition"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="sr-only">{{ link.title }}</span>
+              <div class="w-4 h-4 flex items-center justify-center rounded-full hover:border-orange-400">
+                <Icon
+                  :name="useGetSocialIcon(link.title)"
+                  class="w-4 h-4"
+                />
+              </div>
+            </a>
+          </div>
+        </div>
       </div>
       <!-- drawer:btn -->
       <div
@@ -152,7 +234,7 @@ const showDrawer = ref(false);
         <div class="pl-4 flex space-x-3 text-xl">
           <button
             type="button"
-            class="text-gray-400 hover:text-gray-100 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            class="text-white hover:text-light-green inline-flex items-center justify-center text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             @click.prevent="() => (showDrawer = !showDrawer)"
           >
             <Icon
@@ -195,11 +277,13 @@ const showDrawer = ref(false);
                 class="flex justify-center items-center text-base space-x-2 h-[4rem] w-full border-b"
                 @click="() => (showDrawer = false)"
               >
-                <span :class="{
-                  'text-lg': true,
-                  'text-gray-900 dark:text-gray-100 font-bold': isActive,
-                  'text-gray-700 dark:text-gray-300': !isActive,
-                }">{{ parseMenuTitle(item?.title) }}</span>
+                <span
+                  :class="{
+                    'text-lg': true,
+                    'text-gray-900 dark:text-gray-100 font-bold': isActive,
+                    'text-gray-700 dark:text-gray-300': !isActive,
+                  }"
+                >{{ parseMenuTitle(item?.title) }}</span>
               </NuxtLink>
             </template>
 
@@ -252,11 +336,13 @@ const showDrawer = ref(false);
                           class="block w-full py-2 pl-4 text-sm"
                           @click="() => (showDrawer = false)"
                         >
-                          <span :class="[
-                            isActive
-                              ? 'text-gray-900 dark:text-gray-100 font-bold'
-                              : 'text-gray-700 dark:text-gray-300',
-                          ]">{{ parseMenuTitle(child?.title) }}</span>
+                          <span
+                            :class="[
+                              isActive
+                                ? 'text-gray-900 dark:text-gray-100 font-bold'
+                                : 'text-gray-700 dark:text-gray-300',
+                            ]"
+                          >{{ parseMenuTitle(child?.title) }}</span>
                         </NuxtLink>
                       </template>
                     </HeadlessDisclosurePanel>

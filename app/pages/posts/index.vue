@@ -24,7 +24,10 @@ useHead({
 <template>
   <LayoutPageWrapper>
     <LayoutPageHeader>
-      <LayoutPageTitle text="Posts" class="capitalize" />
+      <LayoutPageTitle
+        text="Posts"
+        class="capitalize"
+      />
     </LayoutPageHeader>
     <LayoutPageSection>
       <ContentList path="/post">
@@ -40,7 +43,10 @@ useHead({
                 class="text-sm flex items-center justify-end space-x-1"
                 :href="`https://www.github.com/${article.author}`"
               >
-                <Icon name="mdi:github-face" class="text-xs" />
+                <Icon
+                  name="mdi:github-face"
+                  class="text-xs"
+                />
                 <span>{{ article.author }}</span>
               </NuxtLink>
             </div>
@@ -59,7 +65,10 @@ useHead({
                   :to="article._path"
                 >
                   <span>learn more</span>
-                  <Icon name="ic:baseline-arrow-right-alt" class="text-sm" />
+                  <Icon
+                    name="ic:baseline-arrow-right-alt"
+                    class="text-sm"
+                  />
                 </NuxtLink>
               </div>
             </div>

@@ -1,13 +1,11 @@
-import { useBreakpoints } from '@vueuse/core';
+import { useBreakpoints, breakpointsTailwind } from '@vueuse/core';
 
 export const useScreen = () => {
-  const breakpoints = useBreakpoints({
-    sm: 640,
-    md: 768,
-    lg: 1024,
-    xl: 1280,
-    '2xl': 1536,
-  });
+  const breakpoints = useBreakpoints(breakpointsTailwind);
+
+  const isMobile = computed(() => breakpoints.smaller('md').value);
+  const isTablet = computed(() => breakpoints.between('md', 'lg').value);
+  const isDesktop = computed(() => breakpoints.greater('lg').value);
 
   return {
     sm: breakpoints.sm,
@@ -15,6 +13,9 @@ export const useScreen = () => {
     lg: breakpoints.lg,
     xl: breakpoints.xl,
     '2xl': breakpoints['2xl'],
+    isMobile,
+    isTablet,
+    isDesktop,
     greater: (breakpoint: 'sm' | 'md' | 'lg' | 'xl' | '2xl') =>
       breakpoints.greater(breakpoint),
     smaller: (breakpoint: 'sm' | 'md' | 'lg' | 'xl' | '2xl') =>

@@ -2,7 +2,7 @@ name: Version Increment
 
 on:
   workflow_run:
-    workflows: ['Run Tests']
+    workflows: ["Run Tests"]
     branches:
       - main
     types:
@@ -16,10 +16,36 @@ jobs:
         node-version: [18.x]
         environment: [UAT, PROD]
     steps:
-      - uses: actions/checkout@v2
-      - run: git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - run: git config user.name "$GITHUB_ACTOR"
-      - run: npm version minor -m "v%s"
-      - run: VERSION=$(node -p "require('./package.json').version")
-      - run: git tag ${VERSION}
-      - run: git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN  }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
+      - uses: actions/checkout@v4
+      - name: Setup git config
+        run: |
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name "$GITHUB_ACTOR"
+      - name: Extract pnpm version from package.json
+        run: |
+          if [ -f package.json ]; then
+            echo "package.json found, proceeding to extract pnpm version."
+          else
+            echo "package.json not found, exiting."
+            exit 1
+          fi
+          PNPM_VERSION=$(jq -r '.packageManager // "latest"' package.json | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' || echo "latest")
+          echo "PNPM_VERSION=$PNPM_VERSION" >> $GITHUB_ENV
+          echo "Extracted pnpm version: $PNPM_VERSION"
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - name: Setup Node.js with pnpm cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+      - name: Increment version and create tag
+        run: |
+          pnpm version minor -m "v%s"
+          VERSION=$(node -p "require('./package.json').version")
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          git tag v${VERSION}
+      - name: Push changes and tags
+        run: git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags

@@ -250,6 +250,10 @@ content:
                 label: Text Color
                 type: string
                 default: "#fff"
+          - name: useCenteredLogo
+            label: Use Centered Logo
+            type: boolean
+            default: false
           - name: links
             label: Links
             type: object

@@ -63,6 +63,7 @@ export interface NuxtAppConfig {
         hasBanner?: boolean;
         bannerStyle?: Record<string, string>;
         enableSocialLinks?: boolean;
+        useCenteredLogo?: boolean;
       };
     };
     /** footer */

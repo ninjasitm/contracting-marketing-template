@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides a comprehensive architectural analysis and implementation template for creating pages in the Dashti Group marketing site. It was developed using the Motiff design system as the source of truth and follows a systematic approach to ensure consistency, maintainability, and performance.
+This document provides a comprehensive architectural analysis and implementation template for creating pages in the marketing site. It was developed using the Motiff design system as the source of truth and follows a systematic approach to ensure consistency, maintainability, and performance.
 
 ## Implementation Philosophy
 
@@ -63,7 +63,7 @@ Always consider:
 3. Examine `components/` for custom business components
 4. Analyze existing pages for similar patterns
 
-**Available Components (Dashti Group):**
+**Available Components:**
 
 ```
 ✅ Header: components/layouts/Page/Header.vue + Navbar.vue

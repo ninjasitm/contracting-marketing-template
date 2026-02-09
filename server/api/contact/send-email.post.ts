@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { createEmailAdapter } from '~/server/utils/email/factory';
-import type { EmailProvider } from '~/server/utils/email/types';
+import type { EmailAdapter } from '~/server/utils/email/types';
 
 // Define the contact form schema for validation
 const contactFormSchema = z.object({
@@ -17,19 +17,18 @@ const contactFormSchema = z.object({
 });
 
 export default defineEventHandler(async (event) => {
-  console.log('[ContactAPI]: Email send request received');
+  console.info('[ContactAPI] [sendEmail]: Request received');
 
   try {
     // Parse and validate the request body
     const body = await readBody(event);
-    console.log('[ContactAPI]: Request body:', body);
 
     // Validate the form data using Zod schema
     const validationResult = contactFormSchema.safeParse(body);
 
     if (!validationResult.success) {
-      console.error(
-        '[ContactAPI]: Validation failed:',
+      console.warn(
+        '[ContactAPI] [sendEmail]: Validation failed | issues:',
         validationResult.error.errors,
       );
       throw createError({
@@ -41,78 +40,26 @@ export default defineEventHandler(async (event) => {
 
     const { fullName, email, phone, message } = validationResult.data;
 
-    // Get runtime config
+    // Get runtime config for recipient email
     const config = useRuntimeConfig();
-    const recipientEmail =
-      (config.contactEmailTo as string) || 'info@thedashtigroup.com';
-    const emailProvider = (config.emailProvider as EmailProvider) || 'mailchannels';
-    const emailApiKey = config.emailApiKey as string;
+    const appConfig = useAppConfig();
+    const recipientEmail = config?.mail?.message?.to || 'info@company.com';
 
-    // Gather available credentials
-    const hasApiKey = !!emailApiKey;
-    const hasSmtpCredentials = !!(config.smtpUser && config.smtpPassword);
-
-    // Create adapter config with all available credentials
-    const adapterConfig: any = {
-      // API credentials
-      apiKey: emailApiKey,
-      // SMTP credentials (standard for all providers)
-      host: config.smtpHost as string,
-      port: parseInt(config.smtpPort as string) || 587,
-      secure: config.smtpSecure === 'true' || config.smtpSecure === true,
-      user: config.smtpUser as string,
-      password: config.smtpPassword as string,
-    };
-
-    // Add provider-specific config
-    if (emailProvider === 'mailgun') {
-      adapterConfig.domain = config.mailgunDomain as string;
-      adapterConfig.region = (config.mailgunRegion as string) || 'us';
-
-      if (!adapterConfig.domain) {
-        throw createError({
-          statusCode: 500,
-          statusMessage: 'Configuration Error',
-          message: 'Mailgun domain is not configured',
-        });
-      }
-
-      // Validate that at least one method is available
-      if (!hasApiKey && !hasSmtpCredentials) {
-        throw createError({
-          statusCode: 500,
-          statusMessage: 'Configuration Error',
-          message: 'Mailgun requires either EMAIL_API_KEY or SMTP credentials (SMTP_USER and SMTP_PASSWORD)',
-        });
-      }
-    } else if (emailProvider === 'mailchannels') {
-      if (!hasApiKey) {
-        throw createError({
-          statusCode: 500,
-          statusMessage: 'Configuration Error',
-          message: 'MailChannels requires EMAIL_API_KEY',
-        });
-      }
-    } else if (emailProvider === 'gmail') {
-      if (!hasSmtpCredentials) {
-        throw createError({
-          statusCode: 500,
-          statusMessage: 'Configuration Error',
-          message: 'Gmail requires SMTP_USER and SMTP_PASSWORD (use App Password)',
-        });
-      }
-    } else if (emailProvider === 'smtp') {
-      if (!hasSmtpCredentials) {
-        throw createError({
-          statusCode: 500,
-          statusMessage: 'Configuration Error',
-          message: 'SMTP requires SMTP_USER and SMTP_PASSWORD',
-        });
-      }
+    // Create email adapter (loads config internally, validates, and throws error if invalid)
+    let emailAdapter: EmailAdapter;
+    try {
+      emailAdapter = createEmailAdapter();
+    } catch (error: any) {
+      console.error(
+        '[ContactAPI] [sendEmail]: Adapter creation failed | error:',
+        error.message,
+      );
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Configuration Error',
+        message: error.message,
+      });
     }
-
-    // Create email adapter
-    const emailAdapter = createEmailAdapter(emailProvider, adapterConfig);
 
     // Prepare email content
     const emailSubject = `New Contact Form Submission from ${fullName}`;
@@ -142,19 +89,22 @@ export default defineEventHandler(async (event) => {
     `;
 
     // Send the email using the configured adapter
-    console.log(`[ContactAPI]: Sending email via ${emailAdapter.name}...`);
+    console.info(
+      '[ContactAPI] [sendEmail]: Sending email | provider:',
+      emailAdapter.name,
+    );
     await emailAdapter.send({
       to: recipientEmail,
       subject: emailSubject,
       html: emailBody,
       replyTo: email,
       from: {
-        email: 'dj@thedashtigroup.com',
-        name: 'Dashti Group Contact Form',
+        email: config?.mail?.auth?.user || 'noreply@company.com',
+        name: appConfig.companyName || 'Contact Form',
       },
     });
 
-    console.log('[ContactAPI]: Email sent successfully');
+    console.info('[ContactAPI] [sendEmail]: Email sent');
 
     // Return success response
     return {
@@ -162,7 +112,10 @@ export default defineEventHandler(async (event) => {
       message: 'Email sent successfully',
     };
   } catch (error: any) {
-    console.error('[ContactAPI]: Error sending email:', error);
+    console.error(
+      '[ContactAPI] [sendEmail]: Failed to send email | error:',
+      error,
+    );
 
     // Handle different types of errors
     if (error.statusCode) {

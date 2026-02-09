@@ -6,10 +6,14 @@ export class MailChannelsAdapter implements EmailAdapter {
 
   constructor(config: EmailAdapterConfig) {
     this.apiKey = config.apiKey;
+
+    if (!this.apiKey) {
+      throw new Error('MailChannels requires EMAIL_API_KEY');
+    }
   }
 
   async send(message: EmailMessage): Promise<void> {
-    console.log('[MailChannelsAdapter]: Sending email...');
+    console.info('[MailChannelsAdapter]: Sending email');
 
     const response = await fetch('https://api.mailchannels.net/tx/v1/send', {
       method: 'POST',
@@ -45,6 +49,6 @@ export class MailChannelsAdapter implements EmailAdapter {
       );
     }
 
-    console.log('[MailChannelsAdapter]: Email sent successfully');
+    console.info('[MailChannelsAdapter]: Email sent successfully');
   }
 }

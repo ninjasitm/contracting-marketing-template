@@ -208,19 +208,35 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     mail: {
+      // Provider configuration
+      provider: process.env.EMAIL_PROVIDER || 'mailchannels',
+      apiKey: process.env.EMAIL_API_KEY || '',
+
+      // Message settings
       message: {
-        to: process.env.GMAIL_EMAIL_TO || 'info@company.com',
+        to:
+          process.env.CONTACT_EMAIL_TO ||
+          process.env.GMAIL_EMAIL_TO ||
+          'info@company.com',
       },
+
+      // SMTP configuration (for Gmail, SMTP, or Mailgun SMTP mode)
       smtp: {
-        service: 'gmail',
         host: process.env.SMTP_HOST || 'smtp.gmail.com',
         port: parseInt(process.env.SMTP_PORT || '587'),
         secure: process.env.SMTP_SECURE === 'true',
-        startTls: process.env.SMTP_START_TLS !== 'false',
       },
+
+      // Authentication (SMTP credentials)
       auth: {
-        user: process.env.GMAIL_APP_USER || 'invalid',
-        pass: process.env.GMAIL_APP_PASSWORD || 'invalid',
+        user: process.env.SMTP_USER || process.env.GMAIL_APP_USER || '',
+        pass: process.env.SMTP_PASSWORD || process.env.GMAIL_APP_PASSWORD || '',
+      },
+
+      // Mailgun-specific configuration
+      mailgun: {
+        domain: process.env.MAILGUN_DOMAIN || '',
+        region: process.env.MAILGUN_REGION || 'us',
       },
     },
   },

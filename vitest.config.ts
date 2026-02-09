@@ -9,25 +9,18 @@
 
 import { resolve } from 'path';
 import { defineVitestConfig } from '@nuxt/test-utils/config';
-import Vue from '@vitejs/plugin-vue';
 
 export default defineVitestConfig({
-  // Plugins for Vue support
-  plugins: [Vue()],
-
   // Test configuration
   test: {
     // Enable global test environment setup
     globals: true,
 
-    // Mock browser environment
+    // Default to jsdom; server tests can opt into node via file directive
     environment: 'jsdom',
 
     // Exclude certain files/directories from testing
     exclude: ['node_modules', 'dist', '.nuxt', 'coverage'],
-
-    // Include specific file patterns for testing
-    include: ['./test/**/*.{test,spec}.{js,ts}'],
 
     // Coverage configuration
     coverage: {
@@ -53,10 +46,48 @@ export default defineVitestConfig({
 
   // Resolve aliases to match Nuxt configuration
   resolve: {
-    alias: {
-      '@': resolve(__dirname, './'),
-      '~': resolve(__dirname, './'),
-      '#app': resolve(__dirname, 'node_modules/nuxt/dist/app'),
-    },
+    alias: [
+      {
+        find: /^#app\/composables\/error$/,
+        replacement: resolve(__dirname, './test/mocks/nuxt-error.ts'),
+      },
+      {
+        find: /^#app\/composables\/router$/,
+        replacement: resolve(__dirname, './test/mocks/nuxt-router.ts'),
+      },
+      {
+        find: /^#app\/composables\/head$/,
+        replacement: resolve(__dirname, './test/mocks/nuxt-head.ts'),
+      },
+      {
+        find: /^#app\/composables\/ssr$/,
+        replacement: resolve(__dirname, './test/mocks/nuxt-ssr.ts'),
+      },
+      {
+        find: /^#app\/nuxt-vitest-app-entry$/,
+        replacement: resolve(
+          __dirname,
+          './test/mocks/nuxt-vitest-app-entry.ts',
+        ),
+      },
+      {
+        find: /^nodemailer$/,
+        replacement: resolve(__dirname, './test/mocks/nodemailer.ts'),
+      },
+      {
+        find: /^#app\/config$/,
+        replacement: resolve(__dirname, './test/mocks/nuxt-config.ts'),
+      },
+      {
+        find: /^#app\/nuxt$/,
+        replacement: resolve(__dirname, './test/mocks/nuxt-app.ts'),
+      },
+      {
+        find: '#app',
+        replacement: resolve(__dirname, './test/mocks/nuxt-app.ts'),
+      },
+      { find: '@', replacement: resolve(__dirname, './') },
+      { find: '~', replacement: resolve(__dirname, './') },
+    ],
   },
 });

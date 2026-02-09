@@ -1,11 +1,12 @@
 ---
-description:
+description: Deprecated patterns and anti-practices to avoid
 globs:
-alwaysApply: true
+alwaysApply: agent
 ---
-- No deprecated Nuxt/Vue features.
-- No global CSS outside Tailwind or `assets/scss/`.
-- No direct DOM manipulation; use Vue's reactivity and refs.
-- No custom solutions for problems already solved by core libraries.
+
+- No deprecated {{FRAMEWORK}} features.
+- No global CSS outside {{STYLING}} configuration.
+- No direct DOM manipulation; use framework reactivity.
+- No custom solutions for problems solved by core libraries.
 - No inconsistent naming for events or handlers.
-- No server code imports in client components; see server-client-separation.mdc.
+- No mixing server and client code inappropriately.

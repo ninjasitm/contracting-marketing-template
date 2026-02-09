@@ -1,8 +1,11 @@
 ---
-description:
+description: Testing and code quality guidelines
 globs:
-alwaysApply: true
+alwaysApply: agent
 ---
-- Ensure `pnpm run lint`, `pnpm test`, and `pnpm run build` pass before suggesting or committing code.
-- Use Vitest for unit/component tests, Playwright for E2E, and place tests alongside implementation files.
-- Prefer VS Code's Testing UI; fall back to terminal as needed.
+
+- Ensure lint, test, and build pass before committing.
+- Use {{TEST_FRAMEWORK}} for unit/component tests.
+- Use {{E2E_FRAMEWORK}} for end-to-end tests.
+- Place tests alongside implementation files or in `tests/` directory.
+- Aim for meaningful test coverage of business logic.

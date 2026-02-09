@@ -1,7 +1,11 @@
 ---
-description:
-globs: api/*
-alwaysApply: false
+description: API development and server-side implementation guidelines
+globs:
+alwaysApply: agent
 ---
-- Use Nuxt server routes (`/server/api/`), validate input, and return consistent responses.
-- Use provided scripts and manual testing as described in the documentation.
+
+- {{API_ROUTE_PATTERN}}
+- Validate all input data before processing.
+- Return consistent response formats.
+- Use proper HTTP status codes.
+- Document API endpoints in {{API_DOCS_LOCATION}}.

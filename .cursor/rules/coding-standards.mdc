@@ -1,10 +1,11 @@
 ---
-description:
-globs: *.vue
-alwaysApply: false
+description: {{LANGUAGE}} and {{FRAMEWORK}} development standards
+globs:
+alwaysApply: agent
 ---
-- All code must be TypeScript. Avoid `any` type unless justified.
-- Use `<script setup lang="ts">` in components.
-- Follow Nuxt's recommended folder and naming conventions.
+
+- All code must be {{LANGUAGE}}. {{TYPE_SAFETY_RULE}}
+- {{COMPONENT_SYNTAX_RULE}}
+- Follow {{FRAMEWORK}}'s recommended folder and naming conventions.
 - Keep functions focused and manageable (under 50-75 lines).
-- Use try-catch for async operations; leverage Nuxt error utilities.
+- Use try-catch for async operations; leverage {{FRAMEWORK}} error utilities.

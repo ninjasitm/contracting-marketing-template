@@ -1,8 +1,11 @@
 ---
-description:
+description: UI accessibility and responsive design principles
 globs:
-alwaysApply: true
+alwaysApply: agent
 ---
-- Develop Tailwind components with a mobile-first approach.
-- Adhere to WCAG 2.1 AA, use semantic HTML, and ensure keyboard/focus accessibility.
-- Use skeleton loaders or disable inputs during async operations.
+
+- Develop with a mobile-first approach.
+- Adhere to WCAG 2.1 AA accessibility standards.
+- Use semantic HTML elements.
+- Ensure keyboard navigation and focus management.
+- Use loading states during async operations.

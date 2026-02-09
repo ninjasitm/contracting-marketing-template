@@ -1,7 +1,10 @@
 ---
-description:
-globs: *
-alwaysApply: false
+description: Project documentation and context review requirements
+globs:
+alwaysApply: agent
 ---
-- Always review the entire contents of the `docs/ai/` directory (especially `overview.md` and `architecture.md`) before generating code, suggestions, or answers.
-- Update documentation in `docs/ai/`, `README.md`, and `CHANGELOG.md` for new features, architectural changes, or significant decisions.
+
+- Review project documentation before generating code or suggestions.
+- Check `docs/` directory for architecture and design decisions.
+- Update documentation for new features or architectural changes.
+- Reference AGENTS.md for coding patterns and standards.

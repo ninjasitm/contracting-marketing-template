@@ -10,7 +10,7 @@ Conduct comprehensive code review for pull requests with structured fix tracking
 
 ```bash
 /review-pr 42
-/review-pr https://github.com/ninjasitm/contracting-marketing-template/pull/42
+/review-pr https://github.com/{{REPO_OWNER}}/{{PROJECT_NAME}}/pull/42
 ```
 
 ## Process

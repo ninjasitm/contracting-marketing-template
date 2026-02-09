@@ -1,31 +1,30 @@
 ---
-applyTo: "**/*"
-description: "Developer workflows and environment settings for contracting-marketing-template."
+applyTo: '**/*'
+description: 'Developer workflows and environment settings for {{PROJECT_NAME}}.'
 ---
 
 # Workflows
 
 ## Development
 
-- **Start dev server:** `pnpm dev` (port 3000)
-- **Build:** `pnpm build`
-- **Generate:** `pnpm generate` (static site generation)
-- **Type check:** `pnpm lint` (includes `vue-tsc --noEmit`)
+- **Start dev server:** `{{PACKAGE_MANAGER}} run dev` (port {{DEV_PORT}})
+- **Build:** `{{PACKAGE_MANAGER}} run build`
+- **Type check:** `{{PACKAGE_MANAGER}} run type-check`
 
 ## Testing
 
-- **Unit tests:** `pnpm test`
-- **Watch mode:** `pnpm test:watch`
-- **Coverage:** `pnpm test:coverage`
+- **Unit tests:** `{{PACKAGE_MANAGER}} run test`
+- **Coverage:** `{{PACKAGE_MANAGER}} run test:coverage`
+- **E2E tests:** `{{PACKAGE_MANAGER}} run test:e2e`
 
 ## Code quality
 
-- **Lint:** `pnpm lint`
-- **Preview:** `pnpm preview` (build + preview on port 3000)
+- **Lint:** `{{PACKAGE_MANAGER}} run lint`
+- **Format:** `{{PACKAGE_MANAGER}} run format`
 
 ## Environment variables
 
-| Variable          | Purpose                                  | Required |
-| ----------------- | ---------------------------------------- | -------- |
-| `NUXT_PUBLIC_*`   | Public runtime config exposed to client  | Varies   |
-| `NUXT_*`          | Private runtime config (server only)     | Varies   |
+| Variable        | Purpose            | Required |
+| --------------- | ------------------ | -------- |
+| `{{ENV_VAR_1}}` | {{ENV_VAR_1_DESC}} | Yes      |
+| `{{ENV_VAR_2}}` | {{ENV_VAR_2_DESC}} | No       |

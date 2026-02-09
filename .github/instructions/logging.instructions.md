@@ -1,6 +1,6 @@
 ---
-applyTo: "**/*"
-description: "Logging standards and best practices for contracting-marketing-template"
+applyTo: '**/*'
+description: 'Logging standards and best practices for {{PROJECT_NAME}}'
 ---
 
 # Logging Standards
@@ -15,7 +15,7 @@ Consistent logging is critical for debugging, monitoring, and understanding appl
 
 Use bracketed tags to identify the source:
 
-```ts
+```{{FILE_EXTENSION}}
 [ComponentName]: message
 [ServiceName]: operation completed
 [UtilityName]: processing data
@@ -31,16 +31,16 @@ Use bracketed tags to identify the source:
 
 ```javascript
 // Good
-console.log("[UserService] [fetchUser]: Retrieved user data | userId:", userId);
+console.log('[UserService] [fetchUser]: Retrieved user data | userId:', userId);
 console.error(
-	"[PaymentService] [processPayment]: Payment failed | error:",
-	error.message,
+  '[PaymentService] [processPayment]: Payment failed | error:',
+  error.message,
 );
-console.warn("[CacheService] [invalidate]: Cache miss | key:", cacheKey);
+console.warn('[CacheService] [invalidate]: Cache miss | key:', cacheKey);
 
 // Bad
-console.log("got user");
-console.error("error");
+console.log('got user');
+console.error('error');
 console.log(data);
 ```
 
@@ -56,7 +56,7 @@ console.log(data);
 - Data corruption
 - Security violations
 
-```ts
+```{{FILE_EXTENSION}}
 console.error('[DatabaseService]: Connection failed | error:', error);
 ```
 
@@ -70,7 +70,7 @@ console.error('[DatabaseService]: Connection failed | error:', error);
 - Configuration issues
 - Unexpected but handled states
 
-```ts
+```{{FILE_EXTENSION}}
 console.warn('[AuthService]: Using fallback auth method | reason:', reason);
 ```
 
@@ -84,7 +84,7 @@ console.warn('[AuthService]: Using fallback auth method | reason:', reason);
 - Major state changes
 - Background job completion
 
-```ts
+```{{FILE_EXTENSION}}
 console.info('[Application]: Started successfully | port:', port);
 ```
 
@@ -98,7 +98,7 @@ console.info('[Application]: Started successfully | port:', port);
 - Loop iterations
 - Algorithm steps
 
-```ts
+```{{FILE_EXTENSION}}
 console.debug('[Validator]: Checking constraints | input:', input);
 ```
 
@@ -140,21 +140,21 @@ console.debug('[Validator]: Checking constraints | input:', input);
 
 ```javascript
 // Bad
-console.log("[AuthService]: Login attempt", { username, password });
+console.log('[AuthService]: Login attempt', { username, password });
 
 // Good
-console.log("[AuthService]: Login attempt | username:", username);
+console.log('[AuthService]: Login attempt | username:', username);
 
 // Bad
-console.log("[PaymentService]: Processing payment", paymentData);
+console.log('[PaymentService]: Processing payment', paymentData);
 
 // Good
 const sanitized = {
-	...paymentData,
-	cardNumber: "****" + paymentData.cardNumber.slice(-4),
-	cvv: "***",
+  ...paymentData,
+  cardNumber: '****' + paymentData.cardNumber.slice(-4),
+  cvv: '***',
 };
-console.log("[PaymentService]: Processing payment", sanitized);
+console.log('[PaymentService]: Processing payment', sanitized);
 ```
 
 ## Performance Considerations
@@ -163,13 +163,13 @@ console.log("[PaymentService]: Processing payment", sanitized);
 
 ```javascript
 // Only log in development
-if (process.env.NODE_ENV === "development") {
-	console.debug("[DataProcessor]: Intermediate result", data);
+if (process.env.NODE_ENV === 'development') {
+  console.debug('[DataProcessor]: Intermediate result', data);
 }
 
 // Use log level checks
 if (logger.level <= LogLevel.DEBUG) {
-	console.debug("[Service]: Expensive computation", expensiveOperation());
+  console.debug('[Service]: Expensive computation', expensiveOperation());
 }
 ```
 
@@ -178,16 +178,16 @@ if (logger.level <= LogLevel.DEBUG) {
 ```javascript
 // Bad - logs on every iteration
 for (const item of items) {
-	console.log("[Processor]: Processing item", item);
-	process(item);
+  console.log('[Processor]: Processing item', item);
+  process(item);
 }
 
 // Good - log summary
-console.info("[Processor]: Processing batch | count:", items.length);
+console.info('[Processor]: Processing batch | count:', items.length);
 for (const item of items) {
-	process(item);
+  process(item);
 }
-console.info("[Processor]: Batch complete | processed:", items.length);
+console.info('[Processor]: Batch complete | processed:', items.length);
 ```
 
 ## Error Logging
@@ -196,14 +196,14 @@ console.info("[Processor]: Batch complete | processed:", items.length);
 
 ```javascript
 try {
-	await riskyOperation();
+  await riskyOperation();
 } catch (error) {
-	console.error("[ServiceName] [operation]: Operation failed", {
-		error: error.message,
-		stack: error.stack,
-		context: { userId, requestId, timestamp: Date.now() },
-	});
-	// Re-throw or handle
+  console.error('[ServiceName] [operation]: Operation failed', {
+    error: error.message,
+    stack: error.stack,
+    context: { userId, requestId, timestamp: Date.now() },
+  });
+  // Re-throw or handle
 }
 ```
 
@@ -211,65 +211,94 @@ try {
 
 ```javascript
 const logError = (source, operation, error, context = {}) => {
-	console.error(`[${source}] [${operation}]: ${error.message}`, {
-		error: {
-			name: error.name,
-			message: error.message,
-			stack: error.stack,
-		},
-		...context,
-	});
+  console.error(`[${source}] [${operation}]: ${error.message}`, {
+    error: {
+      name: error.name,
+      message: error.message,
+      stack: error.stack,
+    },
+    ...context,
+  });
 };
 
 // Usage
-logError("UserService", "createUser", error, { userId, email });
+logError('UserService', 'createUser', error, { userId, email });
 ```
 
 ## Framework-Specific Guidelines
 
-### Nuxt 3
+{{#if (eq FRAMEWORK "Next.js")}}
+
+### Next.js
 
 ```typescript
-// Composables
-export const useDataService = () => {
-  const fetchData = async () => {
-    console.info('[useDataService] [fetchData]: Loading content');
-    try {
-      const data = await queryContent('/api/data').find();
-      console.debug('[useDataService] [fetchData]: Content loaded | count:', data.length);
-      return data;
-    } catch (error) {
-      console.error('[useDataService] [fetchData]: Failed to load content', { error });
-      throw error;
-    }
-  };
+// Server components
+import { logger } from '@/lib/logger';
 
-  return { fetchData };
-};
+export default async function Page() {
+  logger.info('[HomePage]: Rendering');
+  // ...
+}
 
-// Server API routes (Nitro)
-export default defineEventHandler(async (event) => {
-  console.info('[API] [/contact]: Contact form submission');
+// API routes
+export async function POST(request: Request) {
   try {
-    const body = await readBody(event);
-    console.debug('[API] [/contact]: Processing | email:', body.email);
+    logger.info('[API] [/users]: Create user request');
     // ...
   } catch (error) {
-    console.error('[API] [/contact]: Failed to process submission', { error });
-    throw createError({ statusCode: 500, message: 'Internal Server Error' });
+    logger.error('[API] [/users]: Failed to create user', { error });
   }
-});
-
-// Pinia stores
-export const useIdentity = defineStore('identity', {
-  actions: {
-    setUser(user: User) {
-      console.info('[IdentityStore] [setUser]: Updating user | id:', user.id);
-      this.user = user;
-    },
-  },
-});
+}
 ```
+
+{{/if}}
+
+{{#if (eq FRAMEWORK "Django")}}
+
+### Django
+
+```python
+import logging
+
+logger = logging.getLogger(__name__)
+
+class UserView(View):
+    def get(self, request):
+        logger.info(f'[UserView] [get]: Request | user_id={request.user.id}')
+        try:
+            # ...
+        except Exception as e:
+            logger.error(f'[UserView] [get]: Failed | error={str(e)}', exc_info=True)
+```
+
+{{/if}}
+
+{{#if (eq FRAMEWORK "Laravel")}}
+
+### Laravel
+
+```php
+use Illuminate\Support\Facades\Log;
+
+class UserController extends Controller
+{
+    public function store(Request $request)
+    {
+        Log::info('[UserController] [store]: Creating user');
+
+        try {
+            // ...
+        } catch (\Exception $e) {
+            Log::error('[UserController] [store]: Failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+        }
+    }
+}
+```
+
+{{/if}}
 
 ## Production Logging
 
@@ -288,11 +317,11 @@ Integrate with log aggregation services:
 ```javascript
 // Add to all logs in a request
 const requestId = generateId();
-context.set("requestId", requestId);
+context.set('requestId', requestId);
 
-console.info("[API]: Request started | requestId:", requestId);
-console.info("[Service]: Processing | requestId:", requestId);
-console.info("[API]: Request complete | requestId:", requestId);
+console.info('[API]: Request started | requestId:', requestId);
+console.info('[Service]: Processing | requestId:', requestId);
+console.info('[API]: Request complete | requestId:', requestId);
 ```
 
 ## Monitoring and Alerts
@@ -323,18 +352,18 @@ Extract metrics:
 
 ```javascript
 // Jest example
-const consoleSpy = jest.spyOn(console, "error");
+const consoleSpy = jest.spyOn(console, 'error');
 
-test("logs error on failure", async () => {
-	await failingOperation();
+test('logs error on failure', async () => {
+  await failingOperation();
 
-	expect(consoleSpy).toHaveBeenCalledWith(
-		expect.stringContaining("[ServiceName]"),
-		expect.any(Object),
-	);
+  expect(consoleSpy).toHaveBeenCalledWith(
+    expect.stringContaining('[ServiceName]'),
+    expect.any(Object),
+  );
 });
 ```
 
 ---
 
-**Last Updated**: 2026-02-09
+**Last Updated**: {{Date}}

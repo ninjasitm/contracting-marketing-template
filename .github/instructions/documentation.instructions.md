@@ -1,6 +1,6 @@
 ---
-applyTo: "**/*"
-description: "Documentation standards for features and fixes"
+applyTo: '**/*'
+description: 'Documentation standards for features and fixes'
 ---
 
 # Documentation Guidelines
@@ -164,13 +164,13 @@ Brief description of the feature and its purpose.
 
 ### New Files
 
-- `components/FeatureName.vue`
-- `test/components/FeatureName.test.ts`
+- `{{SRC_DIR}}/components/FeatureName.{{FILE_EXTENSION}}`
+- `{{TEST_DIR}}/FeatureName.test.{{FILE_EXTENSION}}`
 
 ### Modified Files
 
-- `app/pages/index.vue`
-- `types/index.ts`
+- `{{SRC_DIR}}/routes/index.{{FILE_EXTENSION}}`
+- `{{SRC_DIR}}/types/index.{{FILE_EXTENSION}}`
 
 ## Testing Strategy
 
@@ -204,7 +204,6 @@ Brief description of the feature and its purpose.
 **Before creating any fix documentation, ask:**
 
 1. **Is this a complex fix?** (multi-file, architectural changes, affects multiple features)
-
    - ✅ YES → Create folder `docs/fixes/{{ISSUE_ID}}-FIX-NAME/` with `spec.md` + `plan.md`
    - ❌ NO → Add entry to `docs/fixes/{YYYY-MM}.md` (monthly log)
 

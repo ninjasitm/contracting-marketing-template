@@ -1,5 +1,5 @@
 media:
-  input: public/media
+  input: apps/web/public/media
   output: /media
 components:
   hero:

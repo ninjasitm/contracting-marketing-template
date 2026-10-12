@@ -8,3 +8,5 @@ alwaysApply: agent
 - Check `docs/` directory for architecture and design decisions.
 - Update documentation for new features or architectural changes.
 - Reference AGENTS.md for coding patterns and standards.
+- For AI bootstrap tasks, follow the shared template-vs-derived-project boundaries in `.claude/rules-snippets/project-context.md` and `.claude/prompt-snippets/bootstrap.md`.
+- For shared workflow and reuse standards, read `.claude/rules-snippets/workflows.md` and `.claude/rules-snippets/patterns.md`.

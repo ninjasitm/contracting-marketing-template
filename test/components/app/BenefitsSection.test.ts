@@ -3,6 +3,10 @@ import { describe, expect, it } from 'vitest';
 import BenefitsSection from '../../../apps/web/components/app/BenefitsSection.vue';
 
 describe('BenefitsSection', () => {
+  it('supports the explicit bullets contract', () => {
+    const wrapper = mount(BenefitsSection, { props: { title: 'Benefits', items: [{ title: 'Care', description: 'Included', bullets: ['Support'] }] }, global: { stubs: { Icon: true } } });
+    expect(wrapper.get('li').text()).toBe('Support');
+  });
   it('supports optional plain-text nested bullets', () => {
     const wrapper = mount(BenefitsSection, { props: { title: 'Benefits', items: [{ title: 'Care', description: 'Included', items: ['<b>Support</b>', 'Updates'] }] }, global: { stubs: { Icon: true } } });
     expect(wrapper.findAll('li').map(item => item.text())).toEqual(['<b>Support</b>', 'Updates']);

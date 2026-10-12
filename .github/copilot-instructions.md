@@ -45,12 +45,12 @@ Nuxt globally scans only `apps/web/components/layouts/` (`Layout` prefix), `apps
 ## Workflows (package.json)
 
 - Use root scripts as the workspace entry points; website tasks such as dev/build/generate/preview forward to `@nitm/web`.
-- **Dev:** `pnpm dev` (port 3000)
+- **Dev:** `pnpm dev` (port 3002 by default; Nuxt falls back if occupied)
 - **Build:** `pnpm build`
 - **Test:** `pnpm test`
 - **Lint:** `pnpm lint` (ESLint)
 - **Type check:** `pnpm typecheck`
-- **Preview:** `pnpm preview` (build + preview)
+- **Preview:** `pnpm preview` (build + preview on port 3002 by default)
 - **Optional Worker:** `pnpm --filter @nitm/server dev` or `pnpm --filter @nitm/server typecheck`; Worker tests: `pnpm test -- test/server-example/worker.test.ts`
 
 ## Environment variables
@@ -64,6 +64,7 @@ Nuxt globally scans only `apps/web/components/layouts/` (`Layout` prefix), `apps
 
 - [AGENTS.md](../AGENTS.md) - AI agent context
 - [`.nitm/BOOTSTRAP.md`](../.nitm/BOOTSTRAP.md) - Toolkit bootstrap handoff and scope
+- [`.claude/prompt-snippets/`](../.claude/prompt-snippets/) and [`.claude/rules-snippets/`](../.claude/rules-snippets/) - Shared AI bootstrap task and standards
 - [README.md](../README.md) - Project documentation
 - [.cursor/rules/](../.cursor/rules/) - Cursor IDE rules
 

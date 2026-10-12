@@ -10,7 +10,7 @@ description: 'Nuxt 4 patterns and conventions for contracting-marketing-template
 **Framework:** Nuxt 4.3 (with Vue 3.5)
 **Architecture:** Leading Nuxt 4 website in `apps/web/`, inside a pnpm `apps/*` / `packages/*` workspace; `apps/server/` is an optional independent Worker example
 **Rendering:** SPA mode (`ssr: false`)
-**Dev Server:** Port 3000, Host 0.0.0.0
+**Dev/Preview Servers:** Port 3002 by default; Nuxt falls back if occupied. Host 0.0.0.0. HMR port is managed by Nuxt.
 **Deploy:** Cloudflare Workers
 
 ## Project Structure

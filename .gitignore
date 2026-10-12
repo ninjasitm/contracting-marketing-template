@@ -5,6 +5,7 @@ node_modules
 .cache
 .output
 **/.wrangler/
+**/.turbo/
 .env
 dist
 .DS_Store

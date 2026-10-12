@@ -5,6 +5,8 @@ description: "Project-specific coding patterns and shared utilities for the cont
 
 # Patterns and conventions
 
+For shared AI bootstrap, workflow, and reuse boundaries, read the canonical notes in [`.claude/rules-snippets/`](../../.claude/rules-snippets/) and [`.claude/prompt-snippets/bootstrap.md`](../../.claude/prompt-snippets/bootstrap.md). This instruction remains the detailed Copilot source for app coding patterns.
+
 ## State management
 
 - Pinia stores currently live in `apps/web/app/stores/` and `apps/web/stores/`; preserve both locations unless Nuxt scanning is verified.

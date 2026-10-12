@@ -36,3 +36,4 @@ description: 'Contracting marketing template workspace architecture and data flo
 - [`AGENTS.md`](../../AGENTS.md) - Project conventions and workflows.
 - [`docs/ai/codebase-structure.md`](../../docs/ai/codebase-structure.md) - Current workspace structure.
 - [`docs/ai/architecture.md`](../../docs/ai/architecture.md) - Data flow and system architecture.
+- For AI bootstrap tasks, follow the shared template-vs-derived-project boundaries in [`.claude/rules-snippets/project-context.md`](../../.claude/rules-snippets/project-context.md) and [`.claude/prompt-snippets/bootstrap.md`](../../.claude/prompt-snippets/bootstrap.md).

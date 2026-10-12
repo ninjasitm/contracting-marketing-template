@@ -11,7 +11,25 @@ pnpm install
 pnpm dev
 ```
 
-Use the pinned pnpm version (8.5.1). Root scripts run the web app's `dev`, `build`, `generate`, and `preview` tasks, and forward `test`, `typecheck`, and non-mutating `lint`. The dev server defaults to port 3000.
+Use the pinned pnpm version (8.5.1). Root `pnpm dev` uses Turbo TUI for **web only**; `pnpm dev:all` optionally runs web and the independent health Worker together. Without a TTY/TUI, use `pnpm --filter @nitm/web dev` and, if wanted, `pnpm --filter @nitm/server dev` separately. Root `pnpm build`, `pnpm generate`, and `pnpm preview` target `@nitm/web`; build/tests/typecheck/lint remain non-Turbo. `pnpm lint` and `pnpm test` run at the workspace root, while `pnpm typecheck` checks the app plus root test typing. `pnpm lint` does not modify files. The web dev and preview servers default to port 3002. Nuxt selects another available port if 3002 is occupied; use the URL printed at startup. Nuxt CLI port overrides remain available.
+
+## Purpose and route audit before launch
+
+This checkout is the reusable **template**: keep its optional examples here. A **derived site** should go through purpose/features → route audit → approved cleanup → verification before being marked launch-ready. The shared [bootstrap prompt](../.claude/prompt-snippets/bootstrap.md) serves all four native harness wrappers; [bootstrap scope](../.nitm/BOOTSTRAP.md#bootstrap-scope) separates documentation-only AI setup from approved site adaptation.
+
+1. **Confirm purpose and features.** Read the derived repository and confirmed requirements. Record audience, primary conversion, and required services/blog/portfolio/team/contact/lead/scheduling/integration features. Ask only about missing decisions; seed company names, proof, machine settings and template-owner metadata are not client facts. Mark unknowns unresolved.
+2. **Inventory actual routes.** Inspect `apps/web/app/pages/`, configured page extensions/modules and route rules, plus references/content dependencies. Use a table like this, filling every actual public path rather than inferring access from folder prefixes:
+
+   | Public path | Source file / feature | Decision | File impact and dependencies |
+   | --- | --- | --- | --- |
+   | `/examples/lead-forms` | `apps/web/app/pages/examples/lead-forms.vue` / local demo | Recommend remove in derived site | Audit links; keep needed form components/integrations |
+   | `/_dev/docs/components` | `apps/web/app/pages/_dev/docs/components.vue` / catalog | Recommend remove in derived site | Audit links; preserve shared UI and assets |
+   | Other inventoried routes | Actual file / selected feature | Keep, remove or undecided | List references, content and required behavior |
+
+   Both listed examples are public, not protected by their directory names. Inspect other demo/dev-doc/theme/test/error-preview routes individually; do not delete the whole `_dev` folder by assumption. `/posts`, `/work`, `/process`, `/about` and other business routes are optional **only according to selected features**. Preserve needed legal/error/system routes, APIs, middleware, auth and CMS. Unknown routes stay kept and flagged.
+3. **Approve the file scope before deletion.** Show the full keep/remove/undecided table and file impact, then ask for approval. Check callers/shared asset ownership first. Remove only approved routes/references; retain reusable components, styles and UI unless separate cleanup is approved. Removing a demo does not authorize rewriting mail/backend code or dropping an integration needed by the real site. Replace/unpublish identified seed posts, people, client proof and case studies only within approved scope; never delete real user content as “sample”.
+4. **Reconcile dependent references.** Update navbar/footer/mobile navigation, CTAs, `apps/web/app.config.ts`, CMS/site navigation/configuration and relevant `.pages.yml` collections, sitemap/SEO, fixtures and documentation to the approved route set. Do not leave dead links or orphaned configuration; preserve collections required by retained features.
+5. **Verify and record launch blockers.** Check retained direct URLs and actual navigation/CTAs, plus removed-route router absence/not-found UI using fresh generated routing/build output. With SPA rendering, HTTP 200 alone is not proof of a rendered page or a removed route's HTTP 404. Run appropriate `pnpm test`, `pnpm typecheck`, `pnpm lint` and `pnpm build`; record skipped/blocked checks. Do not run generation over build artifacts unless you restore the intended output. Keep a launch checklist for unresolved purpose/features, remaining seed content, live integration/credential checks and deployment verification. Documentation/toolkit doctor alone does not prove production readiness.
 
 ## Customize content and assets
 
@@ -31,7 +49,7 @@ The sample post at `apps/web/content/_posts/data/template-example.md` is intenti
 
 ## Reuse the included sections
 
-App-level components are auto-imported; about, work, service and post components must be explicitly imported because Nuxt's component scanner only scans `Layout`, `Ui`, and `App` folders. The opt-in examples page at `/_dev/docs/components` includes controls, portfolio/proof cards, team headers, packages, partner cards, optional brand motion, content filters and contact patterns alongside the original FAQ, benefits and article examples. All new business copy is fictional. See the [Component Catalog](COMPONENTS.md) for imports, contracts and examples. It is a regular public app route, not access-protected or development-only; remove `apps/web/app/pages/_dev/docs/components.vue` before a production build if you do not want it deployed. These sections are not automatically added to your homepage.
+App-level components are auto-imported; about, work, service and post components must be explicitly imported because Nuxt's component scanner only scans `Layout`, `Ui`, and `App` folders. The opt-in examples page at `/_dev/docs/components` includes controls, portfolio/proof cards, team headers, packages, partner cards, optional brand motion, content filters and contact patterns alongside the original FAQ, benefits and article examples. All new business copy is fictional. See the [Component Catalog](COMPONENTS.md) for imports, contracts and examples. It is a regular public app route, not access-protected or development-only; in a derived site, include `apps/web/app/pages/_dev/docs/components.vue` in the approved removal scope before production if unwanted. These sections are not automatically added to your homepage.
 
 Useful component contracts (check the source before extending them):
 
@@ -61,7 +79,7 @@ The optional HubSpot contact-form integration and any required environment varia
 
 ## Optional Worker example
 
-`apps/server/` is a separate, health-only Cloudflare Worker example; it is not the website backend and is not used by the root web `dev`, `build`, `generate`, or `preview` scripts. The website contact endpoint remains in `apps/web/server/`. The example needs no account settings, secrets, or external services.
+`apps/server/` is a separate, health-only Cloudflare Worker example; it is not the website backend. Root `pnpm dev` stays web-only; opt-in `pnpm dev:all` includes the Worker, while website `build`, `generate` and `preview` do not. The website contact endpoint remains in `apps/web/server/`. The example needs no account settings, secrets, or external services.
 
 ```sh
 pnpm --filter @nitm/server typecheck

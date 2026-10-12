@@ -8,6 +8,10 @@ const global = { stubs: { NuxtLink: { props: ['to'], template: '<a :href="to"><s
 const project = { title: 'Example', slug: 'a/b?c', client: 'acme', description: 'A useful project' };
 
 describe('work cards and filters', () => {
+  it('defaults the controlled category to All', () => {
+    const wrapper = mount(FilterSection, { props: { sectionTitle: 'Work', categories: [] } });
+    expect(wrapper.get('button').attributes('aria-pressed')).toBe('true');
+  });
   it('encodes case-study slugs and injects client metadata', () => {
     const wrapper = mount(FeaturedProjectCard, { props: { project, client: { name: 'Acme Inc.' } }, global });
     expect(wrapper.get('a').attributes('href')).toBe('/work/a%2Fb%3Fc');

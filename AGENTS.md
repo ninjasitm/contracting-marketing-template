@@ -19,7 +19,7 @@
 | **Content**          | @nuxt/content (flat-file CMS) | 2.13    |
 | **Package Manager**  | pnpm                          | 8.5.1   |
 | **Test Framework**   | Vitest                        | 3.2     |
-| **Deploy Platform**  | Cloudflare Workers            | —       |
+| **Deploy Platform**  | Cloudflare Pages (configured) | —       |
 
 ### Repository
 
@@ -75,7 +75,7 @@ This is a pnpm workspace with a leading Nuxt 4 website app and an optional indep
 
 ```
 / (private pnpm workspace root)
-├── package.json                # Private @nitm/contracting-marketing-template; scripts forward to @nitm/web
+├── package.json                # Private @nitm/contracting-marketing-template; website scripts target @nitm/web
 ├── pnpm-workspace.yaml         # apps/* and packages/* workspace globs
 ├── apps/
 │   ├── web/                    # @nitm/web — the Nuxt 4 website
@@ -95,7 +95,7 @@ This is a pnpm workspace with a leading Nuxt 4 website app and an optional indep
 └── packages/                   # Add a package only for a real shared need
 ```
 
-`apps/web` is the default website target for root website scripts. `apps/server` is optional and independent; it does not replace the website Nitro API or affect root website scripts. Keep the design system in `apps/web/components/ui/`; do not introduce another backend, a separate UI package, or a task orchestrator without a concrete requirement.
+Root `pnpm dev` uses Turbo TUI for `@nitm/web` only; opt-in `pnpm dev:all` runs web and the independent Worker. `build`, `generate`, and `preview` target `@nitm/web`; build/tests/typecheck/lint remain non-Turbo. Lint and Vitest run at the workspace root, while `typecheck` checks the app and root test typing. `apps/server` does not replace the website Nitro API. Keep the design system in `apps/web/components/ui/`; do not introduce another backend, a separate UI package, or a task orchestrator without a concrete requirement.
 
 ### Data Flow
 
@@ -119,7 +119,7 @@ This is a pnpm workspace with a leading Nuxt 4 website app and an optional indep
 4. **Server APIs:**
    - `apps/web/server/api/` - Website Nitro API endpoints, including contact processing via `worker-mailer`
    - Optional HubSpot form integration is separate from the Nitro contact endpoint
-   - `apps/server/` - Optional independent health-only Cloudflare Worker example (`GET /health`); not used by website root scripts
+   - `apps/server/` - Optional independent health-only Cloudflare Worker example (`GET /health`); included only in opt-in root `dev:all`, not website requests/builds
    - Worker commands: `pnpm --filter @nitm/server dev`, `pnpm --filter @nitm/server typecheck`, `pnpm test -- test/server-example/worker.test.ts`
 
 ### Component Patterns
@@ -246,8 +246,8 @@ const emit = defineEmits<{
 
 #### Type Definitions
 
-- Global types: `types/global.d.ts`
-- Feature types: `types/*.d.ts`
+- Global types: `apps/web/types/global.d.ts`
+- Feature types: `apps/web/types/*.ts` or `apps/web/types/*.d.ts`
 - Component types: Inline or co-located `*.types.ts`
 
 #### Nuxt-specific Types
@@ -296,9 +296,9 @@ store.increment();
 
 #### TailwindCSS
 
-- **Configuration:** `tailwind.config.ts`
-- **Custom styles:** `assets/scss/app.scss`
-- **Variables:** `assets/scss/_variables.scss`
+- **Configuration:** `apps/web/tailwind.config.ts`
+- **Custom styles:** `apps/web/assets/scss/app.scss`
+- **Variables:** `apps/web/assets/scss/_variables.scss`
 - **Theme:** See `docs/TAILWIND_THEME.md`
 
 #### Component Styling
@@ -432,14 +432,14 @@ describe('MyComponent', () => {
 
 ## Deployment
 
-### Cloudflare Workers
+### Cloudflare Pages
 
-**Configuration:** Cloudflare/Wrangler configuration for the website; check its actual location before changing deployment paths.
+**Repository configuration:** `apps/web/nuxt.config.ts` uses Nitro's `cloudflare-pages` preset, and root `wrangler.toml` sets `pages_build_output_dir = "apps/web/dist"`. The optional `apps/server` example is a separate Cloudflare Worker. This documents checked-in configuration only; deployment has not been verified.
 
 ### Build Commands
 
 ```bash
-# Root workspace scripts forward website tasks to @nitm/web
+# Root website scripts target @nitm/web
 pnpm build
 
 # Static generation (if configured by @nitm/web)
@@ -451,7 +451,7 @@ pnpm preview
 
 ### Environment Variables
 
-Set these in Cloudflare Workers dashboard or `.env`:
+Configure these in Cloudflare Pages project settings for a deployed site or in `.env` locally:
 
 - `NUXT_PUBLIC_*` - Public runtime config (exposed to client)
 - `NUXT_*` - Private runtime config (server only)
@@ -466,10 +466,17 @@ Set these in Cloudflare Workers dashboard or `.env`:
 # Install dependencies
 pnpm install
 
-# Start the @nitm/web dev server (port 3000)
+# Turbo TUI: web only (port 3002 by default; Nuxt falls back if occupied)
 pnpm dev
 
-# Open http://localhost:3000
+# Optional: web + independent health Worker in the TUI
+pnpm dev:all
+
+# Without TUI/TTY: run app commands directly (Worker optional)
+pnpm --filter @nitm/web dev
+pnpm --filter @nitm/server dev
+
+# Open the URL printed at startup (normally http://localhost:3002)
 ```
 
 ### Code Quality
@@ -554,6 +561,8 @@ pnpm release
 - Write tests for critical functionality
 - Follow logging conventions (see `.github/instructions/logging.instructions.md`)
 - Document features and fixes (see `.github/instructions/documentation.instructions.md`)
+- For shared AI bootstrap, project-context, workflow, and reuse standards, consult `.claude/prompt-snippets/` and `.claude/rules-snippets/`; keep harness entrypoints as native wrappers that read the shared files.
+- Before a derived site is launch-ready, follow [purpose/route audit and approved cleanup](docs/TEMPLATE_USAGE.md#purpose-and-route-audit-before-launch). AI-guidance bootstrap is documentation-only; template-maintainer mode retains reusable examples.
 - Use Pinia for state management
 - Query content with `@nuxt/content`
 - Use `cn()` helper for conditional classes
@@ -590,12 +599,16 @@ pnpm release
 | --------------------------------- | ----------------------------- |
 | `.github/copilot-instructions.md` | GitHub Copilot configuration  |
 | `.github/instructions/`           | Context-specific instructions |
-| `.agents/skills/`                 | Agent skill definitions       |
 | `.cursor/rules/`                  | Cursor IDE rules              |
+| `.claude/`                        | Claude Code entrypoint, rules, and task commands |
+| `.opencode/commands/`             | OpenCode native task commands |
+| `.claude/prompt-snippets/`        | Shared AI task prompts         |
+| `.claude/rules-snippets/`         | Shared AI standards             |
+| `.agents/skills/`                 | Canonical reusable skill files |
 
 ### Skills
 
-Installed agent skills (see `.agents/skills/README.md`):
+Reusable skill files are maintained in `.agents/skills/`. Preserve them byte-for-byte during AI bootstrap; do not copy or synchronize them into harness-specific directories. `.claude/skills/README.md` documents the current Claude Code skill-file policy; it does not imply automatic discovery.
 
 - **brainstorming** - Feature ideation and requirements
 - **executing-plans** - Plan execution workflows
@@ -614,15 +627,15 @@ Installed agent skills (see `.agents/skills/README.md`):
 
 ### Development
 
-- **Port:** 3000
+- **Dev/preview port:** 3002 by default; the dev server can fall back if occupied
 - **Host:** 0.0.0.0 (configured for Replit/cloud environments)
-- **HMR:** Enabled on port 3000
+- **HMR:** Managed by Nuxt; no fixed client port override
 
 ### Build
 
 - **SSR:** Disabled (`ssr: false` for static/SPA deployment)
 - **Type Checking:** Strict mode enabled
-- **Target:** Cloudflare Workers (the Nitro contact route remains part of `apps/web`)
+- **Repository target configuration:** `apps/web/nuxt.config.ts` uses Nitro's Cloudflare Pages preset, and root `wrangler.toml` points Pages output to `apps/web/dist`. The optional `apps/server` Cloudflare Worker is separate.
 
 ---
 
@@ -638,5 +651,5 @@ Installed agent skills (see `.agents/skills/README.md`):
 
 ---
 
-**Last Updated:** 2026-10-10
+**Last Updated:** 2026-10-12
 **Template Version:** 2.0.12

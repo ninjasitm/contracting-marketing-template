@@ -14,7 +14,7 @@ The Contracting Marketing Template is a pnpm workspace led by the Nuxt 4 website
 - **Content Management**: Pages CMS with flat-file approach
 - **State Management**: Pinia
 - **Content**: `@nuxt/content` 2.13 and Content 2 APIs (for example, `queryContent()`) for reading Markdown and JSON files
-- **Deployment**: Existing Cloudflare Workers deployment; root scripts forward to `@nitm/web`
+- **Deployment configuration**: The website uses Nitro's Cloudflare Pages preset in `apps/web/nuxt.config.ts`, and root `wrangler.toml` sets the Pages output to `apps/web/dist`; `apps/server` is a separate optional Worker example
 
 ## Architecture Overview
 
@@ -83,7 +83,7 @@ The `.pages.yml` file defines the structure of the content that can be edited th
 ```
 / (private pnpm workspace root)
 ├── .pages.yml                  # PagesCMS config for apps/web content and media
-├── package.json                # Private @nitm/contracting-marketing-template; scripts forward to @nitm/web
+├── package.json                # Private @nitm/contracting-marketing-template; website scripts target @nitm/web
 ├── pnpm-workspace.yaml         # apps/* and packages/* workspace globs
 ├── apps/
 │   ├── web/                    # @nitm/web — leading Nuxt website app
@@ -172,7 +172,7 @@ The website contact endpoint stays inside the Nuxt/Nitro app. The optional `apps
    - Image optimization
 
 3. **Deployment Options**:
-    - Preserve the existing Cloudflare Workers target and Nitro contact endpoint
+     - The checked-in website configuration targets Cloudflare Pages, with the Nitro contact endpoint in `apps/web`; the optional `apps/server` Worker is separate. This does not assert a deployment.
    - Optional CI/CD integration with GitHub actions
 
 ## Future Extensibility

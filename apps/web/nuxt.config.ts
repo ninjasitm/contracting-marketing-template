@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
   devServer: {
-    port: 3000,
+    port: 3002,
     host: '0.0.0.0',
   },
   vite: {
@@ -149,6 +149,31 @@ export default defineNuxtConfig({
       mailgun: {
         domain: process.env.MAILGUN_DOMAIN || '',
         region: process.env.MAILGUN_REGION || 'us',
+      },
+    },
+    // Optional HubSpot lead-form adapter (server only; never exposed to the browser). Disabled
+    // until enabled. Set values at runtime with NUXT_LEAD_FORMS_* variables, for example
+    // NUXT_LEAD_FORMS_ENABLED, NUXT_LEAD_FORMS_HUBSPOT_ACCESS_TOKEN and
+    // NUXT_LEAD_FORMS_HUBSPOT_FORMS_LEAD_FORM_ID, so secrets stay out of the build output.
+    leadForms: {
+      enabled: false,
+      hubspot: {
+        // Private app token with the `forms` scope.
+        accessToken: '',
+        // alias -> fixed HubSpot target, served at /api/lead-forms/hubspot/:alias.
+        // Add one entry per form; browsers can only name an alias, never an ID.
+        forms: {
+          lead: { portalId: '', formId: '' },
+        },
+      },
+      // Optional bot protection. `enabled` must be exactly true or false (anything else answers 503);
+      // when true every other field below is required.
+      turnstile: {
+        enabled: false,
+        secret: '',
+        siteKey: '',
+        expectedHostname: '',
+        action: 'lead-form',
       },
     },
   },

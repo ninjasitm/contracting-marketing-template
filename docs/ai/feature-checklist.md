@@ -4,7 +4,7 @@ This document provides a structured overview of all features for the Contracting
 
 ## Status Legend
 
-- ✅ Done - Feature is fully implemented and deployed
+- ✅ Done - Feature is implemented in the repository; runtime and deployment validation are tracked separately
 - 🔄 In Progress - Feature is currently being developed
 - 📅 Planned - Feature is scheduled for upcoming development
 - ❌ Not Planned - Feature is explicitly excluded from current roadmap
@@ -63,10 +63,10 @@ This document provides a structured overview of all features for the Contracting
 - [x] ✅ HubSpot form integration
   - [x] ✅ Form customization options
   - [x] ✅ Lead tracking
-- [ ] 📅 Blog/news section
-  - [ ] 📅 Article listing page
-  - [ ] 📅 Article detail pages
-  - [ ] 📅 Category and tag filtering
+- [x] ✅ Blog/news section
+  - [x] ✅ Article listing page
+  - [x] ✅ Article detail pages
+  - [x] ✅ Tag/category filtering (`tags` references `postCategories` in PagesCMS)
 - [ ] 📅 Testimonials carousel
   - [ ] 📅 Client testimonials with photos
   - [ ] 📅 Rating display
@@ -91,7 +91,7 @@ The flat-file CMS approach uses a structured YAML configuration (.pages.yml) to 
 
   ```yaml
   media:
-    input: public/media
+    input: apps/web/public/media
     output: /media
   ```
 
@@ -167,7 +167,7 @@ The contact page includes:
 
 ## Last Updated
 
-2025-04-22
+2026-10-12
 
 ---
 

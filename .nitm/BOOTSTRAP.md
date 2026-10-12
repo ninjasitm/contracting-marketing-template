@@ -21,13 +21,19 @@ This is the selective project handoff for `nitm-ai-dev-toolkit@4.0.0` from `ninj
 
 ## Bootstrap scope
 
-Preserve existing project guidance and `.agents/skills/` byte-for-byte. Keep the existing Copilot and Cursor bootstrap wrappers as thin links to this file; directory presence alone does not establish an active harness. The active session reported OpenCode CLI `2.0.23`; do not change harness configuration, permissions, trust, credentials, plugins, MCP servers, hooks, or activation as part of this refresh. Do not add `.toolkit-version`.
+This handoff serves two distinct contexts: maintainers working in this reusable template and users adapting a clone into a client website. In the template checkout, the project facts below describe this repository. In a derived site, verify all project and client facts against that checkout or ask; do not carry over this repository's seed content, owner details, environment, active-session versions, or machine configuration as downstream defaults.
 
-Limit repository edits to existing AI guidance and documentation, plus minimal README/template-usage references when useful. Do not modify source, tests, manifests, lockfiles, build, CI, workflows, or deployment. Resolve project-specific facts, while retaining intentional placeholders in reusable prompts and examples. The toolkit doctor is scaffold-only: it does not verify application behavior or harness activation, and its expected-file/placeholder results do not establish runtime failure or readiness.
+The repository follows the pinned toolkit's native entrypoint pattern: root `CLAUDE.md` imports `AGENTS.md`; shared task bodies are in `.claude/prompt-snippets/`; Claude Code rules wrap `.claude/rules-snippets/`; and the Claude, Cursor, Copilot, and OpenCode `/bootstrap`, `/plan`, `/implement-feature`, and `/review` entrypoints explicitly read the corresponding shared body. OpenCode V2 uses the root `AGENTS.md` as project context; its commands explicitly read task files because `@path` references are ordinary text, not includes. These files configure repository entrypoints, not runtime activation. Existing Cursor and Copilot guidance remains in place and must be merged, not replaced wholesale.
+
+`.agents/skills/` remains the canonical reusable skill tree and must be preserved byte-for-byte. `.claude/skills/README.md` documents policy only: there are no copied skill files or symlinks, and this repository does not claim Claude Code automatically discovers `.agents/skills/`. Do not add a synchronization script or infer harness use from directory presence.
+
+**AI-guidance bootstrap is documentation-only:** merge guidance/native repository entrypoints and minimal documentation references. It does not authorize app source, content, tests, manifests, lockfiles, build, CI, workflow or deployment edits, nor global harness configuration, permissions, trust, credentials, hooks, plugins or MCP changes. Preserve reusable examples/placeholders in this template. The toolkit doctor is scaffold-only: its expected-file/placeholder results do not verify application behavior, harness activation or launch readiness.
+
+**Derived-site adaptation is a separate approval gate:** follow the shared [bootstrap body](../.claude/prompt-snippets/bootstrap.md) and [purpose/route audit](../docs/TEMPLATE_USAGE.md#purpose-and-route-audit-before-launch). Establish purpose, audience, conversion and features; inventory actual routes/dependencies; show keep/remove/undecided and file impact; obtain approval before pruning; then verify the agreed changes before launch readiness. Approved scope may include route/content/reference/configuration/fixture changes in the derived repository only. It never authorizes global settings, forced scaffold replacement, skill synchronization or deployment. Unresolved routes stay kept and flagged; real content and shared assets require ownership/reference checks. Template-maintainer mode retains the reusable examples.
 
 ## Project structure
 
-- The private `@nitm/contracting-marketing-template` pnpm workspace root owns scripts that forward website tasks to `@nitm/web`.
+- The private `@nitm/contracting-marketing-template` pnpm workspace root targets `@nitm/web` for website tasks. The approved dev workflow uses Turbo TUI: `pnpm dev` runs web only; opt-in `pnpm dev:all` also runs the independent Worker. Build/test/typecheck/lint remain non-Turbo. Raw `pnpm --filter @nitm/web dev` / `pnpm --filter @nitm/server dev` are available without TUI/TTY; web stays on port 3002 by default. This current workflow is separate from the dated verification snapshot above.
 - `pnpm-workspace.yaml` covers `apps/*` and `packages/*`.
 - `apps/web` (`@nitm/web`) is the leading Nuxt 4 website: routes in `apps/web/app/pages/`, the existing local design system in `apps/web/components/ui/`, Nitro contact API in `apps/web/server/api/`, and PagesCMS content/media in `apps/web/content/` and `apps/web/public/`.
 - `apps/server` (`@nitm/server`) is an optional, independent health-only Cloudflare Worker example; it is not a second website or a replacement for the website's Nitro contact endpoint.
@@ -38,12 +44,12 @@ Limit repository edits to existing AI guidance and documentation, plus minimal R
 
 ## Bootstrap rules
 
-1. Identify active harnesses only from runtime/session evidence or by asking. Scaffold directories alone do not establish which tools are installed or used.
-2. Preserve existing `AGENTS.md`, `.agents/skills/`, `.github/`, `.cursor/`, and `docs/` content. Merge project-specific guidance rather than replacing it with toolkit defaults. Existing skills remain intact; no new skills are needed.
-3. Keep documentation aligned with actual workspace paths, package names, and manifest scripts. The optional Worker is specifically `@nitm/server`; do not invent further apps, packages, services, or commands.
-4. Limit setup to repository AI guidance and documentation. Do not change global settings, permissions, trust, credentials, hooks, or harness activation. Do not modify package/workspace manifests, app source, tests, build, CI, or deployment files as part of this bootstrap.
-5. Keep Cursor/Copilot bootstrap entries as thin links to this handoff. Add other harness-specific wrappers only when explicitly requested; do not infer harness use.
-6. Report only checks actually run. Do not treat scaffold presence or documentation as runtime validation.
+1. Identify active harnesses from session/runtime evidence or ask; repository scaffolding alone proves neither tool installation nor use.
+2. Preserve existing `AGENTS.md`, `.agents/skills/`, `.github/`, `.cursor/`, and `docs/` content. Merge guidance and keep skills byte-for-byte unchanged.
+3. Keep project facts aligned with the actual workspace and manifests. The optional Worker is `@nitm/server`; it is not the website backend.
+4. In a derived site, customize its context and harness-specific entrypoints using verified project facts. Ask about unknown business, integration, and deployment decisions instead of inheriting sample or machine-specific values.
+5. Do not change user/global settings, permissions, trust, credentials, hooks, plugins, MCP settings, or harness activation. Documentation-only bootstrap cannot modify source/tests/manifests/build/CI/deployment; derived-site adaptation may change only the separately approved route/file scope, never deploy automatically.
+6. Retain intentional placeholders in reusable template examples/prompts; approved derived-site pruning may remove sample routes and replace/unpublish identified seed content. Report only checks actually run; file presence is not runtime validation.
 
 ## Toolkit verification limits
 

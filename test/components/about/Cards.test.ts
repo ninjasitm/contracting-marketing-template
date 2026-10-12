@@ -11,9 +11,14 @@ describe('about cards', () => {
     expect(wrapper.get('dt').text()).toBe('Delivered');
   });
   it('renders values as plain text', () => {
-    const wrapper = mount(ValueCard, { props: { title: 'Care', description: '<b>Always</b>' } });
+    const wrapper = mount(ValueCard, { props: { title: 'Care', description: '<b>Always</b>' }, global: { stubs: { Icon: true } } });
     expect(wrapper.get('h3').text()).toBe('Care');
     expect(wrapper.find('b').exists()).toBe(false);
+  });
+  it('accepts numeric statistics and optional decorative value icons', () => {
+    expect(mount(StatCard, { props: { number: 42, label: 'Projects' } }).get('dd').text()).toBe('42');
+    const wrapper = mount(ValueCard, { props: { title: 'Care', description: 'Always', icon: 'lucide:heart' }, global: { stubs: { Icon: { template: '<span />' } } } });
+    expect(wrapper.get('span').attributes('aria-hidden')).toBe('true');
   });
   it('uses quote/citation and omits unsafe avatars without stray punctuation', () => {
     const wrapper = mount(TestimonialCard, { props: { quote: 'Good work', author: 'Alex', company: 'Acme', avatar: 'javascript:alert(1)' }, global: { stubs: { NuxtImg: { template: '<img />' } } } });

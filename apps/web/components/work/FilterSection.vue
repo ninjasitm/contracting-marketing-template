@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Adapted from ninjasitm/nitm-marketing @ da649f7e374da848aac277d202a49942d708fc92; see docs/reference/NITM_MARKETING_LICENSE.md.
-defineProps<{ sectionTitle: string; categories: { name: string; filter: string }[]; currentCategory: string | null }>();
+withDefaults(defineProps<{ sectionTitle: string; categories: { name: string; filter: string }[]; currentCategory?: string | null }>(), { currentCategory: null });
 defineEmits<{ 'category-change': [value: string | null] }>();
 </script>
 

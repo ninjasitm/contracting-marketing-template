@@ -129,7 +129,7 @@ pnpm dev
 
 ### Test Email Endpoint
 ```bash
-curl -X POST "http://localhost:3000/api/contact/send-email" \
+curl -X POST "http://localhost:3002/api/contact/send-email" \
   -H "Content-Type: application/json" \
   -d '{
     "fullName": "Test User",

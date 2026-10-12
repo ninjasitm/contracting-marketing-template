@@ -12,7 +12,8 @@
   },
   "scripts": {
     "build": "pnpm --filter @nitm/web build",
-    "dev": "pnpm --filter @nitm/web dev",
+    "dev": "turbo run dev --filter=@nitm/web",
+    "dev:all": "turbo run dev",
     "generate": "pnpm --filter @nitm/web generate",
     "preview": "pnpm --filter @nitm/web build && pnpm --filter @nitm/web preview",
     "prepare": "pnpm --filter @nitm/web prepare",
@@ -45,6 +46,7 @@
     "jsdom": "^26.1.0",
     "release-it": "^16.3.0",
     "serve": "^14.2.4",
+    "turbo": "2.11.7",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.32.1",
     "vite": "^7.3.1",

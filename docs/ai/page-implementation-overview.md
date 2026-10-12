@@ -134,6 +134,8 @@ apps/web/content/_pages/[page-name].json
 
 ### 3.2 Page Structure Template
 
+> This is an illustrative composition example. Follow neighboring pages' existing data-loading patterns, including static page-config imports where used; use the Content 2 `queryContent()`/`useAsyncData()` flow for queried CMS records, and reuse existing components.
+
 ```vue
 <template>
   <div>

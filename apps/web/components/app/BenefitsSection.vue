@@ -3,7 +3,7 @@
 defineProps<{
   title: string;
   description?: string;
-  items: { title: string; description: string; icon?: string; items?: string[] }[];
+  items: { title: string; description: string; icon?: string; bullets?: string[]; items?: string[] }[];
 }>();
 </script>
 
@@ -40,11 +40,11 @@ defineProps<{
           {{ item.description }}
         </p>
         <ul
-          v-if="item.items?.length"
+          v-if="(item.bullets ?? item.items)?.length"
           class="mt-4 list-disc pl-5 space-y-2 text-muted-foreground"
         >
           <li
-            v-for="(bullet, bulletIndex) in item.items"
+            v-for="(bullet, bulletIndex) in item.bullets ?? item.items"
             :key="bulletIndex"
             class="break-words"
           >

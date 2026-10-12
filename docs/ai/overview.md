@@ -1,13 +1,15 @@
 ## Project Overview
 
-This is a "Contracting Marketing Template" built on top of Nuxt 3 Awesome Starter. It's designed to create marketing websites for contracting companies without needing a traditional API backend. Instead, it uses a flat-file CMS approach through [PagesCMS.org](https://next.pagescms.org/), specifically for the project at https://next.pagescms.org/ninjasitm/contracting-marketing-starter.
+This is a contracting-company marketing website built with Nuxt 4. The private pnpm workspace root forwards website scripts to the leading app, `@nitm/web` in `apps/web/`; `apps/server/` is an optional independent health-only Cloudflare Worker example. Content is managed as files through [PagesCMS.org](https://next.pagescms.org/); website contact submissions use a Nitro route inside `apps/web/`.
 
 ## Key Technologies and Structure
 
-1. **Nuxt 3**: The project is built with Nuxt 3, a Vue.js framework
+1. **Nuxt 4**: The website is built with Nuxt 4 and Vue 3
 2. **TailwindCSS**: For styling
 3. **Flat-file CMS**: Instead of a database, the content is stored in JSON and Markdown files in the content directory
 4. **PagesCMS**: Used to manage and edit the content files through a CMS interface
+
+The website uses `@nuxt/content` 2.13 and Content 2 APIs such as `queryContent()`. Keep its existing UI design system in `apps/web/components/ui/`; it is not a shared package.
 
 ## The .pages.yml File
 
@@ -21,7 +23,7 @@ The .pages.yml file is the heart of the content management system. It defines th
 
    ```yaml
    media:
-     input: public/media
+     input: apps/web/public/media
      output: /media
    ```
 
@@ -42,17 +44,17 @@ The project includes several key pages:
 4. **Process Page**: Description of the company's work process
 5. **Contact Page**: Contact form with optional HubSpot form integration
 
-For each page, content is stored in JSON files in content/\_pages/, and dynamic content like work items are stored in Markdown files in relevant directories (e.g., content/\_work/).
+For each page, content is stored in JSON files under `apps/web/content/_pages/`; dynamic content such as work items is stored in Markdown under `apps/web/content/_work/`.
 
 ## How the Content System Works
 
 1. The .pages.yml defines the structure that PagesCMS will use to present an admin interface
 2. Editors use the PagesCMS UI to edit content
-3. The edited content is saved as files in the content directory
+3. The edited content is saved as files in `apps/web/content/`
 4. The Nuxt app reads these files directly using Nuxt Content module to render the website
 5. Content is structured in a way that makes it easy to query and filter
 
-This architecture provides a fast, secure website that doesn't require a backend API but still offers CMS capabilities for non-technical users to update content.
+The CMS remains file-based and requires no content database. The contact endpoint remains a Nitro route in `apps/web`; the optional `apps/server` Worker is independent and is not used for website requests.
 
 ## Key Features
 
@@ -64,4 +66,4 @@ This architecture provides a fast, secure website that doesn't require a backend
 6. **Mobile-first Design**: Responsive layouts that work well on all device sizes
 7. **Performance Optimized**: Fast loading with optimized assets and minimal JavaScript
 
-This approach is ideal for marketing websites that need a CMS but don't require complex database operations, user authentication, or other dynamic features that would require a backend API.
+This approach is ideal for marketing websites that need a CMS without complex database operations. Contact submission is handled by the existing Nitro endpoint. The sample post `apps/web/content/_posts/data/template-example.md` is published to provide an example; replace or unpublish it before launch.

@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [22.x]
         environment: [UAT, PROD]
     steps:
       - uses: actions/checkout@v4
@@ -46,6 +46,8 @@ jobs:
           merge-multiple: true
       - name: Run Lint
         run: pnpm lint
+      - name: Run Typecheck
+        run: pnpm typecheck
       - name: Run Tests
         run: pnpm test
       - name: Upload Test Results

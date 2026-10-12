@@ -1,5 +1,5 @@
 export const createTransport = () => ({
-  sendMail: async () => ({}),
+  sendMail: () => Promise.resolve({}),
 });
 
 export default { createTransport };

@@ -1,27 +1,25 @@
 ---
 applyTo: "**/*"
-description: "Project-specific coding patterns and shared utilities for {{PROJECT_NAME}}."
+description: "Project-specific coding patterns and shared utilities for the contracting marketing template."
 ---
 
 # Patterns and conventions
 
 ## State management
 
-- State modules live in `{{STATE_DIR}}`.
-- Use {{STATE_MANAGEMENT}} for state management.
-- {{STATE_PATTERN_DESCRIPTION}}
+- Pinia stores currently live in `apps/web/app/stores/` and `apps/web/stores/`; preserve both locations unless Nuxt scanning is verified.
+- Use Pinia for website client-side state and Composition API patterns for new stores.
 
 ## API patterns
 
-- API services live in `{{SERVICES_DIR}}`.
-- {{API_PATTERN_DESCRIPTION}}
+- Website API routes live in `apps/web/server/api/`; server helpers live in `apps/web/server/utils/`.
+- Keep the optional `apps/server/` Worker isolated from the website Nitro contact endpoint.
 
 ## Component patterns
 
-- Components follow {{COMPONENT_PATTERN}} pattern.
-- {{COMPONENT_PATTERN_DESCRIPTION}}
+- Vue components use `<script setup lang="ts">` and stay app-local under `apps/web/components/`.
+- Reuse the existing local UI design system in `apps/web/components/ui/` before adding components.
 
 ## Utilities
 
-- Shared utilities live in `{{UTILS_DIR}}`.
-- {{UTILITY_PATTERN_DESCRIPTION}}
+- Website utilities live in `apps/web/utils/` and `apps/web/lib/`; check existing helpers before adding another.

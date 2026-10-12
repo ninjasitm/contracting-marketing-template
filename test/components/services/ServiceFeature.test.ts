@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import ServiceFeature from '../../../components/services/ServiceFeature.vue';
+import ServiceFeature from '../../../apps/web/components/services/ServiceFeature.vue';
 
 /**
  * Test suite for the ServiceFeature component
@@ -17,7 +17,7 @@ describe('ServiceFeature', () => {
         description: 'Test description',
       },
       global: {
-        stubs: {
+        components: {
           // Create a proper stub for NuxtImg component
           NuxtImg: {
             template: '<img :src="src" :alt="alt" class="nuxtimg-stub" />',
@@ -47,7 +47,9 @@ describe('ServiceFeature', () => {
         features,
       },
       global: {
-        stubs: ['NuxtImg'],
+        components: {
+          NuxtImg: { template: '<img />' },
+        },
       },
     });
 
@@ -70,7 +72,9 @@ describe('ServiceFeature', () => {
         features: [],
       },
       global: {
-        stubs: ['NuxtImg'],
+        components: {
+          NuxtImg: { template: '<img />' },
+        },
       },
     });
 
@@ -87,7 +91,7 @@ describe('ServiceFeature', () => {
         description: 'Test description',
       },
       global: {
-        stubs: {
+        components: {
           NuxtImg: {
             template:
               '<img :src="$attrs.src" @error="$emit(\'error\', $event)" />',

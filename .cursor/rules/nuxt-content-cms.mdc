@@ -7,10 +7,12 @@ alwaysApply: false
 
 This project uses a flat-file CMS approach with PagesCMS.org and Nuxt Content.
 
+The website uses `@nuxt/content` 2.13; follow Content 2 APIs such as `queryContent()`.
+
 ## Content Structure
 
 - Follow PagesCMS documentation: https://pagescms.org/docs/
-- Files in `content/` represent the CMS structure
+- Files in `apps/web/content/` represent the CMS structure
 - Use Markdown (`.md`) for primary content files
 - Use JSON (`.json`) for structured data or configuration
 

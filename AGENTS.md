@@ -4,7 +4,7 @@
 
 **Name:** contracting-marketing-template
 **Version:** 2.0.12
-**Description:** A professional Nuxt 3 marketing website template designed for contracting companies with flat-file CMS through PagesCMS
+**Description:** A professional Nuxt 4 marketing website template designed for contracting companies with flat-file CMS through PagesCMS
 
 ### Tech Stack
 
@@ -17,8 +17,8 @@
 | **UI Components**    | shadcn-vue (reka-ui)          | 2.3     |
 | **State Management** | Pinia                         | 2.3     |
 | **Content**          | @nuxt/content (flat-file CMS) | 2.13    |
-| **Package Manager**  | pnpm                          | —       |
-| **Test Framework**   | Vitest                        | 1.6     |
+| **Package Manager**  | pnpm                          | 8.5.1   |
+| **Test Framework**   | Vitest                        | 3.2     |
 | **Deploy Platform**  | Cloudflare Workers            | —       |
 
 ### Repository
@@ -71,72 +71,67 @@ Relates to #67, #89
 
 ### Application Structure
 
-This is a **Nuxt 3 Layer-based architecture** with the following structure:
+This is a pnpm workspace with a leading Nuxt 4 website app and an optional independent Cloudflare Worker example. The target layout is:
 
 ```
-/ (root - Nuxt Layer)
-├── app/                        # Main application (extends root layer)
-│   ├── pages/                  # File-based routing
-│   ├── stores/                 # Pinia stores
-│   └── nuxt.config.ts          # App-specific config
-├── components/                 # Auto-imported Vue components
-│   ├── ui/                     # shadcn-vue primitives
-│   ├── app/                    # Reusable app components
-│   ├── about/                  # Page-specific components
-│   ├── services/               # Service page components
-│   ├── work/                   # Portfolio components
-│   └── process/                # Process page components
-├── composables/                # Auto-imported Vue composables
-├── content/                    # Flat-file CMS content (JSON + Markdown)
-│   ├── _pages/                 # Page content configuration
-│   ├── _work/                  # Portfolio items
-│   ├── _about/                 # Team members
-│   ├── _posts/                 # Blog posts
-│   └── _testimonials/          # Client testimonials
-├── layouts/                    # Vue layouts
-├── stores/                     # Global Pinia stores
-├── server/                     # Nitro server
-│   ├── api/                    # API endpoints
-│   └── utils/                  # Server utilities
-├── types/                      # TypeScript type definitions
-└── utils/                      # Shared utilities
+/ (private pnpm workspace root)
+├── package.json                # Private @nitm/contracting-marketing-template; scripts forward to @nitm/web
+├── pnpm-workspace.yaml         # apps/* and packages/* workspace globs
+├── apps/
+│   ├── web/                    # @nitm/web — the Nuxt 4 website
+│   │   ├── app/pages/          # File-based routes
+│   │   ├── app/stores/         # Pinia stores
+│   │   ├── stores/             # Existing additional Pinia store
+│   │   ├── components/ui/      # Existing local design system
+│   │   ├── server/api/         # Nitro contact endpoint
+│   │   ├── content/            # PagesCMS JSON and Markdown
+│   │   ├── public/             # Static and CMS media
+│   │   ├── assets/             # Styles and bundled assets
+│   │   ├── composables/        # Auto-imported composables
+│   │   ├── layouts/            # Nuxt layouts
+│   │   ├── nuxt.config.ts      # Website Nuxt configuration
+│   │   └── app.config.ts       # Website configuration
+│   └── server/                 # Optional @nitm/server health-only Worker example
+└── packages/                   # Add a package only for a real shared need
 ```
+
+`apps/web` is the default website target for root website scripts. `apps/server` is optional and independent; it does not replace the website Nitro API or affect root website scripts. Keep the design system in `apps/web/components/ui/`; do not introduce another backend, a separate UI package, or a task orchestrator without a concrete requirement.
 
 ### Data Flow
 
 1. **Content Loading:**
-   - Pages use `queryContent()` composable from `@nuxt/content`
-   - Content files (JSON/Markdown) in `content/` directory
+   - Pages use `queryContent()` from `@nuxt/content` 2.13 (Content 2 APIs)
+   - Content files (JSON/Markdown) in `apps/web/content/`
    - `useContent.ts` composable provides typed content access
-   - `useAsyncData()` for SSR-compatible data fetching
+   - `useAsyncData()` for Nuxt data fetching
 
 2. **State Management:**
-   - Pinia stores in `app/stores/` and `stores/`
+   - Pinia stores currently in `apps/web/app/stores/` and `apps/web/stores/`; preserve locations unless store scanning is verified
    - `use-identity.ts` - User/identity state
    - `use-counter.ts` - Example counter state
    - Auto-imported across application
 
 3. **Configuration:**
-   - `app.config.ts` - Runtime app configuration (company info, navigation, social links)
-   - `content/config.json` - CMS-managed site configuration
-   - `nuxt.config.ts` (root) - Layer configuration
-   - `app/nuxt.config.ts` - App-specific overrides
+   - `apps/web/app.config.ts` - Runtime app configuration (company info, navigation, social links)
+   - `apps/web/content/config.json` - CMS-managed site configuration
+   - `apps/web/nuxt.config.ts` - Nuxt application configuration
 
-4. **Server API:**
-   - `server/api/` - Nitro API endpoints
-   - Contact form processing via `worker-mailer`
-   - Optional HubSpot form integration
+4. **Server APIs:**
+   - `apps/web/server/api/` - Website Nitro API endpoints, including contact processing via `worker-mailer`
+   - Optional HubSpot form integration is separate from the Nitro contact endpoint
+   - `apps/server/` - Optional independent health-only Cloudflare Worker example (`GET /health`); not used by website root scripts
+   - Worker commands: `pnpm --filter @nitm/server dev`, `pnpm --filter @nitm/server typecheck`, `pnpm test -- test/server-example/worker.test.ts`
 
 ### Component Patterns
 
-#### shadcn-vue UI Primitives (`components/ui/`)
+#### Existing UI Design System (`apps/web/components/ui/`)
 
 - **Unstyled, accessible components** using `reka-ui`
 - Customizable via `components.json` configuration
 - TailwindCSS-based styling with `class-variance-authority`
 - Examples: Button, Card, Input, Alert, Sheet, Tabs
 
-#### App Components (`components/app/`)
+#### App Components (`apps/web/components/app/`)
 
 - **Shared application components:**
   - `Button.vue` - Primary action buttons
@@ -167,38 +162,40 @@ This is a **Nuxt 3 Layer-based architecture** with the following structure:
 **PagesCMS Integration:**
 
 - **Admin URL:** https://next.pagescms.org/ninjasitm/contracting-marketing-starter
-- **Configuration:** `.pages.yml` in root
-- **No backend API required** - all content in `content/` directory
+- **Configuration:** `.pages.yml` in root; content and media live under `apps/web/`
+- Content is file-based; website contact submissions use Nitro in `apps/web/server/api/`. The optional `apps/server` Worker is independent and is not used for website requests.
 - **Git-based workflow** - content changes via commits
 
 **Content Types:**
 
 | Type           | Location                            | Format   | Purpose                                          |
 | -------------- | ----------------------------------- | -------- | ------------------------------------------------ |
-| Pages          | `content/_pages/*.json`             | JSON     | Page configuration (home, about, services, etc.) |
-| Work Portfolio | `content/_work/data/*.md`           | Markdown | Case studies and projects                        |
-| Team Members   | `content/_about/teamMembers/*.json` | JSON     | Team member profiles                             |
-| Testimonials   | `content/_testimonials/*.md`        | Markdown | Client testimonials                              |
-| Blog Posts     | `content/_posts/*.md`               | Markdown | Blog articles                                    |
-| Config         | `content/config.json`               | JSON     | Site-wide settings                               |
-| Clients        | `content/clients.json`              | JSON     | Client list                                      |
+| Pages          | `apps/web/content/_pages/*.json`             | JSON     | Page configuration (home, about, services, etc.) |
+| Work Portfolio | `apps/web/content/_work/data/*.md`           | Markdown | Case studies and projects                        |
+| Team Members   | `apps/web/content/_about/teamMembers/*.json` | JSON     | Team member profiles                             |
+| Testimonials   | `apps/web/content/_testimonials/*.md`        | Markdown | Client testimonials                              |
+| Blog Posts     | `apps/web/content/_posts/**/*.md`             | Markdown | Blog articles                                    |
+| Config         | `apps/web/content/config.json`               | JSON     | Site-wide settings                               |
+| Clients        | `apps/web/content/clients.json`              | JSON     | Client list                                      |
+
+The sample post `apps/web/content/_posts/data/template-example.md` is published as an example for the posts page; replace or unpublish it before launch.
 
 ---
 
 ## Development Patterns
 
-### Nuxt 3 Conventions
+### Nuxt 4 Conventions
 
 #### Auto-imports
 
-- **Components:** All components in `components/` are auto-imported
-- **Composables:** All composables are auto-imported
-- **Utils:** Manual import from `utils/` or `lib/`
+- **Components:** Global component scanning is configured only for `apps/web/components/layouts/` (`Layout` prefix), `apps/web/components/ui/` (`Ui` prefix), and `apps/web/components/app/` (`App` prefix). Components in other feature folders must be explicitly imported.
+- **Composables:** Composables in `apps/web/composables/` are auto-imported
+- **Utils:** Nuxt auto-imports utilities from `apps/web/utils/`; helpers in `apps/web/lib/` (such as `cn()`) require explicit imports.
 
 #### File-based Routing
 
 ```
-app/pages/
+apps/web/app/pages/
   index.vue           → /
   about/
     index.vue         → /about
@@ -213,7 +210,7 @@ app/pages/
 
 #### Layouts
 
-- Default layout: `layouts/page.vue`
+- Default layout: `apps/web/layouts/page.vue`
 - Usage in pages: `definePageMeta({ layout: 'page' })`
 
 ### Vue 3 Composition API
@@ -329,7 +326,7 @@ const classes = cn('base-class', isActive && 'active-class', 'another-class');
 #### Server API Routes (Nitro)
 
 ```typescript
-// server/api/example.ts
+// apps/web/server/api/example.ts
 export default defineEventHandler(async (event) => {
   console.info('[API] [/example]: Request received');
 
@@ -383,15 +380,20 @@ const { data: posts } = await useAsyncData('recent-posts', () =>
 
 ### Test Framework: Vitest
 
-**Configuration:** `vitest.config.ts`
+**Configuration:** `vitest.config.ts` at the workspace root
 
 ### Test Structure
 
 ```
-test/
-  components/          # Component tests
-  tailwind/           # Tailwind utility tests
-  shims-vue.d.ts      # Vue test type definitions
+test/ (workspace root)
+  components/           # Component tests
+  composables/          # Composable tests
+  mocks/                # Test mocks
+  server/               # Server tests
+  server-example/       # Optional Worker tests
+  tailwind/             # Tailwind utility tests
+  utils/                # Utility tests
+  shims-vue.d.ts        # Vue test type definitions
 ```
 
 ### Running Tests
@@ -406,6 +408,8 @@ pnpm test:watch
 # With coverage
 pnpm test:coverage
 ```
+
+The 2026-10-11 root test run passed 101 tests across 34 test files; counts are a dated snapshot.
 
 ### Component Testing
 
@@ -430,15 +434,15 @@ describe('MyComponent', () => {
 
 ### Cloudflare Workers
 
-**Configuration:** `wrangler.toml`
+**Configuration:** Cloudflare/Wrangler configuration for the website; check its actual location before changing deployment paths.
 
 ### Build Commands
 
 ```bash
-# Production build
+# Root workspace scripts forward website tasks to @nitm/web
 pnpm build
 
-# Static site generation (if applicable)
+# Static generation (if configured by @nitm/web)
 pnpm generate
 
 # Preview build
@@ -462,7 +466,7 @@ Set these in Cloudflare Workers dashboard or `.env`:
 # Install dependencies
 pnpm install
 
-# Start dev server (port 3000)
+# Start the @nitm/web dev server (port 3000)
 pnpm dev
 
 # Open http://localhost:3000
@@ -471,14 +475,14 @@ pnpm dev
 ### Code Quality
 
 ```bash
-# Lint and type check
+# Lint
 pnpm lint
 
-# ESLint only
-eslint --fix --ext ".ts,.js,.vue" .
+# Lint with automatic fixes
+pnpm lint:fix
 
-# Type check only
-vue-tsc --noEmit
+# Type check
+pnpm typecheck
 ```
 
 ### Release Process
@@ -525,7 +529,7 @@ pnpm release
 ### Development
 
 - `typescript` (5.8) - TypeScript compiler
-- `vitest` (1.6) - Test framework
+- `vitest` (3.2) - Test framework
 - `eslint` (9.27) - Linting
 - `@nuxt/eslint` (1.4) - Nuxt ESLint config
 
@@ -544,7 +548,7 @@ pnpm release
 ### ✅ Do
 
 - Use Composition API with `<script setup>`
-- Leverage auto-imports for components and composables
+- Leverage configured `Layout`/`Ui`/`App` component auto-imports and composable auto-imports; explicitly import feature-folder components.
 - Follow file-based routing conventions
 - Use TypeScript for type safety
 - Write tests for critical functionality
@@ -558,7 +562,7 @@ pnpm release
 ### ❌ Don't
 
 - Use Options API (prefer Composition API)
-- Manually import auto-imported files
+- Do not manually import Nuxt auto-imports; do explicitly import components outside the configured component folders.
 - Ignore TypeScript errors
 - Skip documentation for features
 - Log sensitive data
@@ -618,13 +622,13 @@ Installed agent skills (see `.agents/skills/README.md`):
 
 - **SSR:** Disabled (`ssr: false` for static/SPA deployment)
 - **Type Checking:** Strict mode enabled
-- **Target:** Cloudflare Workers
+- **Target:** Cloudflare Workers (the Nitro contact route remains part of `apps/web`)
 
 ---
 
 ## Related Resources
 
-- **Nuxt 3 Docs:** https://nuxt.com
+- **Nuxt Docs:** https://nuxt.com
 - **Vue 3 Docs:** https://vuejs.org
 - **TailwindCSS Docs:** https://tailwindcss.com
 - **Pinia Docs:** https://pinia.vuejs.org
@@ -634,5 +638,5 @@ Installed agent skills (see `.agents/skills/README.md`):
 
 ---
 
-**Last Updated:** 2026-02-09
+**Last Updated:** 2026-10-10
 **Template Version:** 2.0.12

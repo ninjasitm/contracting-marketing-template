@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [22.x]
         environment: [UAT, PROD]
     steps:
       - uses: actions/checkout@v4
@@ -55,7 +55,7 @@ jobs:
           pnpm build
       - name: Pack build artifacts
         run: >
-          tar zcvf ${{ env.ARTIFACT_NAME }} .output
+          tar zcvf ${{ env.ARTIFACT_NAME }} apps/web/dist
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:

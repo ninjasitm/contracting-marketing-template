@@ -4,41 +4,38 @@ This document provides a comprehensive overview of the source code organization 
 
 ## General Overview
 
-The Contracting Marketing Template is a Nuxt 3-based marketing website template specifically designed for contracting companies. It uses a flat-file CMS approach through PagesCMS.org, making it possible to create and manage websites without needing a traditional backend API.
+The Contracting Marketing Template is a pnpm workspace led by the Nuxt 4 website `@nitm/web` in `apps/web`; `apps/server` is an optional independent health-only Cloudflare Worker example. The website uses `@nuxt/content` 2.13 (Content 2 APIs such as `queryContent()`). PagesCMS manages its flat-file content. Root website scripts forward to `@nitm/web`.
 
 ## Folder Structure
 
 ```
-/ (root)
-├── .pages.yml                  # PagesCMS configuration
-├── app/                        # Main application code
-│   ├── content/                # Content files (JSON/MD)
-│   │   ├── _about/             # About page content
-│   │   ├── _pages/             # Page-specific content
-│   │   ├── _work/              # Work portfolio items (MD)
-│   │   ├── clients.json        # Client information
-│   │   └── config.json         # Global configuration
-│   ├── pages/                  # Application pages (automatic routing)
-│   │   ├── index.vue           # Home page
-│   │   ├── about/              # About pages
-│   │   ├── contact/            # Contact pages
-│   │   ├── process/            # Process pages
-│   │   ├── work/               # Work portfolio pages
-│   │   └── _dev/               # Development/testing pages
-│   └── stores/                 # Pinia stores
-├── assets/                     # Static assets (SCSS, etc.)
-├── components/                 # Reusable Vue components
-├── composables/                # Vue composable functionalities
-├── layouts/                    # Application layouts
-├── modules/                    # Nuxt modules
-├── plugins/                    # Nuxt plugins
-├── public/                     # Public static files
-└── utils/                      # Utilities and helper functions
+/ (private pnpm workspace root)
+├── .pages.yml                  # PagesCMS config; points to apps/web content/media
+├── package.json                # Private @nitm/contracting-marketing-template; scripts forward to @nitm/web
+├── pnpm-workspace.yaml         # apps/* and packages/* workspace globs
+├── apps/
+│   ├── web/                    # @nitm/web — leading Nuxt website app
+│       ├── app/pages/          # Nuxt file-based routes
+│       ├── app/stores/         # Pinia stores
+│       ├── stores/             # Existing additional Pinia store
+│       ├── components/ui/      # Existing local design system
+│       ├── server/api/         # Nitro contact endpoint
+│       ├── content/            # PagesCMS JSON and Markdown
+│       ├── public/             # Static and CMS media
+│       ├── assets/             # Bundled styles/assets
+│       ├── composables/        # Shared composables
+│       ├── layouts/            # Nuxt layouts
+│       ├── app.config.ts       # Site-wide runtime config
+│       └── nuxt.config.ts      # Nuxt 4 app config
+│   └── server/                 # Optional independent @nitm/server Worker example
+└── packages/                   # Add packages only for real shared needs
 ```
+
+The website contact API is a Nitro route inside `apps/web`. The optional `apps/server` Worker is independent and is not used by root website scripts. Keep the existing design system in `apps/web/components/ui`; do not add a separate UI package or task orchestrator speculatively.
 
 ## Key Components
 
-### Page Components (app/pages/)
+### Page Components (`apps/web/app/pages/`)
 
 The application has the following main pages:
 
@@ -54,7 +51,7 @@ The application has the following main pages:
 
 6. **contact/index.vue**: Contact form with optional HubSpot integration.
 
-### Layout Components (components/layouts/)
+### Layout Components (`apps/web/components/layouts/`)
 
 1. **Page/**: Contains layout components like headers, footers, and navigation.
    - **Footer/**: Footer components including company address and social links.
@@ -69,29 +66,15 @@ The application has the following main pages:
 
 3. **process/ProcessSection.vue**: Component for displaying process steps.
 
-### UI Components (components/awesome/)
+### Existing UI Design System (`apps/web/components/ui/`)
 
 Core UI components that make up the application interface:
 
-1. **AlertBanner.vue**: For displaying alert messages.
-
-2. **Button/index.vue**: Reusable button component.
-
-3. **Card/**: Card components for content display.
-
-4. **Content/**: Content rendering components.
-
-5. **Form/**: Form input components.
-
-6. **Link/**: Navigation link components.
-
-7. **ActionSheet/**: Mobile action sheet components.
-
-8. **Tab.vue**, **Tabs.vue**: Tab navigation components.
+`apps/web/components/ui/` is the website's existing local design system. Reuse and extend it in place; add no speculative shared UI package.
 
 ## Content Structure
 
-### Global Configuration (content/config.json)
+### Global Configuration (`apps/web/content/config.json`)
 
 This file contains global settings including:
 
@@ -102,7 +85,7 @@ This file contains global settings including:
 - Navigation configuration
 - Style/theme settings
 
-### Page-specific Content (content/\_pages/)
+### Page-specific Content (`apps/web/content/_pages/`)
 
 Each main page has its own JSON configuration:
 
@@ -132,7 +115,7 @@ Each main page has its own JSON configuration:
    - Form fields and validation settings
    - HubSpot integration settings
 
-### Work Portfolio Items (content/\_work/)
+### Work Portfolio Items (`apps/web/content/_work/`)
 
 Each portfolio project is stored as a Markdown file with frontmatter:
 
@@ -144,7 +127,7 @@ Each portfolio project is stored as a Markdown file with frontmatter:
 - Design samples
 - Results metrics
 
-### Client Information (content/clients.json)
+### Client Information (`apps/web/content/clients.json`)
 
 Contains information about clients:
 
@@ -153,7 +136,7 @@ Contains information about clients:
 - Website URL
 - Banner image
 
-### Team Members (content/\_about/teamMembers.json)
+### Team Members (`apps/web/content/_about/teamMembers/`)
 
 Contains information about team members:
 
@@ -230,9 +213,10 @@ Additional stores can be added as needed to manage application state.
 
 ## Performance Considerations
 
-1. **Static Generation**:
+1. **Rendering and API**:
 
-   - Pages are pre-rendered at build time
+   - Rendering and generation behavior is configured by the Nuxt app.
+   - The contact endpoint is a Nitro route in the same `apps/web` application.
 
 2. **Lazy Loading**:
 
@@ -249,12 +233,12 @@ The project is structured to facilitate extension in several ways:
 
 1. **New Page Types**:
 
-   - Add new JSON configuration files in content/\_pages/
-   - Create corresponding Vue components in app/pages/
+   - Add new JSON configuration files in `apps/web/content/_pages/`
+   - Create corresponding Vue components in `apps/web/app/pages/`
 
 2. **Custom Components**:
 
-   - Add new components in the components/ directory
+   - Add new components in `apps/web/components/`, reusing its local UI system
    - Use in page templates as needed
 
 3. **Styling Customization**:
@@ -263,4 +247,4 @@ The project is structured to facilitate extension in several ways:
 
 ## Conclusion
 
-The Contracting Marketing Template follows modern Nuxt.js/Vue.js development practices, with a clear separation of concerns between components, content, and configuration. The flat-file CMS approach with PagesCMS provides a flexible yet powerful content management solution without the need for a traditional backend API.
+The Contracting Marketing Template separates the pnpm workspace root from its `@nitm/web` Nuxt application. PagesCMS content remains flat-file based, while the contact API is served by that app's Nitro runtime. Root scripts are the workspace entry point and forward to `@nitm/web`.

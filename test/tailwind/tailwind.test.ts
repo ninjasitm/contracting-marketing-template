@@ -6,11 +6,23 @@
  */
 
 import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
+import postcss from 'postcss';
+import tailwindcss from 'tailwindcss';
 import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from '../../tailwind.config';
+import tailwindConfig from '../../apps/web/tailwind.config';
 const resolvedConfig = resolveConfig(tailwindConfig as any);
 
 describe('Tailwind Configuration', () => {
+  it('compiles the shared card rule when content includes a card candidate', async () => {
+    const css = readFileSync('apps/web/assets/scss/tailwind.css', 'utf8');
+    const result = await postcss([tailwindcss({
+      ...tailwindConfig,
+      content: [{ raw: '<div class="card"></div>', extension: 'html' }],
+    })]).process(css, { from: undefined });
+    expect(result.css).toContain('.card');
+    expect(result.css).toContain('30 41 59');
+  });
   // Test that the configuration loads
   it('should load the Tailwind configuration', () => {
     expect(resolvedConfig).toBeDefined();

@@ -9,10 +9,11 @@
 
 **Existing Integration Points:**
 
-- Current Header: `components/layouts/Page/Header.vue` with Navbar component
-- Current Footer: `components/layouts/Page/Footer/index.vue` with modular sub-components
-- Uses app.config.ts for centralized configuration management
+- Current Header: `apps/web/components/layouts/Page/Header.vue` with Navbar component
+- Current Footer: `apps/web/components/layouts/Page/Footer/index.vue` with modular sub-components
+- Uses `apps/web/app.config.ts` for centralized configuration management
 - Follows shadcn/ui + reka-ui component patterns
+- Keep the existing design system local in `apps/web/components/ui/`; do not extract a new package speculatively
 
 **Key Architecture Insights:**
 
@@ -65,7 +66,7 @@ Analyze the design comprehensively to establish the project's design language by
 
 ### Phase 2: Tailwind Configuration Update
 
-- Update `tailwind.config.ts` with extracted colors in the `theme.extend.colors` section
+- Update `apps/web/tailwind.config.ts` with extracted colors in the `theme.extend.colors` section
 - Configure font families and weights in `theme.extend.fontFamily`
 - Set up custom spacing values if needed in `theme.extend.spacing`
 - Define border radius values in `theme.extend.borderRadius`
@@ -76,28 +77,28 @@ Analyze the design comprehensively to establish the project's design language by
 
 Create these essential components following the established patterns:
 
-**Header Component (`components/Header.vue`)**
+**Header Component (`apps/web/components/Header.vue`)**
 
 - Navigation structure and styling
 - Logo placement and responsive behavior
 - Mobile menu implementation
 - Active/hover states for navigation items
 
-**Hero Component (`components/Hero.vue`)**
+**Hero Component (`apps/web/components/Hero.vue`)**
 
 - Main headline and subheading styling
 - Call-to-action button integration
 - Background treatment (images, gradients, etc.)
 - Responsive layout adjustments
 
-**CallToAction Component (`components/CallToAction.vue`)**
+**CallToAction Component (`apps/web/components/CallToAction.vue`)**
 
 - Button styling variations (primary, secondary, outline)
 - Hover and focus states
 - Size variants (small, medium, large)
 - Loading and disabled states
 
-**Footer Component (`components/Footer.vue`)**
+**Footer Component (`apps/web/components/Footer.vue`)**
 
 - Link organization and styling
 - Contact information layout
@@ -145,7 +146,7 @@ Create these essential components following the established patterns:
 
 ## Expected Deliverables
 
-- Updated `tailwind.config.ts` with complete design tokens
+- Updated `apps/web/tailwind.config.ts` with complete design tokens
 - Four core components (Header, Hero, CallToAction, Footer)
 - Design system documentation
 - Component usage examples

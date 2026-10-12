@@ -1,30 +1,25 @@
 ---
 applyTo: '**/*'
-description: 'Developer workflows and environment settings for {{PROJECT_NAME}}.'
+description: 'pnpm workspace commands for the contracting marketing website.'
 ---
 
-# Workflows
+# Development Workflows
 
-## Development
+Run commands from the workspace root. The private root scripts forward website tasks to `@nitm/web`.
 
-- **Start dev server:** `{{PACKAGE_MANAGER}} run dev` (port {{DEV_PORT}})
-- **Build:** `{{PACKAGE_MANAGER}} run build`
-- **Type check:** `{{PACKAGE_MANAGER}} run type-check`
+```bash
+pnpm install
+pnpm dev
+pnpm build
+pnpm generate
+pnpm preview
+pnpm test
+pnpm test:watch
+pnpm test:coverage
+pnpm lint
+pnpm typecheck
+```
 
-## Testing
+Use only commands present in the manifests. If a needed script is not forwarded at the root, target the actual app script with `pnpm --filter @nitm/web <script>`; do not assume Turbo/Nx commands or package-level scripts that do not exist.
 
-- **Unit tests:** `{{PACKAGE_MANAGER}} run test`
-- **Coverage:** `{{PACKAGE_MANAGER}} run test:coverage`
-- **E2E tests:** `{{PACKAGE_MANAGER}} run test:e2e`
-
-## Code quality
-
-- **Lint:** `{{PACKAGE_MANAGER}} run lint`
-- **Format:** `{{PACKAGE_MANAGER}} run format`
-
-## Environment variables
-
-| Variable        | Purpose            | Required |
-| --------------- | ------------------ | -------- |
-| `{{ENV_VAR_1}}` | {{ENV_VAR_1_DESC}} | Yes      |
-| `{{ENV_VAR_2}}` | {{ENV_VAR_2_DESC}} | No       |
+The optional independent Worker is not a root website-script target. Its available commands are `pnpm --filter @nitm/server dev`, `pnpm --filter @nitm/server typecheck`, and the root test `pnpm test -- test/server-example/worker.test.ts`.

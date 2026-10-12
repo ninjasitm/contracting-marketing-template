@@ -4,16 +4,17 @@ This document presents the system architecture of the Contracting Marketing Temp
 
 ## Overview
 
-The Contracting Marketing Template is a Nuxt 3-based marketing website template specifically designed for contracting companies. It uses a flat-file CMS approach through PagesCMS.org, making it easy to create and manage websites without needing a traditional backend API.
+The Contracting Marketing Template is a pnpm workspace led by the Nuxt 4 website `@nitm/web` in `apps/web`. `apps/server` is an optional independent health-only Cloudflare Worker example. PagesCMS manages the website's flat-file content, and its contact endpoint runs through Nitro in the website app.
 
 ## Key Technologies
 
-- **Frontend Framework**: Nuxt 3 (based on Vue.js)
+- **Workspace**: pnpm (`apps/*` and `packages/*`)
+- **Frontend Framework**: Nuxt 4 (based on Vue.js)
 - **CSS Framework**: TailwindCSS
 - **Content Management**: Pages CMS with flat-file approach
 - **State Management**: Pinia
-- **Content**: Nuxt Content module for reading Markdown and JSON files
-- **Deployment**: Static site generation, deployable on any static hosting service
+- **Content**: `@nuxt/content` 2.13 and Content 2 APIs (for example, `queryContent()`) for reading Markdown and JSON files
+- **Deployment**: Existing Cloudflare Workers deployment; root scripts forward to `@nitm/web`
 
 ## Architecture Overview
 
@@ -50,7 +51,7 @@ The `.pages.yml` file defines the structure of the content that can be edited th
 
    ```yaml
    media:
-     input: public/media
+     input: apps/web/public/media
      output: /media
    ```
 
@@ -70,50 +71,46 @@ The `.pages.yml` file defines the structure of the content that can be edited th
 
 ## Nuxt Configuration
 
-The `nuxt.config.ts` file defines the main Nuxt configuration:
+`apps/web/nuxt.config.ts` defines the website configuration:
 
 - **SSR**: Client-side rendering only (ssr: false)
 - **Modules**: TailwindCSS, Headless UI, Color Mode, Nuxt Content, etc.
-- **Components**: Auto-imports for layouts and awesome components
+- **Components**: Global component scanning is configured for `components/layouts/` (`Layout` prefix), `components/ui/` (`Ui` prefix), and `components/app/` (`App` prefix); components in other feature folders require explicit imports
 - **CSS**: Custom SCSS variables and styles
 
 ## Project Structure
 
 ```
-/ (root)
-├── .pages.yml                  # PagesCMS configuration
-├── app/                        # Main application code
-│   ├── content/                # Content files (JSON/MD)
-│   │   ├── _about/             # About page content
-│   │   ├── _pages/             # Page-specific content
-│   │   ├── _work/              # Work portfolio items (MD)
-│   │   ├── clients.json        # Client information
-│   │   └── config.json         # Global configuration
-│   ├── pages/                  # Vue pages (automatic routing)
-│   └── stores/                 # State management (Pinia)
-├── assets/                     # Static assets
-│   └── scss/                   # SCSS stylesheets
-├── components/                 # Vue components
-│   ├── about/                  # About page components
-│   ├── awesome/                # Core UI components
-│   ├── layouts/                # Layout components
-│   ├── process/                # Process page components
-│   └── work/                   # Work page components
-├── composables/                # Vue composables
-├── layouts/                    # Vue layouts
-├── modules/                    # Nuxt modules
-├── public/                     # Public assets
-│   ├── images/                 # Static images
-│   └── media/                  # CMS-managed media
-└── utils/                      # Utility functions
+/ (private pnpm workspace root)
+├── .pages.yml                  # PagesCMS config for apps/web content and media
+├── package.json                # Private @nitm/contracting-marketing-template; scripts forward to @nitm/web
+├── pnpm-workspace.yaml         # apps/* and packages/* workspace globs
+├── apps/
+│   ├── web/                    # @nitm/web — leading Nuxt website app
+│       ├── app/pages/          # Vue routes
+│       ├── app/stores/         # Pinia state
+│       ├── stores/             # Existing additional Pinia store
+│       ├── components/ui/      # Existing local design system
+│       ├── server/api/         # Nitro contact endpoint
+│       ├── content/            # PagesCMS content
+│       ├── public/             # Static and CMS media
+│       ├── assets/             # Styles and assets
+│       ├── composables/        # Vue composables
+│       ├── layouts/            # Vue layouts
+│       ├── app.config.ts       # Site configuration
+│       └── nuxt.config.ts      # Nuxt configuration
+│   └── server/                 # Optional independent @nitm/server Worker example
+└── packages/                   # Real shared packages only, when needed
 ```
+
+The website contact endpoint stays inside the Nuxt/Nitro app. The optional `apps/server` example is separate and not a root website-script dependency. Keep the existing design system in `apps/web/components/ui/`; do not add another backend, extract a UI package, or add a task orchestrator speculatively.
 
 ## Data Flow
 
 1. **Content Management**:
 
    - Content editors use PagesCMS.org to update website content
-   - Changes are saved as JSON and Markdown files in the content directory
+    - Changes are saved as JSON and Markdown files in `apps/web/content/`
    - Git-based workflow for version control of content changes
 
 2. **Content Rendering**:
@@ -123,9 +120,13 @@ The `nuxt.config.ts` file defines the main Nuxt configuration:
    - Page navigation happens through the Vue Router
 
 3. **Page Structure**:
-   - Each page (Home, About, Work, Process, Contact) has its own Vue component
-   - A common layout provides consistent header, footer, and navigation
-   - Content is fetched and displayed based on the current route
+    - Each page (Home, About, Work, Process, Contact) has its own Vue component
+    - A common layout provides consistent header, footer, and navigation
+    - Content is fetched and displayed based on the current route
+
+4. **Contact Submission**:
+   - The contact form calls a Nitro API route in `apps/web/server/api/`
+   - Email handling remains part of the website application
 
 ## Key Components
 
@@ -166,13 +167,12 @@ The `nuxt.config.ts` file defines the main Nuxt configuration:
 
 2. **Build Process**:
 
-   - Static site generation with `nuxt generate`
+    - Root build/generation scripts forward website tasks to `@nitm/web`
    - Optimized assets with CSS and JavaScript minification
    - Image optimization
 
 3. **Deployment Options**:
-   - Any static hosting service (Netlify, Vercel, etc.)
-   - No server-side code required
+    - Preserve the existing Cloudflare Workers target and Nitro contact endpoint
    - Optional CI/CD integration with GitHub actions
 
 ## Future Extensibility
@@ -200,4 +200,4 @@ The architecture is designed to be easily extensible:
 
 ## Conclusion
 
-The Contracting Marketing Template architecture provides a modern, efficient approach to creating marketing websites. By leveraging Nuxt 3, TailwindCSS, and a flat-file CMS, it eliminates the need for complex server infrastructure while still offering robust content management capabilities.
+The Contracting Marketing Template separates its private pnpm workspace root from the `@nitm/web` Nuxt application. PagesCMS content remains flat-file based, while the Nitro contact endpoint is part of that same application and deployment.

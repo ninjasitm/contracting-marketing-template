@@ -16,7 +16,7 @@ This document provides a comprehensive architectural analysis and implementation
 
 ### Technology Stack Integration
 
-- **Nuxt 3**: SSR framework with auto-imports
+- **Nuxt 4**: Vue framework with auto-imported composables in `apps/web`; component auto-imports are limited to the directories configured in `apps/web/nuxt.config.ts`
 - **Vue 3**: Composition API with TypeScript
 - **Tailwind CSS**: Utility-first styling with custom design tokens
 - **Shadcn/UI**: Base component library with custom theming
@@ -58,18 +58,18 @@ Always consider:
 
 **Standard Process:**
 
-1. Check `components/ui/` for shadcn base components
-2. Review `components/layouts/` for page structure components
-3. Examine `components/` for custom business components
+1. Check `apps/web/components/ui/` for existing local design-system components
+2. Review `apps/web/components/layouts/` for page structure components
+3. Examine `apps/web/components/` for custom business components
 4. Analyze existing pages for similar patterns
 
 **Available Components:**
 
 ```
-✅ Header: components/layouts/Page/Header.vue + Navbar.vue
-✅ Footer: components/layouts/Page/Footer/index.vue
-✅ Hero: components/ui/Hero.vue
-✅ CallToAction: components/ui/CallToAction.vue
+✅ Header: apps/web/components/layouts/Page/Header.vue + Navbar.vue
+✅ Footer: apps/web/components/layouts/Page/Footer/index.vue
+✅ Hero: apps/web/components/ui/Hero.vue
+✅ CallToAction: apps/web/components/ui/CallToAction.vue
 ✅ Button: Full shadcn system with variants
 ✅ Card: Complete shadcn card system
 ✅ Input: Form components available
@@ -102,7 +102,7 @@ Always consider:
 **JSON Configuration Pattern:**
 
 ```
-content/_pages/[page-name].json
+apps/web/content/_pages/[page-name].json
 ```
 
 **Structure:**
@@ -154,7 +154,7 @@ content/_pages/[page-name].json
 
 <script setup lang="ts">
 import { reactive } from 'vue';
-import config from '@content/_pages/[page-name].json';
+  import config from '@content/_pages/[page-name].json';
 
 // Type definitions
 interface PageState {
@@ -279,7 +279,7 @@ const emit = defineEmits<{
 
 ```bash
 # 1. Create/update JSON content file
-touch content/_pages/[page-name].json
+touch apps/web/content/_pages/[page-name].json
 
 # 2. Define content structure based on design
 # 3. Add placeholder content for development

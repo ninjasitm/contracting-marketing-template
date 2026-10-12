@@ -7,10 +7,12 @@ description: 'Vitest testing conventions and patterns'
 
 ## Test Framework
 
-**Test Framework:** Vitest 1.6
+**Test Framework:** Vitest 3.2 (`vitest.config.ts` at the workspace root)
 **Test Utils:** @vue/test-utils 2.4, @nuxt/test-utils 3.19
-**Coverage:** @vitest/coverage-v8 1.6
-**Environment:** jsdom 26
+**Coverage:** @vitest/coverage-v8 3.2
+**Environment:** jsdom 26 (default); server tests can opt into Node
+
+The root suite passed 101 tests across 34 test files on 2026-10-11. This is a dated snapshot, not a guaranteed count.
 
 ## Configuration
 
@@ -40,14 +42,11 @@ export default defineConfig({
 ```
 test/
   components/              # Component tests
-    Button.test.ts
-    Card.test.ts
-    about/
-      TeamMember.test.ts
   composables/             # Composable tests
-    useContent.test.ts
+  mocks/                   # Test mocks
+  server/                  # Server tests
+  server-example/           # Optional Worker example tests
   utils/                   # Utility tests
-    utils.test.ts
   tailwind/                # Tailwind utility tests
   shims-vue.d.ts           # Vue type definitions
 ```
@@ -71,14 +70,11 @@ pnpm test:watch
 # Coverage report
 pnpm test:coverage
 
-# Run specific file
-vitest run test/components/Button.test.ts
+# Run a specific root-workspace test file
+pnpm test -- test/server-example/worker.test.ts
 
-# Run tests matching pattern
-vitest run --grep "Button"
-
-# UI mode (visual test runner)
-vitest --ui
+# Run tests matching a test name
+pnpm test -- --testNamePattern "Button"
 ```
 
 ## Component Testing

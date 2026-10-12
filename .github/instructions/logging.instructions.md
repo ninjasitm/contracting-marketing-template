@@ -1,6 +1,6 @@
 ---
 applyTo: '**/*'
-description: 'Logging standards and best practices for {{PROJECT_NAME}}'
+description: 'Logging standards and best practices for the contracting marketing template'
 ---
 
 # Logging Standards
@@ -15,7 +15,7 @@ Consistent logging is critical for debugging, monitoring, and understanding appl
 
 Use bracketed tags to identify the source:
 
-```{{FILE_EXTENSION}}
+```typescript
 [ComponentName]: message
 [ServiceName]: operation completed
 [UtilityName]: processing data
@@ -56,7 +56,7 @@ console.log(data);
 - Data corruption
 - Security violations
 
-```{{FILE_EXTENSION}}
+```typescript
 console.error('[DatabaseService]: Connection failed | error:', error);
 ```
 
@@ -70,7 +70,7 @@ console.error('[DatabaseService]: Connection failed | error:', error);
 - Configuration issues
 - Unexpected but handled states
 
-```{{FILE_EXTENSION}}
+```typescript
 console.warn('[AuthService]: Using fallback auth method | reason:', reason);
 ```
 
@@ -84,7 +84,7 @@ console.warn('[AuthService]: Using fallback auth method | reason:', reason);
 - Major state changes
 - Background job completion
 
-```{{FILE_EXTENSION}}
+```typescript
 console.info('[Application]: Started successfully | port:', port);
 ```
 
@@ -98,7 +98,7 @@ console.info('[Application]: Started successfully | port:', port);
 - Loop iterations
 - Algorithm steps
 
-```{{FILE_EXTENSION}}
+```typescript
 console.debug('[Validator]: Checking constraints | input:', input);
 ```
 
@@ -366,4 +366,4 @@ test('logs error on failure', async () => {
 
 ---
 
-**Last Updated**: {{Date}}
+**Last Updated**: 2026-10-11

@@ -1,4 +1,4 @@
-import withNuxt from './app/.nuxt/eslint.config.mjs';
+import withNuxt from './apps/web/.nuxt/eslint.config.mjs';
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import tsParser from "@typescript-eslint/parser";
@@ -8,6 +8,7 @@ import vueParser from 'vue-eslint-parser';
 import globals from 'globals';
 
 export default withNuxt(
+  { ignores: ['**/.agents/skills/**'] },
   eslint.configs.recommended,
   ...pluginVue.configs['flat/recommended'],
   {
@@ -35,7 +36,7 @@ export default withNuxt(
         ecmaFeatures: {
           jsx: true,
         },
-        project: './app/tsconfig.json',
+        project: ['./apps/web/tsconfig.json', './tsconfig.json'],
         tsconfigRootDir: import.meta.dirname,
         globals: {
           ...globals['shared-node-browser']
@@ -64,7 +65,7 @@ export default withNuxt(
       sourceType: 'module',
       parser: tsParser,
       parserOptions: {
-        project: './app/tsconfig.json',
+        project: ['./apps/web/tsconfig.json', './tsconfig.json'],
         tsconfigRootDir: import.meta.dirname,
       },
     },

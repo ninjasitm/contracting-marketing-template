@@ -9,18 +9,18 @@ alwaysApply: true
 
 - Use PascalCase for component files (e.g., `TeamMember.vue`)
 - App-level components should use `App` prefix (e.g., `AppButton.vue`)
-- UI components follow shadcn structure in `components/ui/`
+- UI components follow the existing shadcn structure in `apps/web/components/ui/`
 
 ## Composables
 
 - Use camelCase with 'use' prefix (e.g., `useNavbarParser.ts`)
-- Place in `composables/` directory
+- Place in `apps/web/composables/`
 - Export as default function with proper TypeScript types
 
 ## Store Files
 
 - Use camelCase with 'use' prefix (e.g., `use-counter.ts`)
-- Place in `stores/` directory
+- Preserve the existing `apps/web/app/stores/` and `apps/web/stores/` locations unless Nuxt scanning is verified
 - Follow Pinia composition API patterns
 
 ## Page Files

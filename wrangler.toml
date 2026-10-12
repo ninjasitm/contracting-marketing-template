@@ -1,6 +1,6 @@
 name = "contracting-starter"
 compatibility_date = "2024-02-08"
-pages_build_output_dir = "app/dist"
+pages_build_output_dir = "apps/web/dist"
 compatibility_flags =  ['nodejs_compat_v2', 'nodejs_compat_populate_process_env']
 
 # Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)

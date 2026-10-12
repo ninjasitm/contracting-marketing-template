@@ -1,0 +1,28 @@
+import { mount } from '@vue/test-utils';
+import { defineComponent, ref } from 'vue';
+import { it, expect, vi } from 'vitest';
+import useScrollFreeze from '../../apps/web/composables/useScrollFreeze';
+import type { CarouselApi } from '../../apps/web/components/ui/carousel';
+it('cancels consumed wheel synchronously, throttles and allows boundary escape', () => {
+  let intersect: (entries: unknown[]) => void = () => {};
+  vi.stubGlobal('IntersectionObserver', class { constructor(callback: typeof intersect) { intersect = callback; } observe() {} disconnect() {} });
+  vi.stubGlobal('matchMedia', () => ({ matches: false }));
+  let frame: FrameRequestCallback | undefined;
+  vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => { frame = callback; return 1; });
+  vi.stubGlobal('cancelAnimationFrame', vi.fn());
+  const next = vi.fn(), canNext = vi.fn(() => true);
+  const api = { selectedScrollSnap: () => 0, canScrollNext: canNext, canScrollPrev: () => false, scrollNext: next, on: vi.fn(), off: vi.fn() } as unknown as CarouselApi;
+  const wrapper = mount(defineComponent({ setup() { const el = ref<HTMLElement | null>(null); useScrollFreeze(el, ref(api), { totalSlides: 3 }); return { el }; }, template: '<div ref="el" />' }));
+  intersect([{ isIntersecting: true, intersectionRatio: 1 }]);
+  const consumed = new WheelEvent('wheel', { deltaY: 100, cancelable: true });
+  wrapper.element.dispatchEvent(consumed);
+  expect(consumed.defaultPrevented).toBe(true); expect(next).not.toHaveBeenCalled();
+  frame?.(0); expect(next).toHaveBeenCalledTimes(1);
+  canNext.mockReturnValue(false);
+  const boundary = new WheelEvent('wheel', { deltaY: 100, cancelable: true }); wrapper.element.dispatchEvent(boundary); expect(boundary.defaultPrevented).toBe(false);
+  canNext.mockReturnValue(true);
+  vi.stubGlobal('matchMedia', () => ({ matches: true }));
+  const reduced = new WheelEvent('wheel', { deltaY: 100, cancelable: true }); wrapper.element.dispatchEvent(reduced); expect(reduced.defaultPrevented).toBe(false);
+  wrapper.unmount(); expect(api?.off).toHaveBeenCalled();
+  vi.unstubAllGlobals();
+});

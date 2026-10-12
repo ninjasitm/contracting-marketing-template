@@ -5,45 +5,53 @@
 - **Framework:** Nuxt 4.3 (Vue 3.5)
 - **Language:** TypeScript 5.8
 - **Styling:** TailwindCSS 3.4 + shadcn-vue
-- Entry point: `app.vue` (layer config: `nuxt.config.ts`, app config: `app/nuxt.config.ts`)
+- **Workspace:** private root `@nitm/contracting-marketing-template`; website app `@nitm/web`
+- Website package: `@nitm/web` in `apps/web/` (Nuxt config: `apps/web/nuxt.config.ts`, site config: `apps/web/app.config.ts`)
 
 ## Architecture
 
-- **Nuxt Layer-based architecture** with flat-file CMS
-- Root layer for shared components, composables, and configuration
-- `app/` directory extends layer with page-specific implementation
-- Content managed via `@nuxt/content` (no backend API needed)
+- **pnpm workspace** with a leading Nuxt 4 website app and an optional independent Cloudflare Worker example
+- Private root package scripts forward to `@nitm/web`; workspaces are `apps/*` and `packages/*`
+- Pages, components, local UI design system, content, public assets, and Nitro API belong to `apps/web/`
+- `apps/server/` is an optional health-only `@nitm/server` Worker, not the website backend or a dependency of root website scripts
+- Content is file-managed through PagesCMS and `@nuxt/content` 2.13 (Content 2 APIs); the contact API is a Nitro route in the web app
 - PagesCMS provides admin interface for content editing
 
 ## Data flow
 
-- Pages load content via `queryContent()` / `useAsyncData()` composables
+- Pages in `apps/web/app/pages/` load content via `queryContent()` / `useAsyncData()` composables
 - Pinia stores handle client-side state (identity, counters)
-- `app.config.ts` provides site-wide configuration (company info, navigation, social links)
-- Server routes in `server/api/` handle backend operations (contact form via worker-mailer)
+- `apps/web/app.config.ts` provides site-wide configuration (company info, navigation, social links)
+- `apps/web/server/api/` hosts the Nitro contact route (email via worker-mailer); keep it separate from the optional `apps/server/` Worker example
 
 ## Key directories
 
+Nuxt globally scans only `apps/web/components/layouts/` (`Layout` prefix), `apps/web/components/ui/` (`Ui` prefix), and `apps/web/components/app/` (`App` prefix). Explicitly import components from other feature folders.
+
 | Directory         | Purpose                                 |
 | ----------------- | --------------------------------------- |
-| `app/pages/`      | Page routes (file-based routing)        |
-| `components/`     | Vue components (auto-imported)          |
-| `components/ui/`  | shadcn-vue UI primitives                |
-| `components/app/` | App-level reusable components           |
-| `composables/`    | Vue composables (auto-imported)         |
-| `content/`        | Flat-file CMS content (JSON + Markdown) |
-| `stores/`         | Pinia state stores                      |
-| `server/api/`     | Nitro API endpoints                     |
-| `types/`          | TypeScript type definitions             |
-| `lib/`            | Utility library (`cn()` helper)         |
+| `apps/web/app/pages/`      | Page routes (file-based routing)        |
+| `apps/web/components/`     | Vue components; only configured folders are auto-imported |
+| `apps/web/components/ui/`  | Existing local UI design system         |
+| `apps/web/components/app/` | App-level reusable components           |
+| `apps/web/composables/`    | Vue composables (auto-imported)         |
+| `apps/web/content/`        | Flat-file CMS content (JSON + Markdown) |
+| `apps/web/app/stores/` and `apps/web/stores/` | Existing Pinia stores                  |
+| `apps/web/server/api/`     | Nitro API endpoints                     |
+| `apps/web/types/`          | TypeScript type definitions             |
+| `apps/web/lib/`            | Utility library (`cn()` helper)          |
+| `packages/*`               | Real shared packages only, when needed  |
 
 ## Workflows (package.json)
 
-- **Dev:** `pnpm run dev` (starts on port 3000)
-- **Build:** `pnpm run build`
-- **Test:** `pnpm run test`
-- **Lint:** `pnpm run lint` (includes `vue-tsc --noEmit`)
-- **Preview:** `pnpm run preview` (build + preview)
+- Use root scripts as the workspace entry points; website tasks such as dev/build/generate/preview forward to `@nitm/web`.
+- **Dev:** `pnpm dev` (port 3000)
+- **Build:** `pnpm build`
+- **Test:** `pnpm test`
+- **Lint:** `pnpm lint` (ESLint)
+- **Type check:** `pnpm typecheck`
+- **Preview:** `pnpm preview` (build + preview)
+- **Optional Worker:** `pnpm --filter @nitm/server dev` or `pnpm --filter @nitm/server typecheck`; Worker tests: `pnpm test -- test/server-example/worker.test.ts`
 
 ## Environment variables
 
@@ -55,6 +63,7 @@
 ## Other instruction sources
 
 - [AGENTS.md](../AGENTS.md) - AI agent context
+- [`.nitm/BOOTSTRAP.md`](../.nitm/BOOTSTRAP.md) - Toolkit bootstrap handoff and scope
 - [README.md](../README.md) - Project documentation
 - [.cursor/rules/](../.cursor/rules/) - Cursor IDE rules
 

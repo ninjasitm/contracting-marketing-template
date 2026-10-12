@@ -1,0 +1,26 @@
+{
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "skipLibCheck": true,
+    "ignoreDeprecations": "5.0",
+    "allowSyntheticDefaultImports": true,
+    "checkJs": false,
+    "jsx": "preserve",
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "useUnknownInCatchVariables": true,
+    "sourceMap": true,
+    "types": ["@pinia/nuxt", "@nuxtjs/tailwindcss"]
+  },
+  "include": [
+    ".nuxt/nuxt.d.ts",
+    ".nuxt/types/**/*.d.ts",
+    ".nuxt/imports.d.ts",
+    ".nuxt/components.d.ts",
+    "**/*.ts",
+    "**/*.vue"
+  ],
+  "exclude": ["node_modules", "dist", ".output", "coverage"]
+}

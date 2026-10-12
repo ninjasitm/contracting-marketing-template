@@ -1,0 +1,23 @@
+<!-- Adapted from ninjasitm/nitm-marketing @ da649f7. Copyright (c) 2025 Ninjas In The Machine. MIT: docs/reference/NITM_MARKETING_LICENSE.md. -->
+<script setup lang="ts">
+    import type { AccordionContentProps } from "reka-ui";
+    import type { HTMLAttributes } from "vue";
+    import { reactiveOmit } from "@vueuse/core";
+    import { AccordionContent } from "reka-ui";
+    import { cn } from "@/lib/utils";
+
+    const props = defineProps<AccordionContentProps & { class?: HTMLAttributes["class"] }>();
+
+    const delegatedProps = reactiveOmit(props, "class");
+</script>
+
+<template>
+  <AccordionContent
+    v-bind="delegatedProps"
+    class="overflow-hidden text-sm"
+  >
+    <div :class="cn('pb-4 pt-0', props.class)">
+      <slot />
+    </div>
+  </AccordionContent>
+</template>

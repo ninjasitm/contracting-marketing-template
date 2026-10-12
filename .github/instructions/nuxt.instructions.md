@@ -8,43 +8,47 @@ description: 'Nuxt 4 patterns and conventions for contracting-marketing-template
 ## Framework Context
 
 **Framework:** Nuxt 4.3 (with Vue 3.5)
-**Architecture:** Layer-based (root layer + app extension)
+**Architecture:** Leading Nuxt 4 website in `apps/web/`, inside a pnpm `apps/*` / `packages/*` workspace; `apps/server/` is an optional independent Worker example
 **Rendering:** SPA mode (`ssr: false`)
 **Dev Server:** Port 3000, Host 0.0.0.0
 **Deploy:** Cloudflare Workers
 
 ## Project Structure
 
-### Layer Architecture
+### Web Application Structure
 
 ```
-/ (root - Nuxt Layer)
-├── nuxt.config.ts              # Layer configuration
-├── app.config.ts               # Runtime app config
-├── app/                        # App extends root layer
-│   ├── nuxt.config.ts          # App-specific overrides
-│   ├── pages/                  # File-based routing
-│   └── stores/                 # App-specific stores
-├── components/                 # Auto-imported components
+apps/web/                       # @nitm/web — leading Nuxt website app
+├── nuxt.config.ts              # Nuxt configuration
+├── app.config.ts               # Runtime site config
+├── app/pages/                  # File-based routes
+├── app/stores/                 # Pinia stores
+├── stores/                     # Existing additional Pinia store
+├── components/ui/              # Existing local design system
+├── components/                 # Website components
 ├── composables/                # Auto-imported composables
-├── layouts/                    # Layouts (app uses these)
-├── server/                     # Nitro server
-└── stores/                     # Shared stores
+├── layouts/                    # Nuxt layouts
+├── content/                    # PagesCMS files
+├── public/                     # Static/CMS media
+└── server/api/                 # Nitro contact route
 ```
+
+The private workspace root forwards website scripts to `@nitm/web`; `apps/server/` is an optional independent health-only Worker and is not a root website-script target. The website uses `@nuxt/content` 2.13 / Content 2 APIs such as `queryContent()`. Keep the UI system app-local and do not infer additional apps or a task runner from the workspace globs.
 
 ### Auto-imports
 
 **Automatically imported:**
 
-- Components from `components/`
-- Composables from `composables/`
-- Utils from `utils/` (via Nuxt configuration)
+- Components only from configured folders: `apps/web/components/layouts/` (`Layout` prefix), `apps/web/components/ui/` (`Ui` prefix), and `apps/web/components/app/` (`App` prefix)
+- Composables from `apps/web/composables/`
+- Nuxt auto-imports from `apps/web/utils/`
 - Pinia stores (use with `useStoreName()`)
 - Vue APIs (`ref`, `computed`, `watch`, etc.)
 - Nuxt APIs (`navigateTo`, `useFetch`, `useAsyncData`, etc.)
 
 **Manual imports required:**
 
+- Components from feature folders outside the three configured component directories (for example, `about/`, `services/`, `work/`, and `posts/`)
 - `lib/utils.ts` utilities (e.g., `cn()` helper)
 - Type definitions
 
@@ -53,7 +57,7 @@ description: 'Nuxt 4 patterns and conventions for contracting-marketing-template
 ### Route Structure
 
 ```
-app/pages/
+  apps/web/app/pages/
   index.vue                    → /
   about/
     index.vue                  → /about
@@ -106,7 +110,7 @@ await navigateTo({ name: 'work-slug', params: { slug: 'project-1' } });
 ### Default Layout
 
 ```vue
-<!-- layouts/page.vue -->
+<!-- apps/web/layouts/page.vue -->
 <template>
   <div>
     <Header />
@@ -159,17 +163,17 @@ const { data: pageConfig } = await useAsyncData('home-config', () =>
 
 | Type         | Location                            | Format   | Usage               |
 | ------------ | ----------------------------------- | -------- | ------------------- |
-| Pages        | `content/_pages/*.json`             | JSON     | Page configuration  |
-| Work         | `content/_work/data/*.md`           | Markdown | Portfolio items     |
-| Posts        | `content/_posts/*.md`               | Markdown | Blog posts          |
-| Team         | `content/_about/teamMembers/*.json` | JSON     | Team members        |
-| Testimonials | `content/_testimonials/*.md`        | Markdown | Client testimonials |
-| Config       | `content/config.json`               | JSON     | Site settings       |
+| Pages        | `apps/web/content/_pages/*.json`             | JSON     | Page configuration  |
+| Work         | `apps/web/content/_work/data/*.md`           | Markdown | Portfolio items     |
+| Posts        | `apps/web/content/_posts/*.md`               | Markdown | Blog posts          |
+| Team         | `apps/web/content/_about/teamMembers/*.json` | JSON     | Team members        |
+| Testimonials | `apps/web/content/_testimonials/*.md`        | Markdown | Client testimonials |
+| Config       | `apps/web/content/config.json`               | JSON     | Site settings       |
 
 ### useContent Composable
 
 ```typescript
-// composables/useContent.ts provides typed access
+// apps/web/composables/useContent.ts provides typed access
 const { getPageContent, getWorkItems, getPosts } = useContent();
 
 const homeConfig = await getPageContent('home');
@@ -182,7 +186,7 @@ const posts = await getPosts({ limit: 5 });
 ### API Routes
 
 ```typescript
-// server/api/contact.post.ts
+// apps/web/server/api/contact.post.ts
 export default defineEventHandler(async (event) => {
   console.info('[API] [/contact]: Processing contact form');
 
@@ -234,7 +238,7 @@ const submit = async (data: ContactForm) => {
 ### Runtime Config
 
 ```typescript
-// nuxt.config.ts
+// apps/web/nuxt.config.ts
 export default defineNuxtConfig({
   runtimeConfig: {
     // Private (server-only)
@@ -476,7 +480,7 @@ colorMode.preference; // 'light', 'dark', 'system'
 ### ✅ Do
 
 - Use `<script setup>` for all components
-- Leverage auto-imports (don't manually import components/composables)
+- Leverage configured component and composable auto-imports; explicitly import components outside the configured folders.
 - Use `useAsyncData()` with unique keys for data fetching
 - Use `queryContent()` for CMS content
 - Define page metadata with `definePageMeta()`
@@ -491,7 +495,7 @@ colorMode.preference; // 'light', 'dark', 'system'
 ### ❌ Don't
 
 - Use Options API (use Composition API)
-- Manually import auto-imported files
+- Manually import components outside the configured component folders; do not manually import Nuxt auto-imports.
 - Fetch data on client when it can be done with `useAsyncData()`
 - Skip unique keys in `useAsyncData()`
 - Ignore TypeScript errors
@@ -601,7 +605,7 @@ const onSubmit = handleSubmit(async (values) => {
 
 ## Related Documentation
 
-- [Nuxt 3 Docs](https://nuxt.com)
+- [Nuxt Docs](https://nuxt.com)
 - [Nuxt Content](https://content.nuxt.com)
 - [Nitro](https://nitro.unjs.io)
 - [Project README](../../README.md)

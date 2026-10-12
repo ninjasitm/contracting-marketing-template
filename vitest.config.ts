@@ -8,9 +8,11 @@
  */
 
 import { resolve } from 'path';
-import { defineVitestConfig } from '@nuxt/test-utils/config';
+import vue from '@vitejs/plugin-vue';
+import { defineConfig } from 'vitest/config';
 
-export default defineVitestConfig({
+export default defineConfig({
+  plugins: [vue()],
   // Test configuration
   test: {
     // Enable global test environment setup
@@ -20,27 +22,19 @@ export default defineVitestConfig({
     environment: 'jsdom',
 
     // Exclude certain files/directories from testing
-    exclude: ['node_modules', 'dist', '.nuxt', 'coverage'],
+    exclude: ['**/node_modules/**', '**/dist/**', '**/.nuxt/**', '**/coverage/**'],
 
     // Coverage configuration
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       exclude: [
-        'node_modules/**',
-        'dist/**',
+        '**/node_modules/**',
+        '**/dist/**',
         'src/tests/**',
         'prisma/**',
-        '.nuxt/**',
+        '**/.nuxt/**',
       ],
-    },
-    environmentOptions: {
-      nuxt: {
-        mock: {
-          intersectionObserver: true,
-          indexedDb: true,
-        },
-      },
     },
   },
 
@@ -86,8 +80,12 @@ export default defineVitestConfig({
         find: '#app',
         replacement: resolve(__dirname, './test/mocks/nuxt-app.ts'),
       },
-      { find: '@', replacement: resolve(__dirname, './') },
-      { find: '~', replacement: resolve(__dirname, './') },
+      { find: /^@(?=\/)/, replacement: resolve(__dirname, './apps/web') },
+      { find: /^~(?=\/)/, replacement: resolve(__dirname, './apps/web') },
+      {
+        find: /^@content(?=\/)/,
+        replacement: resolve(__dirname, './apps/web/content'),
+      },
     ],
   },
 });
